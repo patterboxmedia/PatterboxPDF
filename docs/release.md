@@ -9,6 +9,7 @@ The explicit package allowlist includes source, required redistribution-safe fix
 Build a new package and verify it without extracting:
 
 ```powershell
+New-Item -ItemType Directory -Path artifacts -Force | Out-Null
 python scripts/build-source-package.py artifacts/source-review-001
 python scripts/build-source-package.py --verify artifacts/source-review-001/patterboxpdf-0.0.0-source.zip
 ```
