@@ -7,6 +7,11 @@
       "sha256": "628e9eece078f83b2ea0e21d2e1ef075f0b6130228e4916b8e54af5ea5ec3adf"
     },
     {
+      "bytes": 2166,
+      "path": ".github/workflows/source-checks.yml",
+      "sha256": "e970d59431f06af7ba5ed0c93f236917ea04f301fb7b46f2cd44738ce5fb0da2"
+    },
+    {
       "bytes": 78,
       "path": ".gitignore",
       "sha256": "4fc4dc9495174f383b05deb925377755119eea764dbee93d6b6c5ee56ce0a176"
@@ -1117,9 +1122,9 @@
       "sha256": "3737accf30e12ec45ab981b5d0f9b7dbf08b8445082a5532f069bb61cf9c3259"
     },
     {
-      "bytes": 3576,
+      "bytes": 4410,
       "path": "docs/release.md",
-      "sha256": "5c02106ccd252421062be200a6531507e4ac0cd4992141bee11c53db72c90dcb"
+      "sha256": "58b481834e7fd60167b760b0d6a482dc16c9fc344ff6d8370efd410e076db696"
     },
     {
       "bytes": 6336,
@@ -1147,9 +1152,9 @@
       "sha256": "90ac27b7e780c67bd80a9fe06e5cb47e28875b2a693e67d9e73e6803d62ab837"
     },
     {
-      "bytes": 9777,
+      "bytes": 11034,
       "path": "docs/verification-status.md",
-      "sha256": "156fb8fdaee1df2a6acdbc6df0fdc6d11af3b2b17b6bf96c4900a0c7f0dc1f06"
+      "sha256": "ee06e2493f939aae98b072b6455912da13b2375ac3a0fbd44cf8321c4df36429"
     },
     {
       "bytes": 452466,
@@ -1260,6 +1265,26 @@
       "bytes": 15067,
       "path": "docs/verification/current/font-map-metadata-20261006/repair.json",
       "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
+    },
+    {
+      "bytes": 24771,
+      "path": "docs/verification/current/public-release-20261016/gallery-appearance.json",
+      "sha256": "a4ec47da343b42ab6d54f479fca1507147fc9ef89c20ba71cda825b708669b23"
+    },
+    {
+      "bytes": 7209,
+      "path": "docs/verification/current/public-release-20261016/gallery.json",
+      "sha256": "11d8c96505ac5f4754e06e5e52816ca6454cd58af9f18183797d66c1a872581e"
+    },
+    {
+      "bytes": 3116,
+      "path": "docs/verification/current/public-release-20261016/public-api.json",
+      "sha256": "30db246ff7bb65aeae56afdf67c0cc4c8391ee22c056f4411a55e76097fde148"
+    },
+    {
+      "bytes": 9197,
+      "path": "docs/verification/current/public-release-20261016/source-isolation.json",
+      "sha256": "d7fe845a93832854f4f137d472fb211d1de086ed45fa9cf72a7da34363ca0b7d"
     },
     {
       "bytes": 4211,
@@ -3562,6 +3587,7 @@
       "sha256": "a7083ef3dd41a65eeb2162c2c091b0082e2724fb4c6ed029b363c7840d244ecd"
     }
   ],
+  "inventory_scope": "Exact repository source tree excluding source-manifest.json itself; includes the source-check workflow. Rebuilding a ZIP with scripts/build-source-package.py uses its explicit package allowlist and emits a separate archive inventory without .github.",
   "license_expression": "MIT OR Apache-2.0",
   "public_license_status": "selected",
   "publication_authorized": true,

@@ -1,0 +1,231 @@
+{
+  "schema": "patterboxpdf-public-source-isolation/v1",
+  "date": "2026-10-16",
+  "status": "passed",
+  "scope": "Exact licensed curated source baseline, source equality, Windows workers/client and bounded independent inspection. Publication remains caller-owned.",
+  "license_expression": "MIT OR Apache-2.0",
+  "registry_publication_authorized": false,
+  "archive": {
+    "name": "patterboxpdf-0.0.0-source.zip",
+    "sha256": "7f395c4bf2e1da18e8bf2a446aba46c0375268b644eb6bbf89fbad0988b95108",
+    "bytes": 44782382,
+    "source_manifest_sha256": "132a417b429693bf7b9a1718f218253b8aa62cb77832bd34258cdec2392f9044",
+    "inventory_files": 712,
+    "policy_schema": "patterboxpdf-source-package/v2"
+  },
+  "public_baseline": {
+    "verified_payloads": 713,
+    "source_manifest_sha256": "132a417b429693bf7b9a1718f218253b8aa62cb77832bd34258cdec2392f9044",
+    "archive_git_checkout_equal": true,
+    "author": "PatterboxPDF contributors <hello@patterboxmedia.com>",
+    "committer": "PatterboxPDF contributors <hello@patterboxmedia.com>",
+    "history_commits": 1,
+    "git_attributes": "* -text",
+    "tracked_files": 713,
+    "post_build_source_unchanged": true,
+    "baseline_clean": true,
+    "fresh_checkout_clean": true
+  },
+  "legacy_checkpoint": {
+    "archive": "pdf-library-0.0.0-source-license-pending.zip",
+    "sha256": "0a34b42c87a3c7d5405479e31db0c655004868c0025d4aceb7d729c2ba10f045",
+    "verified_files": 709,
+    "schema": "pdf-library-source-package/v1",
+    "status": "license_pending",
+    "unchanged": true,
+    "qualification": "v1 retains its original notice checking; v2 additionally binds current first-party manifest hashes and effective licensing."
+  },
+  "build": {
+    "target": "x86_64-pc-windows-msvc",
+    "compiler": "rustc 1.98.0 (88d9e12ae 2026-08-18)",
+    "cargo": "cargo 1.98.0 (797e8a9bc 2026-08-05)",
+    "cross_compiler": "cargo-xwin 0.23.1 via WSL Ubuntu and LLVM 18",
+    "fresh_targets": [
+      "target",
+      "target/standalone-client"
+    ],
+    "cached_dependencies_allowed": true,
+    "sibling_sources_used": false,
+    "prebuilt_workers_used": false,
+    "commands": [
+      {
+        "command": "cargo xwin build --target x86_64-pc-windows-msvc --offline --locked --release -p publisher-font-worker -p publisher-color-worker",
+        "exit_code": 0
+      },
+      {
+        "command": "cargo xwin build --manifest-path examples/standalone-client/Cargo.toml --target x86_64-pc-windows-msvc --offline --locked --release --target-dir target/standalone-client --examples --bins",
+        "exit_code": 0
+      }
+    ],
+    "binaries": [
+      {
+        "path": "target/x86_64-pc-windows-msvc/release/publisher-font-worker.exe",
+        "bytes": 1614336,
+        "sha256": "938657e0c85cb316ac052d1785a23a34b01d391dadf55b7c40aa4bd830dc0ab9"
+      },
+      {
+        "path": "target/x86_64-pc-windows-msvc/release/publisher-color-worker.exe",
+        "bytes": 551424,
+        "sha256": "f88fcdd5a6fa47bac6ba12fc807d8179ecd6302da81579eee9670cee6f7d190f"
+      },
+      {
+        "path": "target/standalone-client/x86_64-pc-windows-msvc/release/pdf-library-standalone-client.exe",
+        "bytes": 21453312,
+        "sha256": "cccd2435e2b3eb2852bdabb388c104baeda8172577d9480586ed5e3926b7838a"
+      },
+      {
+        "path": "target/standalone-client/x86_64-pc-windows-msvc/release/examples/feature-gallery.exe",
+        "bytes": 997376,
+        "sha256": "98c3c5026ec5e978e548485e5cb942a103058d860de32fbfcd01a22baa47e2b4"
+      }
+    ]
+  },
+  "execution": {
+    "native_windows": true,
+    "worker_staging": "Packaged stage-workers.py copied only freshly built font/color workers beside client; ordinary gallery ran before any worker was placed beside it; print gallery ran with freshly built color worker.",
+    "main_client_exit_code": 0,
+    "worker_free_ordinary_gallery_exit_code": 0,
+    "prepared_print_gallery_exit_code": 0,
+    "outputs": [
+      {
+        "path": "artifacts/standalone-run/candidate.pdf",
+        "bytes": 2759487,
+        "sha256": "7004c900117887d117c47722f560fb8a66e313bdb42d1b2d2df03e8cf34d0cfa"
+      },
+      {
+        "path": "artifacts/standalone-run/ordinary.pdf",
+        "bytes": 27979,
+        "sha256": "c76c7dc036da885ba582b10ef7eb687fdbbf32b18fef959a78b10000063870be"
+      },
+      {
+        "path": "artifacts/gallery-ordinary/ordinary.pdf",
+        "bytes": 33276,
+        "sha256": "ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8"
+      },
+      {
+        "path": "artifacts/gallery-print/candidate.pdf",
+        "bytes": 2764900,
+        "sha256": "5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab"
+      }
+    ]
+  },
+  "verification": {
+    "package_tests": {
+      "passed": 5,
+      "v2_mutation_cases": 9,
+      "red_before_implementation": "New licensed-package test failed against old collector: public license decision was not preserved."
+    },
+    "requirements_tests": {
+      "passed": 3
+    },
+    "requirements_auditor": {
+      "retained_topics": 28,
+      "writer_contracts": 15,
+      "normative_pdfx4_coverage_complete": false
+    },
+    "notice_collection": {
+      "packages": 232,
+      "third_party": 215,
+      "first_party": 17,
+      "notice_gaps": 0,
+      "external_package_records_unchanged": true,
+      "external_notices_and_assets_unchanged": true,
+      "fixture_provenance_hashes_added": true
+    },
+    "public_api": {
+      "receipt_sha256": "30db246ff7bb65aeae56afdf67c0cc4c8391ee22c056f4411a55e76097fde148",
+      "repeatable_bytes": true,
+      "dependency_packages": 57,
+      "actual_worker_failure_cases": [
+        {
+          "case": "absent-font",
+          "exit_code": 1,
+          "no_output_exposed": true
+        },
+        {
+          "case": "malformed-font",
+          "exit_code": 1,
+          "no_output_exposed": true
+        },
+        {
+          "case": "absent-color",
+          "exit_code": 1,
+          "no_output_exposed": true
+        }
+      ],
+      "qpdf_checks_passed": true
+    },
+    "gallery": {
+      "receipt_sha256": "11d8c96505ac5f4754e06e5e52816ca6454cd58af9f18183797d66c1a872581e",
+      "qpdf_checks_passed": true,
+      "structure_and_exact_local_resource_checks_passed": true,
+      "pdf_pages": 6,
+      "appearance_probes": 50,
+      "all_appearance_probes_passed": true,
+      "appearance_receipt_sha256": "a4ec47da343b42ab6d54f479fca1507147fc9ef89c20ba71cda825b708669b23",
+      "whole_page_comparison_passed": false,
+      "failed_pages": [
+        {
+          "mode": "ordinary",
+          "page": 2,
+          "metrics": {
+            "mean_channel_difference": 1.243686633039092,
+            "p95_max_channel_difference": 23.0,
+            "pixels_above_10_percent": 8.823076923076924
+          }
+        },
+        {
+          "mode": "pdfx4",
+          "page": 1,
+          "metrics": {
+            "mean_channel_difference": 1.6153205128205128,
+            "p95_max_channel_difference": 24.0,
+            "pixels_above_10_percent": 12.556872635561161
+          }
+        },
+        {
+          "mode": "pdfx4",
+          "page": 2,
+          "metrics": {
+            "mean_channel_difference": 1.243686633039092,
+            "p95_max_channel_difference": 23.0,
+            "pixels_above_10_percent": 8.823076923076924
+          }
+        }
+      ],
+      "fixed_bounds": {
+        "mean_channel_difference_max": 5,
+        "p95_max_channel_difference_max": 20,
+        "pixels_above_10_percent_max": 8
+      },
+      "interpretation": "Existing CMYK preview limitation reproduced; limits and source colors were unchanged. This failure is preserved and does not fail the licensing/source-build gate."
+    }
+  },
+  "public_inventory_audit": {
+    "entries_including_manifest": 713,
+    "every_archive_git_blob_and_checkout_payload_equal": true,
+    "all_payload_paths_and_text_inspected": true,
+    "forbidden_paths_or_identity_secret_pattern_hits": 0,
+    "unresolved_markdown_links": 0,
+    "binary_fixture_provenance": "Twelve fonts including a truncated DejaVu derivative have included upstream notices/provenance; upstream CMYK profile has CC0 terms; generated profile/TIFFs and six synthetic raster controls use first-party terms.",
+    "excluded": "Personal instructions, private history, machine-home paths, credentials, build outputs, commercial binaries/profiles, raw licensed reports."
+  },
+  "independent_tools": {
+    "python": "3.12.14",
+    "pypdf": "6.10.0",
+    "pypdfium2": "5.14.0",
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "qpdf": "12.4.1",
+    "poppler": "26.07.0",
+    "qpdf_sha256": "57c003e868fb66cd343fd5afb91be8c2277f56434eea8635762499731bf9f60d",
+    "pdftoppm_sha256": "1ad6408dc3b02950d00ad407d79b6d52b1d6c3f3b85c96645455d58d390d8b20"
+  },
+  "limitations": [
+    "No fresh callas analysis was performed; old exact-byte checker verdicts are not transferred.",
+    "Complete normative PDF/X-4 coverage remains false.",
+    "Windows is the verified runtime platform; Linux resource preparation and runtime qualification are separate work.",
+    "Whole-page CMYK reader comparison remains failed on ordinary page 2 and print pages 1 and 2.",
+    "Source isolation is passed; remote publication/readback and the open review PR belong to U4."
+  ]
+}

@@ -82,3 +82,11 @@ Native execution and a fresh extracted-source build verify the repaired handoff;
 the failed whole-page CMYK comparison remains recorded.
 
 As of October 16, first-party source and original project material use MIT OR Apache-2.0 under the PatterboxPDF name. Cargo packages retain publish = false. Historical receipts preserve their original license-pending statements. A fresh source-release receipt records the exact licensed source/build identities; earlier callas verdicts do not transfer to new PDF bytes. Next: build the documented Windows standalone examples. A complete standards inventory is separate future assurance work.
+
+## October 16 licensed source build
+
+The [source isolation receipt](verification/current/public-release-20261016/source-isolation.json) records the exact licensed archive and its source-equality checks for the fresh Windows build. The 712 source inventory files plus source manifest survived ZIP-to-Git-to-fresh-checkout comparison byte for byte. Fresh locked Windows worker and separate client/gallery builds passed with dependency caches and new target directories. No sibling source or prebuilt workers were used.
+
+Native example runs, repeatable client bytes, the 57-package default dependency graph, three actual worker failures, independent PDF parsing and qpdf checks passed. Fifty gallery appearance probes passed. Whole-page comparisons retained the same three CMYK failures; no fresh callas or unrestricted conformance verdict is claimed. The five package regressions, three requirements tests and current requirements auditor passed; archive007 still verifies under its historical v1 pending policy and retains its original SHA-256.
+
+The receipt belongs to the frozen source baseline; this section and the receipt are subsequent verification documentation. Public repository/readback and the open release review PR are a separate delivery gate.

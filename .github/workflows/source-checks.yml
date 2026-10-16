@@ -1,0 +1,48 @@
+name: Source checks
+
+"on":
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    name: Package and requirements
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Verify committed source inventory
+        run: |
+          python - <<'PY'
+          import hashlib, json, pathlib, subprocess
+          manifest = json.loads(pathlib.Path('source-manifest.json').read_text())
+          rows = {row['path']: row for row in manifest['files']}
+          tracked = set(subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')) - {'', 'source-manifest.json'}
+          assert len(rows) == len(manifest['files']), 'duplicate inventory paths'
+          assert tracked == set(rows), 'tracked source and inventory paths differ'
+          for name, row in rows.items():
+              data = pathlib.Path(name).read_bytes()
+              assert len(data) == row['bytes'] and hashlib.sha256(data).hexdigest() == row['sha256'], 'source inventory mismatch: ' + name
+          print('Committed source inventory matches all tracked payloads.')
+          PY
+      - name: Package boundary regressions
+        run: python tests/unit/source-package.test.py
+      - name: Requirements inventory regressions
+        run: python tests/unit/requirements-inventory.test.py
+      - name: Audit requirement bindings
+        run: python scripts/verify-requirements.py
+      - name: Build and verify licensed source archive
+        run: |
+          mkdir -p artifacts
+          python scripts/build-source-package.py artifacts/ci-source
+          python -c "import json, pathlib, subprocess, sys; folder = pathlib.Path('artifacts/ci-source'); receipt = json.loads((folder / 'receipt.json').read_text()); subprocess.run([sys.executable, 'scripts/build-source-package.py', '--verify', str(folder / receipt['archive'])], check=True)"
