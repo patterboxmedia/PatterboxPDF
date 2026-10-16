@@ -1,0 +1,2151 @@
+{
+  "schema": "pdf-library-requirements/v1",
+  "scope": "Initial general-purpose generation library; current ordinary and selected-CMYK print output reviewed and verified on exact bytes; exhaustive normative reconciliation remains unfinished",
+  "retained_topic_authority": "crates/validator-boundary/rules/pdfx4-authority-v1.json",
+  "normative_pdfx4_coverage_complete": false,
+  "normative_requirements": [],
+  "topics": [
+    {
+      "id": "PX4-NORMATIVE-INVENTORY",
+      "summary": "Every applicable normative PDF/X-4 requirement is mapped to an evaluator and fixtures.",
+      "authority": "PDFX-COVERAGE-POLICY",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "full-inventory-not-reconciled",
+      "historical_applicability_reason": "A complete applicable PDF/X-4 coverage inventory is absent; calibration and absence proofs cannot invent it",
+      "historical_fixture_ids": [],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/validator-boundary/rules/pdfx4-authority-v1.json"
+        }
+      ],
+      "evidence": [],
+      "status": "normative-pending",
+      "historical_summary": "Every applicable normative PDF/X-4 requirement is mapped to an evaluator and fixtures.",
+      "current_scope": "The implemented generation contracts have bounded output checks. Exhaustive coverage remains incomplete."
+    },
+    {
+      "id": "PX4-STRUCTURAL-INTEGRITY",
+      "summary": "The PDF is syntactically readable without recovery, malformed streams, or structural warnings.",
+      "authority": "QPDF-CHECK",
+      "layer": "base-format-or-tool-condition",
+      "clause": null,
+      "applicability": "emitted-or-payload-applicable",
+      "historical_applicability_reason": "See retained writer inventory, declared supported profile and existing component fixtures",
+      "historical_fixture_ids": [
+        "windows-production-candidate",
+        "missing-startxref"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-structure.json",
+          "sha256": "55914b721aac230dd4538f493367d8b3f9194f417769428e22639847927a19d9"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "The PDF is syntactically readable without recovery, malformed streams, or structural warnings.",
+      "current_scope": "Supported generated structures checked on exact refreshed corpus and gallery bytes; retained topic authority does not establish complete normative scope.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-structure.json",
+          "sha256": "a583dae52b2541be2aa382b1d6059ad565295da53e539486d44982912a81c7ef"
+        }
+      ]
+    },
+    {
+      "id": "PX4-OUTPUT-INTENT",
+      "summary": "The selected print mode embeds one exact usable CMYK printer profile and supplies its custom output-condition description.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "emitted-or-payload-applicable",
+      "historical_applicability_reason": "See retained writer inventory, declared supported profile and existing component fixtures",
+      "historical_fixture_ids": [
+        "missing-output-intent",
+        "wrong-output-profile"
+      ],
+      "independent_control_ids": [
+        "missing-output-intent",
+        "missing-embedded-output-profile"
+      ],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-independent.json",
+          "sha256": "91014b110ca44ff52cb3ebc45a39d200cca81bd7fc9b96a1c05d3d9717a401af"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/examples-independent.json",
+          "sha256": "bdedc9423cdb8cd04721c7c4772b479e5de5853f0f4776834ef5c58766e92630"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-controls.json",
+          "sha256": "eb69168c1f1be4806f126b07e54c63d2c67d1f75b5f0adf54bdeedab4a863184"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "A readable embedded output-intent ICC profile matches the selected print condition.",
+      "current_scope": "Custom OutputConditionIdentifier is bound to embedded-profile SHA-256 and now supplies required Info. Exact selected-profile bytes and PDF N=4 are independently checked. Gallery controls reject missing Info. Callas verdicts and the separate selected-CMYK component guard are recorded separately.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-independent.json",
+          "sha256": "5089de3392e7088c7526e81207191b3d56603a8245e05cf712e4710f363ddb26"
+        }
+      ]
+    },
+    {
+      "id": "PX4-FONT-EMBEDDING",
+      "summary": "Every used font has a readable embedded program containing the required glyphs.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "emitted-or-payload-applicable",
+      "historical_applicability_reason": "See retained writer inventory, declared supported profile and existing component fixtures",
+      "historical_fixture_ids": [
+        "type0-descendant-subset",
+        "unembedded-standard-font",
+        "unembedded-inherited-page-font",
+        "unembedded-form-xobject-font",
+        "unembedded-annotation-appearance-font",
+        "unembedded-annotation-appearance-state-font",
+        "corrupt-embedded-truetype-program",
+        "missing-used-identity-glyph",
+        "nested-missing-used-identity-glyph",
+        "appearance-missing-used-identity-glyph",
+        "used-stream-cid-to-gid-control",
+        "used-flate-stream-cid-to-gid-control",
+        "zero-stream-cid-to-gid-mapping",
+        "out-of-range-stream-cid-to-gid-mapping",
+        "used-cid-beyond-stream-cid-to-gid-map",
+        "odd-stream-cid-to-gid-map",
+        "malformed-flate-stream-cid-to-gid-map",
+        "aggregate-stream-cid-to-gid-budget",
+        "used-identity-cff-glyph-control",
+        "missing-used-identity-cff-glyph",
+        "used-simple-cff-glyph-control",
+        "missing-used-simple-cff-glyph",
+        "predefined-macroman-cff-control",
+        "missing-predefined-macroman-cff-glyph",
+        "predefined-winansi-cff-control",
+        "missing-predefined-winansi-cff-glyph",
+        "used-simple-truetype-glyph-control",
+        "missing-used-simple-truetype-glyph",
+        "used-type3-charproc-control",
+        "missing-used-type3-charproc"
+      ],
+      "independent_control_ids": [
+        "missing-font-program",
+        "missing-cff-font-program"
+      ],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        },
+        {
+          "path": "crates/print-core/src/resources.rs",
+          "symbol": "write_prepared_font"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-independent.json",
+          "sha256": "91014b110ca44ff52cb3ebc45a39d200cca81bd7fc9b96a1c05d3d9717a401af"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/font-map-metadata-20261006/repair.json",
+          "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "Every used font has a readable embedded program containing the required glyphs.",
+      "current_scope": "Supported generated structures checked on exact refreshed corpus and gallery bytes; retained topic authority does not establish complete normative scope.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-independent.json",
+          "sha256": "5089de3392e7088c7526e81207191b3d56603a8245e05cf712e4710f363ddb26"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        }
+      ]
+    },
+    {
+      "id": "PX4-ENCRYPTION",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Trailer excludes Encrypt, Prev and XRefStm",
+      "historical_fixture_ids": [
+        "encrypted-trailer"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "The document is not encrypted or password protected.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PX4-PAGE-BOXES",
+      "summary": "Required page boxes exist and any bleed area correctly encloses the trim area within the media area.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "emitted-or-payload-applicable",
+      "historical_applicability_reason": "See retained writer inventory, declared supported profile and existing component fixtures",
+      "historical_fixture_ids": [
+        "missing-media-box",
+        "missing-trim-or-art-box",
+        "bleed-outside-media",
+        "trim-outside-bleed"
+      ],
+      "independent_control_ids": [
+        "missing-trim-and-art",
+        "bleed-outside-media"
+      ],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-independent.json",
+          "sha256": "91014b110ca44ff52cb3ebc45a39d200cca81bd7fc9b96a1c05d3d9717a401af"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-fidelity.json",
+          "sha256": "45ffd2b79b1aa5af141495ba597190e5595010f3a59e9de3710babfcf8d3cb5a"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "Required page boxes exist and any bleed area correctly encloses the trim area within the media area.",
+      "current_scope": "Supported generated structures checked on exact refreshed corpus and gallery bytes; retained topic authority does not establish complete normative scope.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-independent.json",
+          "sha256": "5089de3392e7088c7526e81207191b3d56603a8245e05cf712e4710f363ddb26"
+        },
+        {
+          "path": "docs/verification/current/corpus-fidelity.json",
+          "sha256": "4672523300fe287ea6b85c9607df7ece285fce2b386734517abef54c8d5ca46f"
+        },
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        }
+      ]
+    },
+    {
+      "id": "PX4-ACTIONS-AND-JAVASCRIPT",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Catalog excludes OpenAction, AA, Names and AcroForm; pages exclude AA",
+      "historical_fixture_ids": [
+        "javascript-open-action",
+        "named-javascript-tree",
+        "xfa-form"
+      ],
+      "independent_control_ids": [
+        "javascript-open-action"
+      ],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "JavaScript, XFA content, and other publicly confirmed prohibited interactive behavior are absent.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PUBLISHER-SAFE-ACTIONS",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PUBLISHER-SAFE-EXPORT-V1",
+      "layer": "local-stricter-contract",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "No action-bearing dictionary/child role in the closed graph",
+      "historical_fixture_ids": [
+        "pdf17-action-subtype-vocabulary",
+        "typed-private-action",
+        "launch-open-action",
+        "catalog-open-action",
+        "page-additional-action",
+        "annotation-primary-action",
+        "chained-next-action",
+        "cyclic-next-action"
+      ],
+      "independent_control_ids": [
+        "javascript-open-action"
+      ],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Publisher exports contain no recognized PDF 1.7 action dictionary; this is deliberately stricter than the unresolved baseline PDF/X-4 action matrix.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PUBLISHER-SAFE-FORMS",
+      "summary": "The public writer does not expose interactive AcroForm or XFA field inputs.",
+      "authority": "PUBLISHER-SAFE-EXPORT-V1",
+      "layer": "local-stricter-contract",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Catalog excludes AcroForm; no field dictionary role",
+      "historical_fixture_ids": [
+        "acroform-field",
+        "xfa-form"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Publisher exports contain no AcroForm catalog or form-field dictionary; this is deliberately stricter than the unresolved baseline PDF/X-4 form matrix.",
+      "current_scope": "Interactive AcroForm/XFA fields remain unavailable and absent from inspected output. Supported Form XObjects used for composition and luminosity masks are separate PDF constructs.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PX4-ANNOTATIONS",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Page role excludes Annots",
+      "historical_fixture_ids": [
+        "text-annotation-warning-gap",
+        "3d-annotation",
+        "movie-annotation",
+        "sound-annotation",
+        "screen-annotation",
+        "rich-media-annotation"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Annotations are restricted according to PDF/X-4 requirements and their printable area.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PUBLISHER-SAFE-ANNOTATION-PLACEMENT",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PUBLISHER-SAFE-EXPORT-V1",
+      "layer": "local-stricter-contract",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Page role excludes Annots",
+      "historical_fixture_ids": [
+        "annotation-inside-trim",
+        "annotation-crossing-art",
+        "annotation-reversed-rectangle",
+        "annotation-parent-only-trim-fails-safe",
+        "annotation-outside-control",
+        "annotation-touching-quarantine",
+        "annotation-missing-rectangle"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Publisher exports keep annotations outside the effective TrimBox or ArtBox; positive-area overlap and unreadable placement fail safe, while boundary contact remains quarantined.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PUBLISHER-SAFE-TEXT-ANNOTATIONS",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PUBLISHER-SAFE-EXPORT-V1",
+      "layer": "local-stricter-contract",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Page role excludes Annots",
+      "historical_fixture_ids": [
+        "text-annotation-outside-print-area",
+        "stamp-annotation-outside-print-area-control"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Publisher exports contain no Text annotations; this is deliberately stricter than the unresolved baseline PDF/X-4 subtype and severity rules.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PX4-ICC-PROFILE-VALIDITY",
+      "summary": "Every used ICCBased color space contains a valid profile whose channel count and device class agree with its PDF use.",
+      "authority": "PDFX-COVERAGE-POLICY",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "emitted-or-payload-applicable",
+      "historical_applicability_reason": "See retained writer inventory, declared supported profile and existing component fixtures",
+      "historical_fixture_ids": [
+        "malformed-active-page-icc",
+        "valid-active-srgb-icc",
+        "declared-channel-mismatch",
+        "malformed-painted-image-icc",
+        "malformed-painted-form-icc",
+        "malformed-active-image-soft-mask-icc",
+        "malformed-applied-soft-mask-group-icc",
+        "malformed-unused-page-icc"
+      ],
+      "independent_control_ids": [
+        "invalid-output-icc-header",
+        "output-profile-channel-mismatch",
+        "output-profile-component-count-missing",
+        "output-profile-component-count-string",
+        "output-profile-component-count-zero"
+      ],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/profile.rs",
+          "symbol": "validate_referenced_version"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-independent.json",
+          "sha256": "91014b110ca44ff52cb3ebc45a39d200cca81bd7fc9b96a1c05d3d9717a401af"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/examples-independent.json",
+          "sha256": "bdedc9423cdb8cd04721c7c4772b479e5de5853f0f4776834ef5c58766e92630"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "Every used ICCBased color space contains a valid profile whose channel count and device class agree with its PDF use.",
+      "current_scope": "One exact CMYK output profile is embedded; decoded images use DeviceGray, DeviceRGB or DeviceCMYK as allowed by mode. Public print output rejects unmanaged RGB. Exact ICC 2.2.0, 4.0.0, 4.1.0 and 4.2.0 encodings are screened before confined parsing/transform probing; malformed or unreviewed editions fail. Arbitrary ICCBased image inputs remain unavailable.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-independent.json",
+          "sha256": "5089de3392e7088c7526e81207191b3d56603a8245e05cf712e4710f363ddb26"
+        }
+      ]
+    },
+    {
+      "id": "PX4-ACTIVE-COLOR-SPACE-SEMANTICS",
+      "summary": "Supported DeviceCMYK and DeviceGray print content agrees with the selected CMYK output intent; unmanaged RGB is rejected at the public print boundary.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "emitted-or-payload-applicable",
+      "historical_applicability_reason": "See retained writer inventory, declared supported profile and existing component fixtures",
+      "historical_fixture_ids": [
+        "valid-active-lab",
+        "malformed-active-lab-white-point",
+        "unknown-active-color-space-type",
+        "valid-indexed-string-lookup",
+        "valid-indexed-stream-lookup",
+        "valid-indexed-single-flate-filter-array",
+        "valid-indexed-noop-flate-decode-parameters",
+        "invalid-indexed-nondefault-flate-predictor",
+        "valid-indexed-named-base-alias",
+        "valid-indexed-devicen-base",
+        "invalid-indexed-hival",
+        "invalid-indexed-lookup-length-or-storage",
+        "invalid-indexed-pattern-shadow-base",
+        "bounded-indexed-flate-expansion",
+        "cached-repeated-indexed-stream-selection",
+        "device-rgb-cmyk-output-intent-mismatch",
+        "default-rgb-icc-under-cmyk-output-intent-control"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "PaintColor"
+        },
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "paints_rgb"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-independent.json",
+          "sha256": "91014b110ca44ff52cb3ebc45a39d200cca81bd7fc9b96a1c05d3d9717a401af"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "Active Lab definitions are structurally valid, and device RGB or CMYK use is compatible with the output intent unless a matching default color space provides explicit color management.",
+      "current_scope": "Ordinary paint, decoded images and gradients admit RGB, Gray and CMYK. Print admits CMYK/Gray and rejects all registered RGB images even if unused. Ordinary page/group blending space follows its own painted subtree; print groups use CMYK and internal luminosity masks use Gray. Lab, default-space and spot definitions remain unavailable.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-independent.json",
+          "sha256": "5089de3392e7088c7526e81207191b3d56603a8245e05cf712e4710f363ddb26"
+        }
+      ]
+    },
+    {
+      "id": "PDF-CONTENT-INDEXED-COLOR-OPERANDS",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "ADOBE-PDF-1.7",
+      "layer": "base-format-or-tool-condition",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "No ColorSpace resource role or cs/CS/sc/scn/SC/SCN operators",
+      "historical_fixture_ids": [
+        "indexed-content-normalization-control",
+        "invalid-indexed-content-component-arity",
+        "independent-indexed-fill-stroke-state",
+        "restored-indexed-graphics-state",
+        "inherited-indexed-form-state",
+        "invalid-indexed-pattern-name-operand",
+        "invalid-indexed-selection-resource-alias"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "A directly selected Indexed color space uses one numeric component with SC, SCN, sc, or scn; real and out-of-range numbers are rounded or clamped by the PDF consumer.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PDF-CONTENT-GRAPHICS-STATE-BALANCE",
+      "summary": "Every walked page, Form, and pattern content program balances q graphics-state saves with Q restores without underflow.",
+      "authority": "ADOBE-PDF-1.7",
+      "layer": "base-format-or-tool-condition",
+      "clause": null,
+      "applicability": "emitted-or-payload-applicable",
+      "historical_applicability_reason": "See retained writer inventory, declared supported profile and existing component fixtures",
+      "historical_fixture_ids": [
+        "invalid-unmatched-graphics-state-restore",
+        "invalid-unmatched-graphics-state-save"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "Every walked page, Form, and pattern content program balances q graphics-state saves with Q restores without underflow.",
+      "current_scope": "Parsed page and Form streams balance explicit saves/restores. Print admission also bounds the deepest executed path at 28, including Form invocation and mask evaluation saves; ordinary API group recursion remains separately bounded.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PDF-CONTENT-PATTERN-SELECTION",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "ADOBE-PDF-1.7",
+      "layer": "base-format-or-tool-condition",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "No Pattern/Shading resources or scn/SCN/sh operators",
+      "historical_fixture_ids": [
+        "colored-tiling-pattern-selection-control",
+        "uncolored-cmyk-tiling-pattern-selection-control",
+        "shading-pattern-selection-control",
+        "missing-pattern-resource",
+        "invalid-pattern-component-arity",
+        "mismatched-pattern-paint-type",
+        "malformed-tiling-pattern-dictionary",
+        "invalid-shading-pattern-color-space",
+        "recursive-pattern-selection",
+        "nested-pattern-base-budget"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "A parsed Pattern color selection names an available resource with the required tiling entries or readable shading color-space structure; colored and shading patterns use no numeric components, while an uncolored tiling pattern uses exactly the component count of its non-Pattern underlying color space.",
+      "current_scope": "Tiling patterns and Pattern paint selection remain unavailable. Supported native axial/radial shadings are painted directly with sh and do not require Pattern resources.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PDF-UNCOLORED-TILING-PATTERN-CONTENT",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "ADOBE-PDF-1.7",
+      "layer": "base-format-or-tool-condition",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "No Pattern/Shading resources or pattern dictionary role",
+      "historical_fixture_ids": [
+        "uncolored-pattern-geometry-control",
+        "uncolored-pattern-image-mask-control",
+        "uncolored-pattern-color-operator",
+        "uncolored-pattern-colored-image",
+        "uncolored-pattern-invalid-image-mask",
+        "uncolored-pattern-shading-or-rendering-intent",
+        "uncolored-pattern-color-extgstate"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "A parsed uncolored tiling-pattern program does not set color, invoke shading, change rendering intent, use the listed color-related ExtGState entries, or paint an image other than a structurally valid image mask.",
+      "current_scope": "Tiling patterns and Pattern paint selection remain unavailable. Supported native axial/radial shadings are painted directly with sh and do not require Pattern resources.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PDF-INDEXED-IMAGE-SAMPLES",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "ADOBE-PDF-1.7",
+      "layer": "base-format-or-tool-condition",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Image role requires DeviceCMYK, 8-bit exact raw/single-Flate samples",
+      "historical_fixture_ids": [
+        "indexed-image-row-padding-control",
+        "indexed-image-bit-depth-controls",
+        "indexed-image-decode-controls",
+        "indexed-image-intrinsic-entry-faults",
+        "indexed-image-raw-and-flate-controls",
+        "indexed-image-stream-integrity-faults",
+        "indexed-image-aggregate-work-budget",
+        "indexed-image-external-data-faults",
+        "indexed-image-reachability-controls",
+        "indexed-image-cache-context-control"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "An active ordinary non-JPX Image XObject using an Indexed color space has positive integer dimensions, a permitted bit depth, an optional two-number Decode array, and a complete bounded raw or single-Flate sample stream whose decoded length matches its row-padded extent; external data and unsupported filter semantics fail closed.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PDF-IMAGE-MASK-COLOR-NEUTRAL-STRUCTURE",
+      "summary": "The public writer does not emit one-bit stencil ImageMask images.",
+      "authority": "ADOBE-PDF-1.7",
+      "layer": "base-format-or-tool-condition",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "ImageMask stencils are excluded; emitted SMask is an eight-bit gray image",
+      "historical_fixture_ids": [
+        "image-mask-color-neutral-control",
+        "image-mask-missing-dimension-fault",
+        "image-mask-color-space-fault",
+        "image-mask-decode-fault",
+        "image-xobject-inline-alias-faults",
+        "uncolored-pattern-inline-image-mask-controls"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "An active image-mask XObject, or an inline mask accepted inside an uncolored tiling pattern, has positive integer dimensions, no color space or nested mask entries, optional one-bit sample depth, and an optional Decode array of exactly [0 1] or [1 0]; external Image XObjects reject the inline-only IM, BPC, and CS aliases.",
+      "current_scope": "One-bit stencil ImageMask inputs remain unavailable. Supported eight-bit gray soft masks and luminosity-mask Forms are separate constructs and are exercised by the gallery.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PX4-SPOT-ALTERNATE-CONSISTENCY",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "No Separation/DeviceN/tint functions or color-space-selection resources",
+      "historical_fixture_ids": [
+        "repeated-spot-same-alternate-control",
+        "repeated-spot-conflicting-alternate",
+        "repeated-lab-spot-conflicting-parameters",
+        "repeated-calrgb-spot-same-parameters-control",
+        "repeated-calrgb-spot-conflicting-parameters",
+        "calgray-default-and-signed-zero-canonicalization",
+        "lab-default-and-signed-zero-canonicalization",
+        "negative-exponent-domain-excluding-zero-control",
+        "zero-exponent-control",
+        "reversed-tint-range",
+        "default-one-component-tint-cmyk-mismatch",
+        "stitching-tint-invalid-child"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Every active Separation or DeviceN color space has names, an alternate color space, and a readable tint function; repeated ordinary spot names do not declare clearly conflicting alternate color-space families.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PX4-X4-ALLOWED-FEATURES",
+      "summary": "The selected print mode supports live alpha, gray luminosity masks, native axial/radial gradients and all sixteen standard blend modes.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "mixed-emitted-and-excluded",
+      "historical_applicability_reason": "Alpha, object groups and gray luminosity masks are emitted; BM/OCProperties/16-bit/JPX are excluded; retained seven-fixture crosswalk applies",
+      "historical_fixture_ids": [
+        "alpha-extgstate-positive-control",
+        "image-soft-mask-positive-control",
+        "soft-mask-transparency-group-positive-control",
+        "multiply-blend-mode-positive-control",
+        "sixteen-bit-image-positive-control",
+        "static-optional-content-positive-control",
+        "gos5-x4-real-jpx-reachable-corpus"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "BlendMode"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedGradientFill"
+        },
+        {
+          "path": "crates/print-core/src/finished_gradient.rs",
+          "symbol": "GradientReferences"
+        },
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "paint_items"
+        },
+        {
+          "path": "scripts/verify-feature-gallery-appearance.py"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-appearance-probes-reproducible.json",
+          "sha256": "ae64f1f82319f146aa9acecbcd43096e92b56f83ec87ddd552637ebac75bb44b"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/examples-independent.json",
+          "sha256": "bdedc9423cdb8cd04721c7c4772b479e5de5853f0f4776834ef5c58766e92630"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-controls.json",
+          "sha256": "eb69168c1f1be4806f126b07e54c63d2c67d1f75b5f0adf54bdeedab4a863184"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-fidelity.json",
+          "sha256": "45ffd2b79b1aa5af141495ba597190e5595010f3a59e9de3710babfcf8d3cb5a"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "PDF/X-4-valid live transparency, non-Normal blend modes, soft masks, transparency groups, static optional content, 16-bit images, and JPEG 2000 are not rejected merely for using those features.",
+      "current_scope": "Native multi-stop CMYK/Gray axial and radial shadings include hard interior transitions, endpoint padding and independent alpha interpolation. All sixteen standard blends are item-local; completed isolated groups apply placement opacity/blend once. Optional content, sixteen-bit image planes and direct JPEG2000 stream input remain unavailable.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-independent.json",
+          "sha256": "5089de3392e7088c7526e81207191b3d56603a8245e05cf712e4710f363ddb26"
+        },
+        {
+          "path": "docs/verification/current/corpus-fidelity.json",
+          "sha256": "4672523300fe287ea6b85c9607df7ece285fce2b386734517abef54c8d5ca46f"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-appearance-probes.json",
+          "sha256": "5269f5d3fa8517d815738f1592a2c28b77806394849e04aa5c6955e3bcd1da88"
+        }
+      ]
+    },
+    {
+      "id": "PX4-TRANSFER-CURVES",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Alpha/ShadowState roles exclude TR/TR2/HT",
+      "historical_fixture_ids": [
+        "transfer-curve-tr",
+        "transfer-curve-tr2-nondefault",
+        "transfer-curve-tr2-default-control",
+        "halftone-transfer-function"
+      ],
+      "independent_control_ids": [
+        "transfer-curve"
+      ],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Prohibited transfer curves are absent.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PX4-ALTERNATE-IMAGES",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Image/Mask roles exclude Alternates",
+      "historical_fixture_ids": [
+        "alternate-image-list"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Prohibited alternate images are absent.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PX4-EMBEDDED-FILES",
+      "summary": "The finished-page writer excludes this retained construct from its input and output scope.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "excluded-by-closed-writer",
+      "historical_applicability_reason": "Catalog excludes AF/Names and no embedded-file role exists",
+      "historical_fixture_ids": [
+        "embedded-file-name-tree",
+        "embedded-file-associated-file",
+        "external-stream-file",
+        "external-stream-filter-entries",
+        "opi-external-graphics"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        }
+      ],
+      "status": "excluded",
+      "historical_summary": "Prohibited embedded files and external graphical content are absent.",
+      "current_scope": "Closed typed inputs offer no corresponding construct; current output inspection confirms its absence. This exclusion does not generalize the imported validator rule into a normative statement.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "PX4-METADATA-IDENTITY",
+      "summary": "Metadata identifies PDF/X-4 conformance and trapping state consistently.",
+      "authority": "PDFA-PDFX-KEY-FACTS-2017",
+      "layer": "pdfx-topic-awaiting-normative-reconciliation",
+      "clause": null,
+      "applicability": "emitted-or-payload-applicable",
+      "historical_applicability_reason": "See retained writer inventory, declared supported profile and existing component fixtures",
+      "historical_fixture_ids": [
+        "missing-xmp-pdfx-identity",
+        "wrong-xmp-pdfx-identity",
+        "conflicting-xmp-pdfx-identity",
+        "xmp-attribute-identity-control",
+        "invalid-xmp-xml",
+        "missing-info-pdfx-identity",
+        "wrong-info-pdfx-identity",
+        "missing-trapped-state",
+        "invalid-trapped-state",
+        "production-candidate-metadata"
+      ],
+      "independent_control_ids": [
+        "missing-xmp",
+        "missing-pdfx-identification",
+        "ordinary-pdf-control"
+      ],
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-independent.json",
+          "sha256": "91014b110ca44ff52cb3ebc45a39d200cca81bd7fc9b96a1c05d3d9717a401af"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-controls.json",
+          "sha256": "eb69168c1f1be4806f126b07e54c63d2c67d1f75b5f0adf54bdeedab4a863184"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/font-map-metadata-20261006/repair.json",
+          "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
+        }
+      ],
+      "status": "verified",
+      "historical_summary": "Metadata identifies PDF/X-4 conformance and trapping state consistently.",
+      "current_scope": "Print requires a nonblank title, supplies custom output-intent Info, and emits matching document-info/XMP identity, dates and untrapped state. Ordinary output omits PDF/X identity and output intent. These checks concern the supported mode and generated bytes.",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-independent.json",
+          "sha256": "5089de3392e7088c7526e81207191b3d56603a8245e05cf712e4710f363ddb26"
+        }
+      ]
+    },
+    {
+      "id": "GWG-2022-PRODUCTION-PREFLIGHT",
+      "summary": "Historical production or validator calibration topic, outside the neutral writer release contract.",
+      "authority": "GWG-2022",
+      "layer": "production-advice-or-third-party-corpus",
+      "clause": null,
+      "applicability": "separate-production-or-corpus-evidence",
+      "historical_applicability_reason": "GWG production extensions and known-good third-party corpus do not define a complete baseline PDF/X requirement inventory",
+      "historical_fixture_ids": [],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/validator-boundary/rules/pdfx4-authority-v1.json"
+        }
+      ],
+      "evidence": [],
+      "status": "not-in-library-scope",
+      "historical_summary": "Chosen production-variant rules are mapped separately from PDF/X conformance and never establish complete PDF/X conformance.",
+      "current_scope": "Retained production preflight/calibration evidence is separate from the neutral writer contract and does not establish complete conformance coverage."
+    },
+    {
+      "id": "GWG-GOS5-X4-KNOWN-GOOD",
+      "summary": "Historical production or validator calibration topic, outside the neutral writer release contract.",
+      "authority": "GWG-GOS5-X4",
+      "layer": "production-advice-or-third-party-corpus",
+      "clause": null,
+      "applicability": "separate-production-or-corpus-evidence",
+      "historical_applicability_reason": "GWG production extensions and known-good third-party corpus do not define a complete baseline PDF/X requirement inventory",
+      "historical_fixture_ids": [
+        "gos5-x4-sha256-6d9686303ea9049350bc1b3253c22a3cc8578bd7dfcc6afeaef89cbbe37d4cbe"
+      ],
+      "independent_control_ids": [],
+      "implementation": [
+        {
+          "path": "crates/validator-boundary/rules/pdfx4-authority-v1.json"
+        }
+      ],
+      "evidence": [],
+      "status": "not-in-library-scope",
+      "historical_summary": "The separately downloaded official PDF/X-4 Ghent Output Suite 5 file is checked only after its published SHA-256 identity is confirmed; it calibrates false rejections without substituting for normative conformance authority.",
+      "current_scope": "Retained production preflight/calibration evidence is separate from the neutral writer contract and does not establish complete conformance coverage."
+    }
+  ],
+  "writer_contracts": [
+    {
+      "id": "LIBRARY-PAGE-BOXES",
+      "summary": "Finite nested media, bleed and trim boxes in PDF points.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedPageBoxes"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-fidelity.json",
+          "sha256": "45ffd2b79b1aa5af141495ba597190e5595010f3a59e9de3710babfcf8d3cb5a"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-fidelity.json",
+          "sha256": "4672523300fe287ea6b85c9607df7ece285fce2b386734517abef54c8d5ca46f"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-PATHS",
+      "summary": "Ordered moves, lines, cubic curves, closures, fill rules and strokes.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedPath"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-TRANSFORMS-AND-CLIPPING",
+      "summary": "Finite affine transforms and path clipping preserve paint order.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedItem"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-fidelity.json",
+          "sha256": "4672523300fe287ea6b85c9607df7ece285fce2b386734517abef54c8d5ca46f"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-TEXT",
+      "summary": "Prepared exact font programs, used CIDs, Unicode mappings and positioned glyph runs.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FontResource"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-fidelity.json",
+          "sha256": "45ffd2b79b1aa5af141495ba597190e5595010f3a59e9de3710babfcf8d3cb5a"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/standalone-fidelity.json",
+          "sha256": "e492a7a9bad8030e0e2527b871fb6324f7ce189f7adeb613c730d11a0ed9719a"
+        },
+        {
+          "path": "docs/verification/current/font-map-metadata-20261006/repair.json",
+          "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-IMAGES",
+      "summary": "Bounded exact decoded eight-bit RGB, Gray and CMYK planes with optional independent straight alpha; print rejects unmanaged RGB resources.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "from_decoded_rgb"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "from_decoded_gray"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "from_decoded_cmyk"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-TRANSPARENCY",
+      "summary": "Paint alpha, gray masks and isolated group opacity apply once with item-local blending.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedGroup"
+        },
+        {
+          "path": "scripts/verify-feature-gallery-appearance.py"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-appearance-probes-reproducible.json",
+          "sha256": "ae64f1f82319f146aa9acecbcd43096e92b56f83ec87ddd552637ebac75bb44b"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/standalone-fidelity.json",
+          "sha256": "e492a7a9bad8030e0e2527b871fb6324f7ce189f7adeb613c730d11a0ed9719a"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-fidelity.json",
+          "sha256": "45ffd2b79b1aa5af141495ba597190e5595010f3a59e9de3710babfcf8d3cb5a"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        },
+        {
+          "path": "docs/verification/current/corpus-fidelity.json",
+          "sha256": "4672523300fe287ea6b85c9607df7ece285fce2b386734517abef54c8d5ca46f"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-appearance-probes.json",
+          "sha256": "5269f5d3fa8517d815738f1592a2c28b77806394849e04aa5c6955e3bcd1da88"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-INPUT-REJECTION",
+      "summary": "Invalid geometry, decoded planes, identities, glyphs, paints, gradients and budgets fail before bytes are returned.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedPdfError"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/windows-confinement.json",
+          "sha256": "df13111211a86c62aa3f606a088340eb8bc9fbe72470dcab41513b24efe10df5"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-controls.json",
+          "sha256": "eb69168c1f1be4806f126b07e54c63d2c67d1f75b5f0adf54bdeedab4a863184"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-ORDINARY-AND-CANDIDATE-MODES",
+      "summary": "Ordinary output omits PDF/X claims; bounded candidates require a usable embedded CMYK output profile.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedOutputMode"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/examples-independent.json",
+          "sha256": "bdedc9423cdb8cd04721c7c4772b479e5de5853f0f4776834ef5c58766e92630"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-EXPLICIT-METADATA-DETERMINISM",
+      "summary": "Equal finished input and explicit metadata repeat bytes.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "FinishedPdfWriter"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-generation.json",
+          "sha256": "8205ca64b035225c6ae9e2db0741cab2ff9dfe1b912f178020e4793d55e3d648"
+        },
+        {
+          "path": "docs/verification/current/font-map-metadata-20261006/repair.json",
+          "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-EXCLUDED-CONSTRUCTS",
+      "summary": "Typed generation inputs provide no arbitrary PDF dictionaries, interactive/external constructs, spot colors, tiling patterns, mesh/conical gradients, repeating/reflecting spread or direct encoded image streams.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedContent"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/public-api.json",
+          "sha256": "6b43b280cfd21f78257d33f66fdd6cc436ff9db6f23249f4a9bc91b79fd084c8"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/corpus-scope.json",
+          "sha256": "f30cbcfbabc5e5c913be2c21aa26a5e03b0785adf534c92380f63ecc739f3fde"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/u2.json",
+          "sha256": "c49550b44851fc4aa9f63e3064c082cef3c3b0d030ec84383ce25a694242c40f"
+        },
+        {
+          "path": "docs/verification/current/standalone-api.json",
+          "sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55"
+        },
+        {
+          "path": "docs/verification/current/corpus-scope.json",
+          "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-GRADIENTS",
+      "summary": "Native multi-stop axial/radial fills support hard interior transitions, endpoint padding, transforms, clips and independently interpolated authored color/alpha.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "Gradient"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "FinishedGradientFill"
+        },
+        {
+          "path": "crates/print-core/src/finished_gradient.rs",
+          "symbol": "validate"
+        },
+        {
+          "path": "scripts/verify-feature-gallery-appearance.py"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-appearance-probes-reproducible.json",
+          "sha256": "ae64f1f82319f146aa9acecbcd43096e92b56f83ec87ddd552637ebac75bb44b"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/examples-independent.json",
+          "sha256": "bdedc9423cdb8cd04721c7c4772b479e5de5853f0f4776834ef5c58766e92630"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-appearance-probes.json",
+          "sha256": "5269f5d3fa8517d815738f1592a2c28b77806394849e04aa5c6955e3bcd1da88"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-BLEND-MODES",
+      "summary": "All sixteen standard PDF blend modes apply per item and once to completed isolated groups; ordinary blending color is local to each painted page/group.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "BlendMode"
+        },
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "blend_name"
+        },
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "paints_rgb"
+        },
+        {
+          "path": "scripts/verify-feature-gallery-appearance.py"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-appearance-probes-reproducible.json",
+          "sha256": "ae64f1f82319f146aa9acecbcd43096e92b56f83ec87ddd552637ebac75bb44b"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/examples-independent.json",
+          "sha256": "bdedc9423cdb8cd04721c7c4772b479e5de5853f0f4776834ef5c58766e92630"
+        }
+      ],
+      "status": "verified",
+      "historical_evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-appearance-probes.json",
+          "sha256": "5269f5d3fa8517d815738f1592a2c28b77806394849e04aa5c6955e3bcd1da88"
+        }
+      ]
+    },
+    {
+      "id": "LIBRARY-LOCAL-RESOURCES",
+      "summary": "Each content stream names exactly its direct fonts, images, states, shadings and child Forms; stable shared resources are emitted once.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "StreamResources"
+        },
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "write_resources"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-controls.json",
+          "sha256": "eb69168c1f1be4806f126b07e54c63d2c67d1f75b5f0adf54bdeedab4a863184"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "id": "LIBRARY-SUPPORTED-PRINT-LIMITS",
+      "summary": "Supported print output supplies custom output-intent Info and a nonblank title, screens referenced ICC editions, limits decoded content strings to 32767 bytes, executed graphics-state depth to 28 and object references to 8388607.",
+      "authority": "pdf-library-public-contract/v1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "MAX_PDFX_CONTENT_STRING_BYTES"
+        },
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "MAX_PDFX_GRAPHICS_STATE_DEPTH"
+        },
+        {
+          "path": "crates/print-core/src/finished_writer.rs",
+          "symbol": "MAX_PDFX_INDIRECT_OBJECTS"
+        },
+        {
+          "path": "crates/print-core/src/profile.rs",
+          "symbol": "validate_referenced_version"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/finalization-20261004/native-tests.json",
+          "sha256": "031037ba969b2ce69b2bf8bf3acda68a611ca0d9fa6bfb682c5669aa25e8fd70"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/feature-gallery.json",
+          "sha256": "c0a7a800965d05b6e51ef8eec69d395465dbd3ecf7563f4f823646749f278cd2"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/gallery-controls.json",
+          "sha256": "eb69168c1f1be4806f126b07e54c63d2c67d1f75b5f0adf54bdeedab4a863184"
+        },
+        {
+          "path": "docs/verification/current/finalization-20261004/examples-independent.json",
+          "sha256": "bdedc9423cdb8cd04721c7c4772b479e5de5853f0f4776834ef5c58766e92630"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "id": "LIBRARY-TOUNICODE-MAPPINGS",
+      "summary": "Retained destinations are bounded to 512 UTF-16BE bytes without a BOM; both emitters write Type 2 ToUnicode maps, use two-byte CID codes and blocks of at most 100 pairs, preserve extraction, and retain Identity-H Encoding.",
+      "authority": "PDF Reference 1.6 section 5.9.2; Adobe Technical Note 5099 section 1.3.1",
+      "layer": "library-contract",
+      "applicability": "emitted-or-rejected-at-public-boundary",
+      "implementation": [
+        {
+          "path": "crates/print-core/src/to_unicode.rs",
+          "symbol": "destination_within_limit"
+        },
+        {
+          "path": "crates/print-core/src/to_unicode.rs",
+          "symbol": "cmap"
+        },
+        {
+          "path": "crates/print-core/src/finished.rs",
+          "symbol": "from_prepared"
+        },
+        {
+          "path": "crates/print-core/src/publication_font.rs",
+          "symbol": "record_compatibility_unicode"
+        },
+        {
+          "path": "crates/print-core/src/candidate.rs",
+          "symbol": "crate::to_unicode::cmap"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/verification/current/font-map-metadata-20261006/repair.json",
+          "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
+        }
+      ],
+      "status": "verified"
+    }
+  ],
+  "latest_focused_repair": {
+    "path": "docs/verification/current/font-map-metadata-20261006/repair.json",
+    "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
+  },
+  "coverage_assurance": {
+    "status": "incomplete"
+  }
+}

@@ -1,0 +1,680 @@
+{
+  "native_windows_execution": true,
+  "suites": [
+    {
+      "suite": "common_rounding",
+      "executable": "common_rounding-c103c0fa86f03abd.exe",
+      "sha256": "d165b2fc1d42495728bc73a428de8af888fbacb3420ec2dd7d56821a29052127",
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "common_rounding-c103c0fa86f03abd.exe",
+        "caller_sha256": "d165b2fc1d42495728bc73a428de8af888fbacb3420ec2dd7d56821a29052127",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "finished_gradients",
+      "executable": "finished_gradients-e2353282ff630194.exe",
+      "sha256": "9bfa29dc47ddbd252dc4c60972008de276686e018794a029453f346868aea83b",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "finished_gradients-e2353282ff630194.exe",
+        "caller_sha256": "9bfa29dc47ddbd252dc4c60972008de276686e018794a029453f346868aea83b",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "finished_pages",
+      "executable": "finished_pages-12bdd4ba67711c3f.exe",
+      "sha256": "4d802c962d227201f6abd81f8db7da0f788bd618b402a7734af8897d444e4905",
+      "passed": 24,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "finished_pages-12bdd4ba67711c3f.exe",
+        "caller_sha256": "4d802c962d227201f6abd81f8db7da0f788bd618b402a7734af8897d444e4905",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "pdfx4_allowed_features",
+      "executable": "pdfx4_allowed_features-626096c8d3b338fc.exe",
+      "sha256": "21dada2dc96556187ff813213e22e735601eb8fb3444a1a6da7a897a7ab58230",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "pdfx4_allowed_features-626096c8d3b338fc.exe",
+        "caller_sha256": "21dada2dc96556187ff813213e22e735601eb8fb3444a1a6da7a897a7ab58230",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "print_core",
+      "executable": "print_core-7b7a01b74d162c09.exe",
+      "sha256": "12248097d7354fd7e892ebcc36b1db1e2fc8b77f9726158e5326a4bcad1f1d9a",
+      "passed": 60,
+      "failed": 0,
+      "ignored": 1,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "print_core-7b7a01b74d162c09.exe",
+        "caller_sha256": "12248097d7354fd7e892ebcc36b1db1e2fc8b77f9726158e5326a4bcad1f1d9a",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "publication_candidate",
+      "executable": "publication_candidate-e0a23528afe2a7aa.exe",
+      "sha256": "ba49b095e5aad394313de438d017fbb82379f49134be336ced5f00395ab6c8de",
+      "passed": 16,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "publication_candidate-e0a23528afe2a7aa.exe",
+        "caller_sha256": "ba49b095e5aad394313de438d017fbb82379f49134be336ced5f00395ab6c8de",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "publication_fonts",
+      "executable": "publication_fonts-1ea65fe9710bf210.exe",
+      "sha256": "bc9b13f115ca3d6e3f824b2f7ad20eb9cf3c0df4970d3ed1a1752f28a9e992fb",
+      "passed": 14,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "publication_fonts-1ea65fe9710bf210.exe",
+        "caller_sha256": "bc9b13f115ca3d6e3f824b2f7ad20eb9cf3c0df4970d3ed1a1752f28a9e992fb",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "scene_serialization",
+      "executable": "scene_serialization-059da600c0204299.exe",
+      "sha256": "60848e521c40fe78eab020dba640047d64a52fbebc5ef6dc3d54f8164a0df074",
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "scene_serialization-059da600c0204299.exe",
+        "caller_sha256": "60848e521c40fe78eab020dba640047d64a52fbebc5ef6dc3d54f8164a0df074",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "table_authoring",
+      "executable": "table_authoring-2e2f87f1c15f75c0.exe",
+      "sha256": "945aac28c1bba3b83463640de5dfe7e9e40ea39967bb0e581f6fb647d87a92dc",
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "table_authoring-2e2f87f1c15f75c0.exe",
+        "caller_sha256": "945aac28c1bba3b83463640de5dfe7e9e40ea39967bb0e581f6fb647d87a92dc",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "trusted_raster_pipeline",
+      "executable": "trusted_raster_pipeline-29822477f0436011.exe",
+      "sha256": "f5be0c9cbb9860f0332e07b49e527e68dc3132dba12fb27eca08e04c5d471811",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "trusted_raster_pipeline-29822477f0436011.exe",
+        "caller_sha256": "f5be0c9cbb9860f0332e07b49e527e68dc3132dba12fb27eca08e04c5d471811",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker.exe",
+            "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44",
+            "bytes": 1874432,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-validator-worker.exe",
+            "sha256": "a56d113773972ff881100ecd8877f05e3845beee070e30d2f1cad734c50f8518",
+            "bytes": 5528064,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    }
+  ],
+  "passed": 150,
+  "all_passed": true,
+  "coverage_notes": [
+    "The optional pdfx4_allowed_features suite has zero enabled tests with pdf-oxide-validator disabled; no executed advanced-validator coverage is claimed.",
+    "One existing child helper is ignored as a standalone test; its parent exercises the helper."
+  ],
+  "host_receipt_sha256": "75bb73a9ab258d533a700f378e20557f325b084c7f2bced8a5eb0b8084c316b2",
+  "source_files": [
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "sha256": "eda9d2dc569b03da0ca3a31c1cea99fac118a5ddc68f4fa5b6f46df95af39337"
+    },
+    {
+      "path": "crates/print-core/src/finished_writer.rs",
+      "sha256": "10d1b1d892ebe19ac225df40e8e13ee13a397e50093fd8a808195a01f243777b"
+    },
+    {
+      "path": "crates/print-core/src/finished_gradient.rs",
+      "sha256": "aa8fc1753ea035ae26a783ea3f3cca7022116f0e6fa837b6b0b75dfb4d781996"
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "sha256": "e1276ae52defc5af809528aa24cbd5913180a498c4bfa13fc29e094866d454f2"
+    },
+    {
+      "path": "crates/print-core/src/profile.rs",
+      "sha256": "5a758cea72c62fb3d8efb56d47067511cf1c2d0192f3e9876c6d36cf6a7dc1ba"
+    },
+    {
+      "path": "crates/print-core/src/candidate_metadata.rs",
+      "sha256": "bd24612d8e7c34c9a324b254633a51efc1a49d574aa97e8eea4da8b8c39251d9"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "sha256": "90283a5602d556264781280e93f09ee4a0f929f1bd4a11ec664f940ffe2b1014"
+    },
+    {
+      "path": "crates/print-core/tests/finished_gradients.rs",
+      "sha256": "5a79a86f828dc4f68aabe3b63322991596f4c9a0bf4346e394e2871a15f8e963"
+    },
+    {
+      "path": "examples/standalone-client/examples/feature-gallery.rs",
+      "sha256": "4d93e97b2c6a6ed5d2510d3cc23ac2e9e19d1ca29c57f8892822f7e8af6c0189"
+    }
+  ]
+}

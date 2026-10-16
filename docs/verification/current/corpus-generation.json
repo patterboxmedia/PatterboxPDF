@@ -1,0 +1,872 @@
+{
+  "schema": "pdf-library-current-generation/v1",
+  "matrix_sha256": "7a1d5b098e6ec4b93f3a3ecd0592732119e02c3a4842b38ebd658b40dc3357b7",
+  "retained_matrix_sha256": "af0faeeced1477c6e980bafb026a98b905243611bb2845a7790476cbf1e31b83",
+  "all_retained_inputs_unchanged": true,
+  "preserved_input_files": 74,
+  "cases": [
+    {
+      "id": "truetype-multipage",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/truetype-multipage/bundle/publication.pdf",
+        "sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4"
+      },
+      "origin": {
+        "source_sha256": "4158810dfd65561f63800b40797df8675ca542cc5f56b17fc9d74ce4f8db58d8",
+        "retained_source_path": "cases/truetype-multipage/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "ad09efc03b9c3e1fc08b978aaa7c15b88bd04a868d79efad5901e11aea344f58",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "cff-exact-text",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/cff-exact-text/bundle/publication.pdf",
+        "sha256": "ee9839390e1c128eea0a616dd4c9907cb6bba3e163fdaed3aee36db1d02403ba"
+      },
+      "origin": {
+        "source_sha256": "8f693149f19097c2238ca5514b3c34a5b3d5d7e076b7f0daa811cace0cc15a79",
+        "retained_source_path": "cases/cff-exact-text/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "d218b05c6d86f2ff04599f68925b79b3bf88feb1a78866f98daff5cbb9717fb1",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "artwork-transparency",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/artwork-transparency/bundle/publication.pdf",
+        "sha256": "1416b2db45a533ac3a78e0cdd404ee4586da66e3905179b0c39ca1c91cc9033e"
+      },
+      "origin": {
+        "source_sha256": "88e95cb43d2597447444467adb49f55777838edcc754e79fd6c5af3540ee4ba6",
+        "retained_source_path": "cases/artwork-transparency/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "78e1cca3e5079baa30c37765b4300d2038902a9e2f9ad91afa0cff27e335a74c",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "ordinary-pdf-control",
+      "category": "ordinary-control",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/ordinary-pdf-control/bundle/publication.pdf",
+        "sha256": "6f768e3440918e657cd9a9e00569a62e35387a30ca8b3d308a6ed6ba0d0cf573"
+      },
+      "origin": {
+        "source_sha256": "4158810dfd65561f63800b40797df8675ca542cc5f56b17fc9d74ce4f8db58d8",
+        "retained_source_path": "cases/ordinary-pdf-control/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdf",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "8ff966603c27d0649e10250bc8d39883a0c7896e55dab0138dc7787e7ec5fd0c",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "missing-output-intent",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/missing-output-intent/publication.pdf",
+        "sha256": "4575137bf04af67d02d47d00e4a89edc4466394e5e277c7e1036454140297e90"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "schema": "publisher-pdf-mutation/v1",
+          "mutation": "remove-output-intent",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "4575137bf04af67d02d47d00e4a89edc4466394e5e277c7e1036454140297e90",
+          "tool": {
+            "pypdf": "6.10.0"
+          },
+          "changes": [
+            {
+              "path": "/Root/OutputIntents",
+              "operation": "remove",
+              "previous_semantics_sha256": "70edcd0a6fe67d0673d7db5948dfb79968bbc7722500e15aa874918fafa4091f"
+            }
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "pypdf rebuilds serialization/xref; decoded catalog, page, content, metadata and resource meaning match exactly after the declared removals."
+        }
+      }
+    },
+    {
+      "id": "missing-font-program",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/missing-font-program/publication.pdf",
+        "sha256": "d9372312ca19e2518a25660385d103f8330fbdcda2d279b97a2e212cd9ea9ce0"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "schema": "publisher-pdf-mutation/v1",
+          "mutation": "remove-font-programs",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "d9372312ca19e2518a25660385d103f8330fbdcda2d279b97a2e212cd9ea9ce0",
+          "tool": {
+            "pypdf": "6.10.0"
+          },
+          "changes": [
+            {
+              "path": "/Pages/1/Resources/Font//FAD032D2AD0264B07E154215CC967CB96D7AC9862D142AE87CFC7A95BB0ABF000/FontDescriptor/FontFile2",
+              "operation": "remove",
+              "previous_semantics_sha256": "c5098c4162eefed3007e2a38478ad10da965771148ce36d159902a9e6e927c2a"
+            },
+            {
+              "path": "/Pages/1/Resources/Font//F57FCA076154A36D61E1634F89893CCA6F0B63297D241606EC01B95429E423B5A/FontDescriptor/FontFile2",
+              "operation": "remove",
+              "previous_semantics_sha256": "3d2f055b45f63b2b766363f2cbe04612d25b9902ec92cb15ec482411be4dc9b9"
+            }
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "pypdf rebuilds serialization/xref; decoded catalog, page, content, metadata and resource meaning match exactly after the declared removals."
+        }
+      }
+    },
+    {
+      "id": "missing-xmp",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/missing-xmp/publication.pdf",
+        "sha256": "08e89a178bec949d20d05c8d2df645079896b07b2792823c603459419cdefe1d"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "schema": "publisher-pdf-mutation/v1",
+          "mutation": "remove-xmp",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "08e89a178bec949d20d05c8d2df645079896b07b2792823c603459419cdefe1d",
+          "tool": {
+            "pypdf": "6.10.0"
+          },
+          "changes": [
+            {
+              "path": "/Root/Metadata",
+              "operation": "remove",
+              "previous_semantics_sha256": "d8658213abbbb4de77d1407d948aefeee151576bd4d6dab27918b05358ceaed8"
+            }
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "pypdf rebuilds serialization/xref; decoded catalog, page, content, metadata and resource meaning match exactly after the declared removals."
+        }
+      }
+    },
+    {
+      "id": "missing-pdfx-identification",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/missing-pdfx-identification/publication.pdf",
+        "sha256": "89205d9695587e6a618f480c12b7848059a4a3e661a8b940b3a34c58738605ea"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "schema": "publisher-pdf-mutation/v1",
+          "mutation": "remove-pdfx-identification",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "89205d9695587e6a618f480c12b7848059a4a3e661a8b940b3a34c58738605ea",
+          "tool": {
+            "pypdf": "6.10.0"
+          },
+          "changes": [
+            {
+              "path": "/Info/GTS_PDFXVersion",
+              "operation": "remove",
+              "previous_semantics_sha256": "36192b1a4cf7283e8c1202a69f4cd5fdb9692ee6b5dffc77cb689fc73811b5e9"
+            },
+            {
+              "path": "/Root/Metadata/pdfxid:GTS_PDFXVersion",
+              "operation": "remove XML element",
+              "before_stream_sha256": "bb6a573b9c39c8cd7340b6d0e087a5904b8c7d2392bb330ecd612424d50bab45",
+              "after_stream_sha256": "d93c14ae7d1694bb7dda9ffb5621422eb8d7d8e76590463301fd5d8ecf64124d"
+            }
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "pypdf rebuilds serialization/xref; decoded catalog, page, content, metadata and resource meaning match exactly after the declared removals."
+        }
+      }
+    },
+    {
+      "id": "mixed-1-pdf",
+      "category": "ordinary-control",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/mixed-1-pdf/bundle/publication.pdf",
+        "sha256": "fca7241dce430ed6fb63d42a6d4ad8e02b02e21e8f05ef7bc4cd19eb9833cc7c"
+      },
+      "origin": {
+        "source_sha256": "7d71c9adbf08da1402b96da056ea81df8807698df1aa7bcd695e6a2e758e7754",
+        "retained_source_path": "cases/mixed-1-pdf/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdf",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "b706b8aec3063918acd97dbee3d4ae179623304bb306c92b105f0c62cf575f08",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "mixed-1-pdfx4-candidate",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/mixed-1-pdfx4-candidate/bundle/publication.pdf",
+        "sha256": "d44858e199f18b20a1b5e5fc28dd4077eebbf35316050ffc1f6f860ba88a6764"
+      },
+      "origin": {
+        "source_sha256": "7d71c9adbf08da1402b96da056ea81df8807698df1aa7bcd695e6a2e758e7754",
+        "retained_source_path": "cases/mixed-1-pdfx4-candidate/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "8acbaeb2070c5caf6d2a24cff05704ea3fcb1dc56f444f698c70ad9d3fd9e2d2",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "mixed-4-pdf",
+      "category": "ordinary-control",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/mixed-4-pdf/bundle/publication.pdf",
+        "sha256": "edf736dfd3b2d19abb38ea9b46959c7a9c84a1babf00239d9d24d262f310e7e5"
+      },
+      "origin": {
+        "source_sha256": "d5d08e2b33e849140e15f8eed441713aab83011a213910bca8bf57b6f71631ae",
+        "retained_source_path": "cases/mixed-4-pdf/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdf",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "0e7f22547bad2a6d8f52e6788e92066df19173bf71df9e5c8053a067a7f1a75b",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "mixed-4-pdfx4-candidate",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/mixed-4-pdfx4-candidate/bundle/publication.pdf",
+        "sha256": "e5d1b3cd9a467667c3c931ee8bf07c352e262694d5ac8e06c2f748bb863fc1fd"
+      },
+      "origin": {
+        "source_sha256": "d5d08e2b33e849140e15f8eed441713aab83011a213910bca8bf57b6f71631ae",
+        "retained_source_path": "cases/mixed-4-pdfx4-candidate/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "7d9621ad685d1b45f8b271166016ee589ce808798d6a5c8800c8fbe767e35426",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "mixed-16-pdf",
+      "category": "ordinary-control",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/mixed-16-pdf/bundle/publication.pdf",
+        "sha256": "137b803920f5610d9e424ee06ddce033aa6e4386ef67da011aa7c1a2e89d0302"
+      },
+      "origin": {
+        "source_sha256": "9fb50d497279b836224792868252dec00333012d3244e1903bb4b6790351a94c",
+        "retained_source_path": "cases/mixed-16-pdf/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdf",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "ffb12d0efd9c65c544c9911788ce797b43ee8db224efb962c55756ec855573f8",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "mixed-16-pdfx4-candidate",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/mixed-16-pdfx4-candidate/bundle/publication.pdf",
+        "sha256": "c5d18ff0c223c83b11029286b4c78ea0b88ea575f2d0cc0a1c47fe92c0c81d44"
+      },
+      "origin": {
+        "source_sha256": "9fb50d497279b836224792868252dec00333012d3244e1903bb4b6790351a94c",
+        "retained_source_path": "cases/mixed-16-pdfx4-candidate/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "cebc0d51c9f7e7e1d77866032f1950c60d14bf5a9db82fb940d8f776815d42bf",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "mixed-64-pdf",
+      "category": "ordinary-control",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/mixed-64-pdf/bundle/publication.pdf",
+        "sha256": "3f67dded2650bbef6c950da1077c35dd00f40fd4afe9a1fe977fcc779790aa24"
+      },
+      "origin": {
+        "source_sha256": "a0634291f28f43973d7692569e0c0e538ed80cb297eb60b24f5705b6a262a7cf",
+        "retained_source_path": "cases/mixed-64-pdf/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdf",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "24adf3fdb1a93b14388567ab50a2f15a9986c1a32946f50d04f83f96b3f6cc15",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "mixed-64-pdfx4-candidate",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/mixed-64-pdfx4-candidate/bundle/publication.pdf",
+        "sha256": "dc8ab872982fee9c30bc6e0859e811abd8427c13561c31fe3351a7d0e855db6b"
+      },
+      "origin": {
+        "source_sha256": "a0634291f28f43973d7692569e0c0e538ed80cb297eb60b24f5705b6a262a7cf",
+        "retained_source_path": "cases/mixed-64-pdfx4-candidate/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "7351297cc215ba0501901cf1db7e2a8a44561d2be11a6133c15b33087e1d97eb",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "missing-cff-font-program",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/missing-cff-font-program/publication.pdf",
+        "sha256": "51c33aa3ceeb7407c2b9f3166a7fed8539ac7224e80597a65a28e9989a238540"
+      },
+      "origin": {
+        "derived_from": "cff-exact-text",
+        "mutation": {
+          "mutation": "missing-cff-font-program",
+          "source_sha256": "ee9839390e1c128eea0a616dd4c9907cb6bba3e163fdaed3aee36db1d02403ba",
+          "output_sha256": "51c33aa3ceeb7407c2b9f3166a7fed8539ac7224e80597a65a28e9989a238540",
+          "changes": [
+            {
+              "path": "/Pages/1/Resources/Font//F48D87DBDDB18A001195482779064FCF54542BB8E8D61932754E21BF10983190D/FontDescriptor/FontFile3",
+              "operation": "remove",
+              "previous_semantics_sha256": "7a7f7c53169503c88f580c0cd3a8c3f45e1a5c61d475c46ab2c073206a79b856"
+            }
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "Reserialized object meaning matches the source after the named mutation; independent result pending."
+        }
+      }
+    },
+    {
+      "id": "missing-embedded-output-profile",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/missing-embedded-output-profile/publication.pdf",
+        "sha256": "5bedc97b6c4b87e4b5fbd46e7a410ce3ef58320d40b420e0d21efc350880ced7"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "missing-embedded-output-profile",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "5bedc97b6c4b87e4b5fbd46e7a410ce3ef58320d40b420e0d21efc350880ced7",
+          "changes": [
+            "/Root/OutputIntents/0/DestOutputProfile removed"
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "Reserialized object meaning matches the source after the named mutation; independent result pending."
+        }
+      }
+    },
+    {
+      "id": "invalid-output-icc-header",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/invalid-output-icc-header/publication.pdf",
+        "sha256": "417ad5df3bf99125898fa3ca3277aa9464e431f16cdba26c2e8cb6503f1d98a4"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "invalid-output-icc-header",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "417ad5df3bf99125898fa3ca3277aa9464e431f16cdba26c2e8cb6503f1d98a4",
+          "changes": [
+            "embedded output ICC signature acsp changed to xxxx"
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "Reserialized object meaning matches the source after the named mutation; independent result pending."
+        }
+      }
+    },
+    {
+      "id": "missing-trim-and-art",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/missing-trim-and-art/publication.pdf",
+        "sha256": "de15408f719e22c41ac9460757e4803fd6315c77e07f2780eb0588e414b4220f"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "missing-trim-and-art",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "de15408f719e22c41ac9460757e4803fd6315c77e07f2780eb0588e414b4220f",
+          "changes": [
+            "first page TrimBox and ArtBox absent"
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "Reserialized object meaning matches the source after the named mutation; independent result pending."
+        }
+      }
+    },
+    {
+      "id": "bleed-outside-media",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/bleed-outside-media/publication.pdf",
+        "sha256": "0a3cce6b41dd060feb4ca103d7708dbaa15ba1048a04bb2f3e37973aba4d8a1f"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "bleed-outside-media",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "0a3cce6b41dd060feb4ca103d7708dbaa15ba1048a04bb2f3e37973aba4d8a1f",
+          "changes": [
+            "first page BleedBox right edge one inch beyond MediaBox"
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "Reserialized object meaning matches the source after the named mutation; independent result pending."
+        }
+      }
+    },
+    {
+      "id": "javascript-open-action",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/javascript-open-action/publication.pdf",
+        "sha256": "7167352e8608b4735d20d743e540a6c9a1e100e7c5115ca10197da88d76cbe7f"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "javascript-open-action",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "7167352e8608b4735d20d743e540a6c9a1e100e7c5115ca10197da88d76cbe7f",
+          "changes": [
+            "catalog JavaScript OpenAction added; inert source is never executed"
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "Reserialized object meaning matches the source after the named mutation; independent result pending."
+        }
+      }
+    },
+    {
+      "id": "transfer-curve",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/transfer-curve/publication.pdf",
+        "sha256": "316f549c65758dc506cfec35ec521d0b410d34deb3dc8b43c062d9d505048e8a"
+      },
+      "origin": {
+        "derived_from": "artwork-transparency",
+        "mutation": {
+          "mutation": "transfer-curve",
+          "source_sha256": "1416b2db45a533ac3a78e0cdd404ee4586da66e3905179b0c39ca1c91cc9033e",
+          "output_sha256": "316f549c65758dc506cfec35ec521d0b410d34deb3dc8b43c062d9d505048e8a",
+          "changes": [
+            "Reached painted ExtGState gains /TR /Identity"
+          ],
+          "only_declared_semantic_changes": true
+        }
+      }
+    },
+    {
+      "id": "output-profile-channel-mismatch",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/output-profile-channel-mismatch/publication.pdf",
+        "sha256": "87c20f01aee9d1df335fc94b98cac68120e991a2f1d6b1f9a2a95a920fd156aa"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "output-profile-channel-mismatch",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "87c20f01aee9d1df335fc94b98cac68120e991a2f1d6b1f9a2a95a920fd156aa",
+          "changes": [
+            "PDF declares 3 components for unchanged CMYK output ICC bytes"
+          ],
+          "only_declared_semantic_changes": true,
+          "scope": "Reserialized object meaning matches the source after the named mutation; independent result pending."
+        }
+      }
+    },
+    {
+      "id": "effects-isolated-opacity",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/effects-isolated-opacity/bundle/publication.pdf",
+        "sha256": "5dd6933b860878b9aaf552c67d6fea8ae95382a241d04843f63ba2d3e5cb65bf"
+      },
+      "origin": {
+        "source_sha256": "4fb2eb187e182d347cc2fee0a4fb0cbc9e3823c6eb0e068ee462f746460bb5a6",
+        "retained_source_path": "cases/effects-isolated-opacity/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "8a351d07a638b1a68405f60e261737ba5aa34144ee00110bdc563d2220976410",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "text-table-effects-opacity",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/text-table-effects-opacity/bundle/publication.pdf",
+        "sha256": "4a21c298484909ef838c110a210fe7428327b17a82c9e039e68609ccbf99c0d0"
+      },
+      "origin": {
+        "source_sha256": "666d899c06c84c0ae8b793767096f20289fbd55388974a4a1195a54bb06a4608",
+        "retained_source_path": "cases/text-table-effects-opacity/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "3f825f3ebc6ee3571b5212f02d2de2b7da12821e140c82d8fde323ae2dfe08eb",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "variable-font-default-thai",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/variable-font-default-thai/bundle/publication.pdf",
+        "sha256": "a660777c95370856406ff755b2cc361db03df5adda140a02d314b49e0dce9696"
+      },
+      "origin": {
+        "source_sha256": "907ff771baf5e7f22f0f200a3b9cd3a6d7fd9a9350cfd843758f8099e2149d30",
+        "retained_source_path": "cases/variable-font-default-thai/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "06695fc8e7792f79188ff33c51c5e4297e16333cd0ee7db1d40cfef400d42311",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "tagged-rgb-tiff",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/tagged-rgb-tiff/bundle/publication.pdf",
+        "sha256": "e25504c97d589db3a6d5fb6093b1cfdc08bba0276fccb47d2423ae06e431630f"
+      },
+      "origin": {
+        "source_sha256": "df7e32d0242eb47f2d67471c282f92c88a8c78cc2b0e935888051b4952501522",
+        "retained_source_path": "cases/tagged-rgb-tiff/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "b4d6d579c01a481c243071b31d5fe11aed685f07211f3b99a52d70828576f269",
+        "retained_preflight_warnings_match": true,
+        "warnings": []
+      }
+    },
+    {
+      "id": "one-mm-zero-bleed",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/one-mm-zero-bleed/bundle/publication.pdf",
+        "sha256": "5bb2c9d876ad5014722f07d44c2f505bb1cc64755cfa3931ca62bb142643e099"
+      },
+      "origin": {
+        "source_sha256": "c3ca3301f10521302eb5f3bb7655af8497870643338ae24cf7da04d324f99103",
+        "retained_source_path": "cases/one-mm-zero-bleed/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "bd577717ebaf8836d158b86933125c648c8d9c5ac77f0e2fb1fb4aa4383260ca",
+        "retained_preflight_warnings_match": true,
+        "warnings": [
+          {
+            "code": "PossibleBleedMissing",
+            "message": "An object touches the trim edge but may need to extend through bleed.",
+            "target": {
+              "object_id": "object-0000000000000002",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReviewBleedIntent { edge: Top }"
+            },
+            "facts": {
+              "edge": "Top"
+            }
+          },
+          {
+            "code": "PossibleBleedMissing",
+            "message": "An object touches the trim edge but may need to extend through bleed.",
+            "target": {
+              "object_id": "object-0000000000000002",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReviewBleedIntent { edge: Right }"
+            },
+            "facts": {
+              "edge": "Right"
+            }
+          },
+          {
+            "code": "PossibleBleedMissing",
+            "message": "An object touches the trim edge but may need to extend through bleed.",
+            "target": {
+              "object_id": "object-0000000000000002",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReviewBleedIntent { edge: Bottom }"
+            },
+            "facts": {
+              "edge": "Bottom"
+            }
+          },
+          {
+            "code": "PossibleBleedMissing",
+            "message": "An object touches the trim edge but may need to extend through bleed.",
+            "target": {
+              "object_id": "object-0000000000000002",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReviewBleedIntent { edge: Left }"
+            },
+            "facts": {
+              "edge": "Left"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "two-hundred-inch-zero-bleed",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/two-hundred-inch-zero-bleed/bundle/publication.pdf",
+        "sha256": "49076f509272aff55b4bf34d7559059d1915b62fdbfb7d9a89546863b84f1691"
+      },
+      "origin": {
+        "source_sha256": "305f6c55fb6cc361fced5386a139d4542171394154355c5f4522b83b1e14215f",
+        "retained_source_path": "cases/two-hundred-inch-zero-bleed/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "57777680340fb438fba8b5fbf01a4fd55da4eb010feec6293febd8f36ce1fd39",
+        "retained_preflight_warnings_match": true,
+        "warnings": [
+          {
+            "code": "PossibleBleedMissing",
+            "message": "An object touches the trim edge but may need to extend through bleed.",
+            "target": {
+              "object_id": "object-0000000000000002",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReviewBleedIntent { edge: Top }"
+            },
+            "facts": {
+              "edge": "Top"
+            }
+          },
+          {
+            "code": "PossibleBleedMissing",
+            "message": "An object touches the trim edge but may need to extend through bleed.",
+            "target": {
+              "object_id": "object-0000000000000002",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReviewBleedIntent { edge: Right }"
+            },
+            "facts": {
+              "edge": "Right"
+            }
+          },
+          {
+            "code": "PossibleBleedMissing",
+            "message": "An object touches the trim edge but may need to extend through bleed.",
+            "target": {
+              "object_id": "object-0000000000000002",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReviewBleedIntent { edge: Bottom }"
+            },
+            "facts": {
+              "edge": "Bottom"
+            }
+          },
+          {
+            "code": "PossibleBleedMissing",
+            "message": "An object touches the trim edge but may need to extend through bleed.",
+            "target": {
+              "object_id": "object-0000000000000002",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReviewBleedIntent { edge: Left }"
+            },
+            "facts": {
+              "edge": "Left"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "tagged-jpeg-exif-six-print-size",
+      "category": "positive",
+      "expected_result": "pass",
+      "pdf": {
+        "path": "cases/tagged-jpeg-exif-six-print-size/bundle/publication.pdf",
+        "sha256": "c85e47407055d9bde8415741fd1e7e52d13e0dcea8b40f1a3e85f8fc268cb6ff"
+      },
+      "origin": {
+        "source_sha256": "dab643ab7f835a622a0686a542b2a31fa86010e83d8b8bb1abd12a4fc8b00a52",
+        "retained_source_path": "cases/tagged-jpeg-exif-six-print-size/source.publisher-v2",
+        "metadata_utc": "2026-10-03T06:26:01Z",
+        "mode": "pdfx4-candidate",
+        "exporter_sha256": "1a01b2c20599682c5eff618ba3200bff7923f7d07d66fdc2abf91b0783e52673",
+        "retained_pdf_sha256": "5e5e140062b6454063596b9f009665d0459023e47ad7dd845744b942228020bc",
+        "retained_preflight_warnings_match": true,
+        "warnings": [
+          {
+            "code": "ImageResolutionBelowPreset",
+            "message": "Placed image resolution is below the selected print preset's target.",
+            "target": {
+              "object_id": "object-0000000000000006",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReducePlacedImageSize"
+            },
+            "facts": {
+              "content_kind": "ContinuousTone",
+              "effective_ppi_milli": 266666,
+              "minimum_ppi": 200,
+              "target_ppi": 300
+            }
+          },
+          {
+            "code": "ImageResolutionBelowPreset",
+            "message": "Placed image resolution is below the selected print preset's target.",
+            "target": {
+              "object_id": "object-0000000000000007",
+              "page_id": "page-0000000000000001",
+              "repair_action": "ReducePlacedImageSize"
+            },
+            "facts": {
+              "content_kind": "ContinuousTone",
+              "effective_ppi_milli": 254545,
+              "minimum_ppi": 200,
+              "target_ppi": 300
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "output-profile-component-count-missing",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/output-profile-component-count-missing/publication.pdf",
+        "sha256": "0c8d11e20b7ed045956358a5df636c92e7dd67c1cdb3c32f089e614505b92a52"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "output-profile-component-count-missing",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "0c8d11e20b7ed045956358a5df636c92e7dd67c1cdb3c32f089e614505b92a52",
+          "changes": [
+            "output-profile-component-count-missing"
+          ],
+          "only_declared_semantic_changes": true
+        }
+      }
+    },
+    {
+      "id": "output-profile-component-count-string",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/output-profile-component-count-string/publication.pdf",
+        "sha256": "0ca9f168379d7fd1f3aba05342ece350ee2d38c82ccc63699e8497dd21d94ee2"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "output-profile-component-count-string",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "0ca9f168379d7fd1f3aba05342ece350ee2d38c82ccc63699e8497dd21d94ee2",
+          "changes": [
+            "output-profile-component-count-string"
+          ],
+          "only_declared_semantic_changes": true
+        }
+      }
+    },
+    {
+      "id": "output-profile-component-count-zero",
+      "category": "intentional-negative",
+      "expected_result": "fail",
+      "pdf": {
+        "path": "cases/output-profile-component-count-zero/publication.pdf",
+        "sha256": "580bf8f8c6820b8e4391dd93e6ee0158a6cf61fbe303a33f86efaca181be037c"
+      },
+      "origin": {
+        "derived_from": "truetype-multipage",
+        "mutation": {
+          "mutation": "output-profile-component-count-zero",
+          "source_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+          "output_sha256": "580bf8f8c6820b8e4391dd93e6ee0158a6cf61fbe303a33f86efaca181be037c",
+          "changes": [
+            "output-profile-component-count-zero"
+          ],
+          "only_declared_semantic_changes": true
+        }
+      }
+    }
+  ]
+}

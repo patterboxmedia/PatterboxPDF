@@ -1,0 +1,284 @@
+{
+  "schema": "pdf-library-unit-verification/v1",
+  "unit": "U2",
+  "source_kind": "plan",
+  "source_digest": "406e3548d1046541adf85d15a92c40033b3649e2b99701b40a467135aa5a0924",
+  "behavior_changed": true,
+  "implementation_route": "native subagent, root canonical rebuild and native Windows replay",
+  "rust_suites": [
+    {
+      "name": "print_core-7b7a01b74d162c09.exe",
+      "sha256": "617feeced06d16169adddc8c82147c0b66f4173409274bb2fdc626fcdc164428",
+      "passed": 58,
+      "failed": 0,
+      "ignored": 1
+    },
+    {
+      "name": "common_rounding-c103c0fa86f03abd.exe",
+      "sha256": "67b69fff9f133b1774ec1f5a225c9c26022c7d970ff957f78a34a81383c33301",
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "name": "table_authoring-2e2f87f1c15f75c0.exe",
+      "sha256": "b6a9e9d56107b0eea01292fe9071cfa537bfa8fe5101495b6e3a57a344c98411",
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "name": "finished_pages-12bdd4ba67711c3f.exe",
+      "sha256": "833258293107adc3bcb6af6cfda2437ca55f0f7d1253fc474cfb8f60a2080e29",
+      "passed": 10,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "name": "publication_candidate-e0a23528afe2a7aa.exe",
+      "sha256": "0d0c5c7f68ccec9236ebd5c3107d00b8075ce7dc7d0a45fc55afdc83bd2cd030",
+      "passed": 16,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "name": "scene_serialization-059da600c0204299.exe",
+      "sha256": "ad76ee55f46635216e9de2009f8b4ae963d69aa2a46fd68b57ad0a9af3382a25",
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "name": "trusted_raster_pipeline-29822477f0436011.exe",
+      "sha256": "65aa7eb5d763db9b5c7c311591e0b2745ae2d811640f1dd72be4f3dbe9681b55",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "name": "publication_fonts-1ea65fe9710bf210.exe",
+      "sha256": "0b70398c54ef48803f0976a909758a39ccee5936e0e1aa5427aeab9547dc3879",
+      "passed": 14,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "rust_tests_passed": 126,
+  "native_receipt_sha256": "c48ce701e875d761ffb3c8e0a582109c8f91bfa7c1799d5d90e5f3775bd0a4fb",
+  "worker_return_sha256": "1f0e28dfe9639c27f90ab320cb463e5bb60723a8fef1ec86a817c61de2287b04",
+  "source_files": [
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "sha256": "2b8fe74e07f85658a999fa64e2751a36806f3ad7e59f6ab0e184813e7750c124"
+    },
+    {
+      "path": "crates/print-core/src/finished_writer.rs",
+      "sha256": "2b5de8a93e775f202885953930b63c2966566e2cd97f23dce5831f64864795b5"
+    },
+    {
+      "path": "crates/print-core/src/lib.rs",
+      "sha256": "566d7d50a15e81e44744dd65cd2770ff6fb226e03a90e89f465991c6b520f2cd"
+    },
+    {
+      "path": "crates/print-core/src/production.rs",
+      "sha256": "046c27859bd65f72862509bf9d556b9a71c1c1e44641d8f4d24f73020ff3a595"
+    },
+    {
+      "path": "crates/print-core/src/publication_font.rs",
+      "sha256": "dfb4c24eebe641655060c266c662ec8b3428e9b613d5856e18cb5202138a6a41"
+    },
+    {
+      "path": "crates/print-core/src/raster.rs",
+      "sha256": "e9f5eb7923d2ebe1aab0b2785762026e18e10c18c3e9377a5738ba25321c6a72"
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "sha256": "d89ce6b85b26b9e4742f9ed9d7a8376456dc720d08dfacda51981eef870c2796"
+    },
+    {
+      "path": "crates/print-core/src/scene.rs",
+      "sha256": "091f293eac26134d39a4807270f9896c08cd0082711133642fb90e93c40c631a"
+    },
+    {
+      "path": "crates/print-core/src/publisher_adapter.rs",
+      "sha256": "12c1fc6b3dc81d044dca8b8407cb8708e267643c2f3ea1363fccc5955af46a45"
+    },
+    {
+      "path": "crates/print-core/tests/common_rounding.rs",
+      "sha256": "d33c6df5199e60217a1642eebf571bbc8bae29d236ffc27edea32097b6865400"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "sha256": "33532c9f5d07da13a6f3e94d4d74e029431dd8f330eb9958c8d1d6c720676d91"
+    },
+    {
+      "path": "crates/print-core/tests/publication_candidate.rs",
+      "sha256": "542af099ba77d30c7371dd0b5396427631c80c4405a0b5027ebe94d5c970e344"
+    },
+    {
+      "path": "crates/print-core/tests/publication_fonts.rs",
+      "sha256": "75da77f158b7b77c6fd8720b76c3acc9a20748ef59d13fcd0bf84e0f613b4039"
+    },
+    {
+      "path": "crates/print-core/tests/scene_serialization.rs",
+      "sha256": "52fa3620ea12b951bbcb8df8997cd60e081ad0b700bf89898d784931364aca2d"
+    },
+    {
+      "path": "crates/print-core/tests/trusted_raster_pipeline.rs",
+      "sha256": "11f608a2eba6fe5433eeee94ae2b92b840fecb9884684cbdae286a36c640566a"
+    },
+    {
+      "path": "crates/print-core/tests/support/pdf_operators.rs",
+      "sha256": "d1ce4b756d2b49dc945d1e5805fe84d3fb59865558d19e77e502fc4398651bb7"
+    },
+    {
+      "path": "examples/standalone-client/Cargo.toml",
+      "sha256": "4ffdb8b21beef162047e3f853387ad921937efde7348a0d41c1368ad226078d9"
+    },
+    {
+      "path": "examples/standalone-client/Cargo.lock",
+      "sha256": "9919e5b6b8e6d6727406547eab923895affed18372b02dd9cab830b632cd6875"
+    },
+    {
+      "path": "examples/standalone-client/README.md",
+      "sha256": "1db9adb72ff9e0b55c99559d345adfde84ffd6956fdd767657571c9ab2898bf5"
+    },
+    {
+      "path": "examples/standalone-client/src/main.rs",
+      "sha256": "6e470eaf55c50751f7c0f6460ee7c1f37c7af3271f57c5997d2c7162d9700e3e"
+    },
+    {
+      "path": "scripts/stage-workers.py",
+      "sha256": "90d36d2f6935f1e0544198363dad50fefff8677faca05c93e65a26a0c204d972"
+    },
+    {
+      "path": "scripts/verify-public-api.py",
+      "sha256": "a1c7b64dad02c75da5fe6637d14749d1b80c6c0310385f6dec6f1584558406eb"
+    },
+    {
+      "path": "crates/print-core/src/profile.rs",
+      "sha256": "6593963d63f5d982db3b8738f72f05a8f602f913baeae15a030122ce63042258"
+    }
+  ],
+  "characterization": {
+    "unit": "U2",
+    "behavior_changed": true,
+    "existing_tests_inspected": [
+      "scene_serialization",
+      "publication_fonts",
+      "trusted_raster_pipeline",
+      "publication_candidate",
+      "common_rounding",
+      "finished_pages",
+      "table_authoring",
+      "print-core lib resource/profile/export tests"
+    ],
+    "tests_added_or_changed": [
+      "Maximum1024-byte font/image/mask caller identities emit bounded PDF Names; no narrowed caller-ID contract.",
+      "Scene and raster opacity assertions resolve actual ExtGState object references and both /CA stroke and /ca fill; group opacity remains once-only.",
+      "Scene glyph-effect assertions inspect exact neutral paths/matrices and preserve native text counts, ActualText, cubic/outline and shadow geometry.",
+      "Rounded image shadow assertions preserve exact relative transforms and shared crop/flip placement.",
+      "Compatibility diagnostic RGB probe still produces blocking preflight evidence; public FinishedPdfWriter PdfX4 rejects the same neutral RGB document.",
+      "Standalone verifier checks actual worker failures, default dependency graph, repeat bytes, native TT/CFF text, exact decoded CMYK/alpha, clips/transforms/groups, boxes and ordinary/PdfX envelopes.",
+      "Representative adapter verifier compares exact ordered authored ActualText clusters and normalized extractor separators."
+    ],
+    "tests_used_unchanged": [
+      "table_authoring2",
+      "retained native font rights/collection/fallback and drift contracts",
+      "retained raster TIFF/profile/orientation/crop/flip and worker contracts",
+      "export recovery/lib profile/resource tests"
+    ],
+    "red_or_characterization": [
+      "Before adapter edits, the retained native scene_serialization binary passed all18 characterization tests.",
+      "Long-ID focused test failed before bounded naming with unbounded2049-byte PDF Name. Failure preserved at artifacts/u2-adapter-tests/long-resource-id-red.log.",
+      "Actual saved table PDF inspection proved0.65 invoked once, grid0.705882 stroke alpha and text0.470588 fill alpha preserved; helper needed both /CA and /ca.",
+      "Representative exact extracted-string comparison initially failed only because separately clipped table Forms introduce extractor newlines. Ordered authored cluster lists matched exactly157/157 and85/85; verifier now constrains clusters and normalized separators."
+    ],
+    "verification_commands": [
+      "cmd /c scripts\\cargo-xwin-wsl.cmd test --target x86_64-pc-windows-msvc --offline --locked -p print-core --features publisher-adapter --test common_rounding --test publication_fonts --test scene_serialization --test finished_pages --test publication_candidate --test trusted_raster_pipeline --test table_authoring --lib --no-run --target-dir target/adapter-worker",
+      "Run each produced Windows test executable in target/adapter-worker/x86_64-pc-windows-msvc/debug/deps with --test-threads=1; process TEMP/TMP=artifacts/tmp; explicit color/font/raster sidecars in deps and debug parent.",
+      "cmd /c scripts\\cargo-xwin-wsl.cmd clippy --target x86_64-pc-windows-msvc --offline --locked -p print-core --features publisher-adapter --lib --target-dir target/adapter-worker",
+      "cmd /c scripts\\cargo-xwin-wsl.cmd clippy --manifest-path examples/standalone-client/Cargo.toml --target x86_64-pc-windows-msvc --offline --locked --target-dir target/standalone-client",
+      "cmd /c scripts\\cargo-xwin-wsl.cmd build --manifest-path examples/standalone-client/Cargo.toml --target x86_64-pc-windows-msvc --offline --locked --release --target-dir target/standalone-client",
+      "cmd /c scripts\\cargo-xwin-wsl.cmd build --target x86_64-pc-windows-msvc --offline --locked -p publisher-pdf --target-dir target/adapter-worker",
+      "python scripts/stage-workers.py --runtime target/x86_64-pc-windows-msvc/release --caller target/adapter-worker/x86_64-pc-windows-msvc/debug/publisher-pdf.exe --worker color --worker font --worker raster",
+      "python scripts/verify-public-api.py --client target/standalone-client/x86_64-pc-windows-msvc/release/pdf-library-standalone-client.exe --cargo-metadata artifacts/u2-adapter-tests/standalone-metadata.json --adapter-cli target/adapter-worker/x86_64-pc-windows-msvc/debug/publisher-pdf.exe --output artifacts/u2-public-api-complete-v2",
+      "cargo metadata --manifest-path examples/standalone-client/Cargo.toml --filter-platform x86_64-pc-windows-msvc --offline --locked --format-version 1; saved artifacts/u2-adapter-tests/standalone-metadata.json via WSL toolchain",
+      "git diff --check -- <the 14 tracked U2-owned changed files>: passed; both U2 Python scripts ast.parse: passed"
+    ],
+    "verification_results": {
+      "native_tests": {
+        "passed": 125,
+        "failed": 0,
+        "ignored": 1,
+        "suites": {
+          "print-core-lib": 57,
+          "common_rounding": 2,
+          "finished_pages": 10,
+          "publication_candidate": 16,
+          "publication_fonts": 14,
+          "scene_serialization": 18,
+          "table_authoring": 2,
+          "trusted_raster_pipeline": 6
+        },
+        "ignored_reason": "Existing abrupt-process recovery child helper is intentionally invoked by its parent test."
+      },
+      "clippy": {
+        "adapter_library": "passed",
+        "separate_client": "passed"
+      },
+      "standalone": {
+        "default_normal_build_graph_packages": 57,
+        "authoring_dependencies_absent": true,
+        "publisher_adapter_disabled": true,
+        "repeat_runs": 2,
+        "ordinary_sha256": "f3e8077d500ba3cf7238a2c5dbca63f33d840bdb3b8dada15660249e3032e08a",
+        "candidate_sha256": "b0d8072ce1ea71c3c759c38e63c20561a0ecaf1bb8e96774a5f0c4c8a9e24884",
+        "caller_sha256": "22274edab5593bb5fd75db21aae2c0d46e92973c5c32e4dccd5d78edc1de99a2",
+        "same_pdf_hashes_as_root_independent_check": true
+      },
+      "worker_failures": {
+        "actual_cases": [
+          "absent-font",
+          "malformed-font",
+          "absent-color"
+        ],
+        "all_refused_without_output": true
+      },
+      "adapter_cases": {
+        "count": 3,
+        "cases": [
+          "truetype-multipage",
+          "cff-exact-text",
+          "artwork-transparency"
+        ],
+        "repeat_hashes": true,
+        "ordered_actual_text_clusters_match": true,
+        "page_boxes_match": true,
+        "extracted_text_matches_after_separator_normalization": true
+      },
+      "root_reported_independent_check": "Root reports exact standalone candidate callas code0, ordinary code3 expected, strict JSON/XML/hash + selected CMYK review2/2, unchanged input and nofixups. Raw licensed reports remain private."
+    },
+    "exception_reason": "Renderer and full normative/exact-byte corpus acceptance are root U3 gates. No native UI is involved in U2. No additional low-value tests or test-roster expansion after affected suites passed.",
+    "artifacts": [
+      "artifacts/u2-adapter-tests/*.log",
+      "artifacts/u2-adapter-tests/long-resource-id-red.log",
+      "artifacts/u2-adapter-tests/standalone-metadata.json",
+      "artifacts/u2-public-api-complete-v2/results.json"
+    ]
+  },
+  "review_fixes": {
+    "image_memory_accounting": "Native regression first reproduced admission beyond allocated capacity; corrected both resource lease and writer budget. Regression now passes.",
+    "owned_content_buffer": "Moves the owned buffer instead of copying it.",
+    "cid_validation": "Indexes prepared CID membership once; preserves validation results."
+  },
+  "native_reviewer_outcomes": {
+    "reuse": "owned-buffer simplification and concrete allocation-accounting defect fixed",
+    "quality": "corpus Boolean isolation defect fixed with negative proof",
+    "efficiency": "quadratic CID search fixed; resource name caching left as optional optimization without demonstrated need"
+  },
+  "clippy": "current print-core publisher-adapter library passed; separate client previously passed unchanged",
+  "format": "two changed writer files formatted; existing unrelated imported files fail workspace-wide style check",
+  "current_standalone_api_sha256": "329f8b7b4086bd5dbc709351a40ef2a2c8499b83e9980c9b2e351522c541be55",
+  "normative_pdfx4_coverage_complete": false
+}

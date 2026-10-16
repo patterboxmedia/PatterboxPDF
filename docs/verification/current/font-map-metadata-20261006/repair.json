@@ -1,0 +1,391 @@
+{
+  "schema": "pdf-library-font-map-metadata-repair/v1",
+  "date": "2026-10-06",
+  "baseline_commit": "0ebb36f5e1dea06493550ab84f2bbda01b756527",
+  "native_windows_execution": true,
+  "native_tests_passed": 103,
+  "native_suites": [
+    {
+      "suite": "print_core",
+      "filter": "",
+      "passed": 63,
+      "failed": 0,
+      "exit_code": 0,
+      "executable_sha256": "74ef8d8551c13a1e47e69f85c0bb86d71beb9e088b7c9200b2d285216800581c",
+      "workers": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "print_core-f6fe63f700480d28.exe",
+        "caller_sha256": "74ef8d8551c13a1e47e69f85c0bb86d71beb9e088b7c9200b2d285216800581c",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "finished_pages",
+      "filter": "",
+      "passed": 26,
+      "failed": 0,
+      "exit_code": 0,
+      "executable_sha256": "c9da0f7ca0a0c36e1ed17e70dac030f760031d34a969b4268788ec3db9dc8a09",
+      "workers": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "finished_pages-b849c8c7d8f19f63.exe",
+        "caller_sha256": "c9da0f7ca0a0c36e1ed17e70dac030f760031d34a969b4268788ec3db9dc8a09",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    },
+    {
+      "suite": "publication_fonts",
+      "filter": "",
+      "passed": 14,
+      "failed": 0,
+      "exit_code": 0,
+      "executable_sha256": "410b05a344e227656508cbdd0f8208fb53bb62fe78e37e15fd4af37bb217fe7f",
+      "workers": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "publication_fonts-88d930cbf7622fab.exe",
+        "caller_sha256": "410b05a344e227656508cbdd0f8208fb53bb62fe78e37e15fd4af37bb217fe7f",
+        "workers": [
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker.exe",
+            "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+            "bytes": 1640448,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker.exe",
+            "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+            "bytes": 551424,
+            "location": "debug-parent"
+          }
+        ]
+      }
+    }
+  ],
+  "independent_decoding_tests": 2,
+  "samples": [
+    {
+      "name": "tounicode-bmp-512.pdf",
+      "sha256": "93e0b03079150c31d5361dc8ee368fef5e3a4dfbde130dbcac5a534be8e5fe80",
+      "qpdf_exit_code": 0
+    },
+    {
+      "name": "tounicode-surrogate-512.pdf",
+      "sha256": "a6fe0a340b2ea6f21955887feb5a62ea1ed573aaa9ce11917a3489cff1d85e2e",
+      "qpdf_exit_code": 0
+    },
+    {
+      "name": "metadata-ascii-ordinary.pdf",
+      "sha256": "40fc3715587eba58af510fa800d2de5a22c3b048240be0897b7adbdbc06cb86b",
+      "qpdf_exit_code": 0
+    },
+    {
+      "name": "metadata-ascii-print.pdf",
+      "sha256": "0161475482da32629b392c677c89fec2efd70b8e3bb4da94adf7175e7e2d56e6",
+      "qpdf_exit_code": 0
+    },
+    {
+      "name": "metadata-unicode-ordinary.pdf",
+      "sha256": "ec4148939aa4607daf74e1e98c44b47b252cb19be34bbbe9968d01e482af3591",
+      "qpdf_exit_code": 0
+    },
+    {
+      "name": "metadata-unicode-print.pdf",
+      "sha256": "69c53e9448256fe34be1fdf50553d8bb0ba35ff26096b2954d93e136835a360e",
+      "qpdf_exit_code": 0
+    }
+  ],
+  "checks": [
+    {
+      "check": "independent-decoding",
+      "exit_code": 0
+    },
+    {
+      "check": "package-unit-tests",
+      "exit_code": 0
+    },
+    {
+      "check": "inventory-unit-tests",
+      "exit_code": 0
+    },
+    {
+      "check": "qpdf-tounicode-bmp-512",
+      "exit_code": 0
+    },
+    {
+      "check": "qpdf-tounicode-surrogate-512",
+      "exit_code": 0
+    },
+    {
+      "check": "qpdf-metadata-ascii-ordinary",
+      "exit_code": 0
+    },
+    {
+      "check": "qpdf-metadata-ascii-print",
+      "exit_code": 0
+    },
+    {
+      "check": "qpdf-metadata-unicode-ordinary",
+      "exit_code": 0
+    },
+    {
+      "check": "qpdf-metadata-unicode-print",
+      "exit_code": 0
+    },
+    {
+      "check": "clippy-default-lib.log",
+      "exit_code": 0
+    },
+    {
+      "check": "clippy-compatibility-lib.log",
+      "exit_code": 0
+    }
+  ],
+  "all_focused_checks_passed": true,
+  "source_bindings": [
+    {
+      "path": "crates/print-core/Cargo.toml",
+      "sha256": "865cd4ab931e26c5a9580d9457c78ba722543fae908abbc40d04ef1411198474"
+    },
+    {
+      "path": "crates/print-core/src/to_unicode.rs",
+      "sha256": "c4fec65c034a3288fe2f5c04aba0ea7e680e332450db1dc53a15ea8e5203960e"
+    },
+    {
+      "path": "crates/print-core/src/candidate.rs",
+      "sha256": "ba86ed315a35a07058cafc827b144adf978198108a44439811d597e131392a1b"
+    },
+    {
+      "path": "crates/print-core/src/candidate_metadata.rs",
+      "sha256": "a82c21434c601b6033db6b4cffd40bf0af3859459456cd496f28bf753aa96762"
+    },
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "sha256": "b0fd253c2e9d80d93160c9f534b1ad99b981c99b4bf48adf2f34c089194d042e"
+    },
+    {
+      "path": "crates/print-core/src/lib.rs",
+      "sha256": "1f943395c211559e98bed8433f053f96362c81e2d109e140726135b8afa3f011"
+    },
+    {
+      "path": "crates/print-core/src/publication_font.rs",
+      "sha256": "662ccd4b2af93dbf5faabece557ed9acd59795929c1a19a422b7436399c5e4ac"
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "sha256": "5c6badfde21265511efa63b2b8998aafdbbf4b0d547e0965f51b1b0074d50233"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "sha256": "d23d30661b0c7bee650db6bca73f9005ad418234bef47e4d42df4039e9690f00"
+    },
+    {
+      "path": "tests/unit/font-map-metadata.test.py",
+      "sha256": "74494bcf9dbe53111dd9932c1d8e3a8a51f30b810d0475e3cb920c79f0e3000b"
+    },
+    {
+      "path": "scripts/build-source-package.py",
+      "sha256": "c3e79cba21146b59939c5caa2527b21e008bf395211f9b6db92be5429504a928"
+    }
+  ],
+  "regression_reproduction": {
+    "before_repair": {
+      "native_windows_execution": true,
+      "suites": [
+        {
+          "suite": "print_core",
+          "filter": "xml_decoding_preserves_title_carriage_returns",
+          "passed": 0,
+          "failed": 1,
+          "exit_code": 101,
+          "executable_sha256": "6ae89a13bcc3c8a04ae4ea9d9521f4c4cbec598c4ec1c02080de1d261011eb89",
+          "workers": {
+            "schema": "pdf-library-worker-stage/v1",
+            "caller": "print_core-f6fe63f700480d28.exe",
+            "caller_sha256": "6ae89a13bcc3c8a04ae4ea9d9521f4c4cbec598c4ec1c02080de1d261011eb89",
+            "workers": [
+              {
+                "name": "publisher-font-worker.exe",
+                "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+                "bytes": 1640448,
+                "location": "adjacent"
+              },
+              {
+                "name": "publisher-color-worker.exe",
+                "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+                "bytes": 551424,
+                "location": "adjacent"
+              },
+              {
+                "name": "publisher-font-worker.exe",
+                "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+                "bytes": 1640448,
+                "location": "debug-parent"
+              },
+              {
+                "name": "publisher-color-worker.exe",
+                "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+                "bytes": 551424,
+                "location": "debug-parent"
+              }
+            ]
+          }
+        },
+        {
+          "suite": "finished_pages",
+          "filter": "to_unicode_bounds_utf16_destinations_and_emits_unicode_map_type",
+          "passed": 0,
+          "failed": 1,
+          "exit_code": 101,
+          "executable_sha256": "e702752c2c18d2d94d52a34f6006aa8f88ce9655250b087e522e2ea91e18d5a6",
+          "workers": {
+            "schema": "pdf-library-worker-stage/v1",
+            "caller": "finished_pages-b849c8c7d8f19f63.exe",
+            "caller_sha256": "e702752c2c18d2d94d52a34f6006aa8f88ce9655250b087e522e2ea91e18d5a6",
+            "workers": [
+              {
+                "name": "publisher-font-worker.exe",
+                "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+                "bytes": 1640448,
+                "location": "adjacent"
+              },
+              {
+                "name": "publisher-color-worker.exe",
+                "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+                "bytes": 551424,
+                "location": "adjacent"
+              },
+              {
+                "name": "publisher-font-worker.exe",
+                "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+                "bytes": 1640448,
+                "location": "debug-parent"
+              },
+              {
+                "name": "publisher-color-worker.exe",
+                "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+                "bytes": 551424,
+                "location": "debug-parent"
+              }
+            ]
+          }
+        },
+        {
+          "suite": "finished_pages",
+          "filter": "title_carriage_returns_are_identical_in_info_and_xmp",
+          "passed": 0,
+          "failed": 1,
+          "exit_code": 101,
+          "executable_sha256": "e702752c2c18d2d94d52a34f6006aa8f88ce9655250b087e522e2ea91e18d5a6",
+          "workers": {
+            "schema": "pdf-library-worker-stage/v1",
+            "caller": "finished_pages-b849c8c7d8f19f63.exe",
+            "caller_sha256": "e702752c2c18d2d94d52a34f6006aa8f88ce9655250b087e522e2ea91e18d5a6",
+            "workers": [
+              {
+                "name": "publisher-font-worker.exe",
+                "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+                "bytes": 1640448,
+                "location": "adjacent"
+              },
+              {
+                "name": "publisher-color-worker.exe",
+                "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+                "bytes": 551424,
+                "location": "adjacent"
+              },
+              {
+                "name": "publisher-font-worker.exe",
+                "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786",
+                "bytes": 1640448,
+                "location": "debug-parent"
+              },
+              {
+                "name": "publisher-color-worker.exe",
+                "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d",
+                "bytes": 551424,
+                "location": "debug-parent"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "font_width_review": {
+    "pdf_reference": "PDF Reference 1.6, Appendix H implementation note 60, printed pages 1014-1015",
+    "finding": "The PDF format reference requires width consistency; it does not prescribe nearest-integer rounding nor a numeric tolerance. A +1 comparison against a nearest-integer audit is not by itself proof of a PDF/X failure. Floor scaling differs from the exact rational advance by less than one PDF glyph unit; nearest scaling can reduce that error but also does not exactly preserve a fractional advance. No shared worker change is made solely to satisfy that comparator. This is not a normative approval of arbitrary quantization or of the separate CFF-width agreement issue.",
+    "worker_source_unchanged": true,
+    "worker_source_sha256": "9edb0927271a5a8059762323518f8b5f0e70d82a696f45c7a03c42b58bc774f9"
+  },
+  "limitations": [
+    "No new commercial checker verdict on changed font-bearing bytes; earlier exact-byte verdicts remain historical.",
+    "The CMYK whole-page reader comparison remains failed; exhaustive normative inventory remains false.",
+    "A discarded integration stress fixture hit a pre-existing parley debug overflow before PDF preparation; direct mapping boundary tests cover this repair without claiming that shaping case.",
+    "Default all-targets Clippy encountered pre-existing profile test dead-code and finished_writer test default_trait_access findings; default and compatibility library Clippy passed.",
+    "First-party license remains UNLICENSED; publication is not authorized."
+  ],
+  "authorizes_professional_export": false,
+  "normative_pdfx4_coverage_complete": false
+}

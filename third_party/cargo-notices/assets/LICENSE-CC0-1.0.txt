@@ -1,0 +1,18 @@
+Creative Commons Legal Code
+
+CC0 1.0 Universal
+
+THE WORK IS PROVIDED UNDER THE TERMS OF THE CREATIVE COMMONS CC0 1.0
+UNIVERSAL PUBLIC DOMAIN DEDICATION.
+
+Upstream full legal code retained by reference at the exact source commit:
+https://github.com/pmjdebruijn/amethyst-cmyk-icc-profiles/blob/5a36861414d0b634d6f7a1d34ffa4dd2a895a92e/LICENSE
+
+Creative Commons canonical legal code:
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+The upstream notice states that Creative Commons is not a law firm; the work
+is offered as-is without warranties; the affirmer waives copyright and related
+rights to the greatest extent permitted by law, with a royalty-free,
+irrevocable public-license fallback where the waiver is ineffective. No
+trademark or patent rights are waived.

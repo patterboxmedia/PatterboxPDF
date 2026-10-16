@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "snapshot": {
+    "document": {
+      "id": "document-fixture",
+      "title": "Minimal fixture",
+      "pages": [
+        {
+          "id": "page-0000000000000001",
+          "trim": {
+            "width": 215900,
+            "height": 279400
+          },
+          "bleed": {
+            "top": 3175,
+            "right": 3175,
+            "bottom": 3175,
+            "left": 3175
+          },
+          "bleed_expectations": {
+            "top": "auto",
+            "right": "auto",
+            "bottom": "auto",
+            "left": "auto"
+          },
+          "objects": []
+        }
+      ],
+      "pasteboard": {
+        "objects": []
+      },
+      "next_id": 2
+    },
+    "revision": 0
+  },
+  "assets": {}
+}

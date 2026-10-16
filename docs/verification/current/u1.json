@@ -1,0 +1,136 @@
+{
+  "schema": "pdf-library-unit-verification/v1",
+  "unit": "U1",
+  "source_kind": "plan",
+  "source_digest": "406e3548d1046541adf85d15a92c40033b3649e2b99701b40a467135aa5a0924",
+  "implementation_route": "native Codex subagent; host rebuilt and replayed",
+  "behavior_changed": true,
+  "characterization": "New API test first failed with expected missing-module/type errors; legacy two-page baseline preserved.",
+  "rust_suites": [
+    {
+      "name": "finished_pages-e694e4d0b770d8eb.exe",
+      "status": "ok",
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "name": "trusted_raster_pipeline-29822477f0436011.exe",
+      "status": "ok",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "name": "publication_fonts-1ea65fe9710bf210.exe",
+      "status": "ok",
+      "passed": 14,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "name": "scene_serialization-059da600c0204299.exe",
+      "status": "ok",
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    }
+  ],
+  "rust_tests_passed": 47,
+  "native_inputs": [
+    {
+      "name": "publisher-pdf.exe",
+      "sha256": "75b97996e1f626f946846da96dc6aaed9dde9a6e2a009e4531e898844ae87f99"
+    },
+    {
+      "name": "publisher-color-worker.exe",
+      "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d"
+    },
+    {
+      "name": "publisher-font-worker.exe",
+      "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786"
+    },
+    {
+      "name": "publisher-raster-worker.exe",
+      "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44"
+    },
+    {
+      "name": "publisher-validator-worker.exe",
+      "sha256": "0ee7e1b89d8af024b67dc4debaf19816b101a5fd7e075a360b6e80fc3672deb5"
+    },
+    {
+      "name": "concrt140.dll",
+      "sha256": "54716f0738af891f283d213b5c8d11b25896bb8ee3097d301eae718560cf974e"
+    },
+    {
+      "name": "msvcp140_1.dll",
+      "sha256": "206c931bf90fdad8816de3b5e2ef80b2bcaa9406c89ecc05fe6fddffe251e982"
+    },
+    {
+      "name": "msvcp140_2.dll",
+      "sha256": "d50d7883f20d1dc6191768d3746f52dd9cac89c346ffaed5be1f110c2f34a838"
+    },
+    {
+      "name": "msvcp140_atomic_wait.dll",
+      "sha256": "3d0cbfaa1bf3eecf5a3f4491d2960ee803cb994f30292c6adc4a07c498f60e2b"
+    },
+    {
+      "name": "msvcp140_codecvt_ids.dll",
+      "sha256": "8a65c7596ef2e6938731f5a1058e7e40145b6d97967cc649231a076b9a608d78"
+    },
+    {
+      "name": "msvcp140.dll",
+      "sha256": "7c26614e1d733892c2deac7e245ce115504b1d80592dd0a01b08e3e5a55f89ca"
+    },
+    {
+      "name": "qpdf.exe",
+      "sha256": "57c003e868fb66cd343fd5afb91be8c2277f56434eea8635762499731bf9f60d"
+    },
+    {
+      "name": "qpdf30.dll",
+      "sha256": "36fe5b2023f244e5785d96b8372dba26b75ea51b63adf4d4f1e66ad0aa1c8a61"
+    },
+    {
+      "name": "vcruntime140_1.dll",
+      "sha256": "a7146c08f89fe5b04541ab507cdb59ff7b44534d4ba3c668a426c6450a03434e"
+    },
+    {
+      "name": "vcruntime140.dll",
+      "sha256": "d1f4225df2cd877dbf130d5668a021dce3f94118455ff5ec952061c30afc9ce7"
+    },
+    {
+      "name": "finished_pages-e694e4d0b770d8eb.exe",
+      "sha256": "83c313b2218bdba6544ef0262d41e8c50d4084b78cf60657d47846b8bd520c0a"
+    },
+    {
+      "name": "trusted_raster_pipeline-29822477f0436011.exe",
+      "sha256": "51ab6d9b63b4338480be03a67ae4ec6524776f1462c4954efccd95c49b227a70"
+    },
+    {
+      "name": "publication_fonts-1ea65fe9710bf210.exe",
+      "sha256": "0c97bc46755e215aa14560f41dc7ea3faf5ba2e12e9a0a1dadf61cc55cfa7893"
+    },
+    {
+      "name": "scene_serialization-059da600c0204299.exe",
+      "sha256": "a36615744905e08d58bdad7540b8dfe4228f38fd204758887a6ea2b45842cf9f"
+    }
+  ],
+  "javascript_python_tests_passed": 26,
+  "current_cli_smoke": {
+    "pdf_sha256": "329fca77ac0740682f534c0b44b25a0ba10c3130bedb2d8295d8a0493234efa1",
+    "repeated_bytes_equal": true,
+    "legacy_baseline_bytes_equal": true,
+    "qpdf_structure": "pass",
+    "selected_cmyk_profile_contract": "pass"
+  },
+  "fresh_public_api_checker_evidence": "pending U2/U3 exact output generation",
+  "normative_pdfx4_coverage_complete": false
+}

@@ -1,0 +1,84 @@
+{
+  "schema": "publisher-pdfx-combined-contract-review/v1",
+  "scope": "Current exact standalone bytes, independently analyzed without fixups; sanitized verdict and hash receipt",
+  "matrix_sha256": "685f20c5f2b7375958a256128a2c0291ab4fdf1b39664492996975f23773dfff",
+  "checker_sha256": "e8fe1039e12828d1f1e87b2a5f311743f75adc335009b167b1cfbfcaf2fef86f",
+  "standard_profile_sha256": "16d2dfe5f4bd576bd79ff25a6b8a42856bd44bfaac79c47750185092ca7bd6bf",
+  "selected_output_profile_sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1",
+  "engines": {
+    "pypdf": "6.10.0",
+    "Pillow": "12.3.0",
+    "LittleCMS": "2.19"
+  },
+  "all_inputs_unchanged": true,
+  "normative_pdfx4_coverage_complete": false,
+  "expected_positive_passes": 1,
+  "intended_negative_reasons_confirmed": 1,
+  "standard_profile_only_expectations_satisfied": 2,
+  "combined_expectations_satisfied": 2,
+  "combined_contract_matrix_passed": true,
+  "reviewed_receipt_sha256": "4dd86f7298489e4db40f6cca627d1c26d0eebda06d21098dba0fe7dc22562080",
+  "cases": [
+    {
+      "id": "standalone-neutral-api",
+      "input_sha256": "b0d8072ce1ea71c3c759c38e63c20561a0ecaf1bb8e96774a5f0c4c8a9e24884",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "combined_result": "pass",
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "cc0896f492fd3adc18064c0d252f10e16bed75b305e284d9ad9e349c7d5072e0",
+          "bytes": 229396
+        },
+        {
+          "format": "json",
+          "sha256": "ad9585c7ac911823aabd4d1d69dbc08f14d881127873bf39ae085c12ceb65a98",
+          "bytes": 127355
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "ordinary-pdf-control",
+      "input_sha256": "f3e8077d500ba3cf7238a2c5dbca63f33d840bdb3b8dada15660249e3032e08a",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "combined_result": "fail",
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "62f5e66029b996a684f4337bf14a50feb2f0c99814a67fb92b69b5dde8581995",
+          "bytes": 228176
+        },
+        {
+          "format": "json",
+          "sha256": "26eebc21473fd2e206d6e71652fa47ff27222885e7d7fe48db57a4b8adbe9ab5",
+          "bytes": 126477
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_OutputIntentforPDFXmissing",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_PDFX4entrymissingorincorrect",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "fixups_applied": false,
+      "json_xml_agree": true
+    }
+  ]
+}

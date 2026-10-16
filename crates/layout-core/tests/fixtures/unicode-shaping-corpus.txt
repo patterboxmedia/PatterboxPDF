@@ -1,0 +1,5 @@
+latin|fi — “café” …
+combining|Café
+rtl|abc שלום xyz
+arabic|abc سلام xyz
+emoji|Magic 😀

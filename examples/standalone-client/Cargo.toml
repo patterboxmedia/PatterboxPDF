@@ -1,0 +1,21 @@
+[package]
+name = "pdf-library-standalone-client"
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.98"
+license = "MIT OR Apache-2.0"
+publish = false
+
+# This is deliberately a separate Cargo workspace, like an independent caller.
+[workspace]
+
+[dependencies]
+print-core = { path = "../../crates/print-core", default-features = false }
+ttf-parser = { version = "=0.25.1", default-features = false, features = ["std", "glyph-names"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = "deny"
+pedantic = "deny"

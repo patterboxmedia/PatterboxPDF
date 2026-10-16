@@ -1,0 +1,251 @@
+{
+  "schema": "pdf-library-standalone-fidelity/v1",
+  "fixed_bounds": {
+    "mean_channel_difference_max": 5,
+    "p95_max_channel_difference_max": 20,
+    "pixels_above_10_percent_max": 8
+  },
+  "pages_verified": 4,
+  "poppler_sha256": "50e3c5e703e4f9d21b935a40d278becd888cec4bb867e8188afb4651c638a423",
+  "rows": [
+    {
+      "mode": "ordinary",
+      "page": 1,
+      "input_sha256": "f3e8077d500ba3cf7238a2c5dbca63f33d840bdb3b8dada15660249e3032e08a",
+      "comparison": {
+        "mean_channel_difference": 0.4914470486111111,
+        "p95_max_channel_difference": 1.0,
+        "pixels_above_10_percent": 2.9322916666666665,
+        "passed": true
+      },
+      "samples": {
+        "image_red": {
+          "pdfium": [
+            205,
+            69,
+            73
+          ],
+          "poppler": [
+            204,
+            66,
+            73
+          ]
+        },
+        "image_green": {
+          "pdfium": [
+            110,
+            176,
+            142
+          ],
+          "poppler": [
+            110,
+            177,
+            142
+          ]
+        },
+        "outside_clip": {
+          "pdfium": [
+            255,
+            255,
+            255
+          ],
+          "poppler": [
+            255,
+            255,
+            255
+          ]
+        }
+      },
+      "renders": [
+        {
+          "name": "ordinary-1-pdfium.png",
+          "sha256": "451a1aa96e544449ea87fcf33bbfe5391ca1122ee3694d9e6c9aa9f2c411712e"
+        },
+        {
+          "name": "ordinary-1-poppler.png",
+          "sha256": "296bb93714b1225354fa95e2f20235fc87714b0ae0b73bb57dd9ce4b6ce4c096"
+        }
+      ]
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "input_sha256": "f3e8077d500ba3cf7238a2c5dbca63f33d840bdb3b8dada15660249e3032e08a",
+      "comparison": {
+        "mean_channel_difference": 0.2921445105820106,
+        "p95_max_channel_difference": 1.0,
+        "pixels_above_10_percent": 2.6850198412698414,
+        "passed": true
+      },
+      "samples": {
+        "image_red": {
+          "pdfium": [
+            238,
+            29,
+            35
+          ],
+          "poppler": [
+            236,
+            27,
+            36
+          ]
+        },
+        "image_green": {
+          "pdfium": [
+            95,
+            198,
+            144
+          ],
+          "poppler": [
+            95,
+            199,
+            145
+          ]
+        },
+        "outside_clip": {
+          "pdfium": [
+            255,
+            255,
+            255
+          ],
+          "poppler": [
+            255,
+            255,
+            255
+          ]
+        }
+      },
+      "renders": [
+        {
+          "name": "ordinary-2-pdfium.png",
+          "sha256": "472a85b219c3dae992b3c45de3c98374e0b61f7c8d5f783fc9c083eef4841700"
+        },
+        {
+          "name": "ordinary-2-poppler.png",
+          "sha256": "69773649e8c4164e16335af846e1679024783d053a35cec0f5a58d5e5b3f90da"
+        }
+      ]
+    },
+    {
+      "mode": "candidate",
+      "page": 1,
+      "input_sha256": "b0d8072ce1ea71c3c759c38e63c20561a0ecaf1bb8e96774a5f0c4c8a9e24884",
+      "comparison": {
+        "mean_channel_difference": 0.4914470486111111,
+        "p95_max_channel_difference": 1.0,
+        "pixels_above_10_percent": 2.9322916666666665,
+        "passed": true
+      },
+      "samples": {
+        "image_red": {
+          "pdfium": [
+            205,
+            69,
+            73
+          ],
+          "poppler": [
+            204,
+            66,
+            73
+          ]
+        },
+        "image_green": {
+          "pdfium": [
+            110,
+            176,
+            142
+          ],
+          "poppler": [
+            110,
+            177,
+            142
+          ]
+        },
+        "outside_clip": {
+          "pdfium": [
+            255,
+            255,
+            255
+          ],
+          "poppler": [
+            255,
+            255,
+            255
+          ]
+        }
+      },
+      "renders": [
+        {
+          "name": "candidate-1-pdfium.png",
+          "sha256": "451a1aa96e544449ea87fcf33bbfe5391ca1122ee3694d9e6c9aa9f2c411712e"
+        },
+        {
+          "name": "candidate-1-poppler.png",
+          "sha256": "296bb93714b1225354fa95e2f20235fc87714b0ae0b73bb57dd9ce4b6ce4c096"
+        }
+      ]
+    },
+    {
+      "mode": "candidate",
+      "page": 2,
+      "input_sha256": "b0d8072ce1ea71c3c759c38e63c20561a0ecaf1bb8e96774a5f0c4c8a9e24884",
+      "comparison": {
+        "mean_channel_difference": 0.2921445105820106,
+        "p95_max_channel_difference": 1.0,
+        "pixels_above_10_percent": 2.6850198412698414,
+        "passed": true
+      },
+      "samples": {
+        "image_red": {
+          "pdfium": [
+            238,
+            29,
+            35
+          ],
+          "poppler": [
+            236,
+            27,
+            36
+          ]
+        },
+        "image_green": {
+          "pdfium": [
+            95,
+            198,
+            144
+          ],
+          "poppler": [
+            95,
+            199,
+            145
+          ]
+        },
+        "outside_clip": {
+          "pdfium": [
+            255,
+            255,
+            255
+          ],
+          "poppler": [
+            255,
+            255,
+            255
+          ]
+        }
+      },
+      "renders": [
+        {
+          "name": "candidate-2-pdfium.png",
+          "sha256": "472a85b219c3dae992b3c45de3c98374e0b61f7c8d5f783fc9c083eef4841700"
+        },
+        {
+          "name": "candidate-2-poppler.png",
+          "sha256": "69773649e8c4164e16335af846e1679024783d053a35cec0f5a58d5e5b3f90da"
+        }
+      ]
+    }
+  ],
+  "all_inputs_unchanged": true,
+  "passed": true,
+  "raw_receipt_sha256": "89e30e0980e18c2794f12a7e60b6b3be24a65a83988f30fe98ef503b5927700c"
+}

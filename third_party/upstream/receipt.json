@@ -1,0 +1,34 @@
+{
+  "schema": "pdf-library-upstream-notices/v1",
+  "source_identity": "Exact Cargo archive .cargo_vcs_info.json revisions",
+  "notices": [
+    {
+      "package": "alloc-stdlib-0.2.4",
+      "source_revision": "ae42d22078b98549e987d2f03d12df7b984fde47",
+      "url": "https://raw.githubusercontent.com/dropbox/rust-alloc-no-stdlib/ae42d22078b98549e987d2f03d12df7b984fde47/LICENSE",
+      "path": "third_party/upstream/alloc-stdlib-0.2.4/LICENSE",
+      "sha256": "c0c56f26d9c051cac4d200c34c84e7ae9aaa853e01a982a1df08b09931e518ae"
+    },
+    {
+      "package": "defmt-parser-1.0.0",
+      "source_revision": "4a8cdb44891ed57b8ff5a023b6bec7137c48708f",
+      "url": "https://raw.githubusercontent.com/knurling-rs/defmt/4a8cdb44891ed57b8ff5a023b6bec7137c48708f/LICENSE-MIT",
+      "path": "third_party/upstream/defmt-parser-1.0.0/LICENSE-MIT",
+      "sha256": "2710a622a896bba67356913d4d0492cab5465f61b2ecce6d880aeb483834fb50"
+    },
+    {
+      "package": "defmt-parser-1.0.0",
+      "source_revision": "4a8cdb44891ed57b8ff5a023b6bec7137c48708f",
+      "url": "https://raw.githubusercontent.com/knurling-rs/defmt/4a8cdb44891ed57b8ff5a023b6bec7137c48708f/LICENSE-APACHE",
+      "path": "third_party/upstream/defmt-parser-1.0.0/LICENSE-APACHE",
+      "sha256": "8173d5c29b4f956d532781d2b86e4e30f83e6b7878dce18c919451d6ba707c90"
+    },
+    {
+      "package": "taffy-0.11.0",
+      "source_revision": "2ddc66405b14cd6696d0a8391d91c0cdba611133",
+      "url": "https://raw.githubusercontent.com/DioxusLabs/taffy/2ddc66405b14cd6696d0a8391d91c0cdba611133/LICENSE.md",
+      "path": "third_party/upstream/taffy-0.11.0/LICENSE.md",
+      "sha256": "a7083ef3dd41a65eeb2162c2c091b0082e2724fb4c6ed029b363c7840d244ecd"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "pdf-library-gallery-inspector-controls/v1",
+  "positive_source_sha256": "5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab",
+  "positive_source_unchanged": true,
+  "controls": [
+    {
+      "control": "false-isolation",
+      "input_sha256": "f854814f5c4b2c64277f4de14d6e9a8f3cb44b06d676783bdc6aa9cf6b59d836",
+      "rejected": true,
+      "exception": "AssertionError"
+    },
+    {
+      "control": "numeric-isolation",
+      "input_sha256": "2b95a473b1ed94887feba33a6c2697ffff6b6dac7a208c3b37b2b21a350e35e7",
+      "rejected": true,
+      "exception": "AssertionError"
+    },
+    {
+      "control": "unused-resource",
+      "input_sha256": "52bb341868a042a99c77cea01cdf11133d4d98cd14a21303f4decd18a18d3bf0",
+      "rejected": true,
+      "exception": "AssertionError"
+    },
+    {
+      "control": "missing-output-info",
+      "input_sha256": "ffcaddc8de87ee10b082b069cbb808271481f509a5d9cb6cafb5611a68141204",
+      "rejected": true,
+      "exception": "KeyError"
+    }
+  ],
+  "all_rejected": true,
+  "inspector_sha256": "0e2f4095486b674aafcc1cba9586972d2ceb9f806bfad21fc7961559f70f8f27",
+  "host_receipt_sha256": "a25f1d96481cb17374c6f74d1eac3b056af8fa3f3c2920c525ef50196aa6b4ba",
+  "source_files": [
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "sha256": "eda9d2dc569b03da0ca3a31c1cea99fac118a5ddc68f4fa5b6f46df95af39337"
+    },
+    {
+      "path": "crates/print-core/src/finished_writer.rs",
+      "sha256": "10d1b1d892ebe19ac225df40e8e13ee13a397e50093fd8a808195a01f243777b"
+    },
+    {
+      "path": "crates/print-core/src/finished_gradient.rs",
+      "sha256": "aa8fc1753ea035ae26a783ea3f3cca7022116f0e6fa837b6b0b75dfb4d781996"
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "sha256": "e1276ae52defc5af809528aa24cbd5913180a498c4bfa13fc29e094866d454f2"
+    },
+    {
+      "path": "crates/print-core/src/profile.rs",
+      "sha256": "5a758cea72c62fb3d8efb56d47067511cf1c2d0192f3e9876c6d36cf6a7dc1ba"
+    },
+    {
+      "path": "crates/print-core/src/candidate_metadata.rs",
+      "sha256": "bd24612d8e7c34c9a324b254633a51efc1a49d574aa97e8eea4da8b8c39251d9"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "sha256": "90283a5602d556264781280e93f09ee4a0f929f1bd4a11ec664f940ffe2b1014"
+    },
+    {
+      "path": "crates/print-core/tests/finished_gradients.rs",
+      "sha256": "5a79a86f828dc4f68aabe3b63322991596f4c9a0bf4346e394e2871a15f8e963"
+    },
+    {
+      "path": "examples/standalone-client/examples/feature-gallery.rs",
+      "sha256": "4d93e97b2c6a6ed5d2510d3cc23ac2e9e19d1ca29c57f8892822f7e8af6c0189"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "passed": true,
+  "qpdf_sha256": "57c003e868fb66cd343fd5afb91be8c2277f56434eea8635762499731bf9f60d",
+  "cases": [
+    {
+      "id": "truetype-multipage",
+      "returncode": 0
+    },
+    {
+      "id": "cff-exact-text",
+      "returncode": 0
+    },
+    {
+      "id": "artwork-transparency",
+      "returncode": 0
+    },
+    {
+      "id": "ordinary-pdf-control",
+      "returncode": 0
+    },
+    {
+      "id": "missing-output-intent",
+      "returncode": 0
+    },
+    {
+      "id": "missing-font-program",
+      "returncode": 0
+    },
+    {
+      "id": "missing-xmp",
+      "returncode": 0
+    },
+    {
+      "id": "missing-pdfx-identification",
+      "returncode": 0
+    },
+    {
+      "id": "mixed-1-pdf",
+      "returncode": 0
+    },
+    {
+      "id": "mixed-1-pdfx4-candidate",
+      "returncode": 0
+    },
+    {
+      "id": "mixed-4-pdf",
+      "returncode": 0
+    },
+    {
+      "id": "mixed-4-pdfx4-candidate",
+      "returncode": 0
+    },
+    {
+      "id": "mixed-16-pdf",
+      "returncode": 0
+    },
+    {
+      "id": "mixed-16-pdfx4-candidate",
+      "returncode": 0
+    },
+    {
+      "id": "mixed-64-pdf",
+      "returncode": 0
+    },
+    {
+      "id": "mixed-64-pdfx4-candidate",
+      "returncode": 0
+    },
+    {
+      "id": "missing-cff-font-program",
+      "returncode": 0
+    },
+    {
+      "id": "missing-embedded-output-profile",
+      "returncode": 0
+    },
+    {
+      "id": "invalid-output-icc-header",
+      "returncode": 0
+    },
+    {
+      "id": "missing-trim-and-art",
+      "returncode": 0
+    },
+    {
+      "id": "bleed-outside-media",
+      "returncode": 0
+    },
+    {
+      "id": "javascript-open-action",
+      "returncode": 0
+    },
+    {
+      "id": "transfer-curve",
+      "returncode": 0
+    },
+    {
+      "id": "output-profile-channel-mismatch",
+      "returncode": 0
+    },
+    {
+      "id": "effects-isolated-opacity",
+      "returncode": 0
+    },
+    {
+      "id": "text-table-effects-opacity",
+      "returncode": 0
+    },
+    {
+      "id": "variable-font-default-thai",
+      "returncode": 0
+    },
+    {
+      "id": "tagged-rgb-tiff",
+      "returncode": 0
+    },
+    {
+      "id": "one-mm-zero-bleed",
+      "returncode": 0
+    },
+    {
+      "id": "two-hundred-inch-zero-bleed",
+      "returncode": 0
+    },
+    {
+      "id": "tagged-jpeg-exif-six-print-size",
+      "returncode": 0
+    },
+    {
+      "id": "output-profile-component-count-missing",
+      "returncode": 0
+    },
+    {
+      "id": "output-profile-component-count-string",
+      "returncode": 0
+    },
+    {
+      "id": "output-profile-component-count-zero",
+      "returncode": 0
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "pdf-library-windows-confinement/v1",
+  "platform": "x86_64-pc-windows-msvc",
+  "native_windows_execution": true,
+  "passed": 6,
+  "failed": 0,
+  "test_executable_sha256": "c03bd8465319e1d6a6e0ac900319c72f7c231465a99a264e42a458a48bea6263",
+  "log_sha256": "7df448394f261d9250aea5f4444b6da4b8cc8b1028a25ae38895ec4bb8cddbdf",
+  "probe_sha256": "ea9cba66e9e5b7823f1a2dbcab4c5a1ec7eef0a102f7845bf5e203decce86bbc",
+  "source_sha256": "f4a361f1b914a7fe3c106b3592bdb4a01d490c3ebf756ce12329880b4d7cf367",
+  "behaviors": [
+    "file/read/write denial",
+    "network/child denial and sanitized environment",
+    "memory and CPU limits",
+    "drop closes worker pipes",
+    "cancellation preserves independent worker",
+    "unrelated inheritable handle denied"
+  ]
+}

@@ -1,0 +1,1150 @@
+{
+  "schema": "publisher-pdfx-combined-contract-review/v1",
+  "matrix_sha256": "7a1d5b098e6ec4b93f3a3ecd0592732119e02c3a4842b38ebd658b40dc3357b7",
+  "checker_sha256": "e8fe1039e12828d1f1e87b2a5f311743f75adc335009b167b1cfbfcaf2fef86f",
+  "standard_profile_sha256": "16d2dfe5f4bd576bd79ff25a6b8a42856bd44bfaac79c47750185092ca7bd6bf",
+  "selected_output_profile_sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1",
+  "engines": {
+    "pypdf": "6.10.0",
+    "Pillow": "12.3.0",
+    "LittleCMS": "2.19"
+  },
+  "all_inputs_unchanged": true,
+  "normative_pdfx4_coverage_complete": false,
+  "expected_positive_passes": 14,
+  "intended_negative_reasons_confirmed": 20,
+  "standard_profile_only_expectations_satisfied": 30,
+  "combined_expectations_satisfied": 34,
+  "combined_contract_matrix_passed": true,
+  "scope": "Exact current corpus; sanitized results of analysis-only independent checking and local CMYK guard",
+  "reviewed_receipt_sha256": "aefafdb99d2a8a6cf277dc9a2cdc4477ce223e6868a40110967f9dc6785dac43",
+  "cases": [
+    {
+      "id": "truetype-multipage",
+      "input_sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "b6fd6c4a9efe8383c318c23eeacefcc5bdba3d92444a76e0c6f0d58fec416c4c",
+          "bytes": 230014
+        },
+        {
+          "format": "json",
+          "sha256": "fd51ef1ccbb2d52c95d27f1809688ecb00fe8c68460fc8d3a6ace106a5a35e07",
+          "bytes": 129136
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "cff-exact-text",
+      "input_sha256": "ee9839390e1c128eea0a616dd4c9907cb6bba3e163fdaed3aee36db1d02403ba",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "561a0c90f1669a32b1a20ec96e1389baf3d349bed3f28e00ee94c485d4c6a64e",
+          "bytes": 228121
+        },
+        {
+          "format": "json",
+          "sha256": "089eb74430af0f3f5ad93bfe1c9ea18465cd75f13b396d994986be5c2972931e",
+          "bytes": 124822
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "artwork-transparency",
+      "input_sha256": "1416b2db45a533ac3a78e0cdd404ee4586da66e3905179b0c39ca1c91cc9033e",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "8c3b20a57e0c504f5767c02349b7ce5a200f6b380cc8b4f5fe6ef585e1748349",
+          "bytes": 229164
+        },
+        {
+          "format": "json",
+          "sha256": "a8b6da730771e27a759db246e6e8bc147b0d55a21ccddfa7a243bec05a4a1495",
+          "bytes": 127522
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "ordinary-pdf-control",
+      "input_sha256": "6f768e3440918e657cd9a9e00569a62e35387a30ca8b3d308a6ed6ba0d0cf573",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "dc5039dc9eaa038019f985959d6fcb2c609832bea03d31991de2a5326e042737",
+          "bytes": 228814
+        },
+        {
+          "format": "json",
+          "sha256": "ad4f75a164f836f3d919e0dc6f4941a7ffe6c775deeb4df6ddb4f060d55925bf",
+          "bytes": 128282
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_OutputIntentforPDFXmissing",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_PDFX4entrymissingorincorrect",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_INTENT_MISSING",
+          "path": "/Root/OutputIntents",
+          "detail": "No output intent array"
+        },
+        {
+          "code": "OUTPUT_INTENT_COUNT",
+          "path": "/Root/OutputIntents",
+          "detail": "The bounded writer requires exactly one GTS_PDFX intent"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "missing-output-intent",
+      "input_sha256": "4575137bf04af67d02d47d00e4a89edc4466394e5e277c7e1036454140297e90",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "7db2bd8df32bf59f94f39960ba398b3314702f2965261a75bd5edd09994cdc6a",
+          "bytes": 228601
+        },
+        {
+          "format": "json",
+          "sha256": "269c4c0a8ecb6635f959a2d7ec79c7b36276337a852c945233de80b478b4dabf",
+          "bytes": 128076
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_OutputIntentforPDFXmissing",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_INTENT_MISSING",
+          "path": "/Root/OutputIntents",
+          "detail": "No output intent array"
+        },
+        {
+          "code": "OUTPUT_INTENT_COUNT",
+          "path": "/Root/OutputIntents",
+          "detail": "The bounded writer requires exactly one GTS_PDFX intent"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "missing-font-program",
+      "input_sha256": "d9372312ca19e2518a25660385d103f8330fbdcda2d279b97a2e212cd9ea9ce0",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "cb6c35dc8e9106fea731ea29d199e0eb4c2c9b34d19f3b4965a5f08cc4315b50",
+          "bytes": 373438
+        },
+        {
+          "format": "json",
+          "sha256": "abe984158b6eeac95a7c7f00115aa40091917b239fc02d946db1b66ea52de0e2",
+          "bytes": 404819
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_Fontnotembeddedandtextrenderingmodenot3",
+          "severity": "Error",
+          "hit_count": 242
+        }
+      ],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "missing-xmp",
+      "input_sha256": "08e89a178bec949d20d05c8d2df645079896b07b2792823c603459419cdefe1d",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "2fe2d2a5ca5709a5c0534c942074c5bf3626550d4d38605896bf7757576824bc",
+          "bytes": 230921
+        },
+        {
+          "format": "json",
+          "sha256": "fef9aa85c2f95edc2e89c82dd67bec7ee9916c2e63be88358b0f6c116633679f",
+          "bytes": 130054
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_PDFXVersionentrymismatchbetweenDocumentinfoandXMP",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_TrappedentrymismatchbetweenDocumentInfoandXMP",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_MetadatamissingXMP",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_PDFX4entrymissingorincorrect",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "missing-pdfx-identification",
+      "input_sha256": "89205d9695587e6a618f480c12b7848059a4a3e661a8b940b3a34c58738605ea",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "d48f08b28b8296b0777dd00e08d2014dca0bbce112438b6b35c2ae3f94c6a274",
+          "bytes": 230208
+        },
+        {
+          "format": "json",
+          "sha256": "7f6bd80952f28f0c74aa2790ba9ac34f140b66fd77ce81e2ae3afd9873aeae32",
+          "bytes": 129317
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_PDFX4entrymissingorincorrect",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "mixed-1-pdf",
+      "input_sha256": "fca7241dce430ed6fb63d42a6d4ad8e02b02e21e8f05ef7bc4cd19eb9833cc7c",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "fec2cf4054e5e864300ec3104c45c4e849687c7ec403465ea1128809343d7c84",
+          "bytes": 229332
+        },
+        {
+          "format": "json",
+          "sha256": "b4dbeb44410fb1cc2ea2efe19c39db1d37f0f6b6d4d0bb6c2a96bc2923ecef45",
+          "bytes": 128703
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_OutputIntentforPDFXmissing",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_PDFX4entrymissingorincorrect",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_INTENT_MISSING",
+          "path": "/Root/OutputIntents",
+          "detail": "No output intent array"
+        },
+        {
+          "code": "OUTPUT_INTENT_COUNT",
+          "path": "/Root/OutputIntents",
+          "detail": "The bounded writer requires exactly one GTS_PDFX intent"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "mixed-1-pdfx4-candidate",
+      "input_sha256": "d44858e199f18b20a1b5e5fc28dd4077eebbf35316050ffc1f6f860ba88a6764",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "21f4c5a6ddb306dcd0086e67c08e0134cdb7e62448bd16d3c483f947e4ae39fc",
+          "bytes": 230558
+        },
+        {
+          "format": "json",
+          "sha256": "4b495833e10173425fa9bdf219f7096ae7859ea9a43cbad54fc2036bacb0ab5d",
+          "bytes": 129597
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "mixed-4-pdf",
+      "input_sha256": "edf736dfd3b2d19abb38ea9b46959c7a9c84a1babf00239d9d24d262f310e7e5",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "422de1f26a0271f91fff6f92238e28b7630c7c6ffd9b4ab5eecfd43d97c26d41",
+          "bytes": 236926
+        },
+        {
+          "format": "json",
+          "sha256": "5ba97383c0d96abba0422fdd162f29b423837709e34255501619ea06882877d8",
+          "bytes": 147101
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_OutputIntentforPDFXmissing",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_PDFX4entrymissingorincorrect",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_INTENT_MISSING",
+          "path": "/Root/OutputIntents",
+          "detail": "No output intent array"
+        },
+        {
+          "code": "OUTPUT_INTENT_COUNT",
+          "path": "/Root/OutputIntents",
+          "detail": "The bounded writer requires exactly one GTS_PDFX intent"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "mixed-4-pdfx4-candidate",
+      "input_sha256": "e5d1b3cd9a467667c3c931ee8bf07c352e262694d5ac8e06c2f748bb863fc1fd",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "705c9e642dbc2e91dece0ca12aac34d024dd8a79eb730051bc4be551883c4a66",
+          "bytes": 238152
+        },
+        {
+          "format": "json",
+          "sha256": "ad4c4250d10703bc78dd82e47d6bd4f70555430790240529cab1ebd3d73c9412",
+          "bytes": 147981
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "mixed-16-pdf",
+      "input_sha256": "137b803920f5610d9e424ee06ddce033aa6e4386ef67da011aa7c1a2e89d0302",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "17e7fd1a07101ac2b800c8e2d918bb1e210ca506be0043096c0bcdc137f054a3",
+          "bytes": 264886
+        },
+        {
+          "format": "json",
+          "sha256": "d222c3320647b39025c1d93c44468b4bcd0c6770d43330782d48a110f951babb",
+          "bytes": 216503
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_OutputIntentforPDFXmissing",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_PDFX4entrymissingorincorrect",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_INTENT_MISSING",
+          "path": "/Root/OutputIntents",
+          "detail": "No output intent array"
+        },
+        {
+          "code": "OUTPUT_INTENT_COUNT",
+          "path": "/Root/OutputIntents",
+          "detail": "The bounded writer requires exactly one GTS_PDFX intent"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "mixed-16-pdfx4-candidate",
+      "input_sha256": "c5d18ff0c223c83b11029286b4c78ea0b88ea575f2d0cc0a1c47fe92c0c81d44",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "1424db335f85cbc5dcba677eb1599fc555b5b4797cb695a65fdb396bf795408d",
+          "bytes": 266111
+        },
+        {
+          "format": "json",
+          "sha256": "c1926611dc2fb4c55f2ad73ab6b3db2a041e979e734b5f45b680c971e6b00a33",
+          "bytes": 217368
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "mixed-64-pdf",
+      "input_sha256": "3f67dded2650bbef6c950da1077c35dd00f40fd4afe9a1fe977fcc779790aa24",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "691e2d44c5d0ec7004e27270f49d94071c772c16864ab38f6cd91397ecc5a5a9",
+          "bytes": 374502
+        },
+        {
+          "format": "json",
+          "sha256": "6b56975a007038240f8ce78416cd72fa344b6d89b865994c99849cda15170e9f",
+          "bytes": 490225
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_OutputIntentforPDFXmissing",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_PDFX4entrymissingorincorrect",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_INTENT_MISSING",
+          "path": "/Root/OutputIntents",
+          "detail": "No output intent array"
+        },
+        {
+          "code": "OUTPUT_INTENT_COUNT",
+          "path": "/Root/OutputIntents",
+          "detail": "The bounded writer requires exactly one GTS_PDFX intent"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "mixed-64-pdfx4-candidate",
+      "input_sha256": "dc8ab872982fee9c30bc6e0859e811abd8427c13561c31fe3351a7d0e855db6b",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "ea3ebf211ea93fabb4c7f221d9fc30948f02f2eb52baa77dcc321ef339b012af",
+          "bytes": 375727
+        },
+        {
+          "format": "json",
+          "sha256": "983812033a4bdb38ed967c9193036015699629d6095f3a9022c323e65b310dcf",
+          "bytes": 491118
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "missing-cff-font-program",
+      "input_sha256": "51c33aa3ceeb7407c2b9f3166a7fed8539ac7224e80597a65a28e9989a238540",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "05887f812df3a1c900184039cc38788e81c22dcc8ac360942f537af3f0d54b31",
+          "bytes": 255328
+        },
+        {
+          "format": "json",
+          "sha256": "3c7e11dd98b59ae08334ec0eb55d21cdd10a39c6e8d8303aea42a6fecf6373b3",
+          "bytes": 176621
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_Fontnotembeddedandtextrenderingmodenot3",
+          "severity": "Error",
+          "hit_count": 45
+        }
+      ],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "missing-embedded-output-profile",
+      "input_sha256": "5bedc97b6c4b87e4b5fbd46e7a410ce3ef58320d40b420e0d21efc350880ced7",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "c22ce425983a860c093ddb21281903514a8c1e2f27a3a2f738a1b35eaad01b75",
+          "bytes": 229180
+        },
+        {
+          "format": "json",
+          "sha256": "1dbae1c46cc569131e3342c54971213bfbf404f84e817154b52ac60b0236a0db",
+          "bytes": 128577
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_ICCprofilemissinginPDFXOutputIntent",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_PROFILE_MISSING",
+          "path": "/Root/OutputIntents/0/DestOutputProfile",
+          "detail": "No embedded destination profile stream"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "invalid-output-icc-header",
+      "input_sha256": "417ad5df3bf99125898fa3ca3277aa9464e431f16cdba26c2e8cb6503f1d98a4",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "a3077c49d5d9430b16fe6f32fea768474ef746cc4e10703eba0e81bb6d830698",
+          "bytes": 229175
+        },
+        {
+          "format": "json",
+          "sha256": "5fb977ce289d19d4f8c8e2ac3d610895d218f981ed7b50f8238e8082dcb10afb",
+          "bytes": 128572
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_ICCprofilemissinginPDFXOutputIntent",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_PROFILE_BYTES_MISMATCH",
+          "path": "/Root/OutputIntents/0/DestOutputProfile",
+          "detail": "Embedded profile differs from the pinned selected CMYK profile"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "missing-trim-and-art",
+      "input_sha256": "de15408f719e22c41ac9460757e4803fd6315c77e07f2780eb0588e414b4220f",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "663344d96d8a566db85540bc7c83b11d23451e22ef80660f62add54429c9d427",
+          "bytes": 230303
+        },
+        {
+          "format": "json",
+          "sha256": "c1c97fa88295ce106a854529eb8e4a5ffbd6fd8dd9622065477199ea75b420af",
+          "bytes": 129129
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_PagedoesnothaveTrimBoxorArtBox",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "bleed-outside-media",
+      "input_sha256": "0a3cce6b41dd060feb4ca103d7708dbaa15ba1048a04bb2f3e37973aba4d8a1f",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "20f8d9cd82d142201adc268067ff5d149406aa966cbc1a49ded70568b18fb079",
+          "bytes": 230258
+        },
+        {
+          "format": "json",
+          "sha256": "307363102296a48ae17757571450c2e374eee3e46801b80d184e5ed93708ce45",
+          "bytes": 129404
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_Pageboxesnotnestedproperly",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "javascript-open-action",
+      "input_sha256": "7167352e8608b4735d20d743e540a6c9a1e100e7c5115ca10197da88d76cbe7f",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "1489bd15b815a63a7ec7447c6232eb9fdc01fab3418246baea407fa49736fac0",
+          "bytes": 230490
+        },
+        {
+          "format": "json",
+          "sha256": "b7dd0a50538c19069a92f1ffd11af6c4cff8ab76bb2cd3e1db00760fe4882531",
+          "bytes": 129575
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_DocumentcontainsJavaScripts",
+          "severity": "Error",
+          "hit_count": 1
+        },
+        {
+          "key": "R_6_Documentcontainsactions",
+          "severity": "Error",
+          "hit_count": 1
+        }
+      ],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "transfer-curve",
+      "input_sha256": "316f549c65758dc506cfec35ec521d0b410d34deb3dc8b43c062d9d505048e8a",
+      "expected_result": "fail",
+      "standard_profile_result": "fail",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "4c0d57b08bbea84f58492545b7a58595a8e3f31a252deceedce097609ab1ec3e",
+          "bytes": 233156
+        },
+        {
+          "format": "json",
+          "sha256": "9aa89f895c4afa5e2c28c4c45aaae8e6971493f10601ba00add98f79d0b6e7a8",
+          "bytes": 134404
+        }
+      ],
+      "findings": [
+        {
+          "key": "R_6_Transfercurveused",
+          "severity": "Error",
+          "hit_count": 7
+        }
+      ],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "output-profile-channel-mismatch",
+      "input_sha256": "87c20f01aee9d1df335fc94b98cac68120e991a2f1d6b1f9a2a95a920fd156aa",
+      "expected_result": "fail",
+      "standard_profile_result": "pass",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "4841c5004936deac9194b8f41ffdfa8be42090f0dacd6639be0db000baf2fbb0",
+          "bytes": 230020
+        },
+        {
+          "format": "json",
+          "sha256": "a56751d070c18226336a87acfd1290e6ca2a8b5cb7a6d9d5752485ca6440b987",
+          "bytes": 129127
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_PROFILE_COMPONENT_MISMATCH",
+          "path": "/Root/OutputIntents/0/DestOutputProfile/N",
+          "detail": "PDF declares 3 components; ICC declares 4 (CMYK)"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "effects-isolated-opacity",
+      "input_sha256": "5dd6933b860878b9aaf552c67d6fea8ae95382a241d04843f63ba2d3e5cb65bf",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "a90e041395e10d0eae8336a05a1229ca0286ba666f13036827356ea05018ca29",
+          "bytes": 229639
+        },
+        {
+          "format": "json",
+          "sha256": "a3964b43160ae745318afc810756351702094be8b89e74d340e43d3f32a4f54e",
+          "bytes": 128590
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "text-table-effects-opacity",
+      "input_sha256": "4a21c298484909ef838c110a210fe7428327b17a82c9e039e68609ccbf99c0d0",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "ad0e00a37bd31ead6458400c8d271b30a10c511d38a518e14067f9bca9444d2e",
+          "bytes": 230810
+        },
+        {
+          "format": "json",
+          "sha256": "54e31ce2a66e4cbbd65dbb9741a51b515f70ad5a3407f88caf90f9fdaa29dc2b",
+          "bytes": 130897
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "variable-font-default-thai",
+      "input_sha256": "a660777c95370856406ff755b2cc361db03df5adda140a02d314b49e0dce9696",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "c75a7cb4b87f6f297f40158297d7c102264744806cb75562a4129d302507fe83",
+          "bytes": 228398
+        },
+        {
+          "format": "json",
+          "sha256": "cb962273c530a7c7b82a455def8193a350ab1e63859aee1db62c4dfbb2c1ce4d",
+          "bytes": 124885
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "tagged-rgb-tiff",
+      "input_sha256": "e25504c97d589db3a6d5fb6093b1cfdc08bba0276fccb47d2423ae06e431630f",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "4712affe403937aef550d2039300c2d443fd44d3cca1fb203130a659d5c91972",
+          "bytes": 228950
+        },
+        {
+          "format": "json",
+          "sha256": "55bce3ad2a53e4d74e4d5cc75b010eebb0f09e0366ae5b989630d304ddfabce7",
+          "bytes": 127211
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "one-mm-zero-bleed",
+      "input_sha256": "5bb2c9d876ad5014722f07d44c2f505bb1cc64755cfa3931ca62bb142643e099",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "3f84cc73f5f400f391e916ffd5ac6b2aae399796eff86e4b03470c1cb92941e4",
+          "bytes": 228247
+        },
+        {
+          "format": "json",
+          "sha256": "a017a07e19f53237288340dd9b456d17bcbc54232f86299f827c0baac0d74808",
+          "bytes": 126145
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "two-hundred-inch-zero-bleed",
+      "input_sha256": "49076f509272aff55b4bf34d7559059d1915b62fdbfb7d9a89546863b84f1691",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "5a0a2d2eb60f6bf09c7f56d0ea27c7b442444b70dbec1ba23213a026a9cc67fa",
+          "bytes": 228255
+        },
+        {
+          "format": "json",
+          "sha256": "ac4763be4861c0a87398ab24f062fc6a7f37a55c2c5278f12747c80a3805c9f1",
+          "bytes": 125901
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "tagged-jpeg-exif-six-print-size",
+      "input_sha256": "c85e47407055d9bde8415741fd1e7e52d13e0dcea8b40f1a3e85f8fc268cb6ff",
+      "expected_result": "pass",
+      "standard_profile_result": "pass",
+      "combined_result": "pass",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "35112796c43a2b77d0151e2748b0b1452eec16d079570da04f81e799fe9a556e",
+          "bytes": 228980
+        },
+        {
+          "format": "json",
+          "sha256": "971c75882034a920b3476d295f95b12c83bb446d2f52a5a109568faaf9b5418a",
+          "bytes": 127241
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "pass",
+      "profile_contract_findings": [],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "output-profile-component-count-missing",
+      "input_sha256": "0c8d11e20b7ed045956358a5df636c92e7dd67c1cdb3c32f089e614505b92a52",
+      "expected_result": "fail",
+      "standard_profile_result": "pass",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "7a0855437d938ffb5aabf301cb2068335b2d4252c11e9399627bf798a1e3f8f3",
+          "bytes": 230027
+        },
+        {
+          "format": "json",
+          "sha256": "b144b347b1ac25159f03af19dbf2188bf57495374e22e7d49a98a596e05abd03",
+          "bytes": 129134
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_PROFILE_COMPONENT_COUNT_INVALID",
+          "path": "/Root/OutputIntents/0/DestOutputProfile/N",
+          "detail": "Component count is absent or not a PDF integer"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "output-profile-component-count-string",
+      "input_sha256": "0ca9f168379d7fd1f3aba05342ece350ee2d38c82ccc63699e8497dd21d94ee2",
+      "expected_result": "fail",
+      "standard_profile_result": "pass",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "d441344f277d3c3d03ab96364581e1a1653884c5fd1d83a7d0e53fdea00c52e7",
+          "bytes": 230026
+        },
+        {
+          "format": "json",
+          "sha256": "d51eb92d46ec7c6eeffd319ed820efa708b8144f84fbe19c12dc05fc4f0d938e",
+          "bytes": 129133
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_PROFILE_COMPONENT_COUNT_INVALID",
+          "path": "/Root/OutputIntents/0/DestOutputProfile/N",
+          "detail": "Component count is absent or not a PDF integer"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    },
+    {
+      "id": "output-profile-component-count-zero",
+      "input_sha256": "580bf8f8c6820b8e4391dd93e6ee0158a6cf61fbe303a33f86efaca181be037c",
+      "expected_result": "fail",
+      "standard_profile_result": "pass",
+      "combined_result": "fail",
+      "intended_reason_confirmed": true,
+      "expectation_satisfied": true,
+      "report_hashes": [
+        {
+          "format": "xml",
+          "sha256": "aa561f25cab5385156d2c4e5e3069887a1d7e64e5662b31f3ec02644b90cb1ba",
+          "bytes": 230024
+        },
+        {
+          "format": "json",
+          "sha256": "4f70b5be28f740b916dcb8ae672f73921d3e65382fbabe8633c5aefaa60c0927",
+          "bytes": 129131
+        }
+      ],
+      "findings": [],
+      "profile_contract_result": "fail",
+      "profile_contract_findings": [
+        {
+          "code": "OUTPUT_PROFILE_COMPONENT_MISMATCH",
+          "path": "/Root/OutputIntents/0/DestOutputProfile/N",
+          "detail": "PDF declares 0 components; ICC declares 4 (CMYK)"
+        }
+      ],
+      "fixups_applied": false,
+      "json_xml_agree": true
+    }
+  ]
+}

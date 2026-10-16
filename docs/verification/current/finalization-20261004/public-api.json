@@ -1,0 +1,192 @@
+{
+  "schema": "pdf-library-public-api/v1",
+  "dependency_graph": {
+    "no_authoring_dependencies": true,
+    "package_count": 57,
+    "packages": [
+      "adler2",
+      "autocfg",
+      "bitflags",
+      "block-buffer",
+      "bytemuck",
+      "cc",
+      "cfg-if",
+      "chrono",
+      "color-boundary",
+      "cpufeatures",
+      "crc32fast",
+      "crypto-common",
+      "digest",
+      "dunce",
+      "find-msvc-tools",
+      "flate2",
+      "font-boundary",
+      "foreign-types",
+      "foreign-types-macros",
+      "foreign-types-shared",
+      "generic-array",
+      "getrandom",
+      "itoa",
+      "jobserver",
+      "lcms2",
+      "lcms2-sys",
+      "libc",
+      "memchr",
+      "miniz_oxide",
+      "num-traits",
+      "pdf-library-standalone-client",
+      "pdf-writer",
+      "pkg-config",
+      "print-core",
+      "proc-macro2",
+      "publisher-windows-atomic-file",
+      "publisher-worker-job",
+      "quote",
+      "raster-capacity",
+      "ryu",
+      "serde",
+      "serde_core",
+      "serde_derive",
+      "serde_json",
+      "sha2",
+      "shlex",
+      "simd-adler32",
+      "syn",
+      "ttf-parser",
+      "typenum",
+      "unicode-ident",
+      "version_check",
+      "windows-link",
+      "windows-sys",
+      "zlib-rs",
+      "zmij"
+    ]
+  },
+  "standalone": [
+    [
+      {
+        "file": "ordinary.pdf",
+        "sha256": "423f7ae94cab95dce8aa30b4176633aa2573cdd12e3931c4a9f6fcac2e0f9e14",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": false
+      },
+      {
+        "file": "candidate.pdf",
+        "sha256": "67bb01da8f9ddc4bf1b86db55f9768b02fe30ab4ca4f3439b98512a40aacc121",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": true
+      }
+    ],
+    [
+      {
+        "file": "ordinary.pdf",
+        "sha256": "423f7ae94cab95dce8aa30b4176633aa2573cdd12e3931c4a9f6fcac2e0f9e14",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": false
+      },
+      {
+        "file": "candidate.pdf",
+        "sha256": "67bb01da8f9ddc4bf1b86db55f9768b02fe30ab4ca4f3439b98512a40aacc121",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": true
+      }
+    ]
+  ],
+  "repeatable_bytes": true,
+  "worker_failures": [
+    {
+      "case": "absent-font",
+      "exit_code": 1,
+      "no_output_exposed": true
+    },
+    {
+      "case": "malformed-font",
+      "exit_code": 1,
+      "no_output_exposed": true
+    },
+    {
+      "case": "absent-color",
+      "exit_code": 1,
+      "no_output_exposed": true
+    }
+  ],
+  "adapter": [
+    {
+      "case": "truetype-multipage",
+      "sha256": "d8161f29366157b3e9360146a0095f7945a9b296070b7f229f78a9646556278d",
+      "ordered_actual_text_matches_retained": true,
+      "extracted_text_matches_after_separator_normalization": true,
+      "page_boxes_match_retained": true
+    },
+    {
+      "case": "cff-exact-text",
+      "sha256": "51d56912c8f9bdcd37f7d2c7b0664f83625dedfe7b41fbc2e3baba360861cb93",
+      "ordered_actual_text_matches_retained": true,
+      "extracted_text_matches_after_separator_normalization": true,
+      "page_boxes_match_retained": true
+    },
+    {
+      "case": "artwork-transparency",
+      "sha256": "ddc1105b90fb432f135dab42e745e1f449aff03e102226268398fae3546e84ff",
+      "ordered_actual_text_matches_retained": true,
+      "extracted_text_matches_after_separator_normalization": true,
+      "page_boxes_match_retained": true
+    }
+  ],
+  "fresh_independent_pdfx4_check": false,
+  "caller": {
+    "name": "pdf-library-standalone-client.exe",
+    "sha256": "b3c8c250eaa05ffe023a66f755d92b93ba4a1d516534ba569dcaaa761f49c55f"
+  },
+  "host_receipt_sha256": "7c124e14841ceeffdfdcb56f76078828daacef43f66abd1340769c4c926becf0",
+  "source_files": [
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "sha256": "eda9d2dc569b03da0ca3a31c1cea99fac118a5ddc68f4fa5b6f46df95af39337"
+    },
+    {
+      "path": "crates/print-core/src/finished_writer.rs",
+      "sha256": "10d1b1d892ebe19ac225df40e8e13ee13a397e50093fd8a808195a01f243777b"
+    },
+    {
+      "path": "crates/print-core/src/finished_gradient.rs",
+      "sha256": "aa8fc1753ea035ae26a783ea3f3cca7022116f0e6fa837b6b0b75dfb4d781996"
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "sha256": "e1276ae52defc5af809528aa24cbd5913180a498c4bfa13fc29e094866d454f2"
+    },
+    {
+      "path": "crates/print-core/src/profile.rs",
+      "sha256": "5a758cea72c62fb3d8efb56d47067511cf1c2d0192f3e9876c6d36cf6a7dc1ba"
+    },
+    {
+      "path": "crates/print-core/src/candidate_metadata.rs",
+      "sha256": "bd24612d8e7c34c9a324b254633a51efc1a49d574aa97e8eea4da8b8c39251d9"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "sha256": "90283a5602d556264781280e93f09ee4a0f929f1bd4a11ec664f940ffe2b1014"
+    },
+    {
+      "path": "crates/print-core/tests/finished_gradients.rs",
+      "sha256": "5a79a86f828dc4f68aabe3b63322991596f4c9a0bf4346e394e2871a15f8e963"
+    },
+    {
+      "path": "examples/standalone-client/examples/feature-gallery.rs",
+      "sha256": "4d93e97b2c6a6ed5d2510d3cc23ac2e9e19d1ca29c57f8892822f7e8af6c0189"
+    }
+  ]
+}

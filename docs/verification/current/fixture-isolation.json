@@ -1,0 +1,114 @@
+{
+  "schema": "pdf-library-source-fixture-verification/v1",
+  "inputs": [
+    {
+      "name": "concrt140.dll",
+      "sha256": "54716f0738af891f283d213b5c8d11b25896bb8ee3097d301eae718560cf974e"
+    },
+    {
+      "name": "fix-qdf.exe",
+      "sha256": "2872497dad0af0fcfd2e92b650067042519ee0108922b9b36eaa1a1b511b43fc"
+    },
+    {
+      "name": "msvcp140.dll",
+      "sha256": "7c26614e1d733892c2deac7e245ce115504b1d80592dd0a01b08e3e5a55f89ca"
+    },
+    {
+      "name": "msvcp140_1.dll",
+      "sha256": "206c931bf90fdad8816de3b5e2ef80b2bcaa9406c89ecc05fe6fddffe251e982"
+    },
+    {
+      "name": "msvcp140_2.dll",
+      "sha256": "d50d7883f20d1dc6191768d3746f52dd9cac89c346ffaed5be1f110c2f34a838"
+    },
+    {
+      "name": "msvcp140_atomic_wait.dll",
+      "sha256": "3d0cbfaa1bf3eecf5a3f4491d2960ee803cb994f30292c6adc4a07c498f60e2b"
+    },
+    {
+      "name": "msvcp140_codecvt_ids.dll",
+      "sha256": "8a65c7596ef2e6938731f5a1058e7e40145b6d97967cc649231a076b9a608d78"
+    },
+    {
+      "name": "publisher-color-worker.exe",
+      "sha256": "f1cb31e2a5e3a891352a8b63fb89be5096643569fc518348b3634d51cd9b617d"
+    },
+    {
+      "name": "publisher-font-worker.exe",
+      "sha256": "50e6b47f2a67a55b63f84ac440664f2fe5328301858cb15acabe78ccb41d7786"
+    },
+    {
+      "name": "publisher-pdf.exe",
+      "sha256": "75b97996e1f626f946846da96dc6aaed9dde9a6e2a009e4531e898844ae87f99"
+    },
+    {
+      "name": "publisher-raster-worker.exe",
+      "sha256": "5138e4df2fd1b1648b3f3704700707e95388346fead3c18c81fbf6a2fa7e0b44"
+    },
+    {
+      "name": "publisher-validator-worker.exe",
+      "sha256": "0ee7e1b89d8af024b67dc4debaf19816b101a5fd7e075a360b6e80fc3672deb5"
+    },
+    {
+      "name": "qpdf.exe",
+      "sha256": "57c003e868fb66cd343fd5afb91be8c2277f56434eea8635762499731bf9f60d"
+    },
+    {
+      "name": "qpdf30.dll",
+      "sha256": "36fe5b2023f244e5785d96b8372dba26b75ea51b63adf4d4f1e66ad0aa1c8a61"
+    },
+    {
+      "name": "vcruntime140.dll",
+      "sha256": "d1f4225df2cd877dbf130d5668a021dce3f94118455ff5ec952061c30afc9ce7"
+    },
+    {
+      "name": "vcruntime140_1.dll",
+      "sha256": "a7146c08f89fe5b04541ab507cdb59ff7b44534d4ba3c668a426c6450a03434e"
+    },
+    {
+      "name": "zlib-flate.exe",
+      "sha256": "6898b9fd9e253c410efd28742d4f78919855f4eb0fc2261361f188bf67aa1602"
+    },
+    {
+      "name": "raster_ingestion-b3534784e4b89b30.exe",
+      "sha256": "857e8af1269cc1df6bdc33811009ef3caa5c662d53bb302cc15374aea2ddf852"
+    },
+    {
+      "name": "application_core-d0a405f96d17f215.exe",
+      "sha256": "c4a57f7382442582bf9233d2dd02b43ae4349d9b4fdb9b2302d2a991353b4fba"
+    }
+  ],
+  "suites": [
+    {
+      "name": "raster_ingestion-b3534784e4b89b30.exe",
+      "filter": null,
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 0
+    },
+    {
+      "name": "application_core-d0a405f96d17f215.exe",
+      "filter": "image_batch_tests",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 26
+    },
+    {
+      "name": "application_core-d0a405f96d17f215.exe",
+      "filter": "persistence_message_tests",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 30
+    }
+  ],
+  "proof_first": "document-core raster_ingestion did not compile because two desktop TIFF paths were absent",
+  "all_passed": true,
+  "passed": 10,
+  "source_kind": "plan",
+  "source_digest": "406e3548d1046541adf85d15a92c40033b3649e2b99701b40a467135aa5a0924",
+  "unit": "U4",
+  "scope": "Project-owned fixture isolation; focused native Windows replay"
+}

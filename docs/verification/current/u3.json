@@ -1,0 +1,49 @@
+{
+  "schema": "pdf-library-unit-verification/v1",
+  "unit": "U3",
+  "status": "bounded verification complete; normative reconciliation blocked",
+  "source_digest": "406e3548d1046541adf85d15a92c40033b3649e2b99701b40a467135aa5a0924",
+  "independent_expected_outcomes": "34/34 combined; 14 positive passes; checker-only30/34",
+  "fidelity_pages": 190,
+  "closed_writer_documents": 21,
+  "proof_first": "Corpus verifier accepted /I false and numeric1 before correction; both controls now reject.",
+  "inventory": {
+    "retained_topics": 28,
+    "writer_contracts": 10,
+    "normative_statements_reconciled": 0,
+    "normative_pdfx4_coverage_complete": false,
+    "pending": [
+      "PX4-NORMATIVE-INVENTORY"
+    ]
+  },
+  "normative_gate": "exit1 for incomplete exhaustive PDF/X-4 coverage",
+  "current_receipts": [
+    {
+      "path": "docs/verification/current/corpus-generation.json",
+      "sha256": "96b5c115399201f21c6b473aabfe67dbb8afd5d39807a1bb003a01196f310a3f"
+    },
+    {
+      "path": "docs/verification/current/corpus-structure.json",
+      "sha256": "a583dae52b2541be2aa382b1d6059ad565295da53e539486d44982912a81c7ef"
+    },
+    {
+      "path": "docs/verification/current/corpus-independent.json",
+      "sha256": "5089de3392e7088c7526e81207191b3d56603a8245e05cf712e4710f363ddb26"
+    },
+    {
+      "path": "docs/verification/current/corpus-fidelity.json",
+      "sha256": "4672523300fe287ea6b85c9607df7ece285fce2b386734517abef54c8d5ca46f"
+    },
+    {
+      "path": "docs/verification/current/corpus-scope.json",
+      "sha256": "76f65783161a5e2365d357eb8a86f42d587e0a6af9ebede586797ef7439e6473"
+    }
+  ],
+  "inventory_sha256": "3d4196600c4d6f2fa51de32c07faa535de34e1c941fe0264072d16a169c6ae4e",
+  "tests": [
+    "2 focused PDF isolation tests passed",
+    "3 inventory consistency tests passed"
+  ],
+  "normative_pdfx4_coverage_complete": false,
+  "browser_applicability": "no UI exists in this library"
+}

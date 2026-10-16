@@ -1,0 +1,27 @@
+[package]
+publish = false
+name = "validator-boundary"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = "=1.0.149"
+sha2 = "=0.10.9"
+pdf_oxide = { version = "=0.3.73", default-features = false, optional = true }
+raster-capacity = { path = "../raster-capacity", optional = true }
+flate2 = { version = "=1.1.10", optional = true }
+
+[features]
+publisher-writer-profile = ["dep:pdf_oxide", "dep:raster-capacity", "dep:flate2"]
+
+[dev-dependencies]
+pdf-writer = "=0.15.0"
+
+[target.'cfg(windows)'.dependencies]
+publisher-worker-job = { path = "../windows-worker-job" }
+
+[lints]
+workspace = true

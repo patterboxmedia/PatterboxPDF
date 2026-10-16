@@ -1,0 +1,14 @@
+{
+  "schema": "pdf-library-unicode-fixture-verification/v1",
+  "native_windows_execution": true,
+  "suite": "unicode_shaping",
+  "passed": 11,
+  "failed": 0,
+  "ignored": 0,
+  "executable_sha256": "0a8d67e82348baea6fb88ef5b7bc863d85c411ffbeafd14aecdf8acc36a3d056",
+  "fixture_path": "crates/layout-core/tests/fixtures/unicode-shaping-corpus.txt",
+  "fixture_sha256": "91efbb3d211dde2dc8070bfa45957c4cdd00bb627c60b0aaddb6b7a11974837b",
+  "fixture_origin": "Five first-party samples authored from the unchanged suite expectations; no claim to recover a missing original corpus",
+  "existing_assertions_unchanged": true,
+  "normative_pdfx4_coverage_complete": false
+}

@@ -1,0 +1,20 @@
+[package]
+publish = false
+name = "layout-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+document-core = { path = "../document-core" }
+fontique = { version = "=0.11.1", default-features = false, features = ["std", "system"] }
+parley = { version = "=0.11.1", default-features = false, features = ["std", "system", "complex-scripts"] }
+sha2 = "0.10.9"
+ttf-parser = { version = "=0.25.1", default-features = false, features = ["std"] }
+
+[lib]
+path = "src/lib.rs"
+
+[lints]
+workspace = true

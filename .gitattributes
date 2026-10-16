@@ -1,0 +1,3 @@
+# Preserve the exact bytes bound by source manifests, notices and evidence.
+# Retained source includes both LF and CRLF; checkout normalization changes hashes.
+* -text

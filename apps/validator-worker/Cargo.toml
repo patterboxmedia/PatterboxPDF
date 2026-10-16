@@ -1,0 +1,26 @@
+[package]
+name = "publisher-validator-worker"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+print-core = { path = "../../crates/print-core", features = ["publisher-adapter", "pdf-oxide-validator"] }
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = "=1.0.149"
+sha2 = "=0.10.9"
+validator-boundary = { path = "../../crates/validator-boundary", features = ["publisher-writer-profile"] }
+
+[dev-dependencies]
+application-core = { path = "../../crates/application-core" }
+color-boundary = { path = "../../crates/color-boundary" }
+document-core = { path = "../../crates/document-core" }
+image = { version = "=0.25.10", default-features = false, features = ["png"] }
+layout-core = { path = "../../crates/layout-core" }
+pdf-writer = "=0.15.0"
+raster-boundary = { path = "../../crates/raster-boundary" }
+
+[lints]
+workspace = true

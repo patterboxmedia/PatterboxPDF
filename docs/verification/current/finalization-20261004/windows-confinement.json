@@ -1,0 +1,60 @@
+{
+  "native_windows_execution": true,
+  "suites": [
+    {
+      "suite": "appcontainer_isolation",
+      "executable": "appcontainer_isolation-157c751c781f2970.exe",
+      "sha256": "082d74a7c94ec43266b5befbab4371cb67d15dcd7b241e14ddd1d4bfbeaa16c2",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "worker_stage": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "appcontainer_isolation-157c751c781f2970.exe",
+        "caller_sha256": "082d74a7c94ec43266b5befbab4371cb67d15dcd7b241e14ddd1d4bfbeaa16c2",
+        "workers": []
+      }
+    }
+  ],
+  "passed": 6,
+  "all_passed": true,
+  "host_receipt_sha256": "d900b291476749378bc035dc99bf0122e8f5bca13c5ee7f117461bd7de139c34",
+  "source_files": [
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "sha256": "eda9d2dc569b03da0ca3a31c1cea99fac118a5ddc68f4fa5b6f46df95af39337"
+    },
+    {
+      "path": "crates/print-core/src/finished_writer.rs",
+      "sha256": "10d1b1d892ebe19ac225df40e8e13ee13a397e50093fd8a808195a01f243777b"
+    },
+    {
+      "path": "crates/print-core/src/finished_gradient.rs",
+      "sha256": "aa8fc1753ea035ae26a783ea3f3cca7022116f0e6fa837b6b0b75dfb4d781996"
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "sha256": "e1276ae52defc5af809528aa24cbd5913180a498c4bfa13fc29e094866d454f2"
+    },
+    {
+      "path": "crates/print-core/src/profile.rs",
+      "sha256": "5a758cea72c62fb3d8efb56d47067511cf1c2d0192f3e9876c6d36cf6a7dc1ba"
+    },
+    {
+      "path": "crates/print-core/src/candidate_metadata.rs",
+      "sha256": "bd24612d8e7c34c9a324b254633a51efc1a49d574aa97e8eea4da8b8c39251d9"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "sha256": "90283a5602d556264781280e93f09ee4a0f929f1bd4a11ec664f940ffe2b1014"
+    },
+    {
+      "path": "crates/print-core/tests/finished_gradients.rs",
+      "sha256": "5a79a86f828dc4f68aabe3b63322991596f4c9a0bf4346e394e2871a15f8e963"
+    },
+    {
+      "path": "examples/standalone-client/examples/feature-gallery.rs",
+      "sha256": "4d93e97b2c6a6ed5d2510d3cc23ac2e9e19d1ca29c57f8892822f7e8af6c0189"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "schema": "pdf-library-public-api/v1",
+  "dependency_graph": {
+    "no_authoring_dependencies": true,
+    "package_count": 57,
+    "packages": [
+      "adler2",
+      "autocfg",
+      "bitflags",
+      "block-buffer",
+      "bytemuck",
+      "cc",
+      "cfg-if",
+      "chrono",
+      "color-boundary",
+      "cpufeatures",
+      "crc32fast",
+      "crypto-common",
+      "digest",
+      "dunce",
+      "find-msvc-tools",
+      "flate2",
+      "font-boundary",
+      "foreign-types",
+      "foreign-types-macros",
+      "foreign-types-shared",
+      "generic-array",
+      "getrandom",
+      "itoa",
+      "jobserver",
+      "lcms2",
+      "lcms2-sys",
+      "libc",
+      "memchr",
+      "miniz_oxide",
+      "num-traits",
+      "pdf-library-standalone-client",
+      "pdf-writer",
+      "pkg-config",
+      "print-core",
+      "proc-macro2",
+      "publisher-windows-atomic-file",
+      "publisher-worker-job",
+      "quote",
+      "raster-capacity",
+      "ryu",
+      "serde",
+      "serde_core",
+      "serde_derive",
+      "serde_json",
+      "sha2",
+      "shlex",
+      "simd-adler32",
+      "syn",
+      "ttf-parser",
+      "typenum",
+      "unicode-ident",
+      "version_check",
+      "windows-link",
+      "windows-sys",
+      "zlib-rs",
+      "zmij"
+    ]
+  },
+  "standalone": [
+    [
+      {
+        "file": "ordinary.pdf",
+        "sha256": "f3e8077d500ba3cf7238a2c5dbca63f33d840bdb3b8dada15660249e3032e08a",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": false
+      },
+      {
+        "file": "candidate.pdf",
+        "sha256": "b0d8072ce1ea71c3c759c38e63c20561a0ecaf1bb8e96774a5f0c4c8a9e24884",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": true
+      }
+    ],
+    [
+      {
+        "file": "ordinary.pdf",
+        "sha256": "f3e8077d500ba3cf7238a2c5dbca63f33d840bdb3b8dada15660249e3032e08a",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": false
+      },
+      {
+        "file": "candidate.pdf",
+        "sha256": "b0d8072ce1ea71c3c759c38e63c20561a0ecaf1bb8e96774a5f0c4c8a9e24884",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": true
+      }
+    ]
+  ],
+  "repeatable_bytes": true,
+  "worker_failures": [
+    {
+      "case": "absent-font",
+      "exit_code": 1,
+      "no_output_exposed": true
+    },
+    {
+      "case": "malformed-font",
+      "exit_code": 1,
+      "no_output_exposed": true
+    },
+    {
+      "case": "absent-color",
+      "exit_code": 1,
+      "no_output_exposed": true
+    }
+  ],
+  "adapter": [
+    {
+      "case": "truetype-multipage",
+      "sha256": "9f9dd3c077d912f656d450390186c172f043a071f2a561a638bcd256507cbbd4",
+      "ordered_actual_text_matches_retained": true,
+      "extracted_text_matches_after_separator_normalization": true,
+      "page_boxes_match_retained": true
+    },
+    {
+      "case": "cff-exact-text",
+      "sha256": "ee9839390e1c128eea0a616dd4c9907cb6bba3e163fdaed3aee36db1d02403ba",
+      "ordered_actual_text_matches_retained": true,
+      "extracted_text_matches_after_separator_normalization": true,
+      "page_boxes_match_retained": true
+    },
+    {
+      "case": "artwork-transparency",
+      "sha256": "1416b2db45a533ac3a78e0cdd404ee4586da66e3905179b0c39ca1c91cc9033e",
+      "ordered_actual_text_matches_retained": true,
+      "extracted_text_matches_after_separator_normalization": true,
+      "page_boxes_match_retained": true
+    }
+  ],
+  "fresh_independent_pdfx4_check": false,
+  "caller": {
+    "name": "pdf-library-standalone-client.exe",
+    "sha256": "b48d5d779eabce7f662e0425de7388b6c7af323d8d5048961c468a44565cb192"
+  },
+  "host_receipt_sha256": "4260b014ea2a3c784f35e5392fc604b0b1eb09b863f7d052a331466b0651352c",
+  "independent_evidence": "standalone-independent.json; the exact generated hashes are unchanged"
+}

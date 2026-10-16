@@ -1,0 +1,1057 @@
+{
+  "schema": "pdf-library-u5-appearance-probes/v1",
+  "all_scenario_probes_passed": true,
+  "scenario_probes": [
+    {
+      "engine": "pdfium",
+      "mode": "ordinary",
+      "probes": [
+        {
+          "scenario": "RGB axial start padding",
+          "point": [
+            45,
+            400
+          ],
+          "actual": [
+            255,
+            0,
+            0
+          ],
+          "expected": [
+            255,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB interior multistop",
+          "point": [
+            125,
+            400
+          ],
+          "actual": [
+            2,
+            253,
+            0
+          ],
+          "expected": [
+            0,
+            255,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB axial end padding",
+          "point": [
+            265,
+            400
+          ],
+          "actual": [
+            0,
+            2,
+            253
+          ],
+          "expected": [
+            0,
+            0,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB hard stop left limit",
+          "point": [
+            145,
+            240
+          ],
+          "actual": [
+            255,
+            0,
+            0
+          ],
+          "expected": [
+            255,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB hard stop right limit",
+          "point": [
+            165,
+            240
+          ],
+          "actual": [
+            0,
+            0,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB radial center",
+          "point": [
+            455,
+            405
+          ],
+          "actual": [
+            0,
+            0,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            255
+          ],
+          "tolerance": 5,
+          "passed": true
+        },
+        {
+          "scenario": "variable alpha radial opaque center",
+          "point": [
+            455,
+            250
+          ],
+          "actual": [
+            0,
+            255,
+            0
+          ],
+          "expected": [
+            0,
+            255,
+            0
+          ],
+          "tolerance": 5,
+          "passed": true
+        },
+        {
+          "scenario": "variable alpha radial transparent padding",
+          "point": [
+            345,
+            250
+          ],
+          "actual": [
+            179,
+            178,
+            178
+          ],
+          "expected": [
+            179,
+            179,
+            179
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "axial transparent endpoint",
+          "point": [
+            355,
+            90
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "independent color and alpha midpoint",
+          "point": [
+            455,
+            90
+          ],
+          "actual": [
+            104,
+            253,
+            103
+          ],
+          "expected": [
+            102,
+            255,
+            102
+          ],
+          "tolerance": 5,
+          "passed": true
+        },
+        {
+          "scenario": "isolated group half opacity",
+          "point": [
+            75,
+            90
+          ],
+          "actual": [
+            255,
+            128,
+            128
+          ],
+          "expected": [
+            255,
+            128,
+            128
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "group opacity once at inner overlap",
+          "point": [
+            155,
+            90
+          ],
+          "actual": [
+            128,
+            128,
+            255
+          ],
+          "expected": [
+            128,
+            128,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "group overlap and nonoverlap agree",
+          "point": [
+            255,
+            90
+          ],
+          "actual": [
+            128,
+            128,
+            255
+          ],
+          "expected": [
+            128,
+            128,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Gray hard stop left",
+          "point": [
+            145,
+            200
+          ],
+          "actual": [
+            0,
+            0,
+            0
+          ],
+          "expected": [
+            0,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Gray hard stop right",
+          "point": [
+            165,
+            200
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "transform clip excludes outside point",
+          "point": [
+            150,
+            120
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Normal blend on completed group",
+          "point": [
+            70,
+            530
+          ],
+          "actual": [
+            64,
+            0,
+            191
+          ],
+          "expected": [
+            64,
+            0,
+            191
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Multiply blend on completed group",
+          "point": [
+            215,
+            530
+          ],
+          "actual": [
+            64,
+            0,
+            0
+          ],
+          "expected": [
+            64,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Screen blend on completed group",
+          "point": [
+            360,
+            530
+          ],
+          "actual": [
+            255,
+            0,
+            191
+          ],
+          "expected": [
+            255,
+            0,
+            191
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "transformed triangular clip retains gray alpha paint",
+          "point": [
+            140,
+            65
+          ],
+          "actual": [
+            149,
+            149,
+            149
+          ],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "engine": "pdfium",
+      "mode": "pdfx4",
+      "probes": [
+        {
+          "scenario": "CMYK hard transition retains distinct flat limits",
+          "left": [
+            0,
+            174,
+            239
+          ],
+          "right": [
+            255,
+            241,
+            1
+          ],
+          "passed": true
+        },
+        {
+          "scenario": "CMYK gradient padding agrees with same-reader decoded image cyan",
+          "gradient": [
+            0,
+            174,
+            239
+          ],
+          "image": [
+            0,
+            174,
+            239
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "print transformed clip excludes outside point",
+          "point": [
+            150,
+            120
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "print Gray hard stop left",
+          "point": [
+            145,
+            200
+          ],
+          "actual": [
+            0,
+            0,
+            0
+          ],
+          "expected": [
+            0,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "print Gray hard stop right",
+          "point": [
+            165,
+            200
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "engine": "poppler",
+      "mode": "ordinary",
+      "probes": [
+        {
+          "scenario": "RGB axial start padding",
+          "point": [
+            45,
+            400
+          ],
+          "actual": [
+            255,
+            0,
+            0
+          ],
+          "expected": [
+            255,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB interior multistop",
+          "point": [
+            125,
+            400
+          ],
+          "actual": [
+            0,
+            254,
+            0
+          ],
+          "expected": [
+            0,
+            255,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB axial end padding",
+          "point": [
+            265,
+            400
+          ],
+          "actual": [
+            0,
+            0,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB hard stop left limit",
+          "point": [
+            145,
+            240
+          ],
+          "actual": [
+            255,
+            0,
+            0
+          ],
+          "expected": [
+            255,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB hard stop right limit",
+          "point": [
+            165,
+            240
+          ],
+          "actual": [
+            0,
+            0,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "RGB radial center",
+          "point": [
+            455,
+            405
+          ],
+          "actual": [
+            0,
+            0,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            255
+          ],
+          "tolerance": 5,
+          "passed": true
+        },
+        {
+          "scenario": "variable alpha radial opaque center",
+          "point": [
+            455,
+            250
+          ],
+          "actual": [
+            0,
+            255,
+            0
+          ],
+          "expected": [
+            0,
+            255,
+            0
+          ],
+          "tolerance": 5,
+          "passed": true
+        },
+        {
+          "scenario": "variable alpha radial transparent padding",
+          "point": [
+            345,
+            250
+          ],
+          "actual": [
+            178,
+            178,
+            178
+          ],
+          "expected": [
+            179,
+            179,
+            179
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "axial transparent endpoint",
+          "point": [
+            355,
+            90
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "independent color and alpha midpoint",
+          "point": [
+            455,
+            90
+          ],
+          "actual": [
+            102,
+            254,
+            102
+          ],
+          "expected": [
+            102,
+            255,
+            102
+          ],
+          "tolerance": 5,
+          "passed": true
+        },
+        {
+          "scenario": "isolated group half opacity",
+          "point": [
+            75,
+            90
+          ],
+          "actual": [
+            255,
+            127,
+            127
+          ],
+          "expected": [
+            255,
+            128,
+            128
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "group opacity once at inner overlap",
+          "point": [
+            155,
+            90
+          ],
+          "actual": [
+            127,
+            127,
+            255
+          ],
+          "expected": [
+            128,
+            128,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "group overlap and nonoverlap agree",
+          "point": [
+            255,
+            90
+          ],
+          "actual": [
+            127,
+            127,
+            255
+          ],
+          "expected": [
+            128,
+            128,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Gray hard stop left",
+          "point": [
+            145,
+            200
+          ],
+          "actual": [
+            0,
+            0,
+            0
+          ],
+          "expected": [
+            0,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Gray hard stop right",
+          "point": [
+            165,
+            200
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "transform clip excludes outside point",
+          "point": [
+            150,
+            120
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Normal blend on completed group",
+          "point": [
+            70,
+            530
+          ],
+          "actual": [
+            64,
+            0,
+            191
+          ],
+          "expected": [
+            64,
+            0,
+            191
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Multiply blend on completed group",
+          "point": [
+            215,
+            530
+          ],
+          "actual": [
+            64,
+            0,
+            0
+          ],
+          "expected": [
+            64,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "Screen blend on completed group",
+          "point": [
+            360,
+            530
+          ],
+          "actual": [
+            255,
+            0,
+            191
+          ],
+          "expected": [
+            255,
+            0,
+            191
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "transformed triangular clip retains gray alpha paint",
+          "point": [
+            140,
+            65
+          ],
+          "actual": [
+            150,
+            150,
+            150
+          ],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "engine": "poppler",
+      "mode": "pdfx4",
+      "probes": [
+        {
+          "scenario": "CMYK hard transition retains distinct flat limits",
+          "left": [
+            0,
+            173,
+            239
+          ],
+          "right": [
+            255,
+            242,
+            0
+          ],
+          "passed": true
+        },
+        {
+          "scenario": "CMYK gradient padding agrees with same-reader decoded image cyan",
+          "gradient": [
+            0,
+            173,
+            239
+          ],
+          "image": [
+            0,
+            172,
+            239
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "print transformed clip excludes outside point",
+          "point": [
+            150,
+            120
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "print Gray hard stop left",
+          "point": [
+            145,
+            200
+          ],
+          "actual": [
+            0,
+            0,
+            0
+          ],
+          "expected": [
+            0,
+            0,
+            0
+          ],
+          "tolerance": 3,
+          "passed": true
+        },
+        {
+          "scenario": "print Gray hard stop right",
+          "point": [
+            165,
+            200
+          ],
+          "actual": [
+            255,
+            255,
+            255
+          ],
+          "expected": [
+            255,
+            255,
+            255
+          ],
+          "tolerance": 3,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "page2_region_metrics": {
+    "gray_axial": {
+      "mean_channel_difference": 0.808695652173913,
+      "p95_max_channel_difference": 2.0,
+      "pixels_above_10_percent": 0.0
+    },
+    "gray_radial": {
+      "mean_channel_difference": 1.0961195652173914,
+      "p95_max_channel_difference": 2.0,
+      "pixels_above_10_percent": 0.0
+    },
+    "cmyk_axial": {
+      "mean_channel_difference": 8.313888888888888,
+      "p95_max_channel_difference": 35.0,
+      "pixels_above_10_percent": 73.33333333333333
+    },
+    "cmyk_radial": {
+      "mean_channel_difference": 5.8338320707070705,
+      "p95_max_channel_difference": 38.0,
+      "pixels_above_10_percent": 47.245265151515156
+    },
+    "gray_hardstop": {
+      "mean_channel_difference": 0.2782608695652174,
+      "p95_max_channel_difference": 0.0,
+      "pixels_above_10_percent": 0.21739130434782608
+    },
+    "cmyk_hardstop": {
+      "mean_channel_difference": 0.8263888888888888,
+      "p95_max_channel_difference": 2.0,
+      "pixels_above_10_percent": 0.20833333333333334
+    },
+    "gray_transform_alpha_clip": {
+      "mean_channel_difference": 0.311031149301826,
+      "p95_max_channel_difference": 2.0,
+      "pixels_above_10_percent": 0.0
+    },
+    "cmyk_transform_alpha_clip": {
+      "mean_channel_difference": 1.090009276437848,
+      "p95_max_channel_difference": 17.0,
+      "pixels_above_10_percent": 10.466604823747682
+    }
+  },
+  "page2_whole_metrics": {
+    "mean_channel_difference": 1.243686633039092,
+    "p95_max_channel_difference": 23.0,
+    "pixels_above_10_percent": 8.823076923076924
+  },
+  "page2_high_difference_pixels": {
+    "inside_cmyk_probe_rectangles": 138834,
+    "outside_cmyk_probe_rectangles": 1100
+  },
+  "strict_gallery_comparison_passed": false,
+  "strict_comparison_receipt_sha256": "4e2b64bc367f906fcd2c2759d296bfdbc36f24de8b1941d7cda5266e8a6ba6f1",
+  "interpretation": "Reader previews disagree in native DeviceCMYK gradient areas; gray/RGB, alpha, hard-edge, clip and group/blend scenario probes pass independently in both readers. Exact whole-page bounds and failures remain retained.",
+  "inputs": [
+    {
+      "file": "ordinary.pdf",
+      "mode": "ordinary",
+      "sha256": "ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8"
+    },
+    {
+      "file": "candidate.pdf",
+      "mode": "pdfx4",
+      "sha256": "5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab"
+    }
+  ],
+  "probe_script_sha256": "d49c220b51843027f543deaf24b5f82e1edd0995e4f38e324975182fb33d0f85",
+  "scenario_count": 50,
+  "host_receipt_sha256": "25eddfc553acf49c608fac66f74565111612158910e0fe1577d477cc1e8c39b5",
+  "source_files": [
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "sha256": "eda9d2dc569b03da0ca3a31c1cea99fac118a5ddc68f4fa5b6f46df95af39337"
+    },
+    {
+      "path": "crates/print-core/src/finished_writer.rs",
+      "sha256": "10d1b1d892ebe19ac225df40e8e13ee13a397e50093fd8a808195a01f243777b"
+    },
+    {
+      "path": "crates/print-core/src/finished_gradient.rs",
+      "sha256": "aa8fc1753ea035ae26a783ea3f3cca7022116f0e6fa837b6b0b75dfb4d781996"
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "sha256": "e1276ae52defc5af809528aa24cbd5913180a498c4bfa13fc29e094866d454f2"
+    },
+    {
+      "path": "crates/print-core/src/profile.rs",
+      "sha256": "5a758cea72c62fb3d8efb56d47067511cf1c2d0192f3e9876c6d36cf6a7dc1ba"
+    },
+    {
+      "path": "crates/print-core/src/candidate_metadata.rs",
+      "sha256": "bd24612d8e7c34c9a324b254633a51efc1a49d574aa97e8eea4da8b8c39251d9"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "sha256": "90283a5602d556264781280e93f09ee4a0f929f1bd4a11ec664f940ffe2b1014"
+    },
+    {
+      "path": "crates/print-core/tests/finished_gradients.rs",
+      "sha256": "5a79a86f828dc4f68aabe3b63322991596f4c9a0bf4346e394e2871a15f8e963"
+    },
+    {
+      "path": "examples/standalone-client/examples/feature-gallery.rs",
+      "sha256": "4d93e97b2c6a6ed5d2510d3cc23ac2e9e19d1ca29c57f8892822f7e8af6c0189"
+    }
+  ]
+}

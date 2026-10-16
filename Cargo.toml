@@ -1,0 +1,33 @@
+[workspace]
+members = [
+  "apps/color-worker",
+  "apps/font-worker",
+  "apps/pdf-cli",
+  "apps/raster-worker",
+  "apps/validator-worker",
+  "crates/application-core",
+  "crates/color-boundary",
+  "crates/document-core",
+  "crates/font-boundary",
+  "crates/layout-core",
+  "crates/print-core",
+  "crates/raster-boundary",
+  "crates/raster-capacity",
+  "crates/validator-boundary",
+  "crates/windows-atomic-file",
+  "crates/windows-worker-job",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.98"
+license = "MIT OR Apache-2.0"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = "deny"
+pedantic = "deny"

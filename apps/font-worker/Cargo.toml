@@ -1,0 +1,23 @@
+[package]
+name = "publisher-font-worker"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[[bin]]
+name = "publisher-font-worker"
+path = "src/main.rs"
+test = false
+
+[dependencies]
+layout-core = { path = "../../crates/layout-core" }
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = "=1.0.149"
+sha2 = "=0.10.9"
+subsetter = "=0.2.6"
+ttf-parser = { version = "=0.25.1", default-features = false, features = ["std", "glyph-names"] }
+
+[lints]
+workspace = true

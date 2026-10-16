@@ -1,0 +1,510 @@
+{
+  "schema_version": 1,
+  "authority_id": "publisher-v2/pdf-x-4-authority/v1",
+  "standard": "PDF/X-4",
+  "coverage_status": "incomplete",
+  "sources": [
+    {
+      "source_id": "PDFX-COVERAGE-POLICY",
+      "role": "local-verification-policy",
+      "url": "docs/requirements/README.md",
+      "status": "incomplete"
+    },
+    {
+      "source_id": "ADOBE-PDF-1.7",
+      "role": "public-base-format-reference",
+      "url": "https://opensource.adobe.com/dc-acrobat-sdk-docs/pdfstandards/pdfreference1.7old.pdf",
+      "status": "available"
+    },
+    {
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "role": "public-summary",
+      "url": "https://pdfa.org/pdfx-the-key-facts/",
+      "status": "available"
+    },
+    {
+      "source_id": "GWG-2022",
+      "role": "public-production-extension",
+      "url": "https://gwg.org/technical-specifications/gwg-2022-specifications/",
+      "status": "available"
+    },
+    {
+      "source_id": "GWG-GOS5-X4",
+      "role": "independent-known-good-corpus",
+      "url": "https://gwg.org/gos5/",
+      "status": "local-hash-pinned-nonredistributable"
+    },
+    {
+      "source_id": "PUBLISHER-SAFE-EXPORT-V1",
+      "role": "product-safety-policy",
+      "url": "docs/research/2026-09-03-pdfx4-public-rule-closure.md",
+      "status": "available"
+    },
+    {
+      "source_id": "QPDF-CHECK",
+      "role": "structural-checker",
+      "url": "https://qpdf.readthedocs.io/en/stable/cli.html#cmdoption-qpdf-check",
+      "status": "pinned-windows-runtime"
+    },
+    {
+      "source_id": "LITTLECMS-LCMS2-RS-6.2.0",
+      "role": "icc-semantic-engine",
+      "url": "https://www.littlecms.com/color-engine/",
+      "status": "pinned-static-runtime"
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "PX4-NORMATIVE-INVENTORY",
+      "source_id": "PDFX-COVERAGE-POLICY",
+      "requirement_summary": "Every applicable normative PDF/X-4 requirement is mapped to an evaluator and fixtures.",
+      "severity": "blocker",
+      "evaluator": "rule-authority",
+      "implementation_status": "normative-pending",
+      "fixtures": []
+    },
+    {
+      "rule_id": "PX4-STRUCTURAL-INTEGRITY",
+      "source_id": "QPDF-CHECK",
+      "requirement_summary": "The PDF is syntactically readable without recovery, malformed streams, or structural warnings.",
+      "severity": "blocker",
+      "evaluator": "qpdf",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "windows-production-candidate",
+        "missing-startxref"
+      ]
+    },
+    {
+      "rule_id": "PX4-OUTPUT-INTENT",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "A readable embedded output-intent ICC profile matches the selected print condition.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "missing-output-intent",
+        "wrong-output-profile"
+      ]
+    },
+    {
+      "rule_id": "PX4-FONT-EMBEDDING",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Every used font has a readable embedded program containing the required glyphs.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "type0-descendant-subset",
+        "unembedded-standard-font",
+        "unembedded-inherited-page-font",
+        "unembedded-form-xobject-font",
+        "unembedded-annotation-appearance-font",
+        "unembedded-annotation-appearance-state-font",
+        "corrupt-embedded-truetype-program",
+        "missing-used-identity-glyph",
+        "nested-missing-used-identity-glyph",
+        "appearance-missing-used-identity-glyph",
+        "used-stream-cid-to-gid-control",
+        "used-flate-stream-cid-to-gid-control",
+        "zero-stream-cid-to-gid-mapping",
+        "out-of-range-stream-cid-to-gid-mapping",
+        "used-cid-beyond-stream-cid-to-gid-map",
+        "odd-stream-cid-to-gid-map",
+        "malformed-flate-stream-cid-to-gid-map",
+        "aggregate-stream-cid-to-gid-budget",
+        "used-identity-cff-glyph-control",
+        "missing-used-identity-cff-glyph",
+        "used-simple-cff-glyph-control",
+        "missing-used-simple-cff-glyph",
+        "predefined-macroman-cff-control",
+        "missing-predefined-macroman-cff-glyph",
+        "predefined-winansi-cff-control",
+        "missing-predefined-winansi-cff-glyph",
+        "used-simple-truetype-glyph-control",
+        "missing-used-simple-truetype-glyph",
+        "used-type3-charproc-control",
+        "missing-used-type3-charproc"
+      ]
+    },
+    {
+      "rule_id": "PX4-ENCRYPTION",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "The document is not encrypted or password protected.",
+      "severity": "blocker",
+      "evaluator": "pdf-oxide-diagnostic",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "encrypted-trailer"
+      ]
+    },
+    {
+      "rule_id": "PX4-PAGE-BOXES",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Required page boxes exist and any bleed area correctly encloses the trim area within the media area.",
+      "severity": "blocker",
+      "evaluator": "pdf-oxide-diagnostic",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "missing-media-box",
+        "missing-trim-or-art-box",
+        "bleed-outside-media",
+        "trim-outside-bleed"
+      ]
+    },
+    {
+      "rule_id": "PX4-ACTIONS-AND-JAVASCRIPT",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "JavaScript, XFA content, and other publicly confirmed prohibited interactive behavior are absent.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "javascript-open-action",
+        "named-javascript-tree",
+        "xfa-form"
+      ]
+    },
+    {
+      "rule_id": "PUBLISHER-SAFE-ACTIONS",
+      "source_id": "PUBLISHER-SAFE-EXPORT-V1",
+      "requirement_summary": "Publisher exports contain no recognized PDF 1.7 action dictionary; this is deliberately stricter than the unresolved baseline PDF/X-4 action matrix.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "pdf17-action-subtype-vocabulary",
+        "typed-private-action",
+        "launch-open-action",
+        "catalog-open-action",
+        "page-additional-action",
+        "annotation-primary-action",
+        "chained-next-action",
+        "cyclic-next-action"
+      ]
+    },
+    {
+      "rule_id": "PUBLISHER-SAFE-FORMS",
+      "source_id": "PUBLISHER-SAFE-EXPORT-V1",
+      "requirement_summary": "Publisher exports contain no AcroForm catalog or form-field dictionary; this is deliberately stricter than the unresolved baseline PDF/X-4 form matrix.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "acroform-field",
+        "xfa-form"
+      ]
+    },
+    {
+      "rule_id": "PX4-ANNOTATIONS",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Annotations are restricted according to PDF/X-4 requirements and their printable area.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "text-annotation-warning-gap",
+        "3d-annotation",
+        "movie-annotation",
+        "sound-annotation",
+        "screen-annotation",
+        "rich-media-annotation"
+      ]
+    },
+    {
+      "rule_id": "PUBLISHER-SAFE-ANNOTATION-PLACEMENT",
+      "source_id": "PUBLISHER-SAFE-EXPORT-V1",
+      "requirement_summary": "Publisher exports keep annotations outside the effective TrimBox or ArtBox; positive-area overlap and unreadable placement fail safe, while boundary contact remains quarantined.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "annotation-inside-trim",
+        "annotation-crossing-art",
+        "annotation-reversed-rectangle",
+        "annotation-parent-only-trim-fails-safe",
+        "annotation-outside-control",
+        "annotation-touching-quarantine",
+        "annotation-missing-rectangle"
+      ]
+    },
+    {
+      "rule_id": "PUBLISHER-SAFE-TEXT-ANNOTATIONS",
+      "source_id": "PUBLISHER-SAFE-EXPORT-V1",
+      "requirement_summary": "Publisher exports contain no Text annotations; this is deliberately stricter than the unresolved baseline PDF/X-4 subtype and severity rules.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "text-annotation-outside-print-area",
+        "stamp-annotation-outside-print-area-control"
+      ]
+    },
+    {
+      "rule_id": "PX4-ICC-PROFILE-VALIDITY",
+      "source_id": "PDFX-COVERAGE-POLICY",
+      "requirement_summary": "Every used ICCBased color space contains a valid profile whose channel count and device class agree with its PDF use.",
+      "severity": "blocker",
+      "evaluator": "littlecms",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "malformed-active-page-icc",
+        "valid-active-srgb-icc",
+        "declared-channel-mismatch",
+        "malformed-painted-image-icc",
+        "malformed-painted-form-icc",
+        "malformed-active-image-soft-mask-icc",
+        "malformed-applied-soft-mask-group-icc",
+        "malformed-unused-page-icc"
+      ]
+    },
+    {
+      "rule_id": "PX4-ACTIVE-COLOR-SPACE-SEMANTICS",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Active Lab definitions are structurally valid, and device RGB or CMYK use is compatible with the output intent unless a matching default color space provides explicit color management.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "valid-active-lab",
+        "malformed-active-lab-white-point",
+        "unknown-active-color-space-type",
+        "valid-indexed-string-lookup",
+        "valid-indexed-stream-lookup",
+        "valid-indexed-single-flate-filter-array",
+        "valid-indexed-noop-flate-decode-parameters",
+        "invalid-indexed-nondefault-flate-predictor",
+        "valid-indexed-named-base-alias",
+        "valid-indexed-devicen-base",
+        "invalid-indexed-hival",
+        "invalid-indexed-lookup-length-or-storage",
+        "invalid-indexed-pattern-shadow-base",
+        "bounded-indexed-flate-expansion",
+        "cached-repeated-indexed-stream-selection",
+        "device-rgb-cmyk-output-intent-mismatch",
+        "default-rgb-icc-under-cmyk-output-intent-control"
+      ]
+    },
+    {
+      "rule_id": "PDF-CONTENT-INDEXED-COLOR-OPERANDS",
+      "source_id": "ADOBE-PDF-1.7",
+      "requirement_summary": "A directly selected Indexed color space uses one numeric component with SC, SCN, sc, or scn; real and out-of-range numbers are rounded or clamped by the PDF consumer.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "indexed-content-normalization-control",
+        "invalid-indexed-content-component-arity",
+        "independent-indexed-fill-stroke-state",
+        "restored-indexed-graphics-state",
+        "inherited-indexed-form-state",
+        "invalid-indexed-pattern-name-operand",
+        "invalid-indexed-selection-resource-alias"
+      ]
+    },
+    {
+      "rule_id": "PDF-CONTENT-GRAPHICS-STATE-BALANCE",
+      "source_id": "ADOBE-PDF-1.7",
+      "requirement_summary": "Every walked page, Form, and pattern content program balances q graphics-state saves with Q restores without underflow.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "invalid-unmatched-graphics-state-restore",
+        "invalid-unmatched-graphics-state-save"
+      ]
+    },
+    {
+      "rule_id": "PDF-CONTENT-PATTERN-SELECTION",
+      "source_id": "ADOBE-PDF-1.7",
+      "requirement_summary": "A parsed Pattern color selection names an available resource with the required tiling entries or readable shading color-space structure; colored and shading patterns use no numeric components, while an uncolored tiling pattern uses exactly the component count of its non-Pattern underlying color space.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "colored-tiling-pattern-selection-control",
+        "uncolored-cmyk-tiling-pattern-selection-control",
+        "shading-pattern-selection-control",
+        "missing-pattern-resource",
+        "invalid-pattern-component-arity",
+        "mismatched-pattern-paint-type",
+        "malformed-tiling-pattern-dictionary",
+        "invalid-shading-pattern-color-space",
+        "recursive-pattern-selection",
+        "nested-pattern-base-budget"
+      ]
+    },
+    {
+      "rule_id": "PDF-UNCOLORED-TILING-PATTERN-CONTENT",
+      "source_id": "ADOBE-PDF-1.7",
+      "requirement_summary": "A parsed uncolored tiling-pattern program does not set color, invoke shading, change rendering intent, use the listed color-related ExtGState entries, or paint an image other than a structurally valid image mask.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "uncolored-pattern-geometry-control",
+        "uncolored-pattern-image-mask-control",
+        "uncolored-pattern-color-operator",
+        "uncolored-pattern-colored-image",
+        "uncolored-pattern-invalid-image-mask",
+        "uncolored-pattern-shading-or-rendering-intent",
+        "uncolored-pattern-color-extgstate"
+      ]
+    },
+    {
+      "rule_id": "PDF-INDEXED-IMAGE-SAMPLES",
+      "source_id": "ADOBE-PDF-1.7",
+      "requirement_summary": "An active ordinary non-JPX Image XObject using an Indexed color space has positive integer dimensions, a permitted bit depth, an optional two-number Decode array, and a complete bounded raw or single-Flate sample stream whose decoded length matches its row-padded extent; external data and unsupported filter semantics fail closed.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "indexed-image-row-padding-control",
+        "indexed-image-bit-depth-controls",
+        "indexed-image-decode-controls",
+        "indexed-image-intrinsic-entry-faults",
+        "indexed-image-raw-and-flate-controls",
+        "indexed-image-stream-integrity-faults",
+        "indexed-image-aggregate-work-budget",
+        "indexed-image-external-data-faults",
+        "indexed-image-reachability-controls",
+        "indexed-image-cache-context-control"
+      ]
+    },
+    {
+      "rule_id": "PDF-IMAGE-MASK-COLOR-NEUTRAL-STRUCTURE",
+      "source_id": "ADOBE-PDF-1.7",
+      "requirement_summary": "An active image-mask XObject, or an inline mask accepted inside an uncolored tiling pattern, has positive integer dimensions, no color space or nested mask entries, optional one-bit sample depth, and an optional Decode array of exactly [0 1] or [1 0]; external Image XObjects reject the inline-only IM, BPC, and CS aliases.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "image-mask-color-neutral-control",
+        "image-mask-missing-dimension-fault",
+        "image-mask-color-space-fault",
+        "image-mask-decode-fault",
+        "image-xobject-inline-alias-faults",
+        "uncolored-pattern-inline-image-mask-controls"
+      ]
+    },
+    {
+      "rule_id": "PX4-SPOT-ALTERNATE-CONSISTENCY",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Every active Separation or DeviceN color space has names, an alternate color space, and a readable tint function; repeated ordinary spot names do not declare clearly conflicting alternate color-space families.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "partial",
+      "fixtures": [
+        "repeated-spot-same-alternate-control",
+        "repeated-spot-conflicting-alternate",
+        "repeated-lab-spot-conflicting-parameters",
+        "repeated-calrgb-spot-same-parameters-control",
+        "repeated-calrgb-spot-conflicting-parameters",
+        "calgray-default-and-signed-zero-canonicalization",
+        "lab-default-and-signed-zero-canonicalization",
+        "negative-exponent-domain-excluding-zero-control",
+        "zero-exponent-control",
+        "reversed-tint-range",
+        "default-one-component-tint-cmyk-mismatch",
+        "stitching-tint-invalid-child"
+      ]
+    },
+    {
+      "rule_id": "PX4-X4-ALLOWED-FEATURES",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "PDF/X-4-valid live transparency, non-Normal blend modes, soft masks, transparency groups, static optional content, 16-bit images, and JPEG 2000 are not rejected merely for using those features.",
+      "severity": "blocker",
+      "evaluator": "composite-positive-control",
+      "implementation_status": "partial",
+      "fixtures": [
+        "alpha-extgstate-positive-control",
+        "image-soft-mask-positive-control",
+        "soft-mask-transparency-group-positive-control",
+        "multiply-blend-mode-positive-control",
+        "sixteen-bit-image-positive-control",
+        "static-optional-content-positive-control",
+        "gos5-x4-real-jpx-reachable-corpus"
+      ]
+    },
+    {
+      "rule_id": "PX4-TRANSFER-CURVES",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Prohibited transfer curves are absent.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "transfer-curve-tr",
+        "transfer-curve-tr2-nondefault",
+        "transfer-curve-tr2-default-control",
+        "halftone-transfer-function"
+      ]
+    },
+    {
+      "rule_id": "PX4-ALTERNATE-IMAGES",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Prohibited alternate images are absent.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "alternate-image-list"
+      ]
+    },
+    {
+      "rule_id": "PX4-EMBEDDED-FILES",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Prohibited embedded files and external graphical content are absent.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "embedded-file-name-tree",
+        "embedded-file-associated-file",
+        "external-stream-file",
+        "external-stream-filter-entries",
+        "opi-external-graphics"
+      ]
+    },
+    {
+      "rule_id": "PX4-METADATA-IDENTITY",
+      "source_id": "PDFA-PDFX-KEY-FACTS-2017",
+      "requirement_summary": "Metadata identifies PDF/X-4 conformance and trapping state consistently.",
+      "severity": "blocker",
+      "evaluator": "publisher-rule-engine",
+      "implementation_status": "fixture-proven",
+      "fixtures": [
+        "missing-xmp-pdfx-identity",
+        "wrong-xmp-pdfx-identity",
+        "conflicting-xmp-pdfx-identity",
+        "xmp-attribute-identity-control",
+        "invalid-xmp-xml",
+        "missing-info-pdfx-identity",
+        "wrong-info-pdfx-identity",
+        "missing-trapped-state",
+        "invalid-trapped-state",
+        "production-candidate-metadata"
+      ]
+    },
+    {
+      "rule_id": "GWG-2022-PRODUCTION-PREFLIGHT",
+      "source_id": "GWG-2022",
+      "requirement_summary": "Chosen production-variant rules are mapped separately from PDF/X conformance and never establish complete PDF/X conformance.",
+      "severity": "blocker",
+      "evaluator": "rule-authority",
+      "implementation_status": "inventory-available",
+      "fixtures": []
+    },
+    {
+      "rule_id": "GWG-GOS5-X4-KNOWN-GOOD",
+      "source_id": "GWG-GOS5-X4",
+      "requirement_summary": "The separately downloaded official PDF/X-4 Ghent Output Suite 5 file is checked only after its published SHA-256 identity is confirmed; it calibrates false rejections without substituting for normative conformance authority.",
+      "severity": "blocker",
+      "evaluator": "local-corpus-harness",
+      "implementation_status": "partial",
+      "fixtures": [
+        "gos5-x4-sha256-6d9686303ea9049350bc1b3253c22a3cc8578bd7dfcc6afeaef89cbbe37d4cbe"
+      ]
+    }
+  ]
+}

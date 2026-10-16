@@ -1,0 +1,100 @@
+[package]
+name = "print-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+color-boundary = { path = "../color-boundary" }
+font-boundary = { path = "../font-boundary" }
+raster-capacity = { path = "../raster-capacity" }
+document-core = { path = "../document-core", optional = true }
+layout-core = { path = "../layout-core", optional = true }
+raster-boundary = { path = "../raster-boundary", optional = true }
+lcms2 = { version = "=6.2.0", features = ["static"] }
+flate2 = { version = "=1.1.10" }
+pdf-writer = "=0.15.0"
+pdf_oxide = { version = "=0.3.73", default-features = false, optional = true }
+read-fonts = { version = "=0.41.0", optional = true }
+roxmltree = { version = "=0.21.1", optional = true }
+sha2 = "=0.10.9"
+chrono = "=0.4.45"
+ttf-parser = { version = "=0.25.1", default-features = false, features = ["std", "glyph-names"], optional = true }
+validator-boundary = { path = "../validator-boundary", optional = true }
+
+[target.'cfg(windows)'.dependencies]
+getrandom = "=0.4.3"
+publisher-windows-atomic-file = { path = "../windows-atomic-file" }
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.143"
+
+[features]
+default = []
+publisher-adapter = ["dep:document-core", "dep:layout-core", "dep:raster-boundary", "dep:validator-boundary"]
+color-management = ["publisher-adapter"]
+pdf-oxide-validator = ["publisher-adapter", "dep:pdf_oxide", "dep:read-fonts", "dep:roxmltree", "dep:ttf-parser"]
+
+[lib]
+path = "src/lib.rs"
+
+[dev-dependencies]
+roxmltree = "=0.21.1"
+ttf-parser = { version = "=0.25.1", default-features = false, features = ["std", "glyph-names"] }
+image = { version = "=0.25.10", default-features = false, features = ["png"] }
+
+[lints]
+workspace = true
+
+[[test]]
+name = "common_rounding"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "gos5_local_corpus"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "large_line_art"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "master_numbering_output"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "pdfx4_allowed_features"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "pdfx_conformance"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "publication_candidate"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "publication_fonts"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "representative_output"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "scene_serialization"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "table_authoring"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "text_table_reopen_determinism"
+required-features = ["publisher-adapter"]
+
+[[test]]
+name = "trusted_raster_pipeline"
+required-features = ["publisher-adapter"]
