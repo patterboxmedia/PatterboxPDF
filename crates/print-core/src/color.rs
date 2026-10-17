@@ -132,8 +132,12 @@ pub(crate) fn publication_color_keys(publication: &ResolvedPublication) -> BTree
                 }
             }
             ResolvedSceneObjectKind::Table { table } => {
-                for fill in &table.cell_fills {colors.insert(rgb_key(fill.color));}
-                for edge in &table.border_segments {colors.insert(rgb_key(edge.color));}
+                for fill in &table.cell_fills {
+                    colors.insert(rgb_key(fill.color));
+                }
+                for edge in &table.border_segments {
+                    colors.insert(rgb_key(edge.color));
+                }
                 if table.grid_width_millipoints > 0 {
                     colors.insert(rgb_key(table.grid_color));
                 }

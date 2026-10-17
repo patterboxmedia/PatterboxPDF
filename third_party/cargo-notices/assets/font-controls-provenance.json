@@ -1,0 +1,59 @@
+{
+  "schema": "patterbox-u2-font-controls/v1",
+  "cff_original_source_asset": "crates/layout-core/tests/fixtures/NotoSansCJKsc-Regular.otf",
+  "cff_original_source_sha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b",
+  "cff_parent_subset_sha256": "b1cc669ccdc74d3ab855c203f21b0fec3c09a37ccdc076a567868ede2de7b300",
+  "cff_license": "OFL-1.1; renamed derivatives; copyright metadata retained",
+  "truetype_license": "MIT OR Apache-2.0; original project control",
+  "control_scope": {
+    "positive": "All controls except the explicitly malformed and normalization-only cases",
+    "malformed": [
+      "no-endchar.otf",
+      "partial.otf",
+      "subr-no-return.otf"
+    ],
+    "normalization_characterization_only": [
+      "absent-top.otf"
+    ],
+    "absent_top_limit": "Retained to inspect source/prepared normalization. It is excluded from positive qualification, including any large effective geometry or renderer overflow."
+  },
+  "controls": {
+    "default.otf": "27cd5a1c50967d41e1be12639be2bb1e537cfcbc4d1439be63be716cd3e795ca",
+    "top.otf": "3635c28b4ce0c48f4e053e4ef10cd437ba28c53165445de7b7e49dae983bb077",
+    "fd.otf": "273267dec7d5baef5731d34df423b5d6f713da303dd12ccfe1f83dcf45facd42",
+    "absent-top.otf": "8b4c1f53beff66933d5d52153462e318966a14ea376b598750fd4e37db2e4ebc",
+    "reflected.otf": "af1609acaf18a719a26c82d8ab5f3232f6e9a7f8f4878b47f45807644e06ce26",
+    "fractional.otf": "8bd6c0dcf353c60f6321f162543e6bd135c89e2b83274ab916590486b7f1c07c",
+    "hflex.otf": "71217df4d32c668855c59b4a4dcdfcd4999f80dc67d3f36ac5bcd092942886da",
+    "flex.otf": "b5a77ad8b17898f50e2656273bf4c68a4161011621d14ed14d66960031d27444",
+    "hflex1.otf": "f315bbf0b3b211141623df6b235c6205cfcd7c86b6d5e63b8c9f2e431105753b",
+    "flex1.otf": "7e5e9fc3ca87263c76988e2d4692b2c130056455d8f97e7f41937a10dbc03e1b",
+    "empty.otf": "c67350a50007c82364b948feca9849f618049b1f2a1361180eda76f6e0eff149",
+    "no-endchar.otf": "2309e563cd2795e2d6e7fa00e762703b77eea9f38921cac11ec1d33b06cb5a26",
+    "partial.otf": "db48a74c7949992915c98c77c00357e94dc7823ddc4beb22a9a4ab26fc1b0336",
+    "subr-no-return.otf": "4976f23ab6d275120569bde3a08000ccbe1cf21560b44f65061a2f332bb4ed56",
+    "width-diff.otf": "ad3df0d8d2e8b3ff924eebebe95283d254de0e06f7a885241a168d90dd195d81",
+    "accumulated-fraction.otf": "ec0c9d3a4a3b0d515ed2c10cac00fbcc53b7c7e800dda9820346c28c224ba32e",
+    "tiny-positive.otf": "64a001f5e9b1f9ab4d664b6c310ac0f114560927bb176555304490c2b1f5aac2",
+    "tiny-negative.otf": "cde827545c1abd7cb226bd0fe91c22d2140ae75e6a3da7b7b5130e67c1fef162",
+    "integer-translation.otf": "6492ca56db24fa2e4b520fa63cf9c42fdd78c249ea615a522a2c04eedc86e84b",
+    "implicit-default.otf": "0b60c2dcb4d659888ece9772a16cbc740f2b8b3fff988da057dca4e61451d6e5",
+    "explicit-default.otf": "73a200b946b5e696aacde6e59d4436e46b90fda12c5cead4a2e08685779409d8",
+    "implicit-scaled.otf": "a08d66328d63ca0cf1805198cc361ec0a8547b22e0174ecda6c9c578fb8dd381",
+    "explicit-scaled.otf": "f216c5f1354a59ac324a4962a4f1309be6069060fb6d8f4bd707f31f165c389b",
+    "implicit-translated.otf": "2a7ee0c22b27738ef020c62c4efe17243b2c5e46f060b943851ae5abfe2a5487",
+    "explicit-translated.otf": "6889b3f80b46899ee0b6a53a73d8cd4d48d8054add5da35b705117cdd0b34dd4",
+    "hflex_top.otf": "4990dbc500ae41beac1b42b8962ea0085e0ffa071d769b4c98ec98d1de7be4dd",
+    "hflex_fd.otf": "41d34f7c30fe05898a7b907e22149622915f8105358e0bdded14c40e477dffee",
+    "flex_top.otf": "efbddd877ad1e0a348ed0d75695eadae45f9025a287e08fe74a746e219e3cdbd",
+    "flex_fd.otf": "3185733bd48e57f176c7f1c45af9bee206c8c9596da13e79e31bbe4308497a6f",
+    "hflex1_top.otf": "fb398cee88b1acc9dce6aa10e4adae037d252e1dfefa698689ddc30bccb4bcac",
+    "hflex1_fd.otf": "93a2dfc1fae7e8d586947b451af48ada684b8ad240b9e467b051feb5935f78ac",
+    "flex1_top.otf": "2b5210102299501101e0ac0a3d9e7699609dc35108a51ff3c68deb634f54793a",
+    "flex1_fd.otf": "c73460944830d7b2a637d3f0647e072b916fd88aeac14a2c658ea4c590dc5d87",
+    "original.ttf": "7d595cd8e4857c6244d109631d44bebe91c1020f92a9d3c3e68cda2a73720f56",
+    "ascent-unencoded-high.otf": "9c9cea8056d087ebdfcf57290b41eae0845d7fcb103763addf34ef731a5cf26b",
+    "ascent-coded-high.otf": "122f8d396ed1c321f34e7ea452557e8668ccd736128c47284fdf72479417888c",
+    "ascent-unencoded-low.otf": "34457df9cee26310c513b37cd912578564f2fe3de3e965e27408db812f569f26"
+  }
+}

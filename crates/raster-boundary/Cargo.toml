@@ -15,5 +15,8 @@ sha2 = "=0.10.9"
 [target.'cfg(windows)'.dependencies]
 publisher-worker-job = { path = "../windows-worker-job" }
 
+[target.'cfg(all(target_os = "linux", target_arch = "x86_64"))'.dependencies]
+publisher-linux-worker-job = { path = "../linux-worker-job" }
+
 [lints]
 workspace = true

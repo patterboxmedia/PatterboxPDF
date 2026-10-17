@@ -185,6 +185,7 @@ pub struct PositionedGlyphRun {
     pub font: ResourceId,
     pub font_size: f32,
     pub glyphs: Vec<PositionedGlyph>,
+    /// Logical text; U+001B language escape inputs are unsupported.
     pub actual_text: String,
     pub paint: Paint,
 }
@@ -493,6 +494,8 @@ pub enum FinishedPdfError {
     MissingResource(ResourceId),
     DuplicateResource(ResourceId),
     InvalidFont(ResourceId),
+    FontAscentFactsRequired(ResourceId),
+    FontCapHeightFactRequired(ResourceId),
     InvalidImage(ResourceId),
     ResourceLimit,
     InvalidOutputProfile(ProfileError),

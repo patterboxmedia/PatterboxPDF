@@ -1,0 +1,2150 @@
+{
+  "schema": "patterboxpdf-linux-runtime/v1",
+  "status": "passed",
+  "target": "x86_64-unknown-linux-gnu",
+  "kernel": {
+    "system": "Linux",
+    "release": "6.6.87.2-microsoft-standard-WSL2",
+    "version": "#1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025",
+    "machine": "x86_64",
+    "landlock_abi": 3,
+    "environment": "WSL2"
+  },
+  "tools": {
+    "cargo": {
+      "name": "rustup",
+      "sha256": "4acc9acc76d5079515b46346a485974457b5a79893cfb01112423c89aeb5aa10",
+      "bytes": 20838840,
+      "version": "cargo 1.98.0 (797e8a9bc 2026-08-05)"
+    },
+    "rustc": {
+      "name": "rustup",
+      "sha256": "4acc9acc76d5079515b46346a485974457b5a79893cfb01112423c89aeb5aa10",
+      "bytes": 20838840,
+      "version": "rustc 1.98.0 (88d9e12ae 2026-08-18)"
+    },
+    "qpdf": {
+      "name": "qpdf",
+      "sha256": "10fc302c4ca9860f24b8d2cb7f8a4cc454ba59d4a91e7a8e40f6b2c229486df7",
+      "bytes": 18768,
+      "version": "qpdf version 11.9.0\nRun qpdf --copyright to see copyright and license information."
+    }
+  },
+  "python": {
+    "version": "3.12.3",
+    "pypdf": "6.10.0",
+    "name": "python3.12",
+    "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+    "bytes": 8020928
+  },
+  "runtime_inspector": {
+    "name": "ldd",
+    "sha256": "4f1d37e25f27535e3f02a5b7da63e1ce18d4982445db2c25fc8f985a3d395cc3",
+    "bytes": 5382
+  },
+  "runtime_libraries": [
+    {
+      "name": "ld-linux-x86-64.so.2",
+      "sha256": "cd4df4f3c7b83673d61189bf2eaebd33ca4f2853ab9772b8a25e025ef99b1e81",
+      "bytes": 236616
+    },
+    {
+      "name": "libc.so.6",
+      "sha256": "8db37cf3f2169f59a0f07ef1fea308c35656668c64c8ff294e1860f4121eb161",
+      "bytes": 2125328
+    },
+    {
+      "name": "libffi.so.8.1.4",
+      "sha256": "00f593fe192f2851b8ce23b25cec2488d769beb5a8f63e8c9e563071e1075153",
+      "bytes": 47672
+    },
+    {
+      "name": "libgcc_s.so.1",
+      "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb",
+      "bytes": 183024
+    },
+    {
+      "name": "libgmp.so.10.5.0",
+      "sha256": "0ccdfb6d6f5c039465f6d002cf7e4c072d48ac6a2cffc8dd6c748dec31592804",
+      "bytes": 534896
+    },
+    {
+      "name": "libgnutls.so.30.37.1",
+      "sha256": "96137275400f39510c9a533c6ad8a921e94266e664e7e09c9ad6ea9f23277c23",
+      "bytes": 2057632
+    },
+    {
+      "name": "libhogweed.so.6.8",
+      "sha256": "c3c606139d4f7776efa4dbd4a6b62e30c916b07a0cafd8c3ef173d6f093607e3",
+      "bytes": 288920
+    },
+    {
+      "name": "libidn2.so.0.4.0",
+      "sha256": "6e632fd9a3125db60bbc623719bbc17b0470330321c5b1c57f1ff7190e5551ad",
+      "bytes": 133192
+    },
+    {
+      "name": "libjpeg.so.8.2.2",
+      "sha256": "ac09f2cd6f8a3b8e3cb123999ce275f9bcbe31c6cf9e20212c8f297772591d15",
+      "bytes": 534592
+    },
+    {
+      "name": "libm.so.6",
+      "sha256": "e9c4b28d340e415b8137480ec442662f981e1399386c5931dae0e886e3639e91",
+      "bytes": 952616
+    },
+    {
+      "name": "libnettle.so.8.8",
+      "sha256": "a245ed916229583d6fe0b07657b3ed945bc148c28cc08b5266295f620d2b91cc",
+      "bytes": 342280
+    },
+    {
+      "name": "libp11-kit.so.0.3.1",
+      "sha256": "c6b469a006685ebf2075e200180c3b21f41b88ad722c5697d736ea558cfe3ea1",
+      "bytes": 1714008
+    },
+    {
+      "name": "libqpdf.so.29.9.0",
+      "sha256": "64fc7064bd728fa5e99b1204f9f47ea2bc1f5ecc2407ba0ef12d59c6acfce0c7",
+      "bytes": 2437648
+    },
+    {
+      "name": "libstdc++.so.6.0.33",
+      "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11",
+      "bytes": 2592224
+    },
+    {
+      "name": "libtasn1.so.6.6.3",
+      "sha256": "7c9c7830afbaac7b07ec21ddaa6b4d606423432c264efd2636e8ca9734b4d7b6",
+      "bytes": 88216
+    },
+    {
+      "name": "libunistring.so.5.0.0",
+      "sha256": "7bcf825cd449892db5105ad2aed91dcf94a27b796426600c765720c584c54dd1",
+      "bytes": 1755312
+    },
+    {
+      "name": "libz.so.1.3",
+      "sha256": "9b64150b28505a33d6bc3ecf709c279f6de97a1c184dbda65d06ee4537f6d286",
+      "bytes": 113000
+    }
+  ],
+  "sources": [
+    {
+      "path": "Cargo.lock",
+      "name": "Cargo.lock",
+      "sha256": "2524356728e4c7ced5377b295caa4d556a09cf23771525718b5fbab62f9ff66b",
+      "bytes": 60827
+    },
+    {
+      "path": "Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "7e9254e1495a51ae7af7abdaf207d8b07842ebef75b80c767562d3e4b269ba20",
+      "bytes": 735
+    },
+    {
+      "path": "apps/color-worker/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "8dbcec9d1114bb47802084fee4b2a09643b0c99184c8d94215b6af203de27831",
+      "bytes": 433
+    },
+    {
+      "path": "apps/color-worker/src/main.rs",
+      "name": "main.rs",
+      "sha256": "1aa2737fc71e3e853aa1e88a2b8cf08718c1a7fb48285777c60dc1af0969a9ee",
+      "bytes": 31505
+    },
+    {
+      "path": "apps/font-worker/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "248d40a166666189e326dd163e1c73567ab9265224fc76f393c642c7bccc916b",
+      "bytes": 580
+    },
+    {
+      "path": "apps/font-worker/src/main.rs",
+      "name": "main.rs",
+      "sha256": "79ad067df4d7b120145192f7221411de4439b13d29dfd3148548d4445d3b5994",
+      "bytes": 48842
+    },
+    {
+      "path": "apps/font-worker/src/pdf_metrics.rs",
+      "name": "pdf_metrics.rs",
+      "sha256": "5c8ff4c3f85d8ac1635a0dfcd7bc3e55ca7f30968a17a86823e2ab6a123b4180",
+      "bytes": 7559
+    },
+    {
+      "path": "apps/font-worker/src/subset_metrics.rs",
+      "name": "subset_metrics.rs",
+      "sha256": "7f70bde028ab62b93661846d23ae918c37a3e1238d8ba6b741550a9819f8433e",
+      "bytes": 6628
+    },
+    {
+      "path": "apps/font-worker/tests/fixtures/unhinted.ttf",
+      "name": "unhinted.ttf",
+      "sha256": "cbcc4e4f89d0441b3081ad0928b874e63c278a5b96b73ccf3d4581f5f62e22c4",
+      "bytes": 724
+    },
+    {
+      "path": "apps/font-worker/tests/worker_process.rs",
+      "name": "worker_process.rs",
+      "sha256": "a9e46ef87c441178018c243ccebcdffdc8558791e674db2e04abdf6506ff0abe",
+      "bytes": 8882
+    },
+    {
+      "path": "apps/pdf-cli/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "d0a90d502d151326d577d099f5b1e375bcec5a7ba23342dd5e6707d03acef972",
+      "bytes": 564
+    },
+    {
+      "path": "apps/pdf-cli/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "2a11e9d6dc399fecfbdd1de621dcbe6dbb27b38eb4b4b7e4ed654c11981c6881",
+      "bytes": 23775
+    },
+    {
+      "path": "apps/pdf-cli/src/main.rs",
+      "name": "main.rs",
+      "sha256": "41208f77cf0051b24929374f7bb0c77f51651a5fcf40dd93a1f2da98613c04eb",
+      "bytes": 5636
+    },
+    {
+      "path": "apps/pdf-cli/tests/export.rs",
+      "name": "export.rs",
+      "sha256": "074859fdcb018ef4372cdfdbf947cc785f59ccc3ee9dec00f47c828b336a5b96",
+      "bytes": 16957
+    },
+    {
+      "path": "apps/raster-worker/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "adb4f11cb469d7c27b29f08ee1f133fc5b5709e8f999f058d1ba0f2fda5150c5",
+      "bytes": 533
+    },
+    {
+      "path": "apps/raster-worker/src/clipboard_dib.rs",
+      "name": "clipboard_dib.rs",
+      "sha256": "04991f2ef37d3787cc0d9c8e4bd0a3b2b3810f15471a4c500b64cf76765ad0be",
+      "bytes": 12130
+    },
+    {
+      "path": "apps/raster-worker/src/main.rs",
+      "name": "main.rs",
+      "sha256": "6de52b8b181873cbcd36ea9f0c7be9d23c45650b69c4b9e807e2106991fc466f",
+      "bytes": 24304
+    },
+    {
+      "path": "apps/validator-worker/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "1c83f6addb008b9e6c5717535b7d3b4a3137ac06beadb66ee396b7d140b24056",
+      "bytes": 956
+    },
+    {
+      "path": "apps/validator-worker/src/main.rs",
+      "name": "main.rs",
+      "sha256": "51c30ed31aef8a93d5eeb90582b2b433cb0e912313fda41b2d1d31ca6f08f5a5",
+      "bytes": 34439
+    },
+    {
+      "path": "apps/validator-worker/src/tests/calibration.rs",
+      "name": "calibration.rs",
+      "sha256": "1af31618b147f14d91b7057488b4506f5c5f86543b0960902ba8c769b277f3e6",
+      "bytes": 26385
+    },
+    {
+      "path": "apps/validator-worker/tests/trusted_publication_gate.rs",
+      "name": "trusted_publication_gate.rs",
+      "sha256": "72d195b579ef5e23f2d29f568289d692ac26d85f11a32afdbacfd2401495b1b7",
+      "bytes": 8616
+    },
+    {
+      "path": "crates/application-core/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "906039aeef2d7271d9dad24358a0c07c7373d6cd9d0db259c1dd15a78a89628f",
+      "bytes": 831
+    },
+    {
+      "path": "crates/application-core/src/clipboard.rs",
+      "name": "clipboard.rs",
+      "sha256": "ef32ecbdd51985d8f64e3750a07e9123f275865237c89d72f2e1422185daa5cf",
+      "bytes": 6570
+    },
+    {
+      "path": "crates/application-core/src/embedded_font_reuse.rs",
+      "name": "embedded_font_reuse.rs",
+      "sha256": "340f35b8034f00bcd31feb5bbfc8202c4387ed823ddece3131898deea322d500",
+      "bytes": 7337
+    },
+    {
+      "path": "crates/application-core/src/font_selection.rs",
+      "name": "font_selection.rs",
+      "sha256": "a389df56658f7c534f6815f5c0956e45c18280dd7bb3430144d8c161c90a85c4",
+      "bytes": 83164
+    },
+    {
+      "path": "crates/application-core/src/image_batch_tests.rs",
+      "name": "image_batch_tests.rs",
+      "sha256": "d1269c7cc9248cad286a028653aef86c37befb9c590d96642420272714a02645",
+      "bytes": 11100
+    },
+    {
+      "path": "crates/application-core/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "b21411444c924ca3d1d71988e17a256607495b61998214330a2fc70bd8e8fda0",
+      "bytes": 139016
+    },
+    {
+      "path": "crates/application-core/src/master_pages.rs",
+      "name": "master_pages.rs",
+      "sha256": "15c8949ca976e36036baa4d73d276ac278c748244f0b01a2e53a7782b49de5f1",
+      "bytes": 6629
+    },
+    {
+      "path": "crates/application-core/src/save_job.rs",
+      "name": "save_job.rs",
+      "sha256": "e8b7f067594f7a09976fe751612b007a2cd2a773b6369e4fc2026bc1176c60e3",
+      "bytes": 5713
+    },
+    {
+      "path": "crates/application-core/src/selection.rs",
+      "name": "selection.rs",
+      "sha256": "cad87b6057360a08238a7312bcb7662cd84ff34c2dca25a8b369c33e55c00681",
+      "bytes": 29383
+    },
+    {
+      "path": "crates/application-core/src/session_clipboard/resources.rs",
+      "name": "resources.rs",
+      "sha256": "a3fda9e12b4702a692fd57d77a005429ab9f8fe397b0c39e186bbe54a59d797f",
+      "bytes": 16583
+    },
+    {
+      "path": "crates/application-core/src/session_clipboard.rs",
+      "name": "session_clipboard.rs",
+      "sha256": "11c6ca12155cbb12c395c07e7a0c91386828bc8abfe290778303a6dc952d477c",
+      "bytes": 9926
+    },
+    {
+      "path": "crates/application-core/src/shape_creation.rs",
+      "name": "shape_creation.rs",
+      "sha256": "c02a1ae28a5c315c7fd0e49daf10a780b868c77bd63db05117c98a047e8cd3da",
+      "bytes": 6754
+    },
+    {
+      "path": "crates/application-core/src/style_transfer.rs",
+      "name": "style_transfer.rs",
+      "sha256": "aafb4158280d120c80c5bb62cfbad922f30631a7262efa9f76d765bfc5749695",
+      "bytes": 32747
+    },
+    {
+      "path": "crates/application-core/src/table_authoring.rs",
+      "name": "table_authoring.rs",
+      "sha256": "2dae52e641181754ae121c40b33991b6105c7a2731022478a51c61815f59d044",
+      "bytes": 3157
+    },
+    {
+      "path": "crates/application-core/src/text_search.rs",
+      "name": "text_search.rs",
+      "sha256": "fb19bba9cc6b9630a57b0f4322c3e06bf0cd4716a8b527fec12712bdb2dfac27",
+      "bytes": 21559
+    },
+    {
+      "path": "crates/application-core/tests/asset_reachability.rs",
+      "name": "asset_reachability.rs",
+      "sha256": "f76d7476d0e2f9cf639309354bfb71668a2fc80c0fe1baf34a1a9959657500ef",
+      "bytes": 16978
+    },
+    {
+      "path": "crates/application-core/tests/authoring_integration.rs",
+      "name": "authoring_integration.rs",
+      "sha256": "c67f805fa5d96983e5308f1d579a7d0fb992a2a19eebdab129da1c4af7ae06ad",
+      "bytes": 21268
+    },
+    {
+      "path": "crates/application-core/tests/editor_module.rs",
+      "name": "editor_module.rs",
+      "sha256": "938f48dc7203d234843226d161f08169a946ea6daaeeda977d0e15384196da31",
+      "bytes": 138461
+    },
+    {
+      "path": "crates/application-core/tests/fixed_text_resize.rs",
+      "name": "fixed_text_resize.rs",
+      "sha256": "57bf23b0a318c0528c4e7d0a7150627f77aa48eeabcce993017083db6af80342",
+      "bytes": 17168
+    },
+    {
+      "path": "crates/application-core/tests/fixtures/session_clipboard_native.rs",
+      "name": "session_clipboard_native.rs",
+      "sha256": "1be87f0781e33217f39486a48a2b4ea5a4bc206fd33be56e35bbbf372879287a",
+      "bytes": 18976
+    },
+    {
+      "path": "crates/application-core/tests/history_retention.rs",
+      "name": "history_retention.rs",
+      "sha256": "006c6104af7f910107efc74824157cf731bd03a934497193163f218ab2a00e6f",
+      "bytes": 5684
+    },
+    {
+      "path": "crates/application-core/tests/instructional_page_contract.rs",
+      "name": "instructional_page_contract.rs",
+      "sha256": "d198e2c69770332095a0db682cc5c8df0da891cbf294329a639a636358e0388d",
+      "bytes": 26012
+    },
+    {
+      "path": "crates/application-core/tests/master_authoring.rs",
+      "name": "master_authoring.rs",
+      "sha256": "463b03b7c11c952df31198459d374ed733b19dbb5680381e5c7540b2f688ef18",
+      "bytes": 13125
+    },
+    {
+      "path": "crates/application-core/tests/publication_workload.rs",
+      "name": "publication_workload.rs",
+      "sha256": "74b5b0ff8ff2db2fbf280315c4db29e939170fcf811d07164a5b2f8564c8f2c6",
+      "bytes": 29266
+    },
+    {
+      "path": "crates/application-core/tests/recovery_lifecycle.rs",
+      "name": "recovery_lifecycle.rs",
+      "sha256": "f50ce1e0d85be367440e442adde9a83b76f9f740d59d46d11a259f0a8b324724",
+      "bytes": 12608
+    },
+    {
+      "path": "crates/application-core/tests/save_jobs.rs",
+      "name": "save_jobs.rs",
+      "sha256": "fb1b94e6e3a99bad36cb64f2c1f35d26d3e3b5a021948efa0ea4f81ec903c492",
+      "bytes": 7310
+    },
+    {
+      "path": "crates/application-core/tests/schema_upgrade.rs",
+      "name": "schema_upgrade.rs",
+      "sha256": "ed70267d1c9d12bd8646a7e0f5cd630096fcaa41f979a674271c638ff581ae85",
+      "bytes": 7271
+    },
+    {
+      "path": "crates/application-core/tests/selection_contract.rs",
+      "name": "selection_contract.rs",
+      "sha256": "ac3cdfff7c535d7844c92f7f70edb9cf2b8a86cd84a7461218accd918d9043e3",
+      "bytes": 27156
+    },
+    {
+      "path": "crates/application-core/tests/selection_rounding.rs",
+      "name": "selection_rounding.rs",
+      "sha256": "58fe03e0edf99db9cfbeba02269e5c2e9b6489d8bab493300530845b2148f681",
+      "bytes": 9823
+    },
+    {
+      "path": "crates/application-core/tests/session_clipboard.rs",
+      "name": "session_clipboard.rs",
+      "sha256": "352d33f962267a3193c623079027e6d6848f040e15a61e35afea45c4fdd32fcc",
+      "bytes": 26651
+    },
+    {
+      "path": "crates/application-core/tests/sustained_recovery.rs",
+      "name": "sustained_recovery.rs",
+      "sha256": "e246d55041fdf7bf2d4d2d7630bd65e08cf5c1aeeea2d7fe7dde78715ad5d221",
+      "bytes": 9130
+    },
+    {
+      "path": "crates/application-core/tests/text_box_sizing_contract.rs",
+      "name": "text_box_sizing_contract.rs",
+      "sha256": "f7e6453bcd0aeebe42452951c4e89cdc84f2ca5110ffd7cd64449d0a788e800f",
+      "bytes": 7930
+    },
+    {
+      "path": "crates/application-core/tests/text_search.rs",
+      "name": "text_search.rs",
+      "sha256": "65262d327b4a2810ec886b2a89c9630b1b0ecc5aef936aba72d33f60b15167dd",
+      "bytes": 12657
+    },
+    {
+      "path": "crates/color-boundary/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "c674292b5847c5af1fd9fd57a42aa76f1277a514f5aa7349c3a7c337ea5dc76a",
+      "bytes": 635
+    },
+    {
+      "path": "crates/color-boundary/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "c328e300c82c3f9ad0462c69691a7aebcff54549a13ccf54df6787fadcac8c2e",
+      "bytes": 47816
+    },
+    {
+      "path": "crates/color-boundary/tests/linux_preparation.rs",
+      "name": "linux_preparation.rs",
+      "sha256": "d75d1e2e24c9c741e30611b660acec966739ce4c3f70e03f34d6289ae3ab390c",
+      "bytes": 933
+    },
+    {
+      "path": "crates/color-boundary/tests/packaged_color_missing.rs",
+      "name": "packaged_color_missing.rs",
+      "sha256": "0b84c3c42b32e3a779072fc86f929f3f9017f15d81b10c1a5497bc1b36870c7c",
+      "bytes": 915
+    },
+    {
+      "path": "crates/document-core/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "99adc04ce7f338ce12e2967e830507b83c478a374aa3c2e2cfa31d668d4fb87b",
+      "bytes": 893
+    },
+    {
+      "path": "crates/document-core/src/assets.rs",
+      "name": "assets.rs",
+      "sha256": "65191e44da6213934b0feb0a4576040261eb3f2a40bb1d2deb00e123bf2dfeb8",
+      "bytes": 13606
+    },
+    {
+      "path": "crates/document-core/src/commands/master_pages.rs",
+      "name": "master_pages.rs",
+      "sha256": "80c24deb101d5842f28d80aaecfeb7d61e967e953e62b2a484be18e343608b67",
+      "bytes": 5080
+    },
+    {
+      "path": "crates/document-core/src/commands.rs",
+      "name": "commands.rs",
+      "sha256": "763c0795fefb112311281bc5f60ec08bea474e0aa4da86fbb7a5081718eef284",
+      "bytes": 127363
+    },
+    {
+      "path": "crates/document-core/src/geometry.rs",
+      "name": "geometry.rs",
+      "sha256": "bd0ed3d75261c96f9edf8b111f17e07a7ed0ab2d14cb87c95f9caf099904ded7",
+      "bytes": 22905
+    },
+    {
+      "path": "crates/document-core/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "8cb855d598f2d7528c933ff8d905a4405136c5809b570b6076f503ca747bd48a",
+      "bytes": 1626
+    },
+    {
+      "path": "crates/document-core/src/model/master_pages.rs",
+      "name": "master_pages.rs",
+      "sha256": "afafa308b01ab4e92f4178175e3aef16cb9a35859bfe18366e015db774dea531",
+      "bytes": 8046
+    },
+    {
+      "path": "crates/document-core/src/model/table_authoring.rs",
+      "name": "table_authoring.rs",
+      "sha256": "2add79eaece14be081c93b2e7df5d7d3032d8744f30072910fc6cd1cacad69a9",
+      "bytes": 17701
+    },
+    {
+      "path": "crates/document-core/src/model.rs",
+      "name": "model.rs",
+      "sha256": "8d7943f8f86e252490cbb5a7e3267ece28c01e49d1a9352eee66390557193af2",
+      "bytes": 87364
+    },
+    {
+      "path": "crates/document-core/src/package.rs",
+      "name": "package.rs",
+      "sha256": "1568343250ff995eda2e81faa4ae3514200d47c94d25deb5a3af183dbe087213",
+      "bytes": 63652
+    },
+    {
+      "path": "crates/document-core/src/recovery.rs",
+      "name": "recovery.rs",
+      "sha256": "d214eafa5cab02f633d7dc7b80153541d7007c868acde1e37e7e5ae4e1f71827",
+      "bytes": 31974
+    },
+    {
+      "path": "crates/document-core/src/recovery_retention.rs",
+      "name": "recovery_retention.rs",
+      "sha256": "dfce806eace7df3f4828517f8f2377d8bc7e061b918481c2041823871080acc6",
+      "bytes": 15983
+    },
+    {
+      "path": "crates/document-core/src/save_transaction.rs",
+      "name": "save_transaction.rs",
+      "sha256": "c86d956c46a6cc4aa6df0598e7f76e3880708b67539cef2132d7dee253eb4995",
+      "bytes": 140257
+    },
+    {
+      "path": "crates/document-core/src/shape_geometry/rounded_interiors.rs",
+      "name": "rounded_interiors.rs",
+      "sha256": "ce78f51f1086cbb13413e4542df41b67f0a2911250dd3084b22ec4c322f352a8",
+      "bytes": 7389
+    },
+    {
+      "path": "crates/document-core/src/shape_geometry.rs",
+      "name": "shape_geometry.rs",
+      "sha256": "5e0886f4057a91fd775b993732f609d4fa61fe1e5bc936c473ea5f8e40a95a64",
+      "bytes": 4193
+    },
+    {
+      "path": "crates/document-core/tests/commands_undo.rs",
+      "name": "commands_undo.rs",
+      "sha256": "ef761b8b87c7032d8cea13c05664673737863dbcbfa45a74c674f59c1b3b31c8",
+      "bytes": 64603
+    },
+    {
+      "path": "crates/document-core/tests/common/mod.rs",
+      "name": "mod.rs",
+      "sha256": "20e356e0a1924945d5d9ce79d7fb4e9558032628c8001b1ef55268daca77a1d8",
+      "bytes": 7059
+    },
+    {
+      "path": "crates/document-core/tests/common_rounding.rs",
+      "name": "common_rounding.rs",
+      "sha256": "15a5fcc80bed0854ae2150d312e28ce7d5c963e5e2643e30ac76174f47ea1d1c",
+      "bytes": 7287
+    },
+    {
+      "path": "crates/document-core/tests/cover_effects.rs",
+      "name": "cover_effects.rs",
+      "sha256": "8be83c306e86ddccd993c71c5d42e7eb9a41c88d3c38f9f7531e9affa577ccd7",
+      "bytes": 17272
+    },
+    {
+      "path": "crates/document-core/tests/crash_recovery.rs",
+      "name": "crash_recovery.rs",
+      "sha256": "bb66a0dbdddb1b6afc53e14e8354165775925a90158ccd12e2cc05a852321ff4",
+      "bytes": 14344
+    },
+    {
+      "path": "crates/document-core/tests/exact_font_fallbacks.rs",
+      "name": "exact_font_fallbacks.rs",
+      "sha256": "ea207ca4a23e913cede49ec343ac9dbef8e0a1b93ab0905b42969a2e2089dcc2",
+      "bytes": 5255
+    },
+    {
+      "path": "crates/document-core/tests/exact_font_variants.rs",
+      "name": "exact_font_variants.rs",
+      "sha256": "7bec3f5db119e8c0a3fae3b6febf358d7fae4cc1a027350dcff882ae97ae74a9",
+      "bytes": 17121
+    },
+    {
+      "path": "crates/document-core/tests/fixtures/minimal/manifest.json",
+      "name": "manifest.json",
+      "sha256": "4621c7aa6a98eb1dce7deda4152009316dd6aa5fb2b9c5a128ed614398293151",
+      "bytes": 745
+    },
+    {
+      "path": "crates/document-core/tests/guide_commands.rs",
+      "name": "guide_commands.rs",
+      "sha256": "3c463f53d294b3de95a78e48624774d2ee6dda44bdfaa40f8ab410244ed8ec30",
+      "bytes": 3437
+    },
+    {
+      "path": "crates/document-core/tests/history_retention.rs",
+      "name": "history_retention.rs",
+      "sha256": "8b9d3f61b54745f422efd6eefd33d580168dd193ee0eb613cefa6605d05b621a",
+      "bytes": 6799
+    },
+    {
+      "path": "crates/document-core/tests/lists_and_table_formatting.rs",
+      "name": "lists_and_table_formatting.rs",
+      "sha256": "db13c9420520ce4a5afc504cfed44c966f798e6e748908bf3c452e44399aef69",
+      "bytes": 28592
+    },
+    {
+      "path": "crates/document-core/tests/master_pages.rs",
+      "name": "master_pages.rs",
+      "sha256": "cc3beeb4012d0c6401567b1c376a3a86ec3e2e01de03a9ac0d73186ef4583559",
+      "bytes": 9301
+    },
+    {
+      "path": "crates/document-core/tests/package_roundtrip.rs",
+      "name": "package_roundtrip.rs",
+      "sha256": "14d502a0341f438bb06879836d40799fd2e169eb28c8c0402360df4c35199566",
+      "bytes": 59916
+    },
+    {
+      "path": "crates/document-core/tests/page_names.rs",
+      "name": "page_names.rs",
+      "sha256": "36d3cf37b4302a26148bbfa14b16e83de638fbe20d9a0a56b5f91dcc59f040b1",
+      "bytes": 5358
+    },
+    {
+      "path": "crates/document-core/tests/page_numbering.rs",
+      "name": "page_numbering.rs",
+      "sha256": "c43bf39ebac25ee61ca3b64e4034c970eb5ae435f4c731641b3aa167d1b90910",
+      "bytes": 9393
+    },
+    {
+      "path": "crates/document-core/tests/raster_ingestion.rs",
+      "name": "raster_ingestion.rs",
+      "sha256": "7503d6672e3dad0dd148fbc077003952593a381fe9f3c7789260ca963c438241",
+      "bytes": 5668
+    },
+    {
+      "path": "crates/document-core/tests/recovery_retention.rs",
+      "name": "recovery_retention.rs",
+      "sha256": "0deee87bb5c8acb7fd9f6168d32b96b66deb6867f2281ea46b2dc933cbb97aef",
+      "bytes": 15308
+    },
+    {
+      "path": "crates/document-core/tests/rich_text_story.rs",
+      "name": "rich_text_story.rs",
+      "sha256": "a52444de3f36692fc74f86e6db3b0b401aa84cc9c2a1980150b577cfa8353095",
+      "bytes": 44709
+    },
+    {
+      "path": "crates/document-core/tests/saveability_admission.rs",
+      "name": "saveability_admission.rs",
+      "sha256": "2425b8e570a2d4226f101dd6a8dde2d83e3301e8be1918f04b6aa2bfa13def9e",
+      "bytes": 6196
+    },
+    {
+      "path": "crates/document-core/tests/schema_compatibility.rs",
+      "name": "schema_compatibility.rs",
+      "sha256": "27a7747711296eadb472801b8ca70d42f563e08cb4595dfc7bf1c1c66a7ed340",
+      "bytes": 3850
+    },
+    {
+      "path": "crates/document-core/tests/selection_geometry.rs",
+      "name": "selection_geometry.rs",
+      "sha256": "e7026b46988edd0ecab0322876c4175be2fcca45ab91656d00f62d3cdd9ef8db",
+      "bytes": 15857
+    },
+    {
+      "path": "crates/document-core/tests/table_authoring.rs",
+      "name": "table_authoring.rs",
+      "sha256": "4d65c51d2fd213e4e78f5637032f0e1344a36adb1b428434fdfe7f49bd29fa62",
+      "bytes": 10300
+    },
+    {
+      "path": "crates/document-core/tests/table_mutations.rs",
+      "name": "table_mutations.rs",
+      "sha256": "14cd121d4ce8ee99d7ab3b4f6418ba70a7645ae6368a29020c0517a5a65a2cf7",
+      "bytes": 18790
+    },
+    {
+      "path": "crates/document-core/tests/text_box_sizing.rs",
+      "name": "text_box_sizing.rs",
+      "sha256": "4324cc38283718449a3fea6930721a60dc0857c4b340419fc6366ce472e3086d",
+      "bytes": 17293
+    },
+    {
+      "path": "crates/font-boundary/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "04e2d218e977eb06b6c819e75877cd90a4b36544ef244854fc6bb9e2844932a8",
+      "bytes": 620
+    },
+    {
+      "path": "crates/font-boundary/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "86cc48379f3e95abc2cf303554502d225dcfdd39d67f6a4722308686fd97f089",
+      "bytes": 100103
+    },
+    {
+      "path": "crates/font-boundary/tests/fixtures/truncated-dejavu-sfnt.ttf",
+      "name": "truncated-dejavu-sfnt.ttf",
+      "sha256": "c5fa9d096bff817f76cfafc5bc5b7b10d48823986d663d2c803c66998c00e46d",
+      "bytes": 336
+    },
+    {
+      "path": "crates/font-boundary/tests/linux_preparation.rs",
+      "name": "linux_preparation.rs",
+      "sha256": "91b1edeebb46304eff562d538f8a4f005bb65e9f76949fbcfbbe22811382a61f",
+      "bytes": 3651
+    },
+    {
+      "path": "crates/font-boundary/tests/packaged_font_missing.rs",
+      "name": "packaged_font_missing.rs",
+      "sha256": "e81e8c83c02bb41714c37c899b5e53a63a9ee7117858df3d5492d1c8283889b7",
+      "bytes": 886
+    },
+    {
+      "path": "crates/font-boundary/tests/support/linux_boundary_probe.rs",
+      "name": "linux_boundary_probe.rs",
+      "sha256": "8874e47cfc29eefa6f04c1b13f2bcbc28c9e2bd9cd17dbf731f71624b7cd9367",
+      "bytes": 2121
+    },
+    {
+      "path": "crates/layout-core/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "b57b4a7c222334498d4e9a7892b123a925b975764342d0b2d87416002f1fa44f",
+      "bytes": 585
+    },
+    {
+      "path": "crates/layout-core/src/fonts/inventory.rs",
+      "name": "inventory.rs",
+      "sha256": "6f0d01236e15d9f4ed3d236326a66404444c71229a89d1659e11f1a55f18aac0",
+      "bytes": 33158
+    },
+    {
+      "path": "crates/layout-core/src/fonts/mod.rs",
+      "name": "mod.rs",
+      "sha256": "d0150511cf36e08d981c5a95ff02bdc978f694eb40f1a8d7d4168c530d56d92d",
+      "bytes": 18980
+    },
+    {
+      "path": "crates/layout-core/src/geometry.rs",
+      "name": "geometry.rs",
+      "sha256": "33d4f2ce95f5dac44f5765518d3ab511dcda49d6bcc23040be417198ba2232eb",
+      "bytes": 110
+    },
+    {
+      "path": "crates/layout-core/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "ca059fbd0538a0dfd7fb39686224aa409ae43d641ce895a8c8a7d1e403179546",
+      "bytes": 1485
+    },
+    {
+      "path": "crates/layout-core/src/publication/rounded_text.rs",
+      "name": "rounded_text.rs",
+      "sha256": "21ed8a4b6895b3f9bab6a5ac7ae8c06c55a5466987898174d6bef379f18acd59",
+      "bytes": 2654
+    },
+    {
+      "path": "crates/layout-core/src/publication/table_authoring/rounded_borders.rs",
+      "name": "rounded_borders.rs",
+      "sha256": "47c8a671f6ff1fc43831c092abc1eb9dc9eb32bf928375658e47f3a7a130f23c",
+      "bytes": 3011
+    },
+    {
+      "path": "crates/layout-core/src/publication/table_authoring.rs",
+      "name": "table_authoring.rs",
+      "sha256": "f05f015a7c248c4c289998d20461aa4d56cf40f8f5eb038c8ed3407ec50efac2",
+      "bytes": 5766
+    },
+    {
+      "path": "crates/layout-core/src/publication.rs",
+      "name": "publication.rs",
+      "sha256": "b615c11f5b9fc7e1d2a238b15d6c9e975631c864c3d7477c9a0794a3fbcc27ce",
+      "bytes": 141054
+    },
+    {
+      "path": "crates/layout-core/src/text/mod.rs",
+      "name": "mod.rs",
+      "sha256": "b87f9e3592b7dc48928bc526c8b59625861f46a7296dc1861bd1a1f84b287c63",
+      "bytes": 79721
+    },
+    {
+      "path": "crates/layout-core/tests/common_rounding.rs",
+      "name": "common_rounding.rs",
+      "sha256": "8b2089d6de1465affb843e124770ec46b2652fe400fd09da398fd04dd1f3dd33",
+      "bytes": 9243
+    },
+    {
+      "path": "crates/layout-core/tests/display_list_determinism.rs",
+      "name": "display_list_determinism.rs",
+      "sha256": "b84c6d01ccb4286220990030f41806921a3fe9133be04f28cd83802ae13e9596",
+      "bytes": 17958
+    },
+    {
+      "path": "crates/layout-core/tests/exact_font_fallback_publication.rs",
+      "name": "exact_font_fallback_publication.rs",
+      "sha256": "e118291f5c5e3ed21604248686236081c104bfb3c5e0032a18917f73ee91bae7",
+      "bytes": 8202
+    },
+    {
+      "path": "crates/layout-core/tests/exact_font_variant_layout.rs",
+      "name": "exact_font_variant_layout.rs",
+      "sha256": "fb410d1c720c3ba01fa5e5f27c65dc6da5ff93b9cd1b555eb22840a71a41a1ca",
+      "bytes": 13354
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/DejaVuSans-Bold.ttf",
+      "name": "DejaVuSans-Bold.ttf",
+      "sha256": "e6476c1b80502924294eed40894c5b18e06c181444ca953e5334262df9c27724",
+      "bytes": 705684
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/DejaVuSans-BoldOblique.ttf",
+      "name": "DejaVuSans-BoldOblique.ttf",
+      "sha256": "eb436dca0c2594b73d8b603b892e374fdfd8d885d25ffb4f18df4c4c0b49e50f",
+      "bytes": 643292
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/DejaVuSans-Oblique.ttf",
+      "name": "DejaVuSans-Oblique.ttf",
+      "sha256": "4af75fa16ee6d3ad43e1ecec41862c24954af26a55c6bb1ebb27bd486a50f5f4",
+      "bytes": 635416
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/DejaVuSans.ttf",
+      "name": "DejaVuSans.ttf",
+      "sha256": "abdc775b21b1bc470d50c97e790d276f2054b7504e56e5bd3e64f48d68582322",
+      "bytes": 759720
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/Noto-COLRv1-noflags.ttf",
+      "name": "Noto-COLRv1-noflags.ttf",
+      "sha256": "469e3b92d63cfc203789f8742f1835b8672c7b5995ab4a832f1699b712a5afcc",
+      "bytes": 2992136
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/NotoColorEmoji-CBDT.ttf",
+      "name": "NotoColorEmoji-CBDT.ttf",
+      "sha256": "72a635cb3d2f3524c51620cdde406b217204e8a6a06c6a096ff8ed4b5fd6e27b",
+      "bytes": 10673480
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/NotoColorEmoji-SVG.otf",
+      "name": "NotoColorEmoji-SVG.otf",
+      "sha256": "3c0a539c58c7f3f40717a9d8e27af6addb137491d1e33434e9230205af89de56",
+      "bytes": 13296760
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/NotoEmoji-Regular.ttf",
+      "name": "NotoEmoji-Regular.ttf",
+      "sha256": "415dc6290378574135b64c808dc640c1df7531973290c4970c51fdeb849cb0c5",
+      "bytes": 418804
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/NotoSansCJKsc-Regular.otf",
+      "name": "NotoSansCJKsc-Regular.otf",
+      "sha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b",
+      "bytes": 16437364
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/NotoSansDevanagari-VF.ttf",
+      "name": "NotoSansDevanagari-VF.ttf",
+      "sha256": "9ce7b04f60e363d8870e5997744cf85cf69d38a4d7d129d364d92a3b14b461d7",
+      "bytes": 647144
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/NotoSansThai-VF.ttf",
+      "name": "NotoSansThai-VF.ttf",
+      "sha256": "5a1c559bb539583c8a1fd99d1c5b9491e5e14478c9cd2bd0970d5c3096cc9ef8",
+      "bytes": 218652
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/common_rounding.rs",
+      "name": "common_rounding.rs",
+      "sha256": "f1432734725b326cbc29ec38ed9227ee8d74e6b436429e9ed9a3c2c5ee4cb4c8",
+      "bytes": 6094
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/table_authoring.rs",
+      "name": "table_authoring.rs",
+      "sha256": "85367b853b9cb1f6b44bfd03689bda103159d61b92cb657a995797e62e7b2b75",
+      "bytes": 3749
+    },
+    {
+      "path": "crates/layout-core/tests/master_page_resolution.rs",
+      "name": "master_page_resolution.rs",
+      "sha256": "08e290d358498b3045fbeb17abc7fa5ea3e36589db214726ee9dbe673052b10f",
+      "bytes": 8031
+    },
+    {
+      "path": "crates/layout-core/tests/output_composition.rs",
+      "name": "output_composition.rs",
+      "sha256": "8373b31b766cd24f1c255bf4db36288b30741d91e4c44fe518b2e3f6bae18af2",
+      "bytes": 14169
+    },
+    {
+      "path": "crates/layout-core/tests/page_preview.rs",
+      "name": "page_preview.rs",
+      "sha256": "9bb00584ec4208378fee6bb52bc978ed2ef18e67abd3768507ceb6a4e49dc242",
+      "bytes": 12106
+    },
+    {
+      "path": "crates/layout-core/tests/publication_preview.rs",
+      "name": "publication_preview.rs",
+      "sha256": "9407b93885baa085e4570eea7de0ec57837d139af9cd016d0bb603ae3a891303",
+      "bytes": 88582
+    },
+    {
+      "path": "crates/layout-core/tests/table_authoring_capacity.rs",
+      "name": "table_authoring_capacity.rs",
+      "sha256": "91f815a58caddf30912ae3bc90b9e4e77a212cec3cd48b9d3bc329b8461cb7a6",
+      "bytes": 1732
+    },
+    {
+      "path": "crates/layout-core/tests/text_box_interiors.rs",
+      "name": "text_box_interiors.rs",
+      "sha256": "4ae7e3cc33e2b252d380a80f7aac076c6f8d3e3a6ab015d26429ed1a08363e9b",
+      "bytes": 10191
+    },
+    {
+      "path": "crates/layout-core/tests/text_feasibility.rs",
+      "name": "text_feasibility.rs",
+      "sha256": "6ab1bb9d57deb7bbcb15bbf12f3776c005638b1523cec235da0913cbd2ec0231",
+      "bytes": 14271
+    },
+    {
+      "path": "crates/layout-core/tests/unicode_shaping.rs",
+      "name": "unicode_shaping.rs",
+      "sha256": "9fb179f634d93832ead6e709943ee03ad3c288868c8799cd8a5aa67ca7507d2c",
+      "bytes": 19625
+    },
+    {
+      "path": "crates/linux-worker-job/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "633307826f7629e73636f495c5546f4c5296073b3b332434871e98d214f6f21c",
+      "bytes": 295
+    },
+    {
+      "path": "crates/linux-worker-job/src/bin/publisher-linux-isolation-probe.rs",
+      "name": "publisher-linux-isolation-probe.rs",
+      "sha256": "349677de153ef815e158a36a476e86bca2f5cf3f6d1071ce4e33628dc510b68c",
+      "bytes": 12749
+    },
+    {
+      "path": "crates/linux-worker-job/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "a1302aca10d0e49208661887232265765e644b241e826390a1ae1596457967ce",
+      "bytes": 813
+    },
+    {
+      "path": "crates/linux-worker-job/src/policy.rs",
+      "name": "policy.rs",
+      "sha256": "d7d3c82c84ca6d4b32c7142ec8e43e6c44a7589cd0c91c8e1dd3d88293e95ecd",
+      "bytes": 7217
+    },
+    {
+      "path": "crates/linux-worker-job/src/process.rs",
+      "name": "process.rs",
+      "sha256": "a385720e144415732f40537c0b4947ed0c9608f3a98153cc6d887e9f5163a135",
+      "bytes": 27737
+    },
+    {
+      "path": "crates/linux-worker-job/tests/linux_isolation.rs",
+      "name": "linux_isolation.rs",
+      "sha256": "baa56c02df2706d0cd098324c0055cd2ef178f19738023a8666f7ecceafc2e4e",
+      "bytes": 16775
+    },
+    {
+      "path": "crates/print-core/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "865cd4ab931e26c5a9580d9457c78ba722543fae908abbc40d04ef1411198474",
+      "bytes": 2942
+    },
+    {
+      "path": "crates/print-core/src/candidate.rs",
+      "name": "candidate.rs",
+      "sha256": "ba86ed315a35a07058cafc827b144adf978198108a44439811d597e131392a1b",
+      "bytes": 39809
+    },
+    {
+      "path": "crates/print-core/src/candidate_metadata.rs",
+      "name": "candidate_metadata.rs",
+      "sha256": "a82c21434c601b6033db6b4cffd40bf0af3859459456cd496f28bf753aa96762",
+      "bytes": 8421
+    },
+    {
+      "path": "crates/print-core/src/color.rs",
+      "name": "color.rs",
+      "sha256": "8a4e697282cfbaae66b2ef136b9dedbea3c68dd30cdf1f8855bdcd158db9f45b",
+      "bytes": 7555
+    },
+    {
+      "path": "crates/print-core/src/export/recovery.rs",
+      "name": "recovery.rs",
+      "sha256": "1a7f78844a86707342b6745bd85393ac82e6a4edc2aeddeeac3fa59c49b35525",
+      "bytes": 21642
+    },
+    {
+      "path": "crates/print-core/src/export.rs",
+      "name": "export.rs",
+      "sha256": "43650c99b2038e6ee43d10e0265e8f36aa7e89ca2dd631ed5cb30c5d01a87272",
+      "bytes": 67134
+    },
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "name": "finished.rs",
+      "sha256": "3a9d2c197227c9353abe756f8d09fd0afca6ecc8cbfc04415f7da522dc51cd86",
+      "bytes": 17344
+    },
+    {
+      "path": "crates/print-core/src/finished_gradient.rs",
+      "name": "finished_gradient.rs",
+      "sha256": "aa8fc1753ea035ae26a783ea3f3cca7022116f0e6fa837b6b0b75dfb4d781996",
+      "bytes": 10844
+    },
+    {
+      "path": "crates/print-core/src/finished_writer.rs",
+      "name": "finished_writer.rs",
+      "sha256": "2e20d098d6c7e33a66d68ceacfa7476fea0ee055acddc483d82ac1b6bc204de0",
+      "bytes": 39532
+    },
+    {
+      "path": "crates/print-core/src/fixture.rs",
+      "name": "fixture.rs",
+      "sha256": "594aa7a773a3219034c9c979e1e7110af53699f0f5839a2d3b3967b86044a411",
+      "bytes": 19976
+    },
+    {
+      "path": "crates/print-core/src/font.rs",
+      "name": "font.rs",
+      "sha256": "13e02d1550a32f1014b3d094b498990d065876ac853551a5689ed37faf770ce9",
+      "bytes": 3014
+    },
+    {
+      "path": "crates/print-core/src/font_contract.rs",
+      "name": "font_contract.rs",
+      "sha256": "5040bd54565c420f58fc34058cfa6226b68b934f0e7f16ca36dd7fa9e24d07d7",
+      "bytes": 9365
+    },
+    {
+      "path": "crates/print-core/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "50b843df4819ed8e710d0d4b3f4d51014ca945e188950be9567dee7e727c7fa4",
+      "bytes": 6526
+    },
+    {
+      "path": "crates/print-core/src/pdf_lines.rs",
+      "name": "pdf_lines.rs",
+      "sha256": "72f6e6596b740c01b7a17836781e2eabe5da88078ff5654636a0f1975b558dda",
+      "bytes": 13814
+    },
+    {
+      "path": "crates/print-core/src/preflight.rs",
+      "name": "preflight.rs",
+      "sha256": "ffabc0e2a18b5d3db95d18d92824856b811f557fd2dc8fd83311531c4032544b",
+      "bytes": 19310
+    },
+    {
+      "path": "crates/print-core/src/production.rs",
+      "name": "production.rs",
+      "sha256": "046c27859bd65f72862509bf9d556b9a71c1c1e44641d8f4d24f73020ff3a595",
+      "bytes": 64343
+    },
+    {
+      "path": "crates/print-core/src/profile.rs",
+      "name": "profile.rs",
+      "sha256": "ff6f8c8764aa627212d29584efea83a3a79f0629aba11217e9135200036a3d5b",
+      "bytes": 40970
+    },
+    {
+      "path": "crates/print-core/src/publication_font.rs",
+      "name": "publication_font.rs",
+      "sha256": "662ccd4b2af93dbf5faabece557ed9acd59795929c1a19a422b7436399c5e4ac",
+      "bytes": 17651
+    },
+    {
+      "path": "crates/print-core/src/publisher_adapter.rs",
+      "name": "publisher_adapter.rs",
+      "sha256": "432e8a0ab31370af69a2b2a8229cf250a05c4e424ba324841407aa47106059ef",
+      "bytes": 43324
+    },
+    {
+      "path": "crates/print-core/src/raster.rs",
+      "name": "raster.rs",
+      "sha256": "6d103f905421f6199300623db081b3520cca1019955e99a0b4e310ca0d8b3524",
+      "bytes": 11754
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "name": "resources.rs",
+      "sha256": "5f5bb135709ae6ab1c997409c91f9ce1adefec4dab0d32fbe4666edf7031f1e9",
+      "bytes": 11446
+    },
+    {
+      "path": "crates/print-core/src/scene.rs",
+      "name": "scene.rs",
+      "sha256": "091f293eac26134d39a4807270f9896c08cd0082711133642fb90e93c40c631a",
+      "bytes": 40415
+    },
+    {
+      "path": "crates/print-core/src/to_unicode.rs",
+      "name": "to_unicode.rs",
+      "sha256": "c4fec65c034a3288fe2f5c04aba0ea7e680e332450db1dc53a15ea8e5203960e",
+      "bytes": 2742
+    },
+    {
+      "path": "crates/print-core/src/validator.rs",
+      "name": "validator.rs",
+      "sha256": "3edb0af54783b82e013abc6120230d0dd71f538400b3f5929e6136b79b859627",
+      "bytes": 7263
+    },
+    {
+      "path": "crates/print-core/src/validator_cff.rs",
+      "name": "validator_cff.rs",
+      "sha256": "144f5e4dcf913c0bbf2821de9497ca3733980ad2476ffde7247a638d774b020d",
+      "bytes": 10137
+    },
+    {
+      "path": "crates/print-core/src/validator_glyphs.rs",
+      "name": "validator_glyphs.rs",
+      "sha256": "6c0f08d235c0b18b1c867777e459225e47ca73d3a33fab4a572f7ccdd209f987",
+      "bytes": 64881
+    },
+    {
+      "path": "crates/print-core/src/validator_icc.rs",
+      "name": "validator_icc.rs",
+      "sha256": "dd823a7a13e3d9c99d10cf50299ed2a05d35083ed64e900ec1db67d51e529332",
+      "bytes": 231584
+    },
+    {
+      "path": "crates/print-core/src/validator_metadata.rs",
+      "name": "validator_metadata.rs",
+      "sha256": "25674885c78420be0f383c317e5ae2b17f2abe27624ccc2040f98523bb17e3c6",
+      "bytes": 13534
+    },
+    {
+      "path": "crates/print-core/src/validator_pdf_oxide.rs",
+      "name": "validator_pdf_oxide.rs",
+      "sha256": "892ae65ae581d85911b185bcf221ff9081c4b87d50d329485b955584dd6c64dc",
+      "bytes": 34129
+    },
+    {
+      "path": "crates/print-core/src/validator_public.rs",
+      "name": "validator_public.rs",
+      "sha256": "57227a936d6489000940fc352b5acd31fb30e1748a3006b863bc6df93f8af70c",
+      "bytes": 41225
+    },
+    {
+      "path": "crates/print-core/tests/common_rounding.rs",
+      "name": "common_rounding.rs",
+      "sha256": "d33c6df5199e60217a1642eebf571bbc8bae29d236ffc27edea32097b6865400",
+      "bytes": 4592
+    },
+    {
+      "path": "crates/print-core/tests/finished_gradients.rs",
+      "name": "finished_gradients.rs",
+      "sha256": "5a79a86f828dc4f68aabe3b63322991596f4c9a0bf4346e394e2871a15f8e963",
+      "bytes": 14080
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "name": "finished_pages.rs",
+      "sha256": "c02b77b3b169a31cf3e09afb680051165a96196efed9224ed52813d82d3e59fe",
+      "bytes": 48901
+    },
+    {
+      "path": "crates/print-core/tests/finished_pdf_lines.rs",
+      "name": "finished_pdf_lines.rs",
+      "sha256": "190fd08e35ffcb8f31bb76637dd3d6e42668b781574799af070099bdde1077d2",
+      "bytes": 3200
+    },
+    {
+      "path": "crates/print-core/tests/fixtures/SWOP2006coated_300_mth.icc",
+      "name": "SWOP2006coated_300_mth.icc",
+      "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1",
+      "bytes": 2730944
+    },
+    {
+      "path": "crates/print-core/tests/fixtures/generated-srgb.icc",
+      "name": "generated-srgb.icc",
+      "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "bytes": 588
+    },
+    {
+      "path": "crates/print-core/tests/gos5_local_corpus.rs",
+      "name": "gos5_local_corpus.rs",
+      "sha256": "fbfdd12aa82117b5c4e0c8b1421347c0f9610944949a83a95ce801c0d0b84a91",
+      "bytes": 10918
+    },
+    {
+      "path": "crates/print-core/tests/large_line_art.rs",
+      "name": "large_line_art.rs",
+      "sha256": "5e75463d1f5fa4e834b493e8014a6327975a39370e5b30a24c375181de321bf3",
+      "bytes": 15629
+    },
+    {
+      "path": "crates/print-core/tests/master_numbering_output.rs",
+      "name": "master_numbering_output.rs",
+      "sha256": "40f801a97cef742bde9253037571306a8cc67ad0d0d0e31482dd7d6f0de371f1",
+      "bytes": 7152
+    },
+    {
+      "path": "crates/print-core/tests/pdfx4_allowed_features.rs",
+      "name": "pdfx4_allowed_features.rs",
+      "sha256": "30addbff3c4d54db3b9ec45f378acb2fa789af911b4e81a86b9efeeb77c62576",
+      "bytes": 16553
+    },
+    {
+      "path": "crates/print-core/tests/pdfx_conformance.rs",
+      "name": "pdfx_conformance.rs",
+      "sha256": "2a3a2b05083d1817533a71375bfea36b05f8b59c4937340e7339708b84b7b140",
+      "bytes": 89665
+    },
+    {
+      "path": "crates/print-core/tests/publication_candidate.rs",
+      "name": "publication_candidate.rs",
+      "sha256": "542af099ba77d30c7371dd0b5396427631c80c4405a0b5027ebe94d5c970e344",
+      "bytes": 59850
+    },
+    {
+      "path": "crates/print-core/tests/publication_fonts.rs",
+      "name": "publication_fonts.rs",
+      "sha256": "75da77f158b7b77c6fd8720b76c3acc9a20748ef59d13fcd0bf84e0f613b4039",
+      "bytes": 47998
+    },
+    {
+      "path": "crates/print-core/tests/representative_output.rs",
+      "name": "representative_output.rs",
+      "sha256": "6dc37f019e0fef6c2cf1a573f3cc018a880f2fd71e43c767d846107360cc7f82",
+      "bytes": 17484
+    },
+    {
+      "path": "crates/print-core/tests/scene_serialization.rs",
+      "name": "scene_serialization.rs",
+      "sha256": "52fa3620ea12b951bbcb8df8997cd60e081ad0b700bf89898d784931364aca2d",
+      "bytes": 68675
+    },
+    {
+      "path": "crates/print-core/tests/support/pdf_operators.rs",
+      "name": "pdf_operators.rs",
+      "sha256": "d1ce4b756d2b49dc945d1e5805fe84d3fb59865558d19e77e502fc4398651bb7",
+      "bytes": 1622
+    },
+    {
+      "path": "crates/print-core/tests/table_authoring.rs",
+      "name": "table_authoring.rs",
+      "sha256": "846b3188b92912e43ee7beec49ad1a62f66c57ff93ebc2f0c03c9e56ce834a3e",
+      "bytes": 10843
+    },
+    {
+      "path": "crates/print-core/tests/text_table_reopen_determinism.rs",
+      "name": "text_table_reopen_determinism.rs",
+      "sha256": "129fd1cb47da91f931d1e6cf6c7aab6d6781c28be69c07929fd80c31af5afa70",
+      "bytes": 24887
+    },
+    {
+      "path": "crates/print-core/tests/trusted_raster_pipeline.rs",
+      "name": "trusted_raster_pipeline.rs",
+      "sha256": "11f608a2eba6fe5433eeee94ae2b92b840fecb9884684cbdae286a36c640566a",
+      "bytes": 28444
+    },
+    {
+      "path": "crates/raster-boundary/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "cb5ddaa0f6d0f96b84ac578b3ef23a1625d5ddbf92ab564e916f36e29fa8eda2",
+      "bytes": 578
+    },
+    {
+      "path": "crates/raster-boundary/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "b238056238881779fe69e328b19d9c7b6c50bc79a28b40fcc0b784b7da9ad06e",
+      "bytes": 49920
+    },
+    {
+      "path": "crates/raster-boundary/tests/linux_preparation.rs",
+      "name": "linux_preparation.rs",
+      "sha256": "33264e1eb2cf38a760727316736cb9666bbed8ae6fa5dc464458188376b1403c",
+      "bytes": 1792
+    },
+    {
+      "path": "crates/raster-boundary/tests/packaged_raster_missing.rs",
+      "name": "packaged_raster_missing.rs",
+      "sha256": "568fc16ef39e4541d2c81c0ab284668aacc5ab87583de025322476c43ffe5677",
+      "bytes": 1276
+    },
+    {
+      "path": "crates/raster-capacity/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "f8c5dabaf29a57d33b35d0ad92169f9a4106918c004f98c037bf735f39a03a1a",
+      "bytes": 192
+    },
+    {
+      "path": "crates/raster-capacity/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "2369ecdb0d3a1ea33e716db20d77ac3878b25c6d38a41e176eb279eeaa51dd41",
+      "bytes": 4929
+    },
+    {
+      "path": "crates/validator-boundary/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "11a6f8b53e94dfb43d6121e522854330846b0b84a4b47db3c8723a9712745264",
+      "bytes": 727
+    },
+    {
+      "path": "crates/validator-boundary/rules/pdfx4-authority-v1.json",
+      "name": "pdfx4-authority-v1.json",
+      "sha256": "c42d2310513e5592672ccffc6348da7302c3fe50d3acdea9f29bbffdc359516d",
+      "bytes": 20894
+    },
+    {
+      "path": "crates/validator-boundary/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "2835a8422da6b8a569e8842a844cb45f302e72524db261ed5d6d45e45c10ae42",
+      "bytes": 72109
+    },
+    {
+      "path": "crates/validator-boundary/src/writer_profile.rs",
+      "name": "writer_profile.rs",
+      "sha256": "ba5ded9a3742b6fb284654b81b3c6de5dba97acfc1fe32dbe25bea32aa2c039b",
+      "bytes": 52471
+    },
+    {
+      "path": "crates/validator-boundary/tests/packaged_validator.rs",
+      "name": "packaged_validator.rs",
+      "sha256": "29c6f5b4540f1acdc0e30d7a77a5931187d84959ee2c9310def97361f201e934",
+      "bytes": 8594
+    },
+    {
+      "path": "crates/validator-boundary/tests/unsupported_platform.rs",
+      "name": "unsupported_platform.rs",
+      "sha256": "16db31ebc61e60cff526a1a36df2be7a9d9f50726372270a96bf21177c256010",
+      "bytes": 473
+    },
+    {
+      "path": "crates/windows-atomic-file/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "51b63ce23277d3d56ddc9de46a37a16b9f8c9b400de043d8cc7c771bddf56ded",
+      "bytes": 467
+    },
+    {
+      "path": "crates/windows-atomic-file/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "d44a3cfd026b8581335535d984cc9645366c70f7c779110a90b4af46656fbf55",
+      "bytes": 63920
+    },
+    {
+      "path": "crates/windows-worker-job/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "06de7dc7dd9ab36f35c701c64591bc0a91e7311ed3eed117859676e22921ec03",
+      "bytes": 503
+    },
+    {
+      "path": "crates/windows-worker-job/src/bin/publisher-isolation-probe.rs",
+      "name": "publisher-isolation-probe.rs",
+      "sha256": "f75acbfabe31b27b9d7385ecf22cc2aa705f8f1564d5648567d72664c09e1724",
+      "bytes": 7839
+    },
+    {
+      "path": "crates/windows-worker-job/src/lib.rs",
+      "name": "lib.rs",
+      "sha256": "057fd41bf9e5416a47e89868df14b4933e01a451a9677756e8f19f51f1190cb1",
+      "bytes": 28823
+    },
+    {
+      "path": "crates/windows-worker-job/tests/appcontainer_isolation.rs",
+      "name": "appcontainer_isolation.rs",
+      "sha256": "f4a361f1b914a7fe3c106b3592bdb4a01d490c3ebf756ce12329880b4d7cf367",
+      "bytes": 14014
+    },
+    {
+      "path": "examples/standalone-client/Cargo.lock",
+      "name": "Cargo.lock",
+      "sha256": "8a9a7a4939591341391fdb72e8bdb09ae5c3960de77ce634f237ccc279ac721f",
+      "bytes": 18058
+    },
+    {
+      "path": "examples/standalone-client/Cargo.toml",
+      "name": "Cargo.toml",
+      "sha256": "2944a540c1fe8cf7822e3e61ba85f2264ad4d7b4c346cf5261fd4f97a7174edf",
+      "bytes": 518
+    },
+    {
+      "path": "examples/standalone-client/examples/cmyk-diagnostic.rs",
+      "name": "cmyk-diagnostic.rs",
+      "sha256": "a0dbe82ed8dd71841186d971b7dd85a3075ec48e55072d80b1e16386d8150297",
+      "bytes": 5874
+    },
+    {
+      "path": "examples/standalone-client/examples/feature-gallery.rs",
+      "name": "feature-gallery.rs",
+      "sha256": "4d93e97b2c6a6ed5d2510d3cc23ac2e9e19d1ca29c57f8892822f7e8af6c0189",
+      "bytes": 13724
+    },
+    {
+      "path": "examples/standalone-client/src/main.rs",
+      "name": "main.rs",
+      "sha256": "6e470eaf55c50751f7c0f6460ee7c1f37c7af3271f57c5997d2c7162d9700e3e",
+      "bytes": 9327
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "name": "rust-toolchain.toml",
+      "sha256": "637138f8759bf52f8328b64a074e8435fd056ccea54d3a3aaf674efafc1a9eb8",
+      "bytes": 123
+    },
+    {
+      "path": "scripts/stage-workers.py",
+      "name": "stage-workers.py",
+      "sha256": "42519e29b6eb8a0049665b57c2a55e9d731306d9b0ea1a01e58d3f40bf7a479b",
+      "bytes": 3902
+    },
+    {
+      "path": "scripts/verify-linux-runtime.py",
+      "name": "verify-linux-runtime.py",
+      "sha256": "507febd8d1993c82eca8f5105dec5600bfd43170c876562c0e65d5c29532c23c",
+      "bytes": 16062
+    },
+    {
+      "path": "scripts/verify-public-api.py",
+      "name": "verify-public-api.py",
+      "sha256": "12598fe7ac129a629911426632aa2cfc81b236fb4617c74814311449229b18da",
+      "bytes": 11277
+    }
+  ],
+  "workers": {
+    "font": {
+      "name": "publisher-font-worker",
+      "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+      "bytes": 2959152
+    },
+    "color": {
+      "name": "publisher-color-worker",
+      "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+      "bytes": 1068688
+    },
+    "raster": {
+      "name": "publisher-raster-worker",
+      "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+      "bytes": 2701200
+    }
+  },
+  "test_probes": [
+    {
+      "name": "linux-boundary-probe",
+      "sha256": "b076055b811822a275e77a8ba9e2d4986c8f7ffacb526b2e15f09691df0ac3d5",
+      "bytes": 633960
+    },
+    {
+      "name": "publisher-linux-isolation-probe",
+      "sha256": "32b2a016f107995b9fdbdec58f25c2d24fbf2e5cb9a1fd74a3239aebae4bbe75",
+      "bytes": 756136
+    }
+  ],
+  "test_suites": [
+    {
+      "package": "publisher-linux-worker-job",
+      "target": "linux_isolation",
+      "kind": "test",
+      "binary": {
+        "name": "linux_isolation-df3b21eaf96222dc",
+        "sha256": "70af7d3e98f06f9fafd172ae35d5af11edd7b835b1064e1532366a4f6805b972",
+        "bytes": 1391640
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "linux_isolation-df3b21eaf96222dc",
+        "target_platform": "linux",
+        "caller_sha256": "70af7d3e98f06f9fafd172ae35d5af11edd7b835b1064e1532366a4f6805b972",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 11,
+      "ignored": 0,
+      "tests": [
+        "a_1024_descriptor_soft_limit_still_launches_the_restricted_worker",
+        "a_full_stdout_pipe_cannot_hold_a_worker_beyond_its_wall_limit",
+        "actual_kernel_denies_files_symlinks_other_runs_network_processes_exec_and_inherited_fds",
+        "drop_and_run_cancellation_close_pipes_and_preserve_an_independent_run",
+        "immutable_executable_and_object_grants_survive_path_replacement",
+        "incompatible_syscall_architectures_cannot_bypass_the_filter",
+        "kernel_memory_cpu_and_independent_wall_limits_are_enforced",
+        "killing_the_host_triggers_os_backed_worker_death",
+        "missing_required_kernel_primitives_fail_before_the_parser_marker",
+        "timestamp_changes_are_denied_for_read_only_and_ungranted_objects",
+        "unrelated_inheritable_pipe_writer_is_closed_while_worker_remains_alive"
+      ]
+    },
+    {
+      "package": "font-boundary",
+      "target": "font_boundary",
+      "kind": "lib",
+      "binary": {
+        "name": "font_boundary-6bdcc3f438f4b086",
+        "sha256": "e704d3b343dab6b6f7b60f3cc117ae72ccdb36403b9a6ab1de4191e276dc9232",
+        "bytes": 19141984
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "font_boundary-6bdcc3f438f4b086",
+        "target_platform": "linux",
+        "caller_sha256": "e704d3b343dab6b6f7b60f3cc117ae72ccdb36403b9a6ab1de4191e276dc9232",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 22,
+      "ignored": 0,
+      "tests": [
+        "release_worker_lookup_is_confined_to_the_application_directory",
+        "tests::confined_worker_inspects_an_exact_face_into_an_opaque_receipt",
+        "tests::confined_worker_prepares_accented_composite_subset",
+        "tests::confined_worker_prepares_hash_bound_subset",
+        "tests::confined_worker_refuses_cff_full_embedding_without_output",
+        "tests::confined_worker_rejects_malformed_cff_name_index_without_output",
+        "tests::confined_worker_rejects_two_cff_names_without_output",
+        "tests::host_rejects_a_worker_inspection_identity_mismatch",
+        "tests::input_budgets_and_duplicates_fail_before_worker_launch",
+        "tests::linux_active_cancellation_reaps_and_removes_partial_outputs",
+        "tests::linux_deadline_kills_sleeping_worker_and_cleans_partial_output",
+        "tests::linux_deadline_remains_a_timeout_after_the_owner_has_already_reaped",
+        "tests::linux_launch_uses_verified_bytes_after_private_path_replacement",
+        "tests::linux_partial_grant_setup_never_runs_and_cleans_up",
+        "tests::linux_real_elf_protocol_failures_clean_up_and_allow_fresh_retry",
+        "tests::packaged_font_worker_cannot_read_or_write_outside_its_private_run",
+        "tests::packaged_font_worker_rejects_exact_malformed_font_without_output_or_paths",
+        "tests::packaged_font_worker_returns_a_bounded_resource_failure",
+        "tests::publication_mode_preserves_a_full_font_when_subsetting_is_forbidden",
+        "tests::source_replacement_after_pinning_is_rejected",
+        "tests::subset_mapping_allows_component_tail_but_rejects_inconsistent_cids",
+        "tests::worker_failures_preserve_authoring_denials_without_hiding_integrity_codes"
+      ]
+    },
+    {
+      "package": "font-boundary",
+      "target": "linux_preparation",
+      "kind": "test",
+      "binary": {
+        "name": "linux_preparation-e8790f72a9504b98",
+        "sha256": "a9293f0f6e48f693c4684abc4e60536cf52dca46399df8e2849fa5afcd52ac51",
+        "bytes": 18964176
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "linux_preparation-e8790f72a9504b98",
+        "target_platform": "linux",
+        "caller_sha256": "a9293f0f6e48f693c4684abc4e60536cf52dca46399df8e2849fa5afcd52ac51",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 2,
+      "ignored": 0,
+      "tests": [
+        "actual_truetype_and_cff_inspect_subset_and_publication_keep_exact_identities",
+        "actual_worker_rejects_synthetic_restricted_rights_without_prepared_receipt"
+      ]
+    },
+    {
+      "package": "color-boundary",
+      "target": "color_boundary",
+      "kind": "lib",
+      "binary": {
+        "name": "color_boundary-9e9c69a83b1ec718",
+        "sha256": "c3cc831299c20636c7be03032854bb1c323a0c1995da123732cf02d1cc0e7ba4",
+        "bytes": 4450408
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "color_boundary-9e9c69a83b1ec718",
+        "target_platform": "linux",
+        "caller_sha256": "c3cc831299c20636c7be03032854bb1c323a0c1995da123732cf02d1cc0e7ba4",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 10,
+      "ignored": 0,
+      "tests": [
+        "release_worker_lookup_is_confined_to_the_application_directory",
+        "tests::authored_srgb_profile_is_canonical_across_repeated_preparation",
+        "tests::confined_worker_converts_valid_profile_and_rejects_out_of_bounds_icc_tag",
+        "tests::host_rejects_invalid_sizes_before_starting_native_code",
+        "tests::inspection_fails_closed_without_a_worker",
+        "tests::inspection_report_rejects_each_identity_mismatch",
+        "tests::packaged_color_worker_cannot_read_or_write_outside_its_private_run",
+        "tests::packaged_worker_inspects_profile_and_rejects_native_transform_corruption",
+        "tests::private_executed_copy_remains_bound_if_source_changes",
+        "tests::source_replacement_after_pinning_is_rejected"
+      ]
+    },
+    {
+      "package": "color-boundary",
+      "target": "linux_preparation",
+      "kind": "test",
+      "binary": {
+        "name": "linux_preparation-3f9ff268d93e6b39",
+        "sha256": "abd584c93553acc40453fa5f8a2d4c5a75f47304ab4d69d1516900c6a5e6698d",
+        "bytes": 4395408
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "linux_preparation-3f9ff268d93e6b39",
+        "target_platform": "linux",
+        "caller_sha256": "abd584c93553acc40453fa5f8a2d4c5a75f47304ab4d69d1516900c6a5e6698d",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 1,
+      "ignored": 0,
+      "tests": [
+        "linux_prepares_actual_profile_through_public_boundary"
+      ]
+    },
+    {
+      "package": "raster-boundary",
+      "target": "raster_boundary",
+      "kind": "lib",
+      "binary": {
+        "name": "raster_boundary-034beeb188c13deb",
+        "sha256": "430dc21ebc2ccad8fe662bad1c7b3bf7605d9ebe854772ea501132c5aee73534",
+        "bytes": 2783680
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "raster_boundary-034beeb188c13deb",
+        "target_platform": "linux",
+        "caller_sha256": "430dc21ebc2ccad8fe662bad1c7b3bf7605d9ebe854772ea501132c5aee73534",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 9,
+      "ignored": 0,
+      "tests": [
+        "release_worker_lookup_is_confined_to_the_application_directory",
+        "tests::clipboard_normalization_cannot_read_or_write_outside_private_run",
+        "tests::confined_clipboard_normalization_binds_source_png_pixels_and_worker",
+        "tests::host_rejects_excessive_dimensions_and_asset_drift_before_decode",
+        "tests::packaged_raster_worker_cannot_read_or_write_outside_its_private_run",
+        "tests::packaged_raster_worker_decodes_exact_authored_pixel",
+        "tests::packaged_raster_worker_decodes_supported_formats_and_rejects_malformed_payloads",
+        "tests::packaged_raster_worker_rejects_exact_malformed_raster_without_outputs_or_paths",
+        "tests::worker_replacement_after_pinning_is_rejected"
+      ]
+    },
+    {
+      "package": "raster-boundary",
+      "target": "linux_preparation",
+      "kind": "test",
+      "binary": {
+        "name": "linux_preparation-fc32b9902b73154f",
+        "sha256": "cc0808e67a6491ac50d70a03ef016d3855ccb26ff14512e3dfb424df1bc6158b",
+        "bytes": 1709544
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "linux_preparation-fc32b9902b73154f",
+        "target_platform": "linux",
+        "caller_sha256": "cc0808e67a6491ac50d70a03ef016d3855ccb26ff14512e3dfb424df1bc6158b",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 1,
+      "ignored": 0,
+      "tests": [
+        "oriented_tiff_keeps_straight_alpha_exact_profile_and_receipt_memory_lifetime"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "validator_boundary",
+      "kind": "lib",
+      "binary": {
+        "name": "validator_boundary-172736e58e1fa3f1",
+        "sha256": "fcdf670c94224bd3cc366a5d211cee4e416c5614e31d85446c7e592dceb10ce2",
+        "bytes": 1451464
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "validator_boundary-172736e58e1fa3f1",
+        "target_platform": "linux",
+        "caller_sha256": "fcdf670c94224bd3cc366a5d211cee4e416c5614e31d85446c7e592dceb10ce2",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 10,
+      "ignored": 0,
+      "tests": [
+        "tests::active_icc_component_identity_drift_is_rejected",
+        "tests::checked_in_manifest_fails_closed_until_every_rule_is_release_proven",
+        "tests::diagnostic_component_identity_drift_is_rejected",
+        "tests::executable_binding_detects_replacement_after_resolution",
+        "tests::packaged_worker_failure_crosses_the_bounded_typed_process_boundary",
+        "tests::private_worker_copy_remains_bound_after_the_packaged_source_is_replaced",
+        "tests::public_core_component_identity_drift_is_rejected",
+        "tests::report_is_bound_to_artifact_profile_rules_and_source_identity",
+        "tests::unknown_report_fields_are_rejected",
+        "tests::unsupported_validator_fails_before_a_script_can_create_a_marker"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "unsupported_platform",
+      "kind": "test",
+      "binary": {
+        "name": "unsupported_platform-740c1d95221d5a11",
+        "sha256": "6d0beb7a5c2c6c2ce2196d19eadf76c611416bdbb754a9275fe2bc678288025b",
+        "bytes": 1142488
+      },
+      "staging": {
+        "schema": "pdf-library-worker-stage/v1",
+        "caller": "unsupported_platform-740c1d95221d5a11",
+        "target_platform": "linux",
+        "caller_sha256": "6d0beb7a5c2c6c2ce2196d19eadf76c611416bdbb754a9275fe2bc678288025b",
+        "workers": [
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "adjacent"
+          },
+          {
+            "name": "publisher-font-worker",
+            "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+            "bytes": 2959152,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-color-worker",
+            "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+            "bytes": 1068688,
+            "location": "debug-parent"
+          },
+          {
+            "name": "publisher-raster-worker",
+            "sha256": "f9edfc70db31ef6e69266a9b4c794934a001f7a36e779e043e74d26a0a55f254",
+            "bytes": 2701200,
+            "location": "debug-parent"
+          }
+        ]
+      },
+      "passed": 1,
+      "ignored": 0,
+      "tests": [
+        "public_validator_explicitly_refuses_the_unqualified_platform"
+      ]
+    }
+  ],
+  "native_tests_passed": 67,
+  "ignored": 0,
+  "client": {
+    "name": "pdf-library-standalone-client",
+    "sha256": "9720dbd33f640dc7207305fa46baaea9730b3ac3d7a4932180fa8458f30dfe98",
+    "bytes": 21847984
+  },
+  "client_staging": {
+    "schema": "pdf-library-worker-stage/v1",
+    "caller": "pdf-library-standalone-client",
+    "target_platform": "linux",
+    "caller_sha256": "9720dbd33f640dc7207305fa46baaea9730b3ac3d7a4932180fa8458f30dfe98",
+    "workers": [
+      {
+        "name": "publisher-font-worker",
+        "sha256": "733b4993ac4b71509d98ad9787c2dfa02bc6bf5d62d5f9a51497680b850b2d4b",
+        "bytes": 2959152,
+        "location": "adjacent"
+      },
+      {
+        "name": "publisher-color-worker",
+        "sha256": "bd6c7131090e52fe0385c94e5c73bf95d0c3b17b27216cca212f0b501903211a",
+        "bytes": 1068688,
+        "location": "adjacent"
+      }
+    ]
+  },
+  "public_api_receipt": {
+    "name": "results.json",
+    "sha256": "7fae0446e1539be0d13ed06bb14467a87cf98235b3ee498db7650ab6ba32738d",
+    "bytes": 2910
+  },
+  "pdfs": [
+    [
+      {
+        "file": "ordinary.pdf",
+        "sha256": "b62a8039d7dcaf67e1b9641b7da150e4587abebf0212a6c00c645993a50534e0",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": false
+      },
+      {
+        "file": "candidate.pdf",
+        "sha256": "76eb0db1dfc3a69683eafa3bf9a250103215ec5d30af94dcd4f9cdacab0a9f98",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": true
+      }
+    ],
+    [
+      {
+        "file": "ordinary.pdf",
+        "sha256": "b62a8039d7dcaf67e1b9641b7da150e4587abebf0212a6c00c645993a50534e0",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": false
+      },
+      {
+        "file": "candidate.pdf",
+        "sha256": "76eb0db1dfc3a69683eafa3bf9a250103215ec5d30af94dcd4f9cdacab0a9f98",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": true
+      }
+    ]
+  ],
+  "validator_runtime": "explicitly unsupported; tested refusal",
+  "format_conformance": "separate exact-output evaluation required"
+}

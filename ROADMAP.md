@@ -1,57 +1,59 @@
 # PatterboxPDF roadmap
 
-Independent library established October 3, 2026. This file records completed scope and future work.
+The independent library was established October 3, 2026. This file records implemented scope, current qualification and future capabilities.
 
-## Completed initial generation scope
+## Implemented generation scope
 
-The initial reusable finished-page library is implemented and verified for unrelated callers. Publisher is an incidental future consumer. Application UI, document integration and physical printer acceptance are downstream work.
+The reusable finished-page interface serves unrelated applications. Application UI, document integration and physical printer acceptance belong to downstream applications.
 
-- Ordinary RGB, Gray and CMYK paints and decoded eight-bit images, including straight alpha and resource lifetime accounting.
-- Native axial/radial gradient fills, multiple stops, hard interior transitions, endpoint padding, constant/varying opacity, transforms and clips.
-- All sixteen standard blend modes, isolated group opacity applied once, per-page/group painted-color discovery and exact direct-stream resource dictionaries.
-- Exact worker-prepared TrueType/CFF programs, positioned glyphs, Unicode extraction mappings and ordered ActualText.
-- Supported CMYK PDF/X output with exact screened output profiles, corrected custom-condition Info, nonblank title, serialized content-string limits, checked object allocation and executed graphics-state depth.
-- Worker-free drawing and prepared-resource print examples, accurate API/platform documentation, current requirements bindings and curated source packaging.
+- Ordinary RGB, Gray and CMYK paints and decoded eight-bit images, including straight alpha and shared resource lifetime accounting.
+- Axial and radial gradient fills, multiple stops, hard interior transitions, endpoint padding, constant or varying opacity, transforms and clips.
+- All sixteen blend modes, isolated group opacity applied once, local blending spaces and direct resource dictionaries.
+- Prepared TrueType and CFF programs, positioned glyphs, Unicode extraction mappings and logical ActualText.
+- CMYK PDF/X-4 generation with exact admitted output profiles, consistent metadata, encoded string limits and checked object/state limits.
+- Confined resource workers, standalone drawing and print examples, public documentation and curated source packaging.
 
-Finalization covered standards corrections, ordinary color inputs, gradients, compositing, neutral examples and current evidence/source delivery. Current results are in [verification status](docs/verification-status.md). Require the source archive's adjacent passed isolation receipt for the final source handoff.
+## Completed accepted-input generation
 
-## Current verification
+The current milestone covers the documented successful generation routes and all supported input families. Native resource checks and writer construction enforce the contract; independent evaluators measure actual output. Intentional diagnostic candidates have their own stated scope.
 
-October 6 maintenance: bound every retained ToUnicode destination to 512
-UTF-16BE bytes, emit Type 2 ToUnicode resources directly in both writer paths,
-and preserve CR/CRLF titles in decoded Info/XMP metadata. Focused native and
-independent decoding checks accompany a new source handoff. Archive 006 remains
-the earlier immutable checkpoint. New font-bearing output has different bytes;
-the October 4 checker results below are retained baseline evidence.
+Font preparation now preserves composite geometry and required metrics through subsetting, including retained component tails. Full-font embedding preserves source bytes. Font descriptors account for complete outlines, effective CFF transformations, flex curves, fractional coordinates and independently established design authority. Valid name-table formats are supported, and malformed retained names are rejected. Independent metric checks select the documented Unicode/MacRoman PostScript identity and ignore other permitted identity records without guessing their meaning.
 
-The affected native replay passed 150 Rust tests. Six actual Windows confinement checks and three real preparation-worker failure cases passed. The separate client retains a 57-package default graph without application authoring crates. The regenerated corpus met 34/34 combined expectations, with 14 positive callas passes; the separate CMYK guard rejects four malformed profile declarations that callas accepts. All 190 source pages passed geometry, text and fixed two-reader comparisons.
+ICC preparation checks supported editions, headers, tag/type roles and retained payloads before native usability checks. Numeric encoding preserves the required relationships in the actual emitted decimals. Metadata, Unicode, image planes, gradient functions and resource graphs have independent output controls.
 
-The new ordinary/print gallery passed native structure/resource checks and fifty meaningful appearance probes in both readers. Its exact CMYK output passed callas. Whole-page comparison exceeded its unchanged bounds on ordinary page 2 and print pages 1–2, concentrated in smooth CMYK gradient previews. Preserve those failures and their qualification; do not describe the full gallery comparison as passed.
+Current source passes 368 native Windows tests and 319 native Ubuntu tests, with no ignored cases. Both platforms pass the 131-case font corpus, the 17-case profile corpus and the four-document composition corpus. The output catalog exercises all 37 targeted negative rules against four positive PDFs. [Verification status](docs/verification-status.md) explains the exact scope and qualifications.
 
-The inherited Unicode test corpus is now supplied inside its crate. All eleven
-existing native assertions passed, and every workspace target compiles. Actual
-printer-profile worker/export evidence uses ICC 2.2.0; admitted v4 encodings have
-screening coverage without a complete real v4 end-to-end run.
+Independent source and exact-output review accepted the documented domain and its explicit authoring premises. Public family/catalog audits pass. The source handoff separately verifies its archive inventory, current compiled inputs and fresh build/execution on both targets.
 
-The authored gallery appearance runner is included in public source. Its exact
-fifty checks are reproducible from retained renders; the original evidence is
-preserved and the refreshed receipt retains failed whole-page comparison flags.
+The three original CMYK reader comparisons remain failed at their unchanged bounds. The completed controlled investigation verifies component/color behavior and explains the retained reader differences. See [color behavior](docs/color-behavior.md).
 
-The second pass corrected the recipient setup instructions and made the gallery
-and public API verifiers refuse optimized Python, which disables their checks.
-The source handoff includes a regression check for that refusal and requires a
-fresh extracted-package build after these repairs.
+Historical receipts retain their original source and exact output identities. Changes that affect generation or inspection require fresh relevant checks and current bindings.
 
-Earlier corpus receipts, archives and the original 1,350 imported files remain preserved checkpoints. New evidence is under docs/verification/current/finalization-20261004; old receipts retain their historical identities.
+## Controlled CMYK screen previews
+
+The optional Python companion is implemented with a reusable module and CLI.
+It renders the actual PDF through an explicitly supplied CMS-enabled Poppler,
+requires matching embedded CMYK OutputIntent bytes when present, and writes RGB
+PNGs containing the selected display ICC profile. Ordinary PDFs without an
+OutputIntent record the caller's explicit DefaultCMYK condition.
+
+Native Windows and Ubuntu preview qualification passes with explicit profiles,
+independent color measurements and repeatability controls. Source delivery also
+requires the adjacent exact-archive isolation receipt. See the
+[proofing guide](docs/proofing.md) for use, completion manifests and limitations. The qualification includes 156 independent
+color/opacity expectations for the native RGB preview route. CMYK group-colorimetry
+requires separate qualification.
+The three historical failed reader comparisons retain their original verdicts
+and bounds. Physical printer acceptance remains a downstream check.
 
 ## Source release
 
-On October 16, 2026 the project selected MIT OR Apache-2.0 for first-party source and original material, and the PatterboxPDF public source identity. Dependency/font/profile terms remain separate. All Cargo packages retain publish = false; registry and binary releases are separate future decisions. Earlier archives and receipts retain the licensing policy in effect when they were produced.
+First-party source and original material use MIT OR Apache-2.0. Dependency, font and profile terms remain separate. All Cargo packages retain `publish = false`. Registry and binary releases require separate work.
 
-The `normative_pdfx4_coverage_complete` flag remains false. Current verification covers the supported generation contracts and exact tested outputs; unrestricted PDF/X-4 conformance is not established.
+The generation contract records the supported caller/resource domain and its specific authoring premises. Current independent output, platform and source-package evidence bind that domain and the exact tested files. Unrestricted PDF/X-4 conformance is a broader claim.
 
 ## Future capability work
 
-Reading/editing/merging PDFs, paragraph layout/shaping, annotations/forms/signatures, spot-color authoring, additional ICC workflows, gradient strokes/repeating/reflecting/conical/mesh gradients and equivalent resource preparation on other platforms require their own scoped plans. They are not unfinished units of this initial generation implementation.
+Reading, editing and merging existing PDFs; paragraph layout and shaping; annotations, forms and signatures; spot colors; additional ICC workflows; gradient strokes and repeating, reflecting, conical or mesh gradients; and resource preparation on additional platforms require separate scope and qualification.
 
-Next: build the documented standalone examples. Future capability work needs a separate scope and verification contract.
+Next: use the standalone examples for the recorded environment. Choose a future capability through its own scoped plan.

@@ -1,0 +1,131 @@
+{
+  "schema": "pdf-library-public-api/v1",
+  "dependency_graph": {
+    "no_authoring_dependencies": true,
+    "package_count": 57,
+    "packages": [
+      "adler2",
+      "autocfg",
+      "bitflags",
+      "block-buffer",
+      "bytemuck",
+      "cc",
+      "cfg-if",
+      "chrono",
+      "color-boundary",
+      "cpufeatures",
+      "crc32fast",
+      "crypto-common",
+      "digest",
+      "dunce",
+      "find-msvc-tools",
+      "flate2",
+      "font-boundary",
+      "foreign-types",
+      "foreign-types-macros",
+      "foreign-types-shared",
+      "generic-array",
+      "getrandom",
+      "itoa",
+      "jobserver",
+      "lcms2",
+      "lcms2-sys",
+      "libc",
+      "memchr",
+      "miniz_oxide",
+      "num-traits",
+      "pdf-library-standalone-client",
+      "pdf-writer",
+      "pkg-config",
+      "print-core",
+      "proc-macro2",
+      "publisher-windows-atomic-file",
+      "publisher-worker-job",
+      "quote",
+      "raster-capacity",
+      "ryu",
+      "serde",
+      "serde_core",
+      "serde_derive",
+      "serde_json",
+      "sha2",
+      "shlex",
+      "simd-adler32",
+      "syn",
+      "ttf-parser",
+      "typenum",
+      "unicode-ident",
+      "version_check",
+      "windows-link",
+      "windows-sys",
+      "zlib-rs",
+      "zmij"
+    ]
+  },
+  "standalone": [
+    [
+      {
+        "file": "ordinary.pdf",
+        "sha256": "c76c7dc036da885ba582b10ef7eb687fdbbf32b18fef959a78b10000063870be",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": false
+      },
+      {
+        "file": "candidate.pdf",
+        "sha256": "7004c900117887d117c47722f560fb8a66e313bdb42d1b2d2df03e8cf34d0cfa",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": true
+      }
+    ],
+    [
+      {
+        "file": "ordinary.pdf",
+        "sha256": "c76c7dc036da885ba582b10ef7eb687fdbbf32b18fef959a78b10000063870be",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": false
+      },
+      {
+        "file": "candidate.pdf",
+        "sha256": "7004c900117887d117c47722f560fb8a66e313bdb42d1b2d2df03e8cf34d0cfa",
+        "pages": 2,
+        "native_text": true,
+        "exact_cmyk_alpha": true,
+        "geometry": true,
+        "pdfx_candidate": true
+      }
+    ]
+  ],
+  "repeatable_bytes": true,
+  "worker_failures": [
+    {
+      "case": "absent-font",
+      "exit_code": 1,
+      "no_output_exposed": true
+    },
+    {
+      "case": "malformed-font",
+      "exit_code": 1,
+      "no_output_exposed": true
+    },
+    {
+      "case": "absent-color",
+      "exit_code": 1,
+      "no_output_exposed": true
+    }
+  ],
+  "adapter": [],
+  "fresh_independent_pdfx4_check": false,
+  "caller": {
+    "name": "pdf-library-standalone-client.exe",
+    "sha256": "cccd2435e2b3eb2852bdabb388c104baeda8172577d9480586ed5e3926b7838a"
+  }
+}

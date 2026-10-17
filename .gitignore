@@ -1,6 +1,7 @@
 /target/
 /artifacts/
 /.tools/
+/.venv-proofing/
 /node_modules/
 __pycache__/
 *.pyc

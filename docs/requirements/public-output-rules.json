@@ -1,0 +1,1670 @@
+{
+  "schema": "patterboxpdf-output-rules/v2",
+  "receipt_set": "accepted-inputs-20261016",
+  "scope": "Documented accepted generation inputs and actual independent exact-output controls; resource-authoring premises and recorded environment limits apply.",
+  "evaluator": {
+    "path": "scripts/verify-pdfx-supported-output.py",
+    "sha256": "8fdb71961d443c90710e35043e833c4c91273b5db2a7d57d9009f75f3d75f3d7"
+  },
+  "helpers": [
+    {
+      "path": "scripts/pdf_font_program_rules.py",
+      "sha256": "2d6a551d9ccb7e63818869096820389b06dbe9fa04a9a626fa42cea0b839f155"
+    },
+    {
+      "path": "scripts/pdf_numeric_rules.py",
+      "sha256": "b8d5e2a728d755942ebdbf7cb0748ba08a160b3e25dd9dff8cc59b0f5d72ab7b"
+    },
+    {
+      "path": "scripts/pdf_text_metadata_rules.py",
+      "sha256": "57e315f52062fbc5bb2975e7a26ba227a3161a2c45095b3b376063a8abc81fae"
+    },
+    {
+      "path": "scripts/pdf_truetype_hint_execution.py",
+      "sha256": "0bf159f6676effec78f122045b3cfc1c14d84335b2b10942a32db574688c7750"
+    },
+    {
+      "path": "scripts/verify-composition-corpus.py",
+      "sha256": "ac10f90b327d454e0b73b393328457b44e997fd20130824b605f7e3d259e4fb7"
+    },
+    {
+      "path": "scripts/verify-font-metrics.py",
+      "sha256": "744235cf2e73a59b963c7670f63724fa05d8fc015d11f25b747acc347949dedf"
+    },
+    {
+      "path": "scripts/verify-icc-profile.py",
+      "sha256": "c093a751878df0ff8875c34aafbf5ed95c47401104bec8bdb445988d2b601f5e"
+    },
+    {
+      "path": "scripts/verify-pdfx-supported-output.py",
+      "sha256": "8fdb71961d443c90710e35043e833c4c91273b5db2a7d57d9009f75f3d75f3d7"
+    }
+  ],
+  "code_bindings": [
+    {
+      "path": "Cargo.lock",
+      "sha256": "2476947309b6fc26a07b1878319fdeaefb747146be8841feee229cae0769c0f8"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "4db803b06d800b4b8d2b5c3615199b629f6f4619d9c33cf2d6542fd57154f85e"
+    },
+    {
+      "path": "apps/color-worker/Cargo.toml",
+      "sha256": "74178e13752d7467274033eb08b7c2c933221784710b1a779eedd9aa2c96a01b"
+    },
+    {
+      "path": "apps/color-worker/src/main.rs",
+      "sha256": "3801675b954e5f502f23ad6b146c23b7b9c2c9a5c1812c8ae290e5680f36218e"
+    },
+    {
+      "path": "apps/font-worker/Cargo.toml",
+      "sha256": "248d40a166666189e326dd163e1c73567ab9265224fc76f393c642c7bccc916b"
+    },
+    {
+      "path": "apps/font-worker/src/cff_normalize.rs",
+      "sha256": "1ff1157746c2cd06a9e271dea0a598272e8dbfbee76e2ec7eeafae60d5cd5242"
+    },
+    {
+      "path": "apps/font-worker/src/cff_program.rs",
+      "sha256": "2529485f356b6f7eb9d5e6d1ab6ea4ee26a4aaebcf7d88aed5749b3517cb3ec5"
+    },
+    {
+      "path": "apps/font-worker/src/enclosure.rs",
+      "sha256": "deea883043c2cdbb1fa93b58a930b36acc559067010ca73d3e7ae30ad36f173b"
+    },
+    {
+      "path": "apps/font-worker/src/main.rs",
+      "sha256": "5ea39deb4792ee3f5c01ab8ac8ec7aba69439d45387cf5731915406372a9de16"
+    },
+    {
+      "path": "apps/font-worker/src/outline.rs",
+      "sha256": "7d99fef191514b34058751f14d84925e4310e67824ad9d269ecd76aa9ba3fcdf"
+    },
+    {
+      "path": "apps/font-worker/src/pdf_metrics.rs",
+      "sha256": "2d313f8a9cb1d4bcd9757de69ef20cbe241c411b1f6b9be42ff350af495ed186"
+    },
+    {
+      "path": "apps/font-worker/src/subset_metrics.rs",
+      "sha256": "d67cd7fbc87dc9934d1dd595bdc4793d2ec9f3c43ebd88b81fad045e53aff1f5"
+    },
+    {
+      "path": "apps/font-worker/src/tests/accepted_inputs.rs",
+      "sha256": "d90ac8f51202d9b18610d546f9f9b6b46d683d1d0c9c2654307b8a256c9b4da1"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/generate.py",
+      "sha256": "f5e20e213ef734a72e492094d680bca9e0c9d41251dcfc1495e11c9fe652d45e"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/probe.py",
+      "sha256": "c3268d842be7b77a77839a9e7c3c48e4c952a4e179f9a603d6d0c8188c31ee26"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/provenance.json",
+      "sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/ascent-facts.json",
+      "sha256": "bc0df0c1444ec85667892d46c6c1e211adfecbaf64271d4583b9d49bb8e541bc"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/provenance.json",
+      "sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8"
+    },
+    {
+      "path": "apps/font-worker/src/tests/generate_controls.py",
+      "sha256": "a66238b369191f0a1cdf45ef405f3da6d9cdc45d5f949beb51ee511930318a9b"
+    },
+    {
+      "path": "apps/font-worker/src/tests/probe_controls.py",
+      "sha256": "7330ed9ba08041fa68382100b25bb1ef037fee6a2aaadf9e850e20e3f480d146"
+    },
+    {
+      "path": "apps/font-worker/src/truetype_program.rs",
+      "sha256": "3cde5d93dfd8ebd68637b0fd571d6d2991793cba773ef27f6b4bdb7e4ee2a86f"
+    },
+    {
+      "path": "apps/font-worker/tests/components.rs",
+      "sha256": "e1a043f6e492a31595f7ede6ead9a626d01587eb6f1f419a3aac594c63798685"
+    },
+    {
+      "path": "apps/font-worker/tests/worker_process.rs",
+      "sha256": "067475ac9fd584a78b8f172669227410087ce17fba0aa65f3736670fbc878b38"
+    },
+    {
+      "path": "apps/pdf-cli/Cargo.toml",
+      "sha256": "d0a90d502d151326d577d099f5b1e375bcec5a7ba23342dd5e6707d03acef972"
+    },
+    {
+      "path": "apps/pdf-cli/src/lib.rs",
+      "sha256": "2a11e9d6dc399fecfbdd1de621dcbe6dbb27b38eb4b4b7e4ed654c11981c6881"
+    },
+    {
+      "path": "apps/pdf-cli/src/main.rs",
+      "sha256": "41208f77cf0051b24929374f7bb0c77f51651a5fcf40dd93a1f2da98613c04eb"
+    },
+    {
+      "path": "apps/pdf-cli/tests/export.rs",
+      "sha256": "074859fdcb018ef4372cdfdbf947cc785f59ccc3ee9dec00f47c828b336a5b96"
+    },
+    {
+      "path": "apps/raster-worker/Cargo.toml",
+      "sha256": "adb4f11cb469d7c27b29f08ee1f133fc5b5709e8f999f058d1ba0f2fda5150c5"
+    },
+    {
+      "path": "apps/raster-worker/src/clipboard_dib.rs",
+      "sha256": "04991f2ef37d3787cc0d9c8e4bd0a3b2b3810f15471a4c500b64cf76765ad0be"
+    },
+    {
+      "path": "apps/raster-worker/src/main.rs",
+      "sha256": "6de52b8b181873cbcd36ea9f0c7be9d23c45650b69c4b9e807e2106991fc466f"
+    },
+    {
+      "path": "apps/validator-worker/Cargo.toml",
+      "sha256": "1c83f6addb008b9e6c5717535b7d3b4a3137ac06beadb66ee396b7d140b24056"
+    },
+    {
+      "path": "apps/validator-worker/src/main.rs",
+      "sha256": "51c30ed31aef8a93d5eeb90582b2b433cb0e912313fda41b2d1d31ca6f08f5a5"
+    },
+    {
+      "path": "apps/validator-worker/src/tests/calibration.rs",
+      "sha256": "1af31618b147f14d91b7057488b4506f5c5f86543b0960902ba8c769b277f3e6"
+    },
+    {
+      "path": "apps/validator-worker/tests/trusted_publication_gate.rs",
+      "sha256": "72d195b579ef5e23f2d29f568289d692ac26d85f11a32afdbacfd2401495b1b7"
+    },
+    {
+      "path": "crates/application-core/Cargo.toml",
+      "sha256": "906039aeef2d7271d9dad24358a0c07c7373d6cd9d0db259c1dd15a78a89628f"
+    },
+    {
+      "path": "crates/application-core/src/clipboard.rs",
+      "sha256": "ef32ecbdd51985d8f64e3750a07e9123f275865237c89d72f2e1422185daa5cf"
+    },
+    {
+      "path": "crates/application-core/src/embedded_font_reuse.rs",
+      "sha256": "340f35b8034f00bcd31feb5bbfc8202c4387ed823ddece3131898deea322d500"
+    },
+    {
+      "path": "crates/application-core/src/font_selection.rs",
+      "sha256": "a389df56658f7c534f6815f5c0956e45c18280dd7bb3430144d8c161c90a85c4"
+    },
+    {
+      "path": "crates/application-core/src/image_batch_tests.rs",
+      "sha256": "d1269c7cc9248cad286a028653aef86c37befb9c590d96642420272714a02645"
+    },
+    {
+      "path": "crates/application-core/src/lib.rs",
+      "sha256": "b21411444c924ca3d1d71988e17a256607495b61998214330a2fc70bd8e8fda0"
+    },
+    {
+      "path": "crates/application-core/src/master_pages.rs",
+      "sha256": "15c8949ca976e36036baa4d73d276ac278c748244f0b01a2e53a7782b49de5f1"
+    },
+    {
+      "path": "crates/application-core/src/save_job.rs",
+      "sha256": "e8b7f067594f7a09976fe751612b007a2cd2a773b6369e4fc2026bc1176c60e3"
+    },
+    {
+      "path": "crates/application-core/src/selection.rs",
+      "sha256": "cad87b6057360a08238a7312bcb7662cd84ff34c2dca25a8b369c33e55c00681"
+    },
+    {
+      "path": "crates/application-core/src/session_clipboard.rs",
+      "sha256": "11c6ca12155cbb12c395c07e7a0c91386828bc8abfe290778303a6dc952d477c"
+    },
+    {
+      "path": "crates/application-core/src/session_clipboard/resources.rs",
+      "sha256": "a3fda9e12b4702a692fd57d77a005429ab9f8fe397b0c39e186bbe54a59d797f"
+    },
+    {
+      "path": "crates/application-core/src/shape_creation.rs",
+      "sha256": "c02a1ae28a5c315c7fd0e49daf10a780b868c77bd63db05117c98a047e8cd3da"
+    },
+    {
+      "path": "crates/application-core/src/style_transfer.rs",
+      "sha256": "aafb4158280d120c80c5bb62cfbad922f30631a7262efa9f76d765bfc5749695"
+    },
+    {
+      "path": "crates/application-core/src/table_authoring.rs",
+      "sha256": "2dae52e641181754ae121c40b33991b6105c7a2731022478a51c61815f59d044"
+    },
+    {
+      "path": "crates/application-core/src/text_search.rs",
+      "sha256": "fb19bba9cc6b9630a57b0f4322c3e06bf0cd4716a8b527fec12712bdb2dfac27"
+    },
+    {
+      "path": "crates/application-core/tests/asset_reachability.rs",
+      "sha256": "f76d7476d0e2f9cf639309354bfb71668a2fc80c0fe1baf34a1a9959657500ef"
+    },
+    {
+      "path": "crates/application-core/tests/authoring_integration.rs",
+      "sha256": "c67f805fa5d96983e5308f1d579a7d0fb992a2a19eebdab129da1c4af7ae06ad"
+    },
+    {
+      "path": "crates/application-core/tests/editor_module.rs",
+      "sha256": "938f48dc7203d234843226d161f08169a946ea6daaeeda977d0e15384196da31"
+    },
+    {
+      "path": "crates/application-core/tests/fixed_text_resize.rs",
+      "sha256": "57bf23b0a318c0528c4e7d0a7150627f77aa48eeabcce993017083db6af80342"
+    },
+    {
+      "path": "crates/application-core/tests/fixtures/session_clipboard_native.rs",
+      "sha256": "1be87f0781e33217f39486a48a2b4ea5a4bc206fd33be56e35bbbf372879287a"
+    },
+    {
+      "path": "crates/application-core/tests/history_retention.rs",
+      "sha256": "006c6104af7f910107efc74824157cf731bd03a934497193163f218ab2a00e6f"
+    },
+    {
+      "path": "crates/application-core/tests/instructional_page_contract.rs",
+      "sha256": "d198e2c69770332095a0db682cc5c8df0da891cbf294329a639a636358e0388d"
+    },
+    {
+      "path": "crates/application-core/tests/master_authoring.rs",
+      "sha256": "463b03b7c11c952df31198459d374ed733b19dbb5680381e5c7540b2f688ef18"
+    },
+    {
+      "path": "crates/application-core/tests/publication_workload.rs",
+      "sha256": "74b5b0ff8ff2db2fbf280315c4db29e939170fcf811d07164a5b2f8564c8f2c6"
+    },
+    {
+      "path": "crates/application-core/tests/recovery_lifecycle.rs",
+      "sha256": "f50ce1e0d85be367440e442adde9a83b76f9f740d59d46d11a259f0a8b324724"
+    },
+    {
+      "path": "crates/application-core/tests/save_jobs.rs",
+      "sha256": "fb1b94e6e3a99bad36cb64f2c1f35d26d3e3b5a021948efa0ea4f81ec903c492"
+    },
+    {
+      "path": "crates/application-core/tests/schema_upgrade.rs",
+      "sha256": "ed70267d1c9d12bd8646a7e0f5cd630096fcaa41f979a674271c638ff581ae85"
+    },
+    {
+      "path": "crates/application-core/tests/selection_contract.rs",
+      "sha256": "ac3cdfff7c535d7844c92f7f70edb9cf2b8a86cd84a7461218accd918d9043e3"
+    },
+    {
+      "path": "crates/application-core/tests/selection_rounding.rs",
+      "sha256": "58fe03e0edf99db9cfbeba02269e5c2e9b6489d8bab493300530845b2148f681"
+    },
+    {
+      "path": "crates/application-core/tests/session_clipboard.rs",
+      "sha256": "352d33f962267a3193c623079027e6d6848f040e15a61e35afea45c4fdd32fcc"
+    },
+    {
+      "path": "crates/application-core/tests/sustained_recovery.rs",
+      "sha256": "e246d55041fdf7bf2d4d2d7630bd65e08cf5c1aeeea2d7fe7dde78715ad5d221"
+    },
+    {
+      "path": "crates/application-core/tests/text_box_sizing_contract.rs",
+      "sha256": "f7e6453bcd0aeebe42452951c4e89cdc84f2ca5110ffd7cd64449d0a788e800f"
+    },
+    {
+      "path": "crates/application-core/tests/text_search.rs",
+      "sha256": "65262d327b4a2810ec886b2a89c9630b1b0ecc5aef936aba72d33f60b15167dd"
+    },
+    {
+      "path": "crates/color-boundary/Cargo.toml",
+      "sha256": "c674292b5847c5af1fd9fd57a42aa76f1277a514f5aa7349c3a7c337ea5dc76a"
+    },
+    {
+      "path": "crates/color-boundary/src/lib.rs",
+      "sha256": "41ea306755ce40f5b60d30ff340a21453483d082ba94e2bbc4451e1d570d9d00"
+    },
+    {
+      "path": "crates/color-boundary/tests/linux_preparation.rs",
+      "sha256": "d75d1e2e24c9c741e30611b660acec966739ce4c3f70e03f34d6289ae3ab390c"
+    },
+    {
+      "path": "crates/color-boundary/tests/packaged_color_missing.rs",
+      "sha256": "0b84c3c42b32e3a779072fc86f929f3f9017f15d81b10c1a5497bc1b36870c7c"
+    },
+    {
+      "path": "crates/document-core/Cargo.toml",
+      "sha256": "99adc04ce7f338ce12e2967e830507b83c478a374aa3c2e2cfa31d668d4fb87b"
+    },
+    {
+      "path": "crates/document-core/src/assets.rs",
+      "sha256": "65191e44da6213934b0feb0a4576040261eb3f2a40bb1d2deb00e123bf2dfeb8"
+    },
+    {
+      "path": "crates/document-core/src/commands.rs",
+      "sha256": "763c0795fefb112311281bc5f60ec08bea474e0aa4da86fbb7a5081718eef284"
+    },
+    {
+      "path": "crates/document-core/src/commands/master_pages.rs",
+      "sha256": "80c24deb101d5842f28d80aaecfeb7d61e967e953e62b2a484be18e343608b67"
+    },
+    {
+      "path": "crates/document-core/src/geometry.rs",
+      "sha256": "bd0ed3d75261c96f9edf8b111f17e07a7ed0ab2d14cb87c95f9caf099904ded7"
+    },
+    {
+      "path": "crates/document-core/src/lib.rs",
+      "sha256": "8cb855d598f2d7528c933ff8d905a4405136c5809b570b6076f503ca747bd48a"
+    },
+    {
+      "path": "crates/document-core/src/model.rs",
+      "sha256": "8d7943f8f86e252490cbb5a7e3267ece28c01e49d1a9352eee66390557193af2"
+    },
+    {
+      "path": "crates/document-core/src/model/master_pages.rs",
+      "sha256": "afafa308b01ab4e92f4178175e3aef16cb9a35859bfe18366e015db774dea531"
+    },
+    {
+      "path": "crates/document-core/src/model/table_authoring.rs",
+      "sha256": "2add79eaece14be081c93b2e7df5d7d3032d8744f30072910fc6cd1cacad69a9"
+    },
+    {
+      "path": "crates/document-core/src/package.rs",
+      "sha256": "1568343250ff995eda2e81faa4ae3514200d47c94d25deb5a3af183dbe087213"
+    },
+    {
+      "path": "crates/document-core/src/recovery.rs",
+      "sha256": "d214eafa5cab02f633d7dc7b80153541d7007c868acde1e37e7e5ae4e1f71827"
+    },
+    {
+      "path": "crates/document-core/src/recovery_retention.rs",
+      "sha256": "dfce806eace7df3f4828517f8f2377d8bc7e061b918481c2041823871080acc6"
+    },
+    {
+      "path": "crates/document-core/src/save_transaction.rs",
+      "sha256": "c86d956c46a6cc4aa6df0598e7f76e3880708b67539cef2132d7dee253eb4995"
+    },
+    {
+      "path": "crates/document-core/src/shape_geometry.rs",
+      "sha256": "5e0886f4057a91fd775b993732f609d4fa61fe1e5bc936c473ea5f8e40a95a64"
+    },
+    {
+      "path": "crates/document-core/src/shape_geometry/rounded_interiors.rs",
+      "sha256": "ce78f51f1086cbb13413e4542df41b67f0a2911250dd3084b22ec4c322f352a8"
+    },
+    {
+      "path": "crates/document-core/tests/commands_undo.rs",
+      "sha256": "ef761b8b87c7032d8cea13c05664673737863dbcbfa45a74c674f59c1b3b31c8"
+    },
+    {
+      "path": "crates/document-core/tests/common/mod.rs",
+      "sha256": "20e356e0a1924945d5d9ce79d7fb4e9558032628c8001b1ef55268daca77a1d8"
+    },
+    {
+      "path": "crates/document-core/tests/common_rounding.rs",
+      "sha256": "15a5fcc80bed0854ae2150d312e28ce7d5c963e5e2643e30ac76174f47ea1d1c"
+    },
+    {
+      "path": "crates/document-core/tests/cover_effects.rs",
+      "sha256": "8be83c306e86ddccd993c71c5d42e7eb9a41c88d3c38f9f7531e9affa577ccd7"
+    },
+    {
+      "path": "crates/document-core/tests/crash_recovery.rs",
+      "sha256": "bb66a0dbdddb1b6afc53e14e8354165775925a90158ccd12e2cc05a852321ff4"
+    },
+    {
+      "path": "crates/document-core/tests/exact_font_fallbacks.rs",
+      "sha256": "ea207ca4a23e913cede49ec343ac9dbef8e0a1b93ab0905b42969a2e2089dcc2"
+    },
+    {
+      "path": "crates/document-core/tests/exact_font_variants.rs",
+      "sha256": "7bec3f5db119e8c0a3fae3b6febf358d7fae4cc1a027350dcff882ae97ae74a9"
+    },
+    {
+      "path": "crates/document-core/tests/fixtures/minimal/manifest.json",
+      "sha256": "4621c7aa6a98eb1dce7deda4152009316dd6aa5fb2b9c5a128ed614398293151"
+    },
+    {
+      "path": "crates/document-core/tests/guide_commands.rs",
+      "sha256": "3c463f53d294b3de95a78e48624774d2ee6dda44bdfaa40f8ab410244ed8ec30"
+    },
+    {
+      "path": "crates/document-core/tests/history_retention.rs",
+      "sha256": "8b9d3f61b54745f422efd6eefd33d580168dd193ee0eb613cefa6605d05b621a"
+    },
+    {
+      "path": "crates/document-core/tests/lists_and_table_formatting.rs",
+      "sha256": "db13c9420520ce4a5afc504cfed44c966f798e6e748908bf3c452e44399aef69"
+    },
+    {
+      "path": "crates/document-core/tests/master_pages.rs",
+      "sha256": "cc3beeb4012d0c6401567b1c376a3a86ec3e2e01de03a9ac0d73186ef4583559"
+    },
+    {
+      "path": "crates/document-core/tests/package_roundtrip.rs",
+      "sha256": "14d502a0341f438bb06879836d40799fd2e169eb28c8c0402360df4c35199566"
+    },
+    {
+      "path": "crates/document-core/tests/page_names.rs",
+      "sha256": "36d3cf37b4302a26148bbfa14b16e83de638fbe20d9a0a56b5f91dcc59f040b1"
+    },
+    {
+      "path": "crates/document-core/tests/page_numbering.rs",
+      "sha256": "c43bf39ebac25ee61ca3b64e4034c970eb5ae435f4c731641b3aa167d1b90910"
+    },
+    {
+      "path": "crates/document-core/tests/raster_ingestion.rs",
+      "sha256": "7503d6672e3dad0dd148fbc077003952593a381fe9f3c7789260ca963c438241"
+    },
+    {
+      "path": "crates/document-core/tests/recovery_retention.rs",
+      "sha256": "0deee87bb5c8acb7fd9f6168d32b96b66deb6867f2281ea46b2dc933cbb97aef"
+    },
+    {
+      "path": "crates/document-core/tests/rich_text_story.rs",
+      "sha256": "a52444de3f36692fc74f86e6db3b0b401aa84cc9c2a1980150b577cfa8353095"
+    },
+    {
+      "path": "crates/document-core/tests/saveability_admission.rs",
+      "sha256": "2425b8e570a2d4226f101dd6a8dde2d83e3301e8be1918f04b6aa2bfa13def9e"
+    },
+    {
+      "path": "crates/document-core/tests/schema_compatibility.rs",
+      "sha256": "27a7747711296eadb472801b8ca70d42f563e08cb4595dfc7bf1c1c66a7ed340"
+    },
+    {
+      "path": "crates/document-core/tests/selection_geometry.rs",
+      "sha256": "e7026b46988edd0ecab0322876c4175be2fcca45ab91656d00f62d3cdd9ef8db"
+    },
+    {
+      "path": "crates/document-core/tests/table_authoring.rs",
+      "sha256": "4d65c51d2fd213e4e78f5637032f0e1344a36adb1b428434fdfe7f49bd29fa62"
+    },
+    {
+      "path": "crates/document-core/tests/table_mutations.rs",
+      "sha256": "14cd121d4ce8ee99d7ab3b4f6418ba70a7645ae6368a29020c0517a5a65a2cf7"
+    },
+    {
+      "path": "crates/document-core/tests/text_box_sizing.rs",
+      "sha256": "4324cc38283718449a3fea6930721a60dc0857c4b340419fc6366ce472e3086d"
+    },
+    {
+      "path": "crates/font-boundary/Cargo.toml",
+      "sha256": "04e2d218e977eb06b6c819e75877cd90a4b36544ef244854fc6bb9e2844932a8"
+    },
+    {
+      "path": "crates/font-boundary/src/lib.rs",
+      "sha256": "65d88cd75c7f5b9502b1dc539e05b086f8a4cac4dcf4f5ca93db91fd6ea1815e"
+    },
+    {
+      "path": "crates/font-boundary/tests/linux_preparation.rs",
+      "sha256": "91b1edeebb46304eff562d538f8a4f005bb65e9f76949fbcfbbe22811382a61f"
+    },
+    {
+      "path": "crates/font-boundary/tests/packaged_font_missing.rs",
+      "sha256": "e81e8c83c02bb41714c37c899b5e53a63a9ee7117858df3d5492d1c8283889b7"
+    },
+    {
+      "path": "crates/font-boundary/tests/support/linux_boundary_probe.rs",
+      "sha256": "8874e47cfc29eefa6f04c1b13f2bcbc28c9e2bd9cd17dbf731f71624b7cd9367"
+    },
+    {
+      "path": "crates/icc-profile/Cargo.toml",
+      "sha256": "bd49b205c0fbdeda804cdb09fc222d23896ac628f07b2337bb3add86877488e2"
+    },
+    {
+      "path": "crates/icc-profile/src/lib.rs",
+      "sha256": "8139c6b8119ff9f7b959508439de6d3f9714f2fa0f76a381036200a001e4b5a2"
+    },
+    {
+      "path": "crates/icc-profile/src/tests.rs",
+      "sha256": "479e7ee66d4442bce6322adb2cc8e9e67075a709c927fd238103de674e959608"
+    },
+    {
+      "path": "crates/layout-core/Cargo.toml",
+      "sha256": "b57b4a7c222334498d4e9a7892b123a925b975764342d0b2d87416002f1fa44f"
+    },
+    {
+      "path": "crates/layout-core/src/fonts/inventory.rs",
+      "sha256": "6f0d01236e15d9f4ed3d236326a66404444c71229a89d1659e11f1a55f18aac0"
+    },
+    {
+      "path": "crates/layout-core/src/fonts/mod.rs",
+      "sha256": "d0150511cf36e08d981c5a95ff02bdc978f694eb40f1a8d7d4168c530d56d92d"
+    },
+    {
+      "path": "crates/layout-core/src/geometry.rs",
+      "sha256": "33d4f2ce95f5dac44f5765518d3ab511dcda49d6bcc23040be417198ba2232eb"
+    },
+    {
+      "path": "crates/layout-core/src/lib.rs",
+      "sha256": "ca059fbd0538a0dfd7fb39686224aa409ae43d641ce895a8c8a7d1e403179546"
+    },
+    {
+      "path": "crates/layout-core/src/publication.rs",
+      "sha256": "b615c11f5b9fc7e1d2a238b15d6c9e975631c864c3d7477c9a0794a3fbcc27ce"
+    },
+    {
+      "path": "crates/layout-core/src/publication/rounded_text.rs",
+      "sha256": "21ed8a4b6895b3f9bab6a5ac7ae8c06c55a5466987898174d6bef379f18acd59"
+    },
+    {
+      "path": "crates/layout-core/src/publication/table_authoring.rs",
+      "sha256": "f05f015a7c248c4c289998d20461aa4d56cf40f8f5eb038c8ed3407ec50efac2"
+    },
+    {
+      "path": "crates/layout-core/src/publication/table_authoring/rounded_borders.rs",
+      "sha256": "47c8a671f6ff1fc43831c092abc1eb9dc9eb32bf928375658e47f3a7a130f23c"
+    },
+    {
+      "path": "crates/layout-core/src/text/mod.rs",
+      "sha256": "b87f9e3592b7dc48928bc526c8b59625861f46a7296dc1861bd1a1f84b287c63"
+    },
+    {
+      "path": "crates/layout-core/tests/common_rounding.rs",
+      "sha256": "8b2089d6de1465affb843e124770ec46b2652fe400fd09da398fd04dd1f3dd33"
+    },
+    {
+      "path": "crates/layout-core/tests/display_list_determinism.rs",
+      "sha256": "b84c6d01ccb4286220990030f41806921a3fe9133be04f28cd83802ae13e9596"
+    },
+    {
+      "path": "crates/layout-core/tests/exact_font_fallback_publication.rs",
+      "sha256": "e118291f5c5e3ed21604248686236081c104bfb3c5e0032a18917f73ee91bae7"
+    },
+    {
+      "path": "crates/layout-core/tests/exact_font_variant_layout.rs",
+      "sha256": "fb410d1c720c3ba01fa5e5f27c65dc6da5ff93b9cd1b555eb22840a71a41a1ca"
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/common_rounding.rs",
+      "sha256": "f1432734725b326cbc29ec38ed9227ee8d74e6b436429e9ed9a3c2c5ee4cb4c8"
+    },
+    {
+      "path": "crates/layout-core/tests/fixtures/table_authoring.rs",
+      "sha256": "85367b853b9cb1f6b44bfd03689bda103159d61b92cb657a995797e62e7b2b75"
+    },
+    {
+      "path": "crates/layout-core/tests/master_page_resolution.rs",
+      "sha256": "08e290d358498b3045fbeb17abc7fa5ea3e36589db214726ee9dbe673052b10f"
+    },
+    {
+      "path": "crates/layout-core/tests/output_composition.rs",
+      "sha256": "8373b31b766cd24f1c255bf4db36288b30741d91e4c44fe518b2e3f6bae18af2"
+    },
+    {
+      "path": "crates/layout-core/tests/page_preview.rs",
+      "sha256": "9bb00584ec4208378fee6bb52bc978ed2ef18e67abd3768507ceb6a4e49dc242"
+    },
+    {
+      "path": "crates/layout-core/tests/publication_preview.rs",
+      "sha256": "9407b93885baa085e4570eea7de0ec57837d139af9cd016d0bb603ae3a891303"
+    },
+    {
+      "path": "crates/layout-core/tests/table_authoring_capacity.rs",
+      "sha256": "91f815a58caddf30912ae3bc90b9e4e77a212cec3cd48b9d3bc329b8461cb7a6"
+    },
+    {
+      "path": "crates/layout-core/tests/text_box_interiors.rs",
+      "sha256": "4ae7e3cc33e2b252d380a80f7aac076c6f8d3e3a6ab015d26429ed1a08363e9b"
+    },
+    {
+      "path": "crates/layout-core/tests/text_feasibility.rs",
+      "sha256": "6ab1bb9d57deb7bbcb15bbf12f3776c005638b1523cec235da0913cbd2ec0231"
+    },
+    {
+      "path": "crates/layout-core/tests/unicode_shaping.rs",
+      "sha256": "9fb179f634d93832ead6e709943ee03ad3c288868c8799cd8a5aa67ca7507d2c"
+    },
+    {
+      "path": "crates/linux-worker-job/Cargo.toml",
+      "sha256": "633307826f7629e73636f495c5546f4c5296073b3b332434871e98d214f6f21c"
+    },
+    {
+      "path": "crates/linux-worker-job/src/bin/publisher-linux-isolation-probe.rs",
+      "sha256": "349677de153ef815e158a36a476e86bca2f5cf3f6d1071ce4e33628dc510b68c"
+    },
+    {
+      "path": "crates/linux-worker-job/src/lib.rs",
+      "sha256": "a1302aca10d0e49208661887232265765e644b241e826390a1ae1596457967ce"
+    },
+    {
+      "path": "crates/linux-worker-job/src/policy.rs",
+      "sha256": "d7d3c82c84ca6d4b32c7142ec8e43e6c44a7589cd0c91c8e1dd3d88293e95ecd"
+    },
+    {
+      "path": "crates/linux-worker-job/src/process.rs",
+      "sha256": "a385720e144415732f40537c0b4947ed0c9608f3a98153cc6d887e9f5163a135"
+    },
+    {
+      "path": "crates/linux-worker-job/tests/linux_isolation.rs",
+      "sha256": "baa56c02df2706d0cd098324c0055cd2ef178f19738023a8666f7ecceafc2e4e"
+    },
+    {
+      "path": "crates/print-core/Cargo.toml",
+      "sha256": "b031bbc75ce166d37755d305f3282a1c888b456eb4f738b37f9f7a03b257fa61"
+    },
+    {
+      "path": "crates/print-core/src/candidate.rs",
+      "sha256": "ba86ed315a35a07058cafc827b144adf978198108a44439811d597e131392a1b"
+    },
+    {
+      "path": "crates/print-core/src/candidate_metadata.rs",
+      "sha256": "6e752b344733c3117278b69de47073161641b8909f39809ac547b8db2ee51669"
+    },
+    {
+      "path": "crates/print-core/src/color.rs",
+      "sha256": "8a4e697282cfbaae66b2ef136b9dedbea3c68dd30cdf1f8855bdcd158db9f45b"
+    },
+    {
+      "path": "crates/print-core/src/export.rs",
+      "sha256": "43650c99b2038e6ee43d10e0265e8f36aa7e89ca2dd631ed5cb30c5d01a87272"
+    },
+    {
+      "path": "crates/print-core/src/export/recovery.rs",
+      "sha256": "1a7f78844a86707342b6745bd85393ac82e6a4edc2aeddeeac3fa59c49b35525"
+    },
+    {
+      "path": "crates/print-core/src/finished.rs",
+      "sha256": "d9bb9e9c616b8840999e6187873acd35cc185a449ab08b30d4537ce13d56ef68"
+    },
+    {
+      "path": "crates/print-core/src/finished_gradient.rs",
+      "sha256": "aa8fc1753ea035ae26a783ea3f3cca7022116f0e6fa837b6b0b75dfb4d781996"
+    },
+    {
+      "path": "crates/print-core/src/finished_writer.rs",
+      "sha256": "340619cced66312eb6bba39279621fe0062d7ed923f92cb3845d14fc3b9c2494"
+    },
+    {
+      "path": "crates/print-core/src/fixture.rs",
+      "sha256": "594aa7a773a3219034c9c979e1e7110af53699f0f5839a2d3b3967b86044a411"
+    },
+    {
+      "path": "crates/print-core/src/font.rs",
+      "sha256": "13e02d1550a32f1014b3d094b498990d065876ac853551a5689ed37faf770ce9"
+    },
+    {
+      "path": "crates/print-core/src/font_contract.rs",
+      "sha256": "5040bd54565c420f58fc34058cfa6226b68b934f0e7f16ca36dd7fa9e24d07d7"
+    },
+    {
+      "path": "crates/print-core/src/lib.rs",
+      "sha256": "54d4ebe7e1b8d8ecd8bb2f3e8f17fa12ad632a508253802abfad3918da4f3fe9"
+    },
+    {
+      "path": "crates/print-core/src/pdf_lines.rs",
+      "sha256": "72f6e6596b740c01b7a17836781e2eabe5da88078ff5654636a0f1975b558dda"
+    },
+    {
+      "path": "crates/print-core/src/preflight.rs",
+      "sha256": "ffabc0e2a18b5d3db95d18d92824856b811f557fd2dc8fd83311531c4032544b"
+    },
+    {
+      "path": "crates/print-core/src/production.rs",
+      "sha256": "046c27859bd65f72862509bf9d556b9a71c1c1e44641d8f4d24f73020ff3a595"
+    },
+    {
+      "path": "crates/print-core/src/profile.rs",
+      "sha256": "e8a94031e7d61f8871580d9becb550d863751822477d10b88e32027e66aa11b2"
+    },
+    {
+      "path": "crates/print-core/src/publication_font.rs",
+      "sha256": "2dea0aaabf5a8d8bed0e14a00b84c73f8f39677cfa08c67c85b264ab57f6f76d"
+    },
+    {
+      "path": "crates/print-core/src/publisher_adapter.rs",
+      "sha256": "432e8a0ab31370af69a2b2a8229cf250a05c4e424ba324841407aa47106059ef"
+    },
+    {
+      "path": "crates/print-core/src/raster.rs",
+      "sha256": "6d103f905421f6199300623db081b3520cca1019955e99a0b4e310ca0d8b3524"
+    },
+    {
+      "path": "crates/print-core/src/resources.rs",
+      "sha256": "036d06c4297e4978cc31bd24631948709aed5307abb31e6cff46e4f6396147d1"
+    },
+    {
+      "path": "crates/print-core/src/scene.rs",
+      "sha256": "091f293eac26134d39a4807270f9896c08cd0082711133642fb90e93c40c631a"
+    },
+    {
+      "path": "crates/print-core/src/to_unicode.rs",
+      "sha256": "c4fec65c034a3288fe2f5c04aba0ea7e680e332450db1dc53a15ea8e5203960e"
+    },
+    {
+      "path": "crates/print-core/src/validator.rs",
+      "sha256": "3edb0af54783b82e013abc6120230d0dd71f538400b3f5929e6136b79b859627"
+    },
+    {
+      "path": "crates/print-core/src/validator_cff.rs",
+      "sha256": "144f5e4dcf913c0bbf2821de9497ca3733980ad2476ffde7247a638d774b020d"
+    },
+    {
+      "path": "crates/print-core/src/validator_glyphs.rs",
+      "sha256": "6c0f08d235c0b18b1c867777e459225e47ca73d3a33fab4a572f7ccdd209f987"
+    },
+    {
+      "path": "crates/print-core/src/validator_icc.rs",
+      "sha256": "dd823a7a13e3d9c99d10cf50299ed2a05d35083ed64e900ec1db67d51e529332"
+    },
+    {
+      "path": "crates/print-core/src/validator_metadata.rs",
+      "sha256": "25674885c78420be0f383c317e5ae2b17f2abe27624ccc2040f98523bb17e3c6"
+    },
+    {
+      "path": "crates/print-core/src/validator_pdf_oxide.rs",
+      "sha256": "892ae65ae581d85911b185bcf221ff9081c4b87d50d329485b955584dd6c64dc"
+    },
+    {
+      "path": "crates/print-core/src/validator_public.rs",
+      "sha256": "57227a936d6489000940fc352b5acd31fb30e1748a3006b863bc6df93f8af70c"
+    },
+    {
+      "path": "crates/print-core/tests/common_rounding.rs",
+      "sha256": "d33c6df5199e60217a1642eebf571bbc8bae29d236ffc27edea32097b6865400"
+    },
+    {
+      "path": "crates/print-core/tests/finished_gradients.rs",
+      "sha256": "5a79a86f828dc4f68aabe3b63322991596f4c9a0bf4346e394e2871a15f8e963"
+    },
+    {
+      "path": "crates/print-core/tests/finished_numeric.rs",
+      "sha256": "a87a183df8ba81917322e29d37462688ed06cfca2dd3f14808bdd2decd28ba1d"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pages.rs",
+      "sha256": "c02b77b3b169a31cf3e09afb680051165a96196efed9224ed52813d82d3e59fe"
+    },
+    {
+      "path": "crates/print-core/tests/finished_pdf_lines.rs",
+      "sha256": "190fd08e35ffcb8f31bb76637dd3d6e42668b781574799af070099bdde1077d2"
+    },
+    {
+      "path": "crates/print-core/tests/gos5_local_corpus.rs",
+      "sha256": "fbfdd12aa82117b5c4e0c8b1421347c0f9610944949a83a95ce801c0d0b84a91"
+    },
+    {
+      "path": "crates/print-core/tests/large_line_art.rs",
+      "sha256": "5e75463d1f5fa4e834b493e8014a6327975a39370e5b30a24c375181de321bf3"
+    },
+    {
+      "path": "crates/print-core/tests/master_numbering_output.rs",
+      "sha256": "40f801a97cef742bde9253037571306a8cc67ad0d0d0e31482dd7d6f0de371f1"
+    },
+    {
+      "path": "crates/print-core/tests/pdfx4_allowed_features.rs",
+      "sha256": "30addbff3c4d54db3b9ec45f378acb2fa789af911b4e81a86b9efeeb77c62576"
+    },
+    {
+      "path": "crates/print-core/tests/pdfx_conformance.rs",
+      "sha256": "2a3a2b05083d1817533a71375bfea36b05f8b59c4937340e7339708b84b7b140"
+    },
+    {
+      "path": "crates/print-core/tests/publication_candidate.rs",
+      "sha256": "542af099ba77d30c7371dd0b5396427631c80c4405a0b5027ebe94d5c970e344"
+    },
+    {
+      "path": "crates/print-core/tests/publication_fonts.rs",
+      "sha256": "9bd335e7781fe854ecb399d081ba19c0c5ac56b21e2c4d180f10719e02de47dc"
+    },
+    {
+      "path": "crates/print-core/tests/representative_output.rs",
+      "sha256": "6dc37f019e0fef6c2cf1a573f3cc018a880f2fd71e43c767d846107360cc7f82"
+    },
+    {
+      "path": "crates/print-core/tests/scene_serialization.rs",
+      "sha256": "52fa3620ea12b951bbcb8df8997cd60e081ad0b700bf89898d784931364aca2d"
+    },
+    {
+      "path": "crates/print-core/tests/support/pdf_operators.rs",
+      "sha256": "d1ce4b756d2b49dc945d1e5805fe84d3fb59865558d19e77e502fc4398651bb7"
+    },
+    {
+      "path": "crates/print-core/tests/table_authoring.rs",
+      "sha256": "846b3188b92912e43ee7beec49ad1a62f66c57ff93ebc2f0c03c9e56ce834a3e"
+    },
+    {
+      "path": "crates/print-core/tests/text_table_reopen_determinism.rs",
+      "sha256": "129fd1cb47da91f931d1e6cf6c7aab6d6781c28be69c07929fd80c31af5afa70"
+    },
+    {
+      "path": "crates/print-core/tests/trusted_raster_pipeline.rs",
+      "sha256": "11f608a2eba6fe5433eeee94ae2b92b840fecb9884684cbdae286a36c640566a"
+    },
+    {
+      "path": "crates/raster-boundary/Cargo.toml",
+      "sha256": "cb5ddaa0f6d0f96b84ac578b3ef23a1625d5ddbf92ab564e916f36e29fa8eda2"
+    },
+    {
+      "path": "crates/raster-boundary/src/lib.rs",
+      "sha256": "b238056238881779fe69e328b19d9c7b6c50bc79a28b40fcc0b784b7da9ad06e"
+    },
+    {
+      "path": "crates/raster-boundary/tests/linux_preparation.rs",
+      "sha256": "33264e1eb2cf38a760727316736cb9666bbed8ae6fa5dc464458188376b1403c"
+    },
+    {
+      "path": "crates/raster-boundary/tests/packaged_raster_missing.rs",
+      "sha256": "568fc16ef39e4541d2c81c0ab284668aacc5ab87583de025322476c43ffe5677"
+    },
+    {
+      "path": "crates/raster-capacity/Cargo.toml",
+      "sha256": "f8c5dabaf29a57d33b35d0ad92169f9a4106918c004f98c037bf735f39a03a1a"
+    },
+    {
+      "path": "crates/raster-capacity/src/lib.rs",
+      "sha256": "2369ecdb0d3a1ea33e716db20d77ac3878b25c6d38a41e176eb279eeaa51dd41"
+    },
+    {
+      "path": "crates/validator-boundary/Cargo.toml",
+      "sha256": "11a6f8b53e94dfb43d6121e522854330846b0b84a4b47db3c8723a9712745264"
+    },
+    {
+      "path": "crates/validator-boundary/rules/pdfx4-authority-v1.json",
+      "sha256": "c42d2310513e5592672ccffc6348da7302c3fe50d3acdea9f29bbffdc359516d"
+    },
+    {
+      "path": "crates/validator-boundary/src/lib.rs",
+      "sha256": "2835a8422da6b8a569e8842a844cb45f302e72524db261ed5d6d45e45c10ae42"
+    },
+    {
+      "path": "crates/validator-boundary/src/writer_profile.rs",
+      "sha256": "ba5ded9a3742b6fb284654b81b3c6de5dba97acfc1fe32dbe25bea32aa2c039b"
+    },
+    {
+      "path": "crates/validator-boundary/tests/packaged_validator.rs",
+      "sha256": "29c6f5b4540f1acdc0e30d7a77a5931187d84959ee2c9310def97361f201e934"
+    },
+    {
+      "path": "crates/validator-boundary/tests/unsupported_platform.rs",
+      "sha256": "16db31ebc61e60cff526a1a36df2be7a9d9f50726372270a96bf21177c256010"
+    },
+    {
+      "path": "crates/windows-atomic-file/Cargo.toml",
+      "sha256": "51b63ce23277d3d56ddc9de46a37a16b9f8c9b400de043d8cc7c771bddf56ded"
+    },
+    {
+      "path": "crates/windows-atomic-file/src/lib.rs",
+      "sha256": "d44a3cfd026b8581335535d984cc9645366c70f7c779110a90b4af46656fbf55"
+    },
+    {
+      "path": "crates/windows-worker-job/Cargo.toml",
+      "sha256": "06de7dc7dd9ab36f35c701c64591bc0a91e7311ed3eed117859676e22921ec03"
+    },
+    {
+      "path": "crates/windows-worker-job/src/bin/publisher-isolation-probe.rs",
+      "sha256": "f75acbfabe31b27b9d7385ecf22cc2aa705f8f1564d5648567d72664c09e1724"
+    },
+    {
+      "path": "crates/windows-worker-job/src/lib.rs",
+      "sha256": "057fd41bf9e5416a47e89868df14b4933e01a451a9677756e8f19f51f1190cb1"
+    },
+    {
+      "path": "crates/windows-worker-job/tests/appcontainer_isolation.rs",
+      "sha256": "f4a361f1b914a7fe3c106b3592bdb4a01d490c3ebf756ce12329880b4d7cf367"
+    },
+    {
+      "path": "examples/standalone-client/Cargo.lock",
+      "sha256": "daef953e1107144715d939f21454bfee2e723f3b9b8fd292c15ca9dafd45664f"
+    },
+    {
+      "path": "examples/standalone-client/Cargo.toml",
+      "sha256": "a6e102ed1959081a4629179aa29190e75de41c1e49479f272ab796e6fd6396b3"
+    },
+    {
+      "path": "examples/standalone-client/examples/accepted-composition-input.rs",
+      "sha256": "2b3dc0c22226c96aea6f5f0797218f6215e35913d7ae09b19411d78a0fcf2961"
+    },
+    {
+      "path": "examples/standalone-client/examples/accepted-font-input.rs",
+      "sha256": "1aa7ab36e432536868d5c21602b4c33ea27281cb15cafe6cecba513af345cd41"
+    },
+    {
+      "path": "examples/standalone-client/examples/cmyk-diagnostic.rs",
+      "sha256": "a0dbe82ed8dd71841186d971b7dd85a3075ec48e55072d80b1e16386d8150297"
+    },
+    {
+      "path": "examples/standalone-client/examples/feature-gallery.rs",
+      "sha256": "4d93e97b2c6a6ed5d2510d3cc23ac2e9e19d1ca29c57f8892822f7e8af6c0189"
+    },
+    {
+      "path": "examples/standalone-client/src/main.rs",
+      "sha256": "6e470eaf55c50751f7c0f6460ee7c1f37c7af3271f57c5997d2c7162d9700e3e"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "sha256": "637138f8759bf52f8328b64a074e8435fd056ccea54d3a3aaf674efafc1a9eb8"
+    },
+    {
+      "path": "scripts/build-source-package.py",
+      "sha256": "18a851be73740f79e481e943fa1282a34d509481f27dc7aae967595f86861faf"
+    },
+    {
+      "path": "scripts/collect-pdf-candidate-licenses.py",
+      "sha256": "8fc5078275a96edf012c9f279b1ff577febef8be320e153351c47316c5d0d221"
+    },
+    {
+      "path": "scripts/pdf_font_program_rules.py",
+      "sha256": "2d6a551d9ccb7e63818869096820389b06dbe9fa04a9a626fa42cea0b839f155"
+    },
+    {
+      "path": "scripts/pdf_numeric_rules.py",
+      "sha256": "b8d5e2a728d755942ebdbf7cb0748ba08a160b3e25dd9dff8cc59b0f5d72ab7b"
+    },
+    {
+      "path": "scripts/pdf_text_metadata_rules.py",
+      "sha256": "57e315f52062fbc5bb2975e7a26ba227a3161a2c45095b3b376063a8abc81fae"
+    },
+    {
+      "path": "scripts/pdf_truetype_hint_execution.py",
+      "sha256": "0bf159f6676effec78f122045b3cfc1c14d84335b2b10942a32db574688c7750"
+    },
+    {
+      "path": "scripts/stage-workers.py",
+      "sha256": "42519e29b6eb8a0049665b57c2a55e9d731306d9b0ea1a01e58d3f40bf7a479b"
+    },
+    {
+      "path": "scripts/verify-accepted-inputs.py",
+      "sha256": "c641d2da28e92607550e445915c0ddbfd3f2f10e4242bbea6890a1fb572c9a76"
+    },
+    {
+      "path": "scripts/verify-cmyk-gradients.py",
+      "sha256": "b12bda89f15829477265d27739c01aa78e227d69728681ef19865e171c588e27"
+    },
+    {
+      "path": "scripts/verify-composition-corpus.py",
+      "sha256": "ac10f90b327d454e0b73b393328457b44e997fd20130824b605f7e3d259e4fb7"
+    },
+    {
+      "path": "scripts/verify-font-metrics.py",
+      "sha256": "744235cf2e73a59b963c7670f63724fa05d8fc015d11f25b747acc347949dedf"
+    },
+    {
+      "path": "scripts/verify-icc-profile.py",
+      "sha256": "c093a751878df0ff8875c34aafbf5ed95c47401104bec8bdb445988d2b601f5e"
+    },
+    {
+      "path": "scripts/verify-linux-runtime.py",
+      "sha256": "de94a9f0770af1ec2aafb1aee60e043d27145308391c725eed300e78bfc871d5"
+    },
+    {
+      "path": "scripts/verify-output-rules.py",
+      "sha256": "7ce1400993a9fdd1ff10291171b4cd8646bc5e6ed97226c20e35ba27a049b23d"
+    },
+    {
+      "path": "scripts/verify-pdfx-supported-output.py",
+      "sha256": "8fdb71961d443c90710e35043e833c4c91273b5db2a7d57d9009f75f3d75f3d7"
+    },
+    {
+      "path": "scripts/verify-public-api.py",
+      "sha256": "12598fe7ac129a629911426632aa2cfc81b236fb4617c74814311449229b18da"
+    }
+  ],
+  "rules": [
+    {
+      "id": "base-format",
+      "summary": "Readable complete PDF with supported version, objects and cross references.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-base-format"
+      ]
+    },
+    {
+      "id": "numeric-limits",
+      "summary": "Integers and real values stay inside the supported architectural range.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-numeric-limits"
+      ]
+    },
+    {
+      "id": "nonstream-line-length",
+      "summary": "Physical lines outside stream payloads contain no more than 255 bytes.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/pdf_lines.rs",
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-nonstream-line-length"
+      ]
+    },
+    {
+      "id": "name-limits",
+      "summary": "Names use valid UTF-8 and at most 127 decoded bytes.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-name-limits"
+      ]
+    },
+    {
+      "id": "file-identity",
+      "summary": "Two direct, nonempty file identifier strings are present.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-file-identity"
+      ]
+    },
+    {
+      "id": "no-encryption",
+      "summary": "Encryption and permissions dictionaries are absent.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-no-encryption"
+      ]
+    },
+    {
+      "id": "embedded-resources",
+      "summary": "External streams, OPI, referenced Forms and file specifications are absent.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-embedded-resources"
+      ]
+    },
+    {
+      "id": "supported-streams",
+      "summary": "Only plain and Flate streams occur in this generated subset.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-supported-streams"
+      ]
+    },
+    {
+      "id": "no-actions",
+      "summary": "Actions, JavaScript and additional action dictionaries are absent.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-no-actions"
+      ]
+    },
+    {
+      "id": "no-annotations",
+      "summary": "Annotations are absent from the supported output.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-no-annotations"
+      ]
+    },
+    {
+      "id": "no-optional-content",
+      "summary": "Optional content and presentation variants are absent.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-no-optional-content"
+      ]
+    },
+    {
+      "id": "no-interactive-forms",
+      "summary": "Interactive forms and rich-media/XFA content are absent.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-no-interactive-forms"
+      ]
+    },
+    {
+      "id": "no-postscript",
+      "summary": "PostScript XObjects and functions are absent.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-no-postscript"
+      ]
+    },
+    {
+      "id": "no-halftones",
+      "summary": "Halftones, transfer functions and black-generation adjustments are absent.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-no-halftones"
+      ]
+    },
+    {
+      "id": "no-alternate-images",
+      "summary": "Alternate image dictionaries are absent.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-no-alternate-images"
+      ]
+    },
+    {
+      "id": "page-boxes",
+      "summary": "Page boxes are positive, correctly nested and contain exactly one trim/art box.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-page-boxes"
+      ]
+    },
+    {
+      "id": "output-intent",
+      "summary": "One embedded CMYK print condition has a meaningful identifier and description.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/profile.rs",
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-output-intent"
+      ]
+    },
+    {
+      "id": "profile-integrity",
+      "summary": "Embedded profiles are parseable printer profiles with matching size/channels/version.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/profile.rs",
+        "crates/color-boundary/src/lib.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-profile-integrity"
+      ]
+    },
+    {
+      "id": "device-color",
+      "summary": "Print content uses only the declared device model and gray.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-device-color"
+      ]
+    },
+    {
+      "id": "transparency",
+      "summary": "Transparency groups, blend modes, masks and opacity use the supported definitions.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-transparency"
+      ]
+    },
+    {
+      "id": "graphics-state",
+      "summary": "Graphics state uses supported rendering intents and overprint values.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-graphics-state"
+      ]
+    },
+    {
+      "id": "graphics-state-depth",
+      "summary": "Executed saved graphics states never exceed 28 and are balanced.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-graphics-state-depth"
+      ]
+    },
+    {
+      "id": "known-operators",
+      "summary": "All content operators have known signatures and legal operands.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-known-operators"
+      ]
+    },
+    {
+      "id": "resource-references",
+      "summary": "Every content resource reference resolves in the active resource dictionary.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-resource-references"
+      ]
+    },
+    {
+      "id": "content-string-limit",
+      "summary": "Content strings contain no more than 32767 bytes.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-content-string-limit"
+      ]
+    },
+    {
+      "id": "font-programs",
+      "summary": "Every font has a parseable embedded program and the supported composite encoding.",
+      "status": "verified",
+      "implementation_paths": [
+        "apps/font-worker/src/main.rs",
+        "crates/print-core/src/resources.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-font-programs"
+      ]
+    },
+    {
+      "id": "font-metrics",
+      "summary": "All emitted glyph widths agree with independently decoded program metrics.",
+      "status": "verified",
+      "implementation_paths": [
+        "apps/font-worker/src/pdf_metrics.rs",
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-font-metrics"
+      ]
+    },
+    {
+      "id": "font-program-layout",
+      "summary": "Embedded program structures, bounds, checksums and reachable compact-outline instructions are consistent.",
+      "status": "verified",
+      "implementation_paths": [
+        "apps/font-worker/src/main.rs",
+        "apps/font-worker/src/subset_metrics.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-font-program-layout"
+      ]
+    },
+    {
+      "id": "font-descriptors",
+      "summary": "Font descriptors have required metrics and bounds for their embedded glyph outlines.",
+      "status": "verified",
+      "implementation_paths": [
+        "apps/font-worker/src/pdf_metrics.rs",
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-font-descriptors"
+      ],
+      "additional_checks": [
+        "font-1-verify-font-metrics-relationships",
+        "font-2-verify-font-metrics-relationships",
+        "adapter-verify-font-metrics-relationships",
+        "adapter-windows-verify-font-metrics-relationships",
+        "semantic-verify-font-metrics-relationships",
+        "witness-verify-font-metrics-relationships",
+        "adapter-negative-verify-font-metrics-relationships"
+      ]
+    },
+    {
+      "id": "font-hint-execution",
+      "summary": "Embedded TrueType instructions execute at the declared independent interpreter settings.",
+      "status": "verified",
+      "implementation_paths": [
+        "apps/font-worker/src/main.rs",
+        "crates/print-core/src/resources.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-font-hint-execution"
+      ]
+    },
+    {
+      "id": "font-glyphs",
+      "summary": "Text references existing nonzero glyphs with embedded outlines and a Unicode mapping.",
+      "status": "verified",
+      "implementation_paths": [
+        "apps/font-worker/src/main.rs",
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-font-glyphs"
+      ]
+    },
+    {
+      "id": "image-data",
+      "summary": "Decoded image and mask samples have the declared dimensions and supported components.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/resources.rs",
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-image-data"
+      ]
+    },
+    {
+      "id": "shading-functions",
+      "summary": "Shadings have valid geometry and bounded continuous/stitching component functions.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs",
+        "crates/print-core/src/color.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-shading-functions"
+      ]
+    },
+    {
+      "id": "metadata-packet",
+      "summary": "All metadata packets are unfiltered, well-formed supported RDF/XML packets.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-metadata-packet"
+      ]
+    },
+    {
+      "id": "metadata-values",
+      "summary": "Required title, dates, producer, creator, identifiers and trapping state are present.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-metadata-values"
+      ]
+    },
+    {
+      "id": "metadata-mapping",
+      "summary": "Present Info fields agree with their mapped metadata values.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-metadata-mapping"
+      ]
+    },
+    {
+      "id": "metadata-identity",
+      "summary": "Print identity has the selected value and ordinary output makes no print claim.",
+      "status": "verified",
+      "implementation_paths": [
+        "crates/print-core/src/finished_writer.rs"
+      ],
+      "documents": [
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
+      ],
+      "negative_controls": [
+        "negative-metadata-identity"
+      ]
+    }
+  ],
+  "receipts": [
+    {
+      "kind": "supported-output",
+      "path": "docs/verification/current/accepted-inputs-20261016/supported-inputs.json",
+      "sha256": "c927e6e2d950ab4890b17b4be9d08acf1e742c1c46ffde4bcfe70bee683fee57"
+    },
+    {
+      "kind": "color",
+      "path": "docs/verification/current/accepted-inputs-20261016/color.json",
+      "sha256": "9130c052af53b9161020945470bfeb3a43a2b1fdbc0620c13461c6c0cb71b2ef"
+    },
+    {
+      "kind": "linux",
+      "path": "docs/verification/current/accepted-inputs-20261016/linux.json",
+      "sha256": "df512dd716aa62bed291e19346d6cc536a8f2800701a09a78ea320605ef89efd"
+    },
+    {
+      "kind": "windows",
+      "path": "docs/verification/current/accepted-inputs-20261016/windows.json",
+      "sha256": "6fbaebf7253f3ff8eea61d2a6374229b8f0d93aa0810770f14baa30c43a0c9ac"
+    }
+  ]
+}

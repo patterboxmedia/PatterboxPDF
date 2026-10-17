@@ -19,10 +19,6 @@ pub(crate) struct FontReferences {
     pub cid_set: Ref,
     pub to_unicode: Ref,
 }
-#[expect(
-    clippy::cast_precision_loss,
-    reason = "the confined worker bounds font metrics to PDF-safe integer ranges and pdf-writer intentionally represents them as f32"
-)]
 pub(crate) fn write_prepared_font(
     pdf: &mut Pdf,
     program: &PreparedPublicationFont,
@@ -66,13 +62,14 @@ pub(crate) fn write_prepared_font(
             .default_width(1_000.0);
         cid_font
             .widths()
-            .consecutive(0, program.widths().iter().map(|width| *width as f32));
+            .consecutive(0, program.pdf_metrics().widths().iter().copied());
         if program.outline_kind() == FontOutlineKind::TrueType {
             cid_font.cid_to_gid_map_predefined(Name(b"Identity"));
         }
     }
     {
-        let bbox = program.bbox();
+        let metrics = program.pdf_metrics();
+        let bbox = metrics.bbox();
         let mut flags = FontFlags::SYMBOLIC;
         if program.fixed_pitch() {
             flags |= FontFlags::FIXED_PITCH;
@@ -84,18 +81,15 @@ pub(crate) fn write_prepared_font(
         descriptor
             .name(base_font)
             .flags(flags)
-            .bbox(Rect::new(
-                bbox[0] as f32,
-                bbox[1] as f32,
-                bbox[2] as f32,
-                bbox[3] as f32,
-            ))
-            .italic_angle(program.italic_angle_millidegrees() as f32 / 1_000.0)
-            .ascent(program.ascent() as f32)
-            .descent(program.descent() as f32)
-            .cap_height(program.cap_height() as f32)
-            .stem_v(80.0)
+            .bbox(Rect::new(bbox[0], bbox[1], bbox[2], bbox[3]))
+            .italic_angle(metrics.italic_angle())
+            .ascent(metrics.ascent())
+            .descent(metrics.descent())
+            .stem_v(metrics.stem_v())
             .cid_set(refs.cid_set);
+        if let Some(cap_height) = metrics.cap_height() {
+            descriptor.cap_height(cap_height);
+        }
         match program.outline_kind() {
             FontOutlineKind::TrueType => {
                 descriptor.font_file2(refs.font_file);

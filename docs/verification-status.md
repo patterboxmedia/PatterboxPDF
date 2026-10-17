@@ -1,84 +1,81 @@
 # Verification status
 
-## October 6 font and metadata maintenance
+Current generator and resource-worker qualification uses free tools and passes the recorded native Windows and Ubuntu workflows. The results below describe current source execution and exact emitted files.
 
-The focused update rejects ToUnicode destinations above 512 UTF-16BE bytes in
-neutral and compatibility construction, with a defensive check at shared
-emission. Both ordinary/print font emitters and the legacy candidate emitter
-write CMapType 2 directly; Identity-H encoding remains unchanged. XML carriage
-return references preserve decoded Info/XMP title equality. The new native
-regressions reproduce the previous defects and check the repaired boundary,
-including supplementary characters and the 100-entry CMap block boundary.
+Independent source and exact-output review accepted the documented family contract and specific authoring premises. The public family/catalog audits pass and bind current code, native controls and 3,726 actual measured comparisons. Corpus size is one part of that evidence.
 
-The focused replay passed 103 native Rust tests across the core, finished-page
-and compatibility-font suites. Two independent pypdf/XML regressions decode six
-new sample PDFs, check full boundary text extraction and title equality in both
-output modes. Exact results and source bindings are in
-`verification/current/font-map-metadata-20261006/repair.json`.
+## Current generator and output evidence
 
-An exploratory compatibility fixture with 256 combining marks hit a debug
-overflow in the existing text-layout dependency before font preparation. It was
-replaced by direct compatibility-map boundary checks; this update makes no claim
-to repair or establish support for that shaping stress case.
+| Check | Windows x86_64 | Ubuntu x86_64 |
+| --- | --- | --- |
+| Native tests executed | 368; none ignored | 319 in 17 suites; none ignored or filtered |
+| Public font corpus | 131 cases; 218 PDFs | 131 cases; 218 PDFs |
+| Complete font-descriptor qualification | 212 PDFs | 212 PDFs |
+| Profile corpus | 17 cases; 8 admitted profiles; 9 expected refusals | 17 cases; 8 admitted profiles; 9 expected refusals |
+| Profile-bearing print outputs | 16 PDFs | 16 PDFs |
+| Composition corpus | 4 authored documents, repeated | 4 authored documents, repeated |
 
-New font-bearing bytes require their own checker analysis. The October 4 corpus
-and callas results below remain evidence for the original exact files; they are
-not inherited by newly generated candidates. Profile limitations, the failed
-CMYK gallery comparison, unfinished normative inventory remain as recorded. The later licensing decision is described below. The source archive's adjacent isolation receipt
-records the new extracted-package build and exact output identities.
+The font corpus has 106 successful ordinary/print cases, 24 expected refusals and one retained normalization characterization. Six of those refusals follow an ordinary compatibility output whose source lacks facts required for print. Their print requests correctly return fact-required errors. Those six ordinary PDFs remain outside complete descriptor qualification. The characterization is recorded separately and does not count as a valid-input positive.
 
-## October 4 implementation baseline
+The font checks cover TrueType subsets and untouched full programs, point-attached components, inherited advances, component tails, required vertical context, CFF flex/affine/fractional geometry, source/face-bound design facts, valid name formats, Macintosh Roman and Windows Unicode names, and invalid retained names. The naming cases exercise both full embedding and subsetting. Independent source identity checks decode the selected Unicode/MacRoman records strictly, ignore other permitted PostScript-name encodings, and reject malformed, illegal or conflicting selected names. Known multi-scalar Unicode mappings and ActualText preserve Latin, supplementary and accented scalar order. Independent measurements use source programs and separately authored facts rather than producer metric reports.
 
-The initial general-purpose finished-page generator is implemented. It supports ordinary RGB/Gray/CMYK output, native axial/radial gradients, all sixteen PDF blend modes, local composition spaces/resources and a bounded CMYK PDF/X mode. The public API, independent examples and optional compatibility adapter build from this workspace. Windows x86_64 is the verified execution platform; font/profile preparation uses its confined workers.
+All 218 actual font PDFs match byte for byte across these two runs. The 125 cases retained from the preceding run also preserve all 206 earlier PDF bytes and prepared font programs; their new preparation witnesses identify the current worker. The four composition outputs also have equal bytes and decoded semantics. This records observed equality for the corpus, rather than a universal cross-platform determinism requirement.
 
-Root's canonical native replay passed 150 affected Rust tests, including 24 finished-page and eight gradient checks. One existing child helper is intentionally ignored and exercised by its parent. The optional pdfx4_allowed_features target ran zero tests because pdf-oxide-validator was disabled; its advanced validator fixtures are not claimed as current executed coverage. Default and compatibility Clippy passed; owned Rust files are formatted. Imported unrelated formatting debt remains outside this change.
+The output-rule catalog has four exact positive PDFs and actual negative controls for all 37 rules. Additional emitted controls exercise wrong ascent, capital height, widths, bounding boxes, resource witness identities and encoded matrix relationships. An adapter-specific ascent alteration is detected against the actual allocated font, including unused registration. The serialized-xref offset control retains qpdf's recovery warning and is not described as a qpdf-clean negative.
 
-The inherited Unicode suite lacked its referenced text corpus in the imported checkpoint. Five first-party samples now live beside that suite, following its existing expectations; every assertion is unchanged. All eleven native Unicode tests passed, and workspace `--all-targets` checking passed. This establishes compilation of all targets and execution of that repaired suite, rather than execution of every workspace test.
+Composition checks independently decode path/stroke combinations, image and straight-alpha planes, gradient functions, blend groups, metadata, page boxes and direct resources. Repeat and registration-order controls preserve the measured semantics; targeted mutations produce the expected disagreements.
 
-Six real Windows confinement checks passed file/network/child denial, memory and CPU limits, cancellation, drop/pipe cleanup and unrelated-handle isolation. The independent default-feature client generated repeatable bytes, retained a 57-package graph without authoring crates, and refused output in three actual missing/malformed worker cases. A copied gallery executable generated ordinary graphics without sidecars; print preparation used the exact color worker and selected profile.
+These examples probe the [generation contract](requirements/generation-contract.json). Source rules and independent review must establish the complete documented domain; corpus size alone does not.
 
-## October 4 exact output evidence
+## Runtime and source delivery
 
-- All 34 regenerated compatibility cases passed qpdf. Three intentional production-control cases reproduced their reviewed bleed/resolution warnings.
-- Callas check-only analysis passed all 14 positive candidates. Strict JSON/XML review checked exact input/checker/profile identities and absence of fixups. Combined analysis and the separate selected-CMYK profile guard met 34/34 expectations.
-- Callas alone met 30/34 expectations: it accepted four invalid output-profile component declarations. The separate guard rejected them. Combined success does not mean callas rejected those controls.
-- All 190 source pages passed declared boxes, ordered ActualText and extracted text after separator normalization. PDFium/Poppler retained-to-current and current cross-reader comparisons passed the unchanged recorded bounds, at a maximum render dimension of 1,600 pixels.
-- The exact independent standalone candidate and new CMYK gallery both passed callas; both ordinary controls failed for their missing PDF/X envelope. The four-case example matrix met 4/4 combined expectations.
-- Four standalone pages passed two-reader comparisons and image/clip probes. The six-page feature gallery passed image/function/shading/mask checks, all sixteen blend-name checks, and exact resource ownership for 24 streams in each PDF.
-- Fifty authored gallery appearance probes passed independently in both readers: RGB endpoints/multistops/hard stops, radial alpha/padding, independent component/alpha interpolation, group opacity, clipping, Gray transitions and representative group blending. Four malformed inspector controls were rejected: false isolation, numeric isolation, unused resource entry and missing output-intent Info.
+The Windows run includes six actual AppContainer checks. Ubuntu tests exercise file, network, process, descriptor, memory, CPU, wall-time and cancellation boundaries using real kernel primitives. Real malformed-worker and preparation failures preserve typed errors and allow fresh retries. Mandatory tests cannot be skipped, and unavailable confinement fails before resource parsing.
 
-## CMYK preview qualification
+Both platforms pass strict lint checks, prepare resources, stage matching workers and run a separate public client. The optional trusted validator supports Windows and deliberately refuses Linux.
 
-The full feature-gallery cross-reader comparison remains **failed** on ordinary page 2 and print pages 1–2. Its original limits are mean channel difference at most 5, 95th-percentile maximum channel difference at most 20, and at most 8% of pixels above a difference of 10. Observed maxima include 24 and 12.557% for the latter two metrics. No tolerance or source color was changed to turn those results into passes.
+A usable source handoff requires an audited archive extracted into a new directory, built from its own source and lockfiles, then exercised on both targets. Its adjacent isolation receipt must bind that exact archive, source and output. A development build or archive inventory alone does not establish this gate.
 
-Differences concentrate in smooth native CMYK gradients. On ordinary page 2, 99.21% of pixels differing by more than ten channel values fall inside the authored CMYK regions. Gray gradients and opaque CMYK hard transitions agree closely. Both readers pass the focused authored appearance probes, and exact print bytes pass structural and PDF/X development checking. This establishes those behaviors while leaving device-color preview agreement qualified. Review CMYK appearance in the intended reader; physical printer acceptance remains a downstream check.
+The source handoff separately passed archive inventory/source equality and the advertised builds and workflows from initially absent targets on both systems. Full native/resource-corpus qualification uses the same exact compiled inputs. Its adjacent isolation receipt identifies that archive and the actual resulting files.
 
-## Requirements and verification
+## CMYK preview evidence
 
-Current output checks cover custom output-condition Info, required title, ICC version screening, encoded content strings and object/executed-state limits. The [supported-output review](requirements/supported-output-review.md) describes the generated structures and their limits.
+The controlled CMYK investigation passed on the recorded Windows and Ubuntu executables. Both produced identical diagnostic PDFs. It passed 288 decoded component/opacity checks, 156 gradient-versus-flat samples, ten matched ICC samples and sixty retained-gallery samples. Fifty authored appearance probes pass separately. [Color behavior](color-behavior.md) records the original tools, settings and replay commands.
 
-The real printer profile used for current worker/export and checker evidence is ICC 2.2.0. Synthetic fixtures exercise screening of the admitted 4.0.0–4.2.0 encodings and then fail for missing tags. A complete real ICC v4 profile has not received the same end-to-end verification; those screening checks do not establish that broader profile evidence.
+The original default PDFium/Poppler comparison remains failed on ordinary page 2 and print pages 1-2. Its limits are unchanged: mean difference at most 5, 95th-percentile maximum difference at most 20, and at most 8% of pixels above 10. Controlled measurements establish correct components and reader conversion/sampling differences. They do not establish identical previews or physical printer acceptance.
 
-The inventory retains 28 authority topics and fifteen public writer contracts, with current implementation and hashed evidence bindings. PX4-NORMATIVE-INVENTORY remains pending. verify-requirements.py --require-normative deliberately fails for that stronger exhaustive assertion. Current checking does not establish unrestricted PDF/X-4 conformance or certification.
+## Retained records and scope
 
-Sanitized, hash-bound current receipts are under verification/current/finalization-20261004. Earlier verification/current receipts remain historical checkpoints. Full local PDFs/renders stay in ignored artifacts; raw licensed reports and activation material stay private outside this workspace.
+Historical receipts retain their exact original source and output identities. Earlier commercial-checker verdicts apply only to the files actually checked; this update claims no new commercial-checker verdict. Changes affecting generation or inspection require fresh relevant checks and current bindings.
 
-The public `verify-feature-gallery-appearance.py` runner repeats all fifty
-authored checks from the source package. Its refreshed receipt retains the
-original colors, tolerances, probe results and region metrics, and binds the
-packaged runner and exact render identities. The earlier receipt remains intact.
-Four controls reject disabled assertions, replacement of an existing receipt,
-changed render bytes and an incorrect authored pixel even with an updated hash.
+First-party source and original material use MIT OR Apache-2.0. Dependencies, fonts, profiles and character mapping data retain their separate terms. Registry publication stays disabled. Current source execution and output measurements do not establish unrestricted PDF/X-4 feature coverage, universal reader fidelity or downstream printer acceptance.
 
-## Source delivery and next step
+## Controlled preview qualification
 
-The curated source archive includes owned source/fixtures, independent examples, public documentation, sanitized evidence and exact dependency/native-library/asset notices. Its auditor rejects private paths, commercial report/profile material, runtime binaries, escaping/duplicate entries, symlinks and changed file identities. Focused package/privacy tests cover those boundaries, licensed policy rejection and assertion protection. Require the adjacent archive receipt and passed isolated-build receipt to establish the unpacked build and matching generated output; a ZIP alone is insufficient.
+The optional [proofing companion](proofing.md) renders actual PDF pages with
+explicit CMYK printing and RGB display profiles. Windows Poppler 26.07.0 and
+native Ubuntu Poppler 24.02.0 each pass 78 gradient/opacity comparisons, 20 direct
+LittleCMS comparisons and 30 retained-gallery comparisons. Maximum observed
+channel errors are zero, one and zero respectively, within the unchanged bound
+of four. Ten repeated pages per environment preserve decoded pixels and ICC
+bytes. Profile sensitivity and OutputIntent mismatch refusal pass separately.
+A further 156 independent expectations cover authored diagnostic colors,
+paint alpha and group opacity.
 
-A skeptical second pass reproduced an optimized-Python assertion bypass in the
-gallery inspector. The gallery and public API verifiers now reject `-O` and
-`PYTHONOPTIMIZE` before creating output. The standalone guide now includes worker
-builds, both example targets, the output parent and portable Windows commands.
-Native execution and a fresh extracted-source build verify the repaired handoff;
-the failed whole-page CMYK comparison remains recorded.
+The qualified Poppler PNG path composites ordinary transparency groups in RGB,
+including groups whose source PDF declares a CMYK blending space. The reference
+checks that RGB appearance. CMYK group-colorimetry and press simulation need
+separate qualification.
 
-As of October 16, first-party source and original project material use MIT OR Apache-2.0 under the PatterboxPDF name. Cargo packages retain publish = false. Historical receipts preserve their original license-pending statements. A fresh source-release receipt records the exact licensed source/build identities; earlier callas verdicts do not transfer to new PDF bytes. Next: build the documented Windows standalone examples. A complete standards inventory is separate future assurance work.
+[Windows](verification/current/proofing-20261017-r3/windows.json) and
+[Ubuntu](verification/current/proofing-20261017-r3/ubuntu.json) receipts bind actual
+inputs, tools, output pixels and conditions. The
+[source-input record](verification/current/proofing-20261017-r3/source-package.json)
+binds the additive companion and unchanged native generation inputs. The exact
+source archive additionally requires its adjacent isolation receipt. The original
+three default-reader failures retain their verdicts and limits.
+
+Earlier [Windows](verification/current/proofing-20261017/windows.json),
+[Ubuntu](verification/current/proofing-20261017/ubuntu.json) and
+[source-input](verification/current/proofing-20261017/source-package.json)
+records retain their original tool identities. The current records add
+independent color and opacity expectations and reject failed or stale evidence.

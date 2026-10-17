@@ -24,6 +24,8 @@ impl PdfCandidateMetadata {
 
     /// Supplies an explicit UTC timestamp for reproducible generation.
     /// Returns `None` for invalid dates or years outside PDF's four-digit range.
+    /// PDF dates have whole seconds through 59. Fractional seconds are dropped;
+    /// an RFC3339 leap second uses its preceding 59th second in both Info and XMP.
     #[must_use]
     pub fn at_utc(title: &str, timestamp: &str) -> Option<Self> {
         let date = DateTime::parse_from_rfc3339(timestamp)
@@ -78,7 +80,13 @@ impl PdfCandidateMetadata {
         };
         let title = xml_text(&self.title);
         let producer = xml_text(producer);
-        let date = self.created_at.format("%Y-%m-%dT%H:%M:%SZ");
+        // Use the same whole second as PDF Info. Chrono's %S includes its
+        // leap-second nanoseconds and can print 60 while second() returns 59.
+        let date = format!(
+            "{}{:02}Z",
+            self.created_at.format("%Y-%m-%dT%H:%M:"),
+            self.created_at.second()
+        );
         let mut hex = String::with_capacity(32);
         for byte in file_id {
             write!(&mut hex, "{byte:02x}").expect("writing to String cannot fail");
@@ -225,5 +233,55 @@ mod tests {
         assert!(info.contains("/CreationDate (D:20261003010203Z)"));
         assert!(info.contains("/ModDate (D:20261003010203Z)"));
         assert!(PdfCandidateMetadata::at_utc("title", "2026-02-30T00:00:00Z").is_none());
+    }
+
+    #[test]
+    fn leap_and_fractional_seconds_have_one_consistent_pdf_date() {
+        for (input, xmp_date, info_date) in [
+            (
+                "2016-12-31T23:59:60Z",
+                "2016-12-31T23:59:59Z",
+                "D:20161231235959Z",
+            ),
+            (
+                "2016-12-31T23:59:59.75Z",
+                "2016-12-31T23:59:59Z",
+                "D:20161231235959Z",
+            ),
+            (
+                "2017-01-01T00:59:60+01:00",
+                "2016-12-31T23:59:59Z",
+                "D:20161231235959Z",
+            ),
+            (
+                "9999-12-31T23:59:60Z",
+                "9999-12-31T23:59:59Z",
+                "D:99991231235959Z",
+            ),
+        ] {
+            let metadata = PdfCandidateMetadata::at_utc("Whole seconds", input).unwrap();
+            let xmp = String::from_utf8(metadata.xmp_for(
+                &[0x12; 16],
+                "PDF Library",
+                "PDF Library",
+                false,
+            ))
+            .unwrap();
+            for field in ["CreateDate", "ModifyDate", "MetadataDate"] {
+                assert!(
+                    xmp.contains(&format!("<xmp:{field}>{xmp_date}</xmp:{field}>")),
+                    "{input}: {field}"
+                );
+            }
+            let mut pdf = pdf_writer::Pdf::new();
+            metadata.write_info(&mut pdf.document_info(pdf_writer::Ref::new(1)));
+            let info = String::from_utf8_lossy(&pdf.finish()).into_owned();
+            for field in ["CreationDate", "ModDate"] {
+                assert!(
+                    info.contains(&format!("/{field} ({info_date})")),
+                    "{input}: {field}"
+                );
+            }
+        }
     }
 }

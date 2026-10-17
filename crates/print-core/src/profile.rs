@@ -3,8 +3,6 @@ pub const MAX_ICC_PROFILE_BYTES: usize = 16 * 1024 * 1024;
 use sha2::{Digest, Sha256};
 
 const ICC_HEADER_LEN: usize = 128;
-const ICC_TAG_COUNT_LEN: usize = 4;
-const ICC_TAG_RECORD_LEN: usize = 12;
 
 /// SHA-256 identity for the exact ICC bytes used by an evaluation.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -55,7 +53,7 @@ pub struct OutputIntentFacts {
     pub(crate) profile_connection_space: [u8; 4],
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "publisher-adapter"))]
 impl OutputIntentFacts {
     pub(crate) const fn from_test_parts(
         sha256: ProfileHash,
@@ -111,9 +109,11 @@ pub enum ProfileError {
     BadSignature,
     InvalidVersionEncoding([u8; 4]),
     UnsupportedVersion([u8; 4]),
+    InvalidHeader,
     MissingTags,
     MalformedTagTable,
     MissingRequiredOutputTransforms,
+    MissingRequiredOutputTags,
     ColorWorkerUnavailable,
     ColorWorkerIdentityMismatch,
     ColorWorkerConfinementFailed,
@@ -203,7 +203,7 @@ pub fn inspect_output_intent(profile: &[u8]) -> Result<OutputIntentFacts, Profil
         return Err(ProfileError::UnsupportedProfileConnectionSpace(pcs));
     }
 
-    validate_tag_table(profile)?;
+    icc_profile::screen_output(profile).map_err(profile_format_error)?;
     let receipt = color_boundary::TrustedColorBoundary::resolve_packaged()
         .inspect_output_profile(profile)
         .map_err(|error| profile_worker_error(&error))?;
@@ -263,63 +263,53 @@ fn profile_worker_error(error: &color_boundary::ColorWorkerError) -> ProfileErro
     }
 }
 
+#[cfg(test)]
 fn validate_tag_table(profile: &[u8]) -> Result<(), ProfileError> {
-    let count_end = ICC_HEADER_LEN
-        .checked_add(ICC_TAG_COUNT_LEN)
-        .ok_or(ProfileError::MalformedTagTable)?;
-    if profile.len() < count_end {
-        return Err(ProfileError::TooShort);
-    }
-    let tag_count = u32::from_be_bytes(
-        profile[ICC_HEADER_LEN..count_end]
-            .try_into()
-            .expect("four byte slice"),
-    );
-    let tag_count = usize::try_from(tag_count).map_err(|_| ProfileError::MalformedTagTable)?;
-    if tag_count == 0 {
-        return Err(ProfileError::MissingTags);
-    }
-    let table_bytes = tag_count
-        .checked_mul(ICC_TAG_RECORD_LEN)
-        .ok_or(ProfileError::MalformedTagTable)?;
-    let table_end = count_end
-        .checked_add(table_bytes)
-        .ok_or(ProfileError::MalformedTagTable)?;
-    if table_end > profile.len() {
-        return Err(ProfileError::MalformedTagTable);
-    }
+    icc_profile::validate_tag_table_with(profile, icc_profile::validate_tag_payload)
+        .map_err(profile_format_error)
+}
+#[cfg(test)]
+fn validate_tag_table_with(
+    profile: &[u8],
+    mut body: impl FnMut(&[u8], &[u8], &[u8]) -> Result<(), ProfileError>,
+) -> Result<(), ProfileError> {
+    icc_profile::validate_tag_table_with(profile, |s, p, profile| {
+        body(s, p, profile).map_err(|_| icc_profile::Error::MalformedTagTable)
+    })
+    .map_err(profile_format_error)
+}
+#[cfg(test)]
+fn validate_tag_payload(
+    signature: &[u8],
+    payload: &[u8],
+    profile: &[u8],
+) -> Result<(), ProfileError> {
+    icc_profile::validate_tag_payload(signature, payload, profile).map_err(profile_format_error)
+}
+#[cfg(test)]
+fn validate_multistage_lut(signature: &[u8], payload: &[u8]) -> Result<(), ProfileError> {
+    icc_profile::validate_multistage_lut(signature, payload).map_err(profile_format_error)
+}
+#[cfg(test)]
+fn profile_u32(bytes: &[u8], offset: usize) -> Option<usize> {
+    icc_profile::profile_u32(bytes, offset)
+}
 
-    let mut has_device_to_pcs = false;
-    let mut has_pcs_to_device = false;
-    for index in 0..tag_count {
-        let record_start = count_end + index * ICC_TAG_RECORD_LEN;
-        let signature = &profile[record_start..record_start + 4];
-        let offset = u32::from_be_bytes(
-            profile[record_start + 4..record_start + 8]
-                .try_into()
-                .expect("four byte slice"),
-        );
-        let size = u32::from_be_bytes(
-            profile[record_start + 8..record_start + 12]
-                .try_into()
-                .expect("four byte slice"),
-        );
-        let offset = usize::try_from(offset).map_err(|_| ProfileError::MalformedTagTable)?;
-        let size = usize::try_from(size).map_err(|_| ProfileError::MalformedTagTable)?;
-        let end = offset
-            .checked_add(size)
-            .ok_or(ProfileError::MalformedTagTable)?;
-        if offset < table_end || offset % 4 != 0 || size < 8 || end > profile.len() {
-            return Err(ProfileError::MalformedTagTable);
-        }
-        has_device_to_pcs |= signature == b"A2B0";
-        has_pcs_to_device |= signature == b"B2A0";
+fn profile_format_error(error: icc_profile::Error) -> ProfileError {
+    use icc_profile::Error;
+    match error {
+        Error::TooShort => ProfileError::TooShort,
+        Error::BadSignature => ProfileError::BadSignature,
+        Error::InvalidVersionEncoding(v) => ProfileError::InvalidVersionEncoding(v),
+        Error::UnsupportedVersion(v) => ProfileError::UnsupportedVersion(v),
+        Error::MissingTags => ProfileError::MissingTags,
+        Error::MissingRequiredOutputTransforms => ProfileError::MissingRequiredOutputTransforms,
+        Error::MissingRequiredOutputTags => ProfileError::MissingRequiredOutputTags,
+        Error::NotPrinter => ProfileError::NotPrinter,
+        Error::NotCmyk => ProfileError::NotCmyk,
+        Error::Header | Error::ProfileId => ProfileError::InvalidHeader,
+        _ => ProfileError::MalformedTagTable,
     }
-
-    if !has_device_to_pcs || !has_pcs_to_device {
-        return Err(ProfileError::MissingRequiredOutputTransforms);
-    }
-    Ok(())
 }
 
 #[cfg(test)]
@@ -335,6 +325,8 @@ mod tests {
         profile[16..20].copy_from_slice(b"CMYK");
         profile[20..24].copy_from_slice(b"Lab ");
         profile[36..40].copy_from_slice(b"acsp");
+        profile[24..36].copy_from_slice(&[7, 234, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0]);
+        profile[68..80].copy_from_slice(&[0, 0, 0xf6, 0xd6, 0, 1, 0, 0, 0, 0, 0xd3, 0x2d]);
         profile
     }
 
@@ -384,7 +376,7 @@ mod tests {
         }
     }
 
-    #[cfg(not(windows))]
+    #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
     #[test]
     fn valid_profile_cannot_fall_back_to_native_parsing_on_an_unsupported_host() {
         let profile = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
@@ -401,6 +393,277 @@ mod tests {
             inspect_output_intent(&profile),
             Err(ProfileError::MissingTags)
         );
+    }
+
+    #[test]
+    fn rejects_missing_required_printer_tags_before_native_parsing() {
+        let original = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
+        for required in [
+            b"desc", b"cprt", b"wtpt", b"A2B0", b"A2B1", b"A2B2", b"B2A0", b"B2A1", b"B2A2",
+            b"gamt",
+        ] {
+            let mut changed = original.to_vec();
+            let records = u32::from_be_bytes(changed[128..132].try_into().unwrap()) as usize;
+            let start = (0..records)
+                .map(|index| 132 + index * 12)
+                .find(|start| &changed[*start..*start + 4] == required)
+                .unwrap();
+            changed[start..start + 4].copy_from_slice(b"test");
+            assert!(
+                super::validate_tag_table(&changed).is_err(),
+                "missing required printer tag {required:?} was admitted"
+            );
+        }
+        assert!(super::validate_tag_table(original).is_ok());
+    }
+
+    fn profile_with_shared_xyz_aliases(alias_count: usize) -> (Vec<u8>, usize) {
+        let original = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
+        let original_count = u32::from_be_bytes(original[128..132].try_into().unwrap()) as usize;
+        let gap = alias_count * 12;
+        let gap_u32 = u32::try_from(gap).unwrap();
+        let mut profile = original.to_vec();
+        profile.splice(132..132, std::iter::repeat_n(0, gap));
+        for index in 0..original_count {
+            let record = 132 + gap + index * 12;
+            let offset = u32::from_be_bytes(profile[record + 4..record + 8].try_into().unwrap());
+            profile[record + 4..record + 8].copy_from_slice(&(offset + gap_u32).to_be_bytes());
+        }
+        let offset = (profile.len() + 3) & !3;
+        let size = 8 + 12 * 8192;
+        profile.resize(offset + size, 0);
+        profile[offset..offset + 4].copy_from_slice(b"XYZ ");
+        let offset_bytes = u32::try_from(offset).unwrap().to_be_bytes();
+        let size_bytes = u32::try_from(size).unwrap().to_be_bytes();
+        for index in 0..alias_count {
+            let record = 132 + index * 12;
+            profile[record..record + 4]
+                .copy_from_slice(&(0x7000_0000_u32 + u32::try_from(index).unwrap()).to_be_bytes());
+            profile[record + 4..record + 8].copy_from_slice(&offset_bytes);
+            profile[record + 8..record + 12].copy_from_slice(&size_bytes);
+        }
+        profile[128..132].copy_from_slice(
+            &u32::try_from(original_count + alias_count)
+                .unwrap()
+                .to_be_bytes(),
+        );
+        let size = u32::try_from(profile.len()).unwrap();
+        profile[..4].copy_from_slice(&size.to_be_bytes());
+        (profile, offset)
+    }
+
+    #[test]
+    fn shared_tag_body_work_is_bounded_by_unique_ranges() {
+        let (profile, large_offset) = profile_with_shared_xyz_aliases(4096);
+        let mut large_visits = 0;
+        let mut large_bytes = 0;
+        super::validate_tag_table_with(&profile, |signature, payload, profile| {
+            if payload.as_ptr() == profile[large_offset..].as_ptr() {
+                large_visits += 1;
+                large_bytes += payload.len();
+            }
+            super::validate_tag_payload(signature, payload, profile)
+        })
+        .unwrap();
+        assert_eq!(large_visits, 1);
+        assert_eq!(large_bytes, profile.len() - large_offset);
+    }
+
+    #[test]
+    fn directory_failures_precede_all_body_work() {
+        let (profile, _) = profile_with_shared_xyz_aliases(64);
+        let count = u32::from_be_bytes(profile[128..132].try_into().unwrap()) as usize;
+        let record = |signature: &[u8]| {
+            (0..count)
+                .map(|i| 132 + i * 12)
+                .find(|start| &profile[*start..*start + 4] == signature)
+                .unwrap()
+        };
+        let mut missing = profile.clone();
+        missing[record(b"A2B0")..record(b"A2B0") + 4].copy_from_slice(b"gone");
+        let mut duplicate = profile.clone();
+        duplicate[144..148].copy_from_slice(&profile[132..136]);
+        let mut overlap = profile.clone();
+        let offset = u32::from_be_bytes(profile[136..140].try_into().unwrap());
+        overlap[148..152].copy_from_slice(&(offset + 4).to_be_bytes());
+        for invalid in [missing, duplicate, overlap] {
+            let mut body_visits = 0;
+            assert!(
+                super::validate_tag_table_with(&invalid, |_, _, _| {
+                    body_visits += 1;
+                    Ok(())
+                })
+                .is_err()
+            );
+            assert_eq!(body_visits, 0);
+        }
+    }
+
+    #[test]
+    fn shared_bodies_still_obey_each_signature_role() {
+        let original = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
+        let count = u32::from_be_bytes(original[128..132].try_into().unwrap()) as usize;
+        let record = |signature: &[u8]| {
+            (0..count)
+                .map(|i| 132 + i * 12)
+                .find(|start| &original[*start..*start + 4] == signature)
+                .unwrap()
+        };
+        for (target, source) in [(b"B2A0", b"A2B0"), (b"gamt", b"B2A0"), (b"cprt", b"desc")] {
+            let mut changed = original.to_vec();
+            changed[record(target) + 4..record(target) + 12]
+                .copy_from_slice(&original[record(source) + 4..record(source) + 12]);
+            assert!(super::validate_tag_table(&changed).is_err());
+        }
+        let (mut changed, offset) = profile_with_shared_xyz_aliases(1);
+        let white = (0..=count)
+            .map(|i| 132 + i * 12)
+            .find(|start| &changed[*start..*start + 4] == b"wtpt")
+            .unwrap();
+        let size = changed.len() - offset;
+        changed[white + 4..white + 8]
+            .copy_from_slice(&u32::try_from(offset).unwrap().to_be_bytes());
+        changed[white + 8..white + 12].copy_from_slice(&u32::try_from(size).unwrap().to_be_bytes());
+        assert!(super::validate_tag_table(&changed).is_err());
+    }
+
+    #[test]
+    fn rejects_duplicate_tags_and_partial_payload_overlap_but_allows_shared_payloads() {
+        let original = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
+        assert!(super::validate_tag_table(original).is_ok());
+        let mut duplicate = original.to_vec();
+        duplicate[144..148].copy_from_slice(b"desc");
+        assert!(super::validate_tag_table(&duplicate).is_err());
+        let mut overlap = original.to_vec();
+        let first_offset = u32::from_be_bytes(original[136..140].try_into().unwrap());
+        overlap[148..152].copy_from_slice(&(first_offset + 4).to_be_bytes());
+        assert!(super::validate_tag_table(&overlap).is_err());
+    }
+
+    #[test]
+    fn rejects_malformed_present_tag_payloads_before_native_parsing() {
+        let original = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
+        for signature in [b"desc", b"cprt", b"wtpt", b"A2B0", b"arts"] {
+            let mut changed = original.to_vec();
+            let records = u32::from_be_bytes(changed[128..132].try_into().unwrap()) as usize;
+            let start = (0..records)
+                .map(|index| 132 + index * 12)
+                .find(|start| &changed[*start..*start + 4] == signature)
+                .unwrap();
+            let offset =
+                u32::from_be_bytes(changed[start + 4..start + 8].try_into().unwrap()) as usize;
+            changed[offset + 4] = 1;
+            assert!(
+                super::validate_tag_table(&changed).is_err(),
+                "nonzero tag reserved bytes admitted"
+            );
+        }
+        let mut wrong_type = original.to_vec();
+        let description_offset =
+            u32::from_be_bytes(original[136..140].try_into().unwrap()) as usize;
+        wrong_type[description_offset..description_offset + 4].copy_from_slice(b"text");
+        assert!(super::validate_tag_table(&wrong_type).is_err());
+    }
+
+    #[test]
+    fn rejects_invalid_lut16_sample_layout_before_native_parsing() {
+        let original = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
+        let mut changed = original.to_vec();
+        let records = u32::from_be_bytes(changed[128..132].try_into().unwrap()) as usize;
+        let start = (0..records)
+            .map(|index| 132 + index * 12)
+            .find(|start| &changed[*start..*start + 4] == b"A2B0")
+            .unwrap();
+        let offset = u32::from_be_bytes(changed[start + 4..start + 8].try_into().unwrap()) as usize;
+        changed[offset + 48..offset + 50].copy_from_slice(&1_u16.to_be_bytes());
+        assert!(super::validate_tag_table(&changed).is_err());
+    }
+
+    #[test]
+    fn rejects_transform_payload_types_and_negative_xyz_before_native_parsing() {
+        let original = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
+        for tag in [*b"A2B0", *b"B2A0", *b"gamt", *b"wtpt"] {
+            let mut changed = original.to_vec();
+            let count = u32::from_be_bytes(changed[128..132].try_into().unwrap()) as usize;
+            let record = (0..count)
+                .map(|index| 132 + index * 12)
+                .find(|record| changed[*record..*record + 4] == tag)
+                .unwrap();
+            let offset =
+                u32::from_be_bytes(changed[record + 4..record + 8].try_into().unwrap()) as usize;
+            if tag == *b"wtpt" {
+                changed[offset + 8..offset + 12].copy_from_slice(&(-1_i32).to_be_bytes());
+            } else {
+                changed[offset..offset + 4].copy_from_slice(b"bad!");
+            }
+            assert!(super::validate_tag_table(&changed).is_err());
+        }
+    }
+
+    #[test]
+    fn multistage_luts_check_stage_pairs_curves_and_clut_extents() {
+        fn lut(inputs: u8, outputs: u8, forward: bool) -> Vec<u8> {
+            let mut data = vec![0; 32];
+            data[..4].copy_from_slice(if forward { b"mAB " } else { b"mBA " });
+            data[8] = inputs;
+            data[9] = outputs;
+            data[12..16].copy_from_slice(&32_u32.to_be_bytes());
+            for _ in 0..if forward { outputs } else { inputs } {
+                data.extend_from_slice(b"curv\0\0\0\0\0\0\0\0");
+            }
+            let clut = u32::try_from(data.len()).unwrap();
+            data[24..28].copy_from_slice(&clut.to_be_bytes());
+            data.extend(std::iter::repeat_n(2, usize::from(inputs)));
+            data.extend(std::iter::repeat_n(0, 16 - usize::from(inputs)));
+            data.extend_from_slice(&[1, 0, 0, 0]);
+            data.extend(std::iter::repeat_n(
+                0,
+                2_usize.pow(u32::from(inputs)) * usize::from(outputs),
+            ));
+            while !data.len().is_multiple_of(4) {
+                data.push(0);
+            }
+            let a = u32::try_from(data.len()).unwrap();
+            data[28..32].copy_from_slice(&a.to_be_bytes());
+            for _ in 0..if forward { inputs } else { outputs } {
+                data.extend_from_slice(b"curv\0\0\0\0\0\0\0\0");
+            }
+            data
+        }
+        for (signature, data) in [
+            (*b"A2B0", lut(4, 3, true)),
+            (*b"B2A0", lut(3, 4, false)),
+            (*b"gamt", lut(3, 1, false)),
+        ] {
+            assert!(super::validate_multistage_lut(&signature, &data).is_ok());
+            let clut = super::profile_u32(&data, 24).unwrap();
+            for (position, value) in [
+                (10, 1),
+                (15, 0),
+                (31, 0),
+                (clut + 16, 3),
+                (clut + usize::from(data[8]), 9),
+                (clut, 255),
+                (32, b'x'),
+            ] {
+                let mut changed = data.clone();
+                changed[position] = value;
+                assert!(super::validate_multistage_lut(&signature, &changed).is_err());
+            }
+        }
+        // A and B can reuse identical individual curve blocks.
+        let mut shared = vec![0; 44];
+        shared[..4].copy_from_slice(b"mAB ");
+        shared[8..10].copy_from_slice(&[1, 1]);
+        shared[12..16].copy_from_slice(&32_u32.to_be_bytes());
+        shared[32..36].copy_from_slice(b"curv");
+        assert!(super::validate_multistage_lut(b"test", &shared).is_ok());
+        shared[28..32].copy_from_slice(&32_u32.to_be_bytes());
+        shared[24..28].copy_from_slice(&44_u32.to_be_bytes());
+        shared.extend_from_slice(&[
+            2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 255,
+        ]);
+        assert!(super::validate_multistage_lut(b"test", &shared).is_ok());
     }
 
     #[test]
@@ -458,6 +721,8 @@ mod tests {
         profile[16..20].copy_from_slice(b"CMYK");
         profile[20..24].copy_from_slice(b"Lab ");
         profile[36..40].copy_from_slice(b"acsp");
+        profile[24..36].copy_from_slice(&[7, 234, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0]);
+        profile[68..80].copy_from_slice(&[0, 0, 0xf6, 0xd6, 0, 1, 0, 0, 0, 0, 0xd3, 0x2d]);
         profile[128..132].copy_from_slice(&1_u32.to_be_bytes());
         profile[132..136].copy_from_slice(b"A2B0");
         profile[136..140].copy_from_slice(&156_u32.to_be_bytes());

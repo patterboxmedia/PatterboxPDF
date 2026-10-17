@@ -219,7 +219,7 @@ impl FinishedPdfWriter {
                 .xmp_for(file_id, PRODUCER, "PDF Library", profile.is_some()),
         );
         Ok(FinishedPdf {
-            bytes: pdf.finish(),
+            bytes: crate::pdf_lines::finish(&pdf.finish())?,
         })
     }
 }
@@ -258,6 +258,12 @@ fn validate(document: &FinishedDocument, pdfx: bool) -> Result<Inputs<'_>, Finis
         retained = retained
             .checked_add(font.program.prepared_bytes().len())
             .ok_or(FinishedPdfError::ResourceLimit)?;
+        if pdfx && font.program.requires_ascent_facts() {
+            return Err(FinishedPdfError::FontAscentFactsRequired(font.id.clone()));
+        }
+        if pdfx && font.program.requires_cap_height_fact() {
+            return Err(FinishedPdfError::FontCapHeightFactRequired(font.id.clone()));
+        }
         inputs.fonts.insert(&font.id, font);
     }
     let mut compressed = 0_usize;
@@ -366,6 +372,7 @@ fn validate_items(
                     || run.font_size <= 0.0
                     || run.glyphs.is_empty()
                     || run.actual_text.is_empty()
+                    || run.actual_text.contains('\u{001b}')
                 {
                     return Err(FinishedPdfError::InvalidFont(run.font.clone()));
                 }
@@ -458,6 +465,74 @@ fn matrix(value: AffineTransform) -> Result<(), FinishedPdfError> {
     } else {
         Err(FinishedPdfError::InvalidGeometry)
     }
+}
+
+/// Compare the determinant terms in their emitted decimal representation.
+/// Shortest binary32 decimals have at most nine significant digits, so their
+/// products fit comfortably in i128 even at the accepted coordinate limits.
+fn decimal_product(a: &str, b: &str) -> (i128, i32) {
+    let component = |text: &str| {
+        let mut coefficient = 0_i128;
+        let mut exponent = 0_i32;
+        let mut fractional = false;
+        for byte in text.bytes() {
+            match byte {
+                b'-' => {}
+                b'.' => fractional = true,
+                b'0'..=b'9' => {
+                    coefficient = coefficient * 10 + i128::from(byte - b'0');
+                    exponent -= i32::from(fractional);
+                }
+                _ => unreachable!("finite f32 Display emits only decimal digits"),
+            }
+        }
+        if text.starts_with('-') {
+            coefficient = -coefficient;
+        }
+        (coefficient, exponent)
+    };
+    let (a, ae) = component(a);
+    let (b, be) = component(b);
+    let mut coefficient = a * b;
+    let mut exponent = ae + be;
+    if coefficient == 0 {
+        return (0, 0);
+    }
+    while coefficient % 10 == 0 {
+        coefficient /= 10;
+        exponent += 1;
+    }
+    (coefficient, exponent)
+}
+
+fn append_matrix(content: &mut Content, matrix: [f32; 6], operator: &str) {
+    let mut operands = matrix.map(|value| {
+        if value == 0.0 {
+            "0".to_owned()
+        } else {
+            value.to_string()
+        }
+    });
+    if decimal_product(&operands[0], &operands[3]) == decimal_product(&operands[1], &operands[2]) {
+        // Input validation already established a nonzero binary32 determinant.
+        // Shortest roundtrip decimals can nevertheless erase that relationship.
+        // A binary32 denominator divides 2^149: this finite expansion is exact,
+        // including subnormals, and needs neither exponent syntax nor an epsilon.
+        for (operand, value) in operands.iter_mut().zip(matrix).take(4) {
+            let exact = format!("{:.149}", f64::from(value));
+            exact
+                .trim_end_matches('0')
+                .trim_end_matches('.')
+                .clone_into(operand);
+            if value == 0.0 {
+                "0".clone_into(operand);
+            }
+        }
+    }
+    // The operands are generated above and the only callers supply cm or Tm.
+    // No caller-controlled raw content crosses this private serialization seam.
+    let operation = format!("{} {operator}", operands.join(" "));
+    content.op(&operation);
 }
 fn alpha(a: f32) -> Result<(), FinishedPdfError> {
     if a.is_finite() && (0.0..=1.0).contains(&a) {
@@ -711,7 +786,7 @@ fn paint_items(
         let alpha = state_name(pair);
         content.set_parameters(Name(alpha.as_bytes()));
         resources.states.insert(alpha, refs.alphas[&pair]);
-        content.transform(item.transform.0);
+        append_matrix(&mut content, item.transform.0, "cm");
         if let Some(clip) = &item.clip {
             clip_path(&mut content, clip);
         }
@@ -745,7 +820,7 @@ fn paint_items(
                     marked.properties().actual_text(TextStr(&run.actual_text));
                 }
                 for glyph in &run.glyphs {
-                    content.set_text_matrix(glyph.matrix.0);
+                    append_matrix(&mut content, glyph.matrix.0, "Tm");
                     content.show(Str(&glyph.cid.to_be_bytes()));
                 }
                 content.end_marked_content();
@@ -1004,11 +1079,214 @@ fn validate_stroke(
 mod tests {
     use super::*;
 
+    fn ascent_document(font: &[u8], facts: Option<&[u16]>, used: bool) -> FinishedDocument {
+        let boundary = font_boundary::TrustedFontBoundary::resolve_packaged();
+        let program = if let Some(facts) = facts {
+            boundary.prepare_publication_with_ascent_facts(font, 0, &[0, 1, 2], facts)
+        } else {
+            boundary.prepare_publication(font, 0, &[0, 1, 2])
+        }
+        .unwrap();
+        facts_document(program, 2, used)
+    }
+    fn facts_document(
+        program: font_boundary::PreparedPublicationFont,
+        cid: u16,
+        used: bool,
+    ) -> FinishedDocument {
+        use crate::finished::{
+            FinishedPage, FinishedPageBoxes, FinishedResources, PositionedGlyph, PositionedGlyphRun,
+        };
+        let resource = FontResource::from_prepared(
+            "authored".into(),
+            program,
+            BTreeMap::from([(cid, "Ĥ".into())]),
+        )
+        .unwrap();
+        let items = if used {
+            vec![FinishedItem::new(FinishedContent::Glyphs(
+                PositionedGlyphRun {
+                    font: "authored".into(),
+                    font_size: 12.,
+                    glyphs: vec![PositionedGlyph {
+                        cid,
+                        matrix: AffineTransform([1., 0., 0., 1., 20., 20.]),
+                    }],
+                    actual_text: "Ĥ".into(),
+                    paint: Paint::gray(0., 1.),
+                },
+            ))]
+        } else {
+            vec![]
+        };
+        FinishedDocument {
+            pages: vec![FinishedPage {
+                boxes: FinishedPageBoxes {
+                    media: PdfBox::new(0., 0., 100., 100.),
+                    bleed: PdfBox::new(0., 0., 100., 100.),
+                    trim: PdfBox::new(0., 0., 100., 100.),
+                },
+                items,
+            }],
+            resources: FinishedResources {
+                fonts: vec![resource],
+                images: vec![],
+            },
+        }
+    }
+    #[test]
+    fn authored_ascent_print_checks_used_and_registered_unused_fonts() {
+        let metadata =
+            crate::PdfCandidateMetadata::at_utc("Authored ascent", "2026-10-17T00:00:00Z").unwrap();
+        let profile = include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc");
+        let ordinary = FinishedPdfOptions {
+            metadata: metadata.clone(),
+            mode: FinishedOutputMode::Ordinary,
+        };
+        let print = FinishedPdfOptions {
+            metadata,
+            mode: FinishedOutputMode::PdfX4 {
+                output_profile: profile,
+            },
+        };
+        let high = include_bytes!(
+            "../../../apps/font-worker/src/tests/fixtures/ascent-unencoded-high.otf"
+        );
+        for used in [false, true] {
+            let unresolved = ascent_document(high, None, used);
+            assert!(
+                matches!(FinishedPdfWriter::write(&unresolved,&print),Err(FinishedPdfError::FontAscentFactsRequired(id)) if id=="authored")
+            );
+            let compat = FinishedPdfWriter::write(&unresolved, &ordinary).unwrap();
+            assert!(String::from_utf8_lossy(compat.bytes()).contains("/Ascent 1100"));
+            let authored = ascent_document(high, Some(&[2]), used);
+            let pdf = FinishedPdfWriter::write(&authored, &print).unwrap();
+            assert!(String::from_utf8_lossy(pdf.bytes()).contains("/Ascent 880"));
+        }
+        for automatic in [
+            include_bytes!("../../../apps/font-worker/src/tests/fixtures/ascent-coded-high.otf")
+                .as_slice(),
+            include_bytes!("../../../apps/font-worker/src/tests/fixtures/ascent-unencoded-low.otf")
+                .as_slice(),
+        ] {
+            assert!(
+                FinishedPdfWriter::write(&ascent_document(automatic, None, true), &print).is_ok()
+            );
+        }
+    }
+
+    fn rounded_role_without_cap_declaration() -> Vec<u8> {
+        // Test-only source authoring: keep all original outlines/metrics, map
+        // the single source character to Q and remove its design declaration.
+        let mut font =
+            include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf").to_vec();
+        let word = |b: &[u8], at: usize| u16::from_be_bytes(b[at..at + 2].try_into().unwrap());
+        let long = |b: &[u8], at: usize| {
+            usize::try_from(u32::from_be_bytes(b[at..at + 4].try_into().unwrap())).unwrap()
+        };
+        let count = usize::from(word(&font, 4));
+        let mut head = 0;
+        for i in 0..count {
+            let r = 12 + i * 16;
+            let at = long(&font, r + 8);
+            match &font[r..r + 4] {
+                b"OS/2" => font[at + 88..at + 90].fill(0),
+                b"head" => {
+                    head = at;
+                    font[at + 8..at + 12].fill(0);
+                }
+                b"cmap" => {
+                    let mut offsets = std::collections::BTreeSet::new();
+                    for j in 0..usize::from(word(&font, at + 2)) {
+                        offsets.insert(at + long(&font, at + 4 + j * 8 + 4));
+                    }
+                    for t in offsets {
+                        assert_eq!(word(&font, t), 4);
+                        let n = usize::from(word(&font, t + 6)) / 2;
+                        for k in 0..n {
+                            let end = t + 14 + k * 2;
+                            let start = t + 16 + n * 2 + k * 2;
+                            let delta = t + 16 + n * 4 + k * 2;
+                            if word(&font, end) == 0x48 && word(&font, start) == 0x48 {
+                                font[end..end + 2].copy_from_slice(&0x51_u16.to_be_bytes());
+                                font[start..start + 2].copy_from_slice(&0x51_u16.to_be_bytes());
+                                let value = word(&font, delta).wrapping_sub(9);
+                                font[delta..delta + 2].copy_from_slice(&value.to_be_bytes());
+                            }
+                        }
+                    }
+                }
+                _ => {}
+            }
+        }
+        let sum = |b: &[u8]| {
+            b.chunks(4).fold(0_u32, |v, b| {
+                let mut w = [0; 4];
+                w[..b.len()].copy_from_slice(b);
+                v.wrapping_add(u32::from_be_bytes(w))
+            })
+        };
+        for i in 0..count {
+            let r = 12 + i * 16;
+            let at = long(&font, r + 8);
+            let len = long(&font, r + 12);
+            let checksum = sum(&font[at..at + len]);
+            font[r + 4..r + 8].copy_from_slice(&checksum.to_be_bytes());
+        }
+        let checksum = 0xb1b0_afba_u32.wrapping_sub(sum(&font));
+        font[head + 8..head + 12].copy_from_slice(&checksum.to_be_bytes());
+        font
+    }
+
+    #[test]
+    fn authored_cap_height_print_checks_used_and_registered_unused_fonts() {
+        let metadata =
+            crate::PdfCandidateMetadata::at_utc("Authored cap height", "2026-10-17T00:00:00Z")
+                .unwrap();
+        let ordinary = FinishedPdfOptions {
+            metadata: metadata.clone(),
+            mode: FinishedOutputMode::Ordinary,
+        };
+        let print = FinishedPdfOptions {
+            metadata,
+            mode: FinishedOutputMode::PdfX4 {
+                output_profile: include_bytes!("../tests/fixtures/SWOP2006coated_300_mth.icc"),
+            },
+        };
+        let font = rounded_role_without_cap_declaration();
+        let boundary = font_boundary::TrustedFontBoundary::resolve_packaged();
+        for used in [false, true] {
+            let program = boundary.prepare_publication(&font, 0, &[1]).unwrap();
+            assert!(!program.requires_ascent_facts());
+            assert!(program.requires_cap_height_fact());
+            let unresolved = facts_document(program, 1, used);
+            assert!(
+                matches!(FinishedPdfWriter::write(&unresolved,&print),Err(FinishedPdfError::FontCapHeightFactRequired(id)) if id=="authored")
+            );
+            assert!(FinishedPdfWriter::write(&unresolved, &ordinary).is_ok());
+            for cap in [0_f32, 700.] {
+                let program = boundary
+                    .prepare_publication_with_font_facts(&font, 0, &[1], None, Some(cap))
+                    .unwrap();
+                assert!(!program.requires_cap_height_fact());
+                let pdf =
+                    FinishedPdfWriter::write(&facts_document(program, 1, used), &print).unwrap();
+                assert!(
+                    String::from_utf8_lossy(pdf.bytes()).contains(&format!("/CapHeight {cap}"))
+                );
+            }
+        }
+        let empty = include_bytes!("../../../apps/font-worker/src/tests/fixtures/empty.otf");
+        let program = boundary.prepare_publication(empty, 0, &[1]).unwrap();
+        let pdf = FinishedPdfWriter::write(&facts_document(program, 1, true), &print).unwrap();
+        assert!(String::from_utf8_lossy(pdf.bytes()).contains("/CapHeight 0"));
+    }
+
     #[test]
     fn pdfx_reference_allocator_allows_last_object_and_rejects_the_next() {
         let document = FinishedDocument {
             pages: vec![],
-            resources: Default::default(),
+            resources: crate::finished::FinishedResources::default(),
         };
         let inputs = Inputs {
             fonts: BTreeMap::new(),

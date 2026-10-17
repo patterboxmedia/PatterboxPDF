@@ -1,0 +1,424 @@
+{
+  "schema": "patterboxpdf-windows-runtime/v1",
+  "status": "passed",
+  "target": "x86_64-pc-windows-msvc",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14",
+    "machine": "AMD64"
+  },
+  "workers": {
+    "font": {
+      "name": "publisher-font-worker.exe",
+      "bytes": 1803264,
+      "sha256": "e3d3ee7cdff9b7a49131000ce92eff7bee005fc4f48676752924a9c5e075c3be",
+      "format": "PE-x86_64"
+    },
+    "color": {
+      "name": "publisher-color-worker.exe",
+      "bytes": 551424,
+      "sha256": "65363660f17c8a7399b64c6b9e771fde36a327440b58d69a64ae3ec8438f64e0",
+      "format": "PE-x86_64"
+    },
+    "raster": {
+      "name": "publisher-raster-worker.exe",
+      "bytes": 1874432,
+      "sha256": "c04ce0b25bec0a613d4665ee223064162065c0fa72b86bb3d4d85918ddc1dff0",
+      "format": "PE-x86_64"
+    },
+    "validator": {
+      "name": "publisher-validator-worker.exe",
+      "bytes": 5529088,
+      "sha256": "5f37134a51c731abf41c97f710265471eacc85213f1466489c89ecfee9a40ddd",
+      "format": "PE-x86_64"
+    }
+  },
+  "client": {
+    "name": "pdf-library-standalone-client.exe",
+    "bytes": 21557760,
+    "sha256": "cabab66687425f2bddfd997b43177c327f1a4453ebacfeb6ffed13abcf2ad3ee",
+    "format": "PE-x86_64"
+  },
+  "test_suites": [
+    {
+      "package": "publisher-worker-job",
+      "target": "publisher_worker_job",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "tests::invalid_memory_limits_fail_before_creating_a_job"
+      ]
+    },
+    {
+      "package": "publisher-worker-job",
+      "target": "appcontainer_isolation",
+      "passed": 6,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "appcontainer_cpu_limit_terminates_busy_worker",
+        "appcontainer_denies_host_files_network_and_children",
+        "appcontainer_memory_limit_denies_bounded_allocation",
+        "dropping_running_appcontainer_closes_worker_pipes_promptly",
+        "explicit_job_cancellation_stops_only_its_worker_after_scope_returns",
+        "unrelated_inheritable_pipe_is_not_passed_to_worker"
+      ]
+    },
+    {
+      "package": "font-boundary",
+      "target": "font_boundary",
+      "passed": 16,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "release_worker_lookup_is_confined_to_the_application_directory",
+        "tests::confined_worker_inspects_an_exact_face_into_an_opaque_receipt",
+        "tests::confined_worker_prepares_accented_composite_subset",
+        "tests::confined_worker_prepares_hash_bound_subset",
+        "tests::confined_worker_refuses_cff_full_embedding_without_output",
+        "tests::confined_worker_rejects_malformed_cff_name_index_without_output",
+        "tests::confined_worker_rejects_two_cff_names_without_output",
+        "tests::host_rejects_a_worker_inspection_identity_mismatch",
+        "tests::input_budgets_and_duplicates_fail_before_worker_launch",
+        "tests::packaged_font_worker_cannot_read_or_write_outside_its_private_run",
+        "tests::packaged_font_worker_rejects_exact_malformed_font_without_output_or_paths",
+        "tests::packaged_font_worker_returns_a_bounded_resource_failure",
+        "tests::publication_mode_preserves_a_full_font_when_subsetting_is_forbidden",
+        "tests::source_replacement_after_pinning_is_rejected",
+        "tests::subset_mapping_allows_component_tail_but_rejects_inconsistent_cids",
+        "tests::worker_failures_preserve_authoring_denials_without_hiding_integrity_codes"
+      ]
+    },
+    {
+      "package": "color-boundary",
+      "target": "color_boundary",
+      "passed": 10,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "release_worker_lookup_is_confined_to_the_application_directory",
+        "tests::authored_srgb_profile_is_canonical_across_repeated_preparation",
+        "tests::confined_worker_converts_valid_profile_and_rejects_out_of_bounds_icc_tag",
+        "tests::host_rejects_invalid_sizes_before_starting_native_code",
+        "tests::inspection_fails_closed_without_a_worker",
+        "tests::inspection_report_rejects_each_identity_mismatch",
+        "tests::packaged_color_worker_cannot_read_or_write_outside_its_private_run",
+        "tests::packaged_worker_inspects_profile_and_rejects_native_transform_corruption",
+        "tests::private_executed_copy_remains_bound_if_source_changes",
+        "tests::source_replacement_after_pinning_is_rejected"
+      ]
+    },
+    {
+      "package": "raster-boundary",
+      "target": "raster_boundary",
+      "passed": 9,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "release_worker_lookup_is_confined_to_the_application_directory",
+        "tests::clipboard_normalization_cannot_read_or_write_outside_private_run",
+        "tests::confined_clipboard_normalization_binds_source_png_pixels_and_worker",
+        "tests::host_rejects_excessive_dimensions_and_asset_drift_before_decode",
+        "tests::packaged_raster_worker_cannot_read_or_write_outside_its_private_run",
+        "tests::packaged_raster_worker_decodes_exact_authored_pixel",
+        "tests::packaged_raster_worker_decodes_supported_formats_and_rejects_malformed_payloads",
+        "tests::packaged_raster_worker_rejects_exact_malformed_raster_without_outputs_or_paths",
+        "tests::worker_replacement_after_pinning_is_rejected"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "validator_boundary",
+      "passed": 13,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "tests::active_icc_component_identity_drift_is_rejected",
+        "tests::checked_in_manifest_fails_closed_until_every_rule_is_release_proven",
+        "tests::diagnostic_component_identity_drift_is_rejected",
+        "tests::executable_binding_detects_replacement_after_resolution",
+        "tests::packaged_worker_failure_crosses_the_bounded_typed_process_boundary",
+        "tests::private_worker_copy_remains_bound_after_the_packaged_source_is_replaced",
+        "tests::public_core_component_identity_drift_is_rejected",
+        "tests::qpdf_diagnostic_redaction_preserves_the_output_cap",
+        "tests::qpdf_diagnostics_redact_ordinary_paths_when_private_path_is_extended",
+        "tests::qpdf_diagnostics_redact_unc_and_extended_unc_variants",
+        "tests::qpdf_diagnostics_redact_windows_path_variants_and_keep_useful_detail",
+        "tests::report_is_bound_to_artifact_profile_rules_and_source_identity",
+        "tests::unknown_report_fields_are_rejected"
+      ]
+    },
+    {
+      "package": "print-core",
+      "target": "print_core",
+      "passed": 28,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "candidate_metadata::tests::complete_metadata_escapes_titles_and_binds_dates_and_identity",
+        "candidate_metadata::tests::xml_decoding_preserves_title_carriage_returns",
+        "finished::tests::decoded_image_lease_accounts_for_allocated_planes",
+        "finished_writer::tests::pdfx_reference_allocator_allows_last_object_and_rejects_the_next",
+        "pdf_lines::tests::changed_producer_envelopes_are_refused",
+        "pdf_lines::tests::large_arrays_and_hex_strings_wrap_without_changing_tokens",
+        "pdf_lines::tests::literal_continuations_do_not_split_escapes_or_change_octals",
+        "pdf_lines::tests::raw_stream_delimiters_are_never_treated_as_syntax",
+        "pdf_lines::tests::short_output_is_byte_identical",
+        "profile::tests::accepts_a_real_cmyk_profile_with_bidirectional_transforms",
+        "profile::tests::directory_failures_precede_all_body_work",
+        "profile::tests::multistage_luts_check_stage_pairs_curves_and_clut_extents",
+        "profile::tests::referenced_versions_reach_tag_checks_and_bad_encodings_fail_before_worker_work",
+        "profile::tests::rejects_a_header_only_profile",
+        "profile::tests::rejects_a_tag_payload_outside_the_profile",
+        "profile::tests::rejects_a_truncated_tag_table",
+        "profile::tests::rejects_declared_size_mismatch",
+        "profile::tests::rejects_duplicate_tags_and_partial_payload_overlap_but_allows_shared_payloads",
+        "profile::tests::rejects_invalid_lut16_sample_layout_before_native_parsing",
+        "profile::tests::rejects_malformed_present_tag_payloads_before_native_parsing",
+        "profile::tests::rejects_missing_required_printer_tags_before_native_parsing",
+        "profile::tests::rejects_oversized_input_before_color_engine_parsing",
+        "profile::tests::rejects_transform_payload_types_and_negative_xyz_before_native_parsing",
+        "profile::tests::shared_bodies_still_obey_each_signature_role",
+        "profile::tests::shared_tag_body_work_is_bounded_by_unique_ranges",
+        "resources::tests::subset_tags_are_unique_for_collection_faces_and_colliding_hashes",
+        "resources::tests::uncontended_subset_and_full_font_names_keep_their_existing_identity",
+        "to_unicode::tests::unicode_map_blocks_are_bounded_and_invalid_destinations_fail"
+      ]
+    },
+    {
+      "package": "print-core",
+      "target": "finished_pages",
+      "passed": 27,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "actual_text_rejects_unsupported_language_escapes_before_resource_lookup",
+        "all_standard_blends_apply_once_to_the_completed_group_and_children_reset_normal",
+        "blending_space_follows_each_page_and_group_painted_colors",
+        "constant_image_alpha_paint_reuses_exact_mask_and_rejects_missing_alpha",
+        "decoded_rgb_gray_and_cmyk_images_keep_components_and_independent_alpha",
+        "fonts_image_masks_and_gradient_resources_are_local_and_shared_objects_emit_once",
+        "gray_paint_and_images_work_in_ordinary_and_cmyk_pdfx",
+        "image_dimensions_planes_and_duplicate_resources_are_rejected",
+        "image_planes_clipping_transform_and_isolated_overlap_are_in_the_returned_pdf",
+        "invalid_geometry_paths_paint_and_missing_resources_return_errors",
+        "isolated_group_overlap_uses_placement_alpha_and_blend_once",
+        "maximum_caller_resource_ids_emit_bounded_pdf_names",
+        "metadata_titles_are_outside_the_content_string_limit_but_keep_the_aggregate_budget",
+        "nested_group_resource_budget_is_checked_before_serialization",
+        "new_image_constructors_reject_invalid_planes_dimensions_and_admission",
+        "oversized_unicode_mapping_actual_text_and_resource_identity_are_rejected_before_output",
+        "pdfx_actual_text_checks_encoded_payload_including_bom_and_surrogate_pairs",
+        "pdfx_graphics_depth_counts_item_saves_implicit_forms_and_mask_evaluation",
+        "pdfx_rejects_bad_profiles_and_rgb_and_binds_exact_icc",
+        "pdfx_rejects_registered_rgb_images_even_when_unused_or_alpha_only",
+        "pdfx_rejects_unreferenced_and_malformed_icc_versions",
+        "pdfx_requires_a_nonblank_title_and_preserves_ordinary_title_policy",
+        "prepared_truetype_and_cff_programs_cids_and_multicodepoint_actual_text_are_preserved",
+        "stream_dictionaries_include_only_direct_images_states_and_child_forms",
+        "title_carriage_returns_are_identical_in_info_and_xmp",
+        "to_unicode_bounds_utf16_destinations_and_emits_unicode_map_type",
+        "two_ordered_pages_keep_boxes_cubics_and_repeatable_ordinary_bytes"
+      ]
+    },
+    {
+      "package": "print-core",
+      "target": "finished_gradients",
+      "passed": 8,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "closely_spaced_distinct_stops_preserve_their_serialized_bounds",
+        "cmyk_and_gray_gradients_work_in_pdfx_but_rgb_and_underflow_collapse_fail",
+        "constant_alpha_reuses_scalar_state_without_mask",
+        "hard_interior_stops_have_left_and_right_limits_without_empty_functions",
+        "invalid_gradient_geometry_stops_and_excess_are_rejected_before_output",
+        "mask_invocation_depth_is_counted_along_the_executed_group_path",
+        "native_multistop_axial_functions_preserve_all_three_component_spaces",
+        "variable_alpha_uses_matching_bounded_gray_mask_and_preserves_clip_transform_group"
+      ]
+    },
+    {
+      "package": "print-core",
+      "target": "finished_pdf_lines",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "long_ascii_unicode_and_escaped_titles_keep_bounded_info_lines_and_valid_offsets"
+      ]
+    },
+    {
+      "package": "publisher-font-worker",
+      "target": "worker_process",
+      "passed": 18,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "empty_stdin_returns_one_bounded_structured_failure",
+        "existing_output_file_fails_after_processing_without_overwriting_it",
+        "inspect_process_rejects_malformed_font_with_path_free_structured_failure",
+        "inspect_process_returns_bounded_path_free_face_facts_without_an_output_file",
+        "malformed_json_returns_one_bounded_structured_failure",
+        "unsupported_protocol_fails_before_attempting_to_open_the_source",
+        "worker::tests::a_face_without_latin_characters_keeps_optional_cap_height_and_measured_stems",
+        "worker::tests::empty_duplicate_unsorted_and_over_budget_glyph_sets_are_rejected_first",
+        "worker::tests::existing_output_path_fails_without_overwriting_existing_bytes",
+        "worker::tests::full_font_with_missing_embedded_tables_is_rejected_without_rewriting",
+        "worker::tests::inspect_reports_hash_bound_container_and_rights_without_output",
+        "worker::tests::inspect_returns_denied_rights_as_facts_but_rejects_malformed_sources",
+        "worker::tests::malformed_source_and_identity_mismatches_are_rejected_without_output",
+        "worker::tests::no_subsetting_rights_require_publication_policy_and_preserve_full_font",
+        "worker::tests::restricted_bitmap_only_and_unknown_rights_fail_closed",
+        "worker::tests::supported_font_produces_a_hash_bound_subset",
+        "worker::tests::unhinted_source_subset_has_the_required_embedded_tables",
+        "worker::tests::unsupported_protocol_is_rejected_before_source_processing"
+      ]
+    },
+    {
+      "package": "font-boundary",
+      "target": "packaged_font_missing",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "missing_packaged_sidecar_fails_closed"
+      ]
+    },
+    {
+      "package": "color-boundary",
+      "target": "packaged_color_missing",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "missing_packaged_sidecar_fails_closed"
+      ]
+    },
+    {
+      "package": "raster-boundary",
+      "target": "packaged_raster_missing",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 0,
+      "tests": [
+        "missing_packaged_sidecar_fails_closed"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "packaged_validator::malformed_candidate_receives_failed_structural_verdict",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 5,
+      "tests": [
+        "malformed_candidate_receives_failed_structural_verdict"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "packaged_validator::missing_qpdf_fails_closed",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 5,
+      "tests": [
+        "missing_qpdf_fails_closed"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "packaged_validator::missing_qpdf_library_fails_closed",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 5,
+      "tests": [
+        "missing_qpdf_library_fails_closed"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "packaged_validator::missing_validator_fails_closed",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 5,
+      "tests": [
+        "missing_validator_fails_closed"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "packaged_validator::ordinary_pdf_reaches_validator_and_is_rejected_as_pdfx",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 5,
+      "tests": [
+        "ordinary_pdf_reaches_validator_and_is_rejected_as_pdfx"
+      ]
+    },
+    {
+      "package": "validator-boundary",
+      "target": "packaged_validator::unsupported_active_page_icc_is_rejected_before_general_diagnostics",
+      "passed": 1,
+      "ignored": 0,
+      "filtered": 5,
+      "tests": [
+        "unsupported_active_page_icc_is_rejected_before_general_diagnostics"
+      ]
+    }
+  ],
+  "native_tests_passed": 146,
+  "ignored": 0,
+  "confinement_tests_passed": 6,
+  "strict_clippy": {
+    "default": true,
+    "publisher_adapter": true
+  },
+  "public_api": {
+    "repeatable_bytes": true,
+    "worker_failures": 3,
+    "pdfs": [
+      [
+        {
+          "file": "ordinary.pdf",
+          "sha256": "b62a8039d7dcaf67e1b9641b7da150e4587abebf0212a6c00c645993a50534e0",
+          "pages": 2,
+          "native_text": true,
+          "exact_cmyk_alpha": true,
+          "geometry": true,
+          "pdfx_candidate": false
+        },
+        {
+          "file": "candidate.pdf",
+          "sha256": "76eb0db1dfc3a69683eafa3bf9a250103215ec5d30af94dcd4f9cdacab0a9f98",
+          "pages": 2,
+          "native_text": true,
+          "exact_cmyk_alpha": true,
+          "geometry": true,
+          "pdfx_candidate": true
+        }
+      ],
+      [
+        {
+          "file": "ordinary.pdf",
+          "sha256": "b62a8039d7dcaf67e1b9641b7da150e4587abebf0212a6c00c645993a50534e0",
+          "pages": 2,
+          "native_text": true,
+          "exact_cmyk_alpha": true,
+          "geometry": true,
+          "pdfx_candidate": false
+        },
+        {
+          "file": "candidate.pdf",
+          "sha256": "76eb0db1dfc3a69683eafa3bf9a250103215ec5d30af94dcd4f9cdacab0a9f98",
+          "pages": 2,
+          "native_text": true,
+          "exact_cmyk_alpha": true,
+          "geometry": true,
+          "pdfx_candidate": true
+        }
+      ]
+    ]
+  },
+  "format_conformance": "Separate exact-output analysis required"
+}

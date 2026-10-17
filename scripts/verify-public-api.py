@@ -123,7 +123,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--client", type=Path, required=True)
     parser.add_argument("--cargo-metadata", type=Path, required=True,
-                        help="cargo metadata for the standalone manifest with default features and Windows target")
+                        help="cargo metadata for the standalone manifest with default features and the caller target")
     parser.add_argument("--adapter-cli", type=Path)
     parser.add_argument("--matrix", type=Path, default=ROOT / "artifacts/pdfx-callas-validation-20261002/matrix-v5-profile-contract-extension-001")
     parser.add_argument("--profile", type=Path, default=ROOT / "crates/print-core/tests/fixtures/SWOP2006coated_300_mth.icc")
@@ -131,6 +131,7 @@ def main():
     parser.add_argument("--qpdf", type=Path, help="optional trusted development checker; never staged into the caller")
     args = parser.parse_args()
     client = args.client.resolve(strict=True)
+    worker_suffix = ".exe" if client.suffix.lower() == ".exe" else ""
     evidence = args.output or ROOT / "artifacts" / ("public-api-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f"))
     evidence.mkdir()
     census = dependency_graph(args.cargo_metadata)
@@ -147,11 +148,11 @@ def main():
         directory = evidence / kind
         directory.mkdir()
         caller = directory / client.name
-        shutil.copyfile(client, caller)
+        shutil.copy2(client, caller)
         if kind == "malformed-font":
-            (directory / "publisher-font-worker.exe").write_bytes(b"invalid executable")
+            (directory / f"publisher-font-worker{worker_suffix}").write_bytes(b"invalid executable")
         if kind == "absent-color":
-            shutil.copyfile(client.parent / "publisher-font-worker.exe", directory / "publisher-font-worker.exe")
+            shutil.copy2(client.parent / f"publisher-font-worker{worker_suffix}", directory / f"publisher-font-worker{worker_suffix}")
         output = directory / "output"
         result = execute([caller, "--output", output, "--profile", args.profile], evidence, kind, False)
         assert not output.exists(), "failure exposed an output bundle"

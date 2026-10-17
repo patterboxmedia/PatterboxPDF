@@ -1,0 +1,241 @@
+{
+  "schema": "pdf-library-feature-gallery-verification/v1",
+  "files": [
+    {
+      "file": "ordinary.pdf",
+      "sha256": "ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8",
+      "mode": "ordinary",
+      "structure": {
+        "pages": 3,
+        "counts": {
+          "group_DeviceRGB": 19,
+          "streams_with_exact_local_resources": 24,
+          "forms": 21,
+          "image_DeviceGray": 4,
+          "image_DeviceRGB": 1,
+          "image_DeviceCMYK": 1,
+          "function_type_2": 34,
+          "function_type_3": 17,
+          "shading_type_2": 8,
+          "shading_type_3": 9,
+          "group_DeviceGray": 4,
+          "luminosity_masks": 4,
+          "group_DeviceCMYK": 1
+        },
+        "blend_modes": [
+          "/Color",
+          "/ColorBurn",
+          "/ColorDodge",
+          "/Darken",
+          "/Difference",
+          "/Exclusion",
+          "/HardLight",
+          "/Hue",
+          "/Lighten",
+          "/Luminosity",
+          "/Multiply",
+          "/Normal",
+          "/Overlay",
+          "/Saturation",
+          "/Screen",
+          "/SoftLight"
+        ],
+        "local_resource_dictionaries_exact": true,
+        "native_functions_images_and_masks_checked": true
+      },
+      "pages": [
+        {
+          "page": 1,
+          "size_px": [
+            1220,
+            1300
+          ],
+          "metrics": {
+            "mean_channel_difference": 0.4550372005044136,
+            "p95_max_channel_difference": 2.0,
+            "pixels_above_10_percent": 0.18745271122320303
+          },
+          "passed": true,
+          "renders": [
+            {
+              "name": "pdfium-1.png",
+              "sha256": "f55bd273617d1bdffa5d6e7b75ba99a8873ebf256c2437253664f463ea9c2680"
+            },
+            {
+              "name": "poppler-1.png",
+              "sha256": "1c4a79719c627900472d25364e85f225dc86e0f08b40602d5ec0eae39296d10e"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "size_px": [
+            1220,
+            1300
+          ],
+          "metrics": {
+            "mean_channel_difference": 1.243686633039092,
+            "p95_max_channel_difference": 23.0,
+            "pixels_above_10_percent": 8.823076923076924
+          },
+          "passed": false,
+          "renders": [
+            {
+              "name": "pdfium-2.png",
+              "sha256": "003f87d110563ff18047416c10baf69669d961a9393083c382ea8dd9eb7c4295"
+            },
+            {
+              "name": "poppler-2.png",
+              "sha256": "1cbc45c25944141bda20ecc96b9715c7e0ca5c477e0d37063dce69c70d191a07"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "size_px": [
+            1220,
+            1300
+          ],
+          "metrics": {
+            "mean_channel_difference": 0.048092475830180746,
+            "p95_max_channel_difference": 0.0,
+            "pixels_above_10_percent": 0.17856242118537202
+          },
+          "passed": true,
+          "renders": [
+            {
+              "name": "pdfium-3.png",
+              "sha256": "82e6eda34ad07fc38a4ff33bb8aeb3b6eb28418c68d1439434ee8dcbc762fe0f"
+            },
+            {
+              "name": "poppler-3.png",
+              "sha256": "7be38f141779fd495fdf5f081d3f21027c0d81115ace279298647425c819cc92"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "candidate.pdf",
+      "sha256": "5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab",
+      "mode": "pdfx4",
+      "structure": {
+        "pages": 3,
+        "counts": {
+          "group_DeviceCMYK": 20,
+          "streams_with_exact_local_resources": 24,
+          "forms": 21,
+          "image_DeviceGray": 4,
+          "image_DeviceCMYK": 2,
+          "function_type_2": 34,
+          "function_type_3": 17,
+          "shading_type_2": 8,
+          "shading_type_3": 9,
+          "group_DeviceGray": 4,
+          "luminosity_masks": 4
+        },
+        "blend_modes": [
+          "/Color",
+          "/ColorBurn",
+          "/ColorDodge",
+          "/Darken",
+          "/Difference",
+          "/Exclusion",
+          "/HardLight",
+          "/Hue",
+          "/Lighten",
+          "/Luminosity",
+          "/Multiply",
+          "/Normal",
+          "/Overlay",
+          "/Saturation",
+          "/Screen",
+          "/SoftLight"
+        ],
+        "local_resource_dictionaries_exact": true,
+        "native_functions_images_and_masks_checked": true
+      },
+      "pages": [
+        {
+          "page": 1,
+          "size_px": [
+            1220,
+            1300
+          ],
+          "metrics": {
+            "mean_channel_difference": 1.6153205128205128,
+            "p95_max_channel_difference": 24.0,
+            "pixels_above_10_percent": 12.556872635561161
+          },
+          "passed": false,
+          "renders": [
+            {
+              "name": "pdfium-1.png",
+              "sha256": "b8bcfeec5b48876d5f600df9bdf3d3ab1d5f9c76a186074ef478a467ea4ad5ad"
+            },
+            {
+              "name": "poppler-1.png",
+              "sha256": "1245814f0011ea079f419678322818c12a0566a0b72e818592581bed33cd5ab3"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "size_px": [
+            1220,
+            1300
+          ],
+          "metrics": {
+            "mean_channel_difference": 1.243686633039092,
+            "p95_max_channel_difference": 23.0,
+            "pixels_above_10_percent": 8.823076923076924
+          },
+          "passed": false,
+          "renders": [
+            {
+              "name": "pdfium-2.png",
+              "sha256": "003f87d110563ff18047416c10baf69669d961a9393083c382ea8dd9eb7c4295"
+            },
+            {
+              "name": "poppler-2.png",
+              "sha256": "1cbc45c25944141bda20ecc96b9715c7e0ca5c477e0d37063dce69c70d191a07"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "size_px": [
+            1220,
+            1300
+          ],
+          "metrics": {
+            "mean_channel_difference": 0.24538251366120217,
+            "p95_max_channel_difference": 2.0,
+            "pixels_above_10_percent": 0.1823455233291299
+          },
+          "passed": true,
+          "renders": [
+            {
+              "name": "pdfium-3.png",
+              "sha256": "92ce5df75b531c39eb5317360f8abc1983e7a07f4767eae2bfae5da48e0cd7c4"
+            },
+            {
+              "name": "poppler-3.png",
+              "sha256": "ddfb870b35a0e90f180207e1ae89d02c7b88a490d05c39a4a1b8bc1ad02d1cf0"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "qpdf_sha256": "57c003e868fb66cd343fd5afb91be8c2277f56434eea8635762499731bf9f60d",
+  "poppler_sha256": "1ad6408dc3b02950d00ad407d79b6d52b1d6c3f3b85c96645455d58d390d8b20",
+  "fixed_bounds": {
+    "mean_channel_difference_max": 5,
+    "p95_max_channel_difference_max": 20,
+    "pixels_above_10_percent_max": 8
+  },
+  "all_inputs_unchanged": true,
+  "passed": false,
+  "normative_pdfx4_coverage_complete": false
+}

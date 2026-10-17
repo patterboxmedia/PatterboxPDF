@@ -1,0 +1,4404 @@
+{
+  "schema": "patterboxpdf-cmyk-diagnostic/v1",
+  "diagnostic": {
+    "file": "diagnostic.pdf",
+    "sha256": "1124ab1ab80aa179cc1c1b222c46a37afa542ccd41a6180c9a22b11852c8d342"
+  },
+  "verifier": {
+    "file": "verify-cmyk-gradients.py",
+    "sha256": "b12bda89f15829477265d27739c01aa78e227d69728681ef19865e171c588e27"
+  },
+  "pdfium_version": "156.0.8076.0",
+  "pypdf_version": "6.10.0",
+  "poppler": {
+    "file": "pdftoppm.exe",
+    "sha256": "1ad6408dc3b02950d00ad407d79b6d52b1d6c3f3b85c96645455d58d390d8b20"
+  },
+  "qpdf": {
+    "file": "qpdf.exe",
+    "sha256": "57c003e868fb66cd343fd5afb91be8c2277f56434eea8635762499731bf9f60d"
+  },
+  "decoded_checks": {
+    "decoded_component_and_opacity_checks": 288,
+    "pages": 2,
+    "cases_per_page": [
+      "axial",
+      "radial",
+      "hard-stop",
+      "constant-alpha",
+      "varying-alpha",
+      "radial-varying-alpha",
+      "group-opacity",
+      "varying-alpha-group-opacity"
+    ]
+  },
+  "diagnostic_renders": [
+    [
+      {
+        "file": "pdfium-1.png",
+        "sha256": "ebff29ed7c4350482a41b0ae8b72faaa2e69da5c1c092487f28994621ca01b1c"
+      },
+      {
+        "file": "poppler-1.png",
+        "sha256": "a0cc3fd7262e1ca3db1a3df923002b821692c52a6541a881866ab84e6578b5d1"
+      }
+    ],
+    [
+      {
+        "file": "pdfium-2.png",
+        "sha256": "ebff29ed7c4350482a41b0ae8b72faaa2e69da5c1c092487f28994621ca01b1c"
+      },
+      {
+        "file": "poppler-2.png",
+        "sha256": "a0cc3fd7262e1ca3db1a3df923002b821692c52a6541a881866ab84e6578b5d1"
+      }
+    ]
+  ],
+  "flat_controls": [
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "axial",
+      "t": 0.125,
+      "gradient_rgb": [
+        208,
+        65,
+        134
+      ],
+      "flat_rgb": [
+        207,
+        66,
+        134
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "axial",
+      "t": 0.25,
+      "gradient_rgb": [
+        181,
+        90,
+        129
+      ],
+      "flat_rgb": [
+        181,
+        91,
+        129
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "axial",
+      "t": 0.5,
+      "gradient_rgb": [
+        127,
+        114,
+        111
+      ],
+      "flat_rgb": [
+        127,
+        114,
+        111
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "axial",
+      "t": 0.75,
+      "gradient_rgb": [
+        61,
+        126,
+        88
+      ],
+      "flat_rgb": [
+        60,
+        127,
+        87
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "axial",
+      "t": 0.875,
+      "gradient_rgb": [
+        3,
+        129,
+        75
+      ],
+      "flat_rgb": [
+        1,
+        129,
+        74
+      ],
+      "maximum_error": 2
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial",
+      "t": 0.125,
+      "gradient_rgb": [
+        208,
+        65,
+        134
+      ],
+      "flat_rgb": [
+        207,
+        66,
+        134
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial",
+      "t": 0.25,
+      "gradient_rgb": [
+        181,
+        90,
+        129
+      ],
+      "flat_rgb": [
+        181,
+        91,
+        129
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial",
+      "t": 0.5,
+      "gradient_rgb": [
+        127,
+        114,
+        111
+      ],
+      "flat_rgb": [
+        127,
+        114,
+        111
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial",
+      "t": 0.75,
+      "gradient_rgb": [
+        61,
+        126,
+        88
+      ],
+      "flat_rgb": [
+        60,
+        127,
+        87
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial",
+      "t": 0.875,
+      "gradient_rgb": [
+        3,
+        129,
+        75
+      ],
+      "flat_rgb": [
+        1,
+        129,
+        74
+      ],
+      "maximum_error": 2
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "hard-stop",
+      "t": 0.125,
+      "gradient_rgb": [
+        237,
+        2,
+        140
+      ],
+      "flat_rgb": [
+        237,
+        2,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "hard-stop",
+      "t": 0.25,
+      "gradient_rgb": [
+        237,
+        2,
+        140
+      ],
+      "flat_rgb": [
+        237,
+        2,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "hard-stop",
+      "t": 0.75,
+      "gradient_rgb": [
+        0,
+        133,
+        64
+      ],
+      "flat_rgb": [
+        0,
+        133,
+        64
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "hard-stop",
+      "t": 0.875,
+      "gradient_rgb": [
+        0,
+        133,
+        64
+      ],
+      "flat_rgb": [
+        0,
+        133,
+        64
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        206,
+        134,
+        168
+      ],
+      "flat_rgb": [
+        205,
+        135,
+        169
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        192,
+        146,
+        166
+      ],
+      "flat_rgb": [
+        192,
+        147,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        165,
+        158,
+        157
+      ],
+      "flat_rgb": [
+        165,
+        159,
+        157
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        132,
+        164,
+        145
+      ],
+      "flat_rgb": [
+        132,
+        165,
+        145
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        103,
+        166,
+        139
+      ],
+      "flat_rgb": [
+        102,
+        166,
+        139
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        187,
+        195
+      ],
+      "flat_rgb": [
+        204,
+        187,
+        195
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        198,
+        175,
+        185
+      ],
+      "flat_rgb": [
+        198,
+        176,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        165,
+        159,
+        157
+      ],
+      "flat_rgb": [
+        165,
+        159,
+        157
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        97,
+        145,
+        117
+      ],
+      "flat_rgb": [
+        96,
+        146,
+        116
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        29,
+        138,
+        91
+      ],
+      "flat_rgb": [
+        26,
+        138,
+        90
+      ],
+      "maximum_error": 3
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        187,
+        195
+      ],
+      "flat_rgb": [
+        204,
+        187,
+        195
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        198,
+        175,
+        185
+      ],
+      "flat_rgb": [
+        198,
+        176,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        165,
+        159,
+        157
+      ],
+      "flat_rgb": [
+        165,
+        159,
+        157
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        97,
+        145,
+        117
+      ],
+      "flat_rgb": [
+        96,
+        146,
+        116
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        29,
+        138,
+        91
+      ],
+      "flat_rgb": [
+        26,
+        138,
+        90
+      ],
+      "maximum_error": 3
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.125,
+      "gradient_rgb": [
+        205,
+        134,
+        169
+      ],
+      "flat_rgb": [
+        205,
+        135,
+        169
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.25,
+      "gradient_rgb": [
+        192,
+        147,
+        166
+      ],
+      "flat_rgb": [
+        192,
+        147,
+        166
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.5,
+      "gradient_rgb": [
+        165,
+        159,
+        157
+      ],
+      "flat_rgb": [
+        165,
+        159,
+        157
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.75,
+      "gradient_rgb": [
+        132,
+        165,
+        146
+      ],
+      "flat_rgb": [
+        132,
+        165,
+        145
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.875,
+      "gradient_rgb": [
+        103,
+        166,
+        139
+      ],
+      "flat_rgb": [
+        102,
+        166,
+        139
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        195,
+        199
+      ],
+      "flat_rgb": [
+        204,
+        195,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "gradient_rgb": [
+        201,
+        190,
+        194
+      ],
+      "flat_rgb": [
+        201,
+        190,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "gradient_rgb": [
+        184,
+        181,
+        181
+      ],
+      "flat_rgb": [
+        184,
+        181,
+        181
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "gradient_rgb": [
+        151,
+        175,
+        161
+      ],
+      "flat_rgb": [
+        150,
+        175,
+        160
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "gradient_rgb": [
+        117,
+        171,
+        148
+      ],
+      "flat_rgb": [
+        115,
+        171,
+        147
+      ],
+      "maximum_error": 2
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "axial",
+      "t": 0.125,
+      "gradient_rgb": [
+        208,
+        65,
+        134
+      ],
+      "flat_rgb": [
+        207,
+        66,
+        134
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "axial",
+      "t": 0.25,
+      "gradient_rgb": [
+        181,
+        90,
+        129
+      ],
+      "flat_rgb": [
+        181,
+        91,
+        129
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "axial",
+      "t": 0.5,
+      "gradient_rgb": [
+        127,
+        114,
+        111
+      ],
+      "flat_rgb": [
+        127,
+        114,
+        111
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "axial",
+      "t": 0.75,
+      "gradient_rgb": [
+        61,
+        126,
+        88
+      ],
+      "flat_rgb": [
+        60,
+        127,
+        87
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "axial",
+      "t": 0.875,
+      "gradient_rgb": [
+        3,
+        129,
+        75
+      ],
+      "flat_rgb": [
+        1,
+        129,
+        74
+      ],
+      "maximum_error": 2
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial",
+      "t": 0.125,
+      "gradient_rgb": [
+        208,
+        65,
+        134
+      ],
+      "flat_rgb": [
+        207,
+        66,
+        134
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial",
+      "t": 0.25,
+      "gradient_rgb": [
+        181,
+        90,
+        129
+      ],
+      "flat_rgb": [
+        181,
+        91,
+        129
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial",
+      "t": 0.5,
+      "gradient_rgb": [
+        127,
+        114,
+        111
+      ],
+      "flat_rgb": [
+        127,
+        114,
+        111
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial",
+      "t": 0.75,
+      "gradient_rgb": [
+        61,
+        126,
+        88
+      ],
+      "flat_rgb": [
+        60,
+        127,
+        87
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial",
+      "t": 0.875,
+      "gradient_rgb": [
+        3,
+        129,
+        75
+      ],
+      "flat_rgb": [
+        1,
+        129,
+        74
+      ],
+      "maximum_error": 2
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "hard-stop",
+      "t": 0.125,
+      "gradient_rgb": [
+        237,
+        2,
+        140
+      ],
+      "flat_rgb": [
+        237,
+        2,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "hard-stop",
+      "t": 0.25,
+      "gradient_rgb": [
+        237,
+        2,
+        140
+      ],
+      "flat_rgb": [
+        237,
+        2,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "hard-stop",
+      "t": 0.75,
+      "gradient_rgb": [
+        0,
+        133,
+        64
+      ],
+      "flat_rgb": [
+        0,
+        133,
+        64
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "hard-stop",
+      "t": 0.875,
+      "gradient_rgb": [
+        0,
+        133,
+        64
+      ],
+      "flat_rgb": [
+        0,
+        133,
+        64
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        206,
+        134,
+        168
+      ],
+      "flat_rgb": [
+        205,
+        135,
+        169
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        192,
+        146,
+        166
+      ],
+      "flat_rgb": [
+        192,
+        147,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        165,
+        158,
+        157
+      ],
+      "flat_rgb": [
+        165,
+        159,
+        157
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        132,
+        164,
+        145
+      ],
+      "flat_rgb": [
+        132,
+        165,
+        145
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        103,
+        166,
+        139
+      ],
+      "flat_rgb": [
+        102,
+        166,
+        139
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        187,
+        195
+      ],
+      "flat_rgb": [
+        204,
+        187,
+        195
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        198,
+        175,
+        185
+      ],
+      "flat_rgb": [
+        198,
+        176,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        165,
+        159,
+        157
+      ],
+      "flat_rgb": [
+        165,
+        159,
+        157
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        97,
+        145,
+        117
+      ],
+      "flat_rgb": [
+        96,
+        146,
+        116
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        29,
+        138,
+        91
+      ],
+      "flat_rgb": [
+        26,
+        138,
+        90
+      ],
+      "maximum_error": 3
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        187,
+        195
+      ],
+      "flat_rgb": [
+        204,
+        187,
+        195
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        198,
+        175,
+        185
+      ],
+      "flat_rgb": [
+        198,
+        176,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        165,
+        159,
+        157
+      ],
+      "flat_rgb": [
+        165,
+        159,
+        157
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        97,
+        145,
+        117
+      ],
+      "flat_rgb": [
+        96,
+        146,
+        116
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        29,
+        138,
+        91
+      ],
+      "flat_rgb": [
+        26,
+        138,
+        90
+      ],
+      "maximum_error": 3
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.125,
+      "gradient_rgb": [
+        205,
+        134,
+        169
+      ],
+      "flat_rgb": [
+        205,
+        135,
+        169
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.25,
+      "gradient_rgb": [
+        192,
+        147,
+        166
+      ],
+      "flat_rgb": [
+        192,
+        147,
+        166
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.5,
+      "gradient_rgb": [
+        165,
+        159,
+        157
+      ],
+      "flat_rgb": [
+        165,
+        159,
+        157
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.75,
+      "gradient_rgb": [
+        132,
+        165,
+        146
+      ],
+      "flat_rgb": [
+        132,
+        165,
+        145
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.875,
+      "gradient_rgb": [
+        103,
+        166,
+        139
+      ],
+      "flat_rgb": [
+        102,
+        166,
+        139
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        195,
+        199
+      ],
+      "flat_rgb": [
+        204,
+        195,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "gradient_rgb": [
+        201,
+        190,
+        194
+      ],
+      "flat_rgb": [
+        201,
+        190,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "gradient_rgb": [
+        184,
+        181,
+        181
+      ],
+      "flat_rgb": [
+        184,
+        181,
+        181
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "gradient_rgb": [
+        151,
+        175,
+        161
+      ],
+      "flat_rgb": [
+        150,
+        175,
+        160
+      ],
+      "maximum_error": 1
+    },
+    {
+      "engine": "pdfium",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "gradient_rgb": [
+        117,
+        171,
+        148
+      ],
+      "flat_rgb": [
+        115,
+        171,
+        147
+      ],
+      "maximum_error": 2
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "axial",
+      "t": 0.125,
+      "gradient_rgb": [
+        208,
+        37,
+        136
+      ],
+      "flat_rgb": [
+        208,
+        37,
+        136
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "axial",
+      "t": 0.25,
+      "gradient_rgb": [
+        179,
+        67,
+        128
+      ],
+      "flat_rgb": [
+        179,
+        67,
+        128
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "axial",
+      "t": 0.5,
+      "gradient_rgb": [
+        121,
+        107,
+        105
+      ],
+      "flat_rgb": [
+        121,
+        107,
+        105
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "axial",
+      "t": 0.75,
+      "gradient_rgb": [
+        60,
+        126,
+        81
+      ],
+      "flat_rgb": [
+        60,
+        126,
+        81
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "axial",
+      "t": 0.875,
+      "gradient_rgb": [
+        30,
+        129,
+        70
+      ],
+      "flat_rgb": [
+        30,
+        129,
+        70
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial",
+      "t": 0.125,
+      "gradient_rgb": [
+        208,
+        37,
+        136
+      ],
+      "flat_rgb": [
+        208,
+        37,
+        136
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial",
+      "t": 0.25,
+      "gradient_rgb": [
+        179,
+        67,
+        128
+      ],
+      "flat_rgb": [
+        179,
+        67,
+        128
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial",
+      "t": 0.5,
+      "gradient_rgb": [
+        121,
+        107,
+        105
+      ],
+      "flat_rgb": [
+        121,
+        107,
+        105
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial",
+      "t": 0.75,
+      "gradient_rgb": [
+        60,
+        126,
+        81
+      ],
+      "flat_rgb": [
+        60,
+        126,
+        81
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial",
+      "t": 0.875,
+      "gradient_rgb": [
+        30,
+        129,
+        70
+      ],
+      "flat_rgb": [
+        30,
+        129,
+        70
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "hard-stop",
+      "t": 0.125,
+      "gradient_rgb": [
+        236,
+        0,
+        140
+      ],
+      "flat_rgb": [
+        236,
+        0,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "hard-stop",
+      "t": 0.25,
+      "gradient_rgb": [
+        236,
+        0,
+        140
+      ],
+      "flat_rgb": [
+        236,
+        0,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "hard-stop",
+      "t": 0.75,
+      "gradient_rgb": [
+        0,
+        129,
+        60
+      ],
+      "flat_rgb": [
+        0,
+        129,
+        60
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "hard-stop",
+      "t": 0.875,
+      "gradient_rgb": [
+        0,
+        129,
+        60
+      ],
+      "flat_rgb": [
+        0,
+        129,
+        60
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        206,
+        120,
+        169
+      ],
+      "flat_rgb": [
+        206,
+        120,
+        169
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        191,
+        135,
+        165
+      ],
+      "flat_rgb": [
+        191,
+        135,
+        165
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        162,
+        155,
+        154
+      ],
+      "flat_rgb": [
+        162,
+        155,
+        154
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        131,
+        164,
+        142
+      ],
+      "flat_rgb": [
+        131,
+        164,
+        142
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "constant-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        116,
+        166,
+        136
+      ],
+      "flat_rgb": [
+        116,
+        166,
+        136
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        183,
+        195
+      ],
+      "flat_rgb": [
+        204,
+        183,
+        195
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        197,
+        169,
+        184
+      ],
+      "flat_rgb": [
+        197,
+        169,
+        184
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        162,
+        155,
+        154
+      ],
+      "flat_rgb": [
+        162,
+        155,
+        154
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        96,
+        145,
+        111
+      ],
+      "flat_rgb": [
+        96,
+        145,
+        111
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        51,
+        138,
+        86
+      ],
+      "flat_rgb": [
+        51,
+        138,
+        86
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        183,
+        195
+      ],
+      "flat_rgb": [
+        204,
+        183,
+        195
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        197,
+        169,
+        184
+      ],
+      "flat_rgb": [
+        197,
+        169,
+        184
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        162,
+        155,
+        154
+      ],
+      "flat_rgb": [
+        162,
+        155,
+        154
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        96,
+        145,
+        111
+      ],
+      "flat_rgb": [
+        96,
+        145,
+        111
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        51,
+        138,
+        86
+      ],
+      "flat_rgb": [
+        51,
+        138,
+        86
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.125,
+      "gradient_rgb": [
+        206,
+        120,
+        169
+      ],
+      "flat_rgb": [
+        206,
+        120,
+        169
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.25,
+      "gradient_rgb": [
+        191,
+        135,
+        165
+      ],
+      "flat_rgb": [
+        191,
+        135,
+        165
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.5,
+      "gradient_rgb": [
+        162,
+        155,
+        154
+      ],
+      "flat_rgb": [
+        162,
+        155,
+        154
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.75,
+      "gradient_rgb": [
+        131,
+        164,
+        142
+      ],
+      "flat_rgb": [
+        131,
+        164,
+        142
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "group-opacity",
+      "t": 0.875,
+      "gradient_rgb": [
+        116,
+        166,
+        136
+      ],
+      "flat_rgb": [
+        116,
+        166,
+        136
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        193,
+        199
+      ],
+      "flat_rgb": [
+        204,
+        193,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "gradient_rgb": [
+        200,
+        186,
+        194
+      ],
+      "flat_rgb": [
+        200,
+        186,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "gradient_rgb": [
+        183,
+        179,
+        179
+      ],
+      "flat_rgb": [
+        183,
+        179,
+        179
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "gradient_rgb": [
+        149,
+        174,
+        157
+      ],
+      "flat_rgb": [
+        149,
+        174,
+        157
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 1,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "gradient_rgb": [
+        127,
+        171,
+        145
+      ],
+      "flat_rgb": [
+        127,
+        171,
+        145
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "axial",
+      "t": 0.125,
+      "gradient_rgb": [
+        208,
+        37,
+        136
+      ],
+      "flat_rgb": [
+        208,
+        37,
+        136
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "axial",
+      "t": 0.25,
+      "gradient_rgb": [
+        179,
+        67,
+        128
+      ],
+      "flat_rgb": [
+        179,
+        67,
+        128
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "axial",
+      "t": 0.5,
+      "gradient_rgb": [
+        121,
+        107,
+        105
+      ],
+      "flat_rgb": [
+        121,
+        107,
+        105
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "axial",
+      "t": 0.75,
+      "gradient_rgb": [
+        60,
+        126,
+        81
+      ],
+      "flat_rgb": [
+        60,
+        126,
+        81
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "axial",
+      "t": 0.875,
+      "gradient_rgb": [
+        30,
+        129,
+        70
+      ],
+      "flat_rgb": [
+        30,
+        129,
+        70
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial",
+      "t": 0.125,
+      "gradient_rgb": [
+        208,
+        37,
+        136
+      ],
+      "flat_rgb": [
+        208,
+        37,
+        136
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial",
+      "t": 0.25,
+      "gradient_rgb": [
+        179,
+        67,
+        128
+      ],
+      "flat_rgb": [
+        179,
+        67,
+        128
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial",
+      "t": 0.5,
+      "gradient_rgb": [
+        121,
+        107,
+        105
+      ],
+      "flat_rgb": [
+        121,
+        107,
+        105
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial",
+      "t": 0.75,
+      "gradient_rgb": [
+        60,
+        126,
+        81
+      ],
+      "flat_rgb": [
+        60,
+        126,
+        81
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial",
+      "t": 0.875,
+      "gradient_rgb": [
+        30,
+        129,
+        70
+      ],
+      "flat_rgb": [
+        30,
+        129,
+        70
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "hard-stop",
+      "t": 0.125,
+      "gradient_rgb": [
+        236,
+        0,
+        140
+      ],
+      "flat_rgb": [
+        236,
+        0,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "hard-stop",
+      "t": 0.25,
+      "gradient_rgb": [
+        236,
+        0,
+        140
+      ],
+      "flat_rgb": [
+        236,
+        0,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "hard-stop",
+      "t": 0.75,
+      "gradient_rgb": [
+        0,
+        129,
+        60
+      ],
+      "flat_rgb": [
+        0,
+        129,
+        60
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "hard-stop",
+      "t": 0.875,
+      "gradient_rgb": [
+        0,
+        129,
+        60
+      ],
+      "flat_rgb": [
+        0,
+        129,
+        60
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        206,
+        120,
+        169
+      ],
+      "flat_rgb": [
+        206,
+        120,
+        169
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        191,
+        135,
+        165
+      ],
+      "flat_rgb": [
+        191,
+        135,
+        165
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        162,
+        155,
+        154
+      ],
+      "flat_rgb": [
+        162,
+        155,
+        154
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        131,
+        164,
+        142
+      ],
+      "flat_rgb": [
+        131,
+        164,
+        142
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "constant-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        116,
+        166,
+        136
+      ],
+      "flat_rgb": [
+        116,
+        166,
+        136
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        183,
+        195
+      ],
+      "flat_rgb": [
+        204,
+        183,
+        195
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        197,
+        169,
+        184
+      ],
+      "flat_rgb": [
+        197,
+        169,
+        184
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        162,
+        155,
+        154
+      ],
+      "flat_rgb": [
+        162,
+        155,
+        154
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        96,
+        145,
+        111
+      ],
+      "flat_rgb": [
+        96,
+        145,
+        111
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        51,
+        138,
+        86
+      ],
+      "flat_rgb": [
+        51,
+        138,
+        86
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        183,
+        195
+      ],
+      "flat_rgb": [
+        204,
+        183,
+        195
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "gradient_rgb": [
+        197,
+        169,
+        184
+      ],
+      "flat_rgb": [
+        197,
+        169,
+        184
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "gradient_rgb": [
+        162,
+        155,
+        154
+      ],
+      "flat_rgb": [
+        162,
+        155,
+        154
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "gradient_rgb": [
+        96,
+        145,
+        111
+      ],
+      "flat_rgb": [
+        96,
+        145,
+        111
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "gradient_rgb": [
+        51,
+        138,
+        86
+      ],
+      "flat_rgb": [
+        51,
+        138,
+        86
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.125,
+      "gradient_rgb": [
+        206,
+        120,
+        169
+      ],
+      "flat_rgb": [
+        206,
+        120,
+        169
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.25,
+      "gradient_rgb": [
+        191,
+        135,
+        165
+      ],
+      "flat_rgb": [
+        191,
+        135,
+        165
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.5,
+      "gradient_rgb": [
+        162,
+        155,
+        154
+      ],
+      "flat_rgb": [
+        162,
+        155,
+        154
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.75,
+      "gradient_rgb": [
+        131,
+        164,
+        142
+      ],
+      "flat_rgb": [
+        131,
+        164,
+        142
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "group-opacity",
+      "t": 0.875,
+      "gradient_rgb": [
+        116,
+        166,
+        136
+      ],
+      "flat_rgb": [
+        116,
+        166,
+        136
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "gradient_rgb": [
+        204,
+        193,
+        199
+      ],
+      "flat_rgb": [
+        204,
+        193,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "gradient_rgb": [
+        200,
+        186,
+        194
+      ],
+      "flat_rgb": [
+        200,
+        186,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "gradient_rgb": [
+        183,
+        179,
+        179
+      ],
+      "flat_rgb": [
+        183,
+        179,
+        179
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "gradient_rgb": [
+        149,
+        174,
+        157
+      ],
+      "flat_rgb": [
+        149,
+        174,
+        157
+      ],
+      "maximum_error": 0
+    },
+    {
+      "engine": "poppler",
+      "page": 2,
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "gradient_rgb": [
+        127,
+        171,
+        145
+      ],
+      "flat_rgb": [
+        127,
+        171,
+        145
+      ],
+      "maximum_error": 0
+    }
+  ],
+  "profile_controls": {
+    "reference_pdf": {
+      "file": "profile-controls.pdf",
+      "sha256": "c766321fe6f22303d761d004c811696379507995d26b271d21336a78899ecdf8"
+    },
+    "renders": [
+      [
+        {
+          "file": "pdfium-1.png",
+          "sha256": "27c18286e6ae7cfab8b60bb1490b1187ed4ae8510a815f1e6c7a324e36f8bbc3"
+        },
+        {
+          "file": "poppler-1.png",
+          "sha256": "0906a00300b9d2478fb6e654223051471c4ab82252f95b192ab05f1247fb5ceb"
+        }
+      ]
+    ],
+    "littlecms_version_encoded": 2190,
+    "pdf_rendering_intent": "relative-colorimetric",
+    "matched_reader_conditions": {
+      "pdfium": {
+        "intent": 0,
+        "flags": 0,
+        "encoding": "truncate-u8"
+      },
+      "poppler": {
+        "intent": 1,
+        "flags": 8448,
+        "encoding": "round-u8"
+      }
+    },
+    "full_precision_reference": {
+      "intent": 1,
+      "flags": 256,
+      "encoding": "double"
+    },
+    "source_profile": {
+      "file": "SWOP2006coated_300_mth.icc",
+      "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+    },
+    "littlecms_library": {
+      "file": "lcms2.dll",
+      "sha256": "4ee49c629f2f69b57887bac30e928c554154c0f284c1e308fd5d5a9a9f4aeda3"
+    },
+    "samples": [
+      {
+        "engine": "pdfium",
+        "t": 0.125,
+        "components": [
+          0.125,
+          0.875,
+          0.125,
+          0.03125
+        ],
+        "icc_rgb": [
+          210,
+          64,
+          131
+        ],
+        "matched_littlecms_rgb": [
+          210,
+          64,
+          131
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          210,
+          70,
+          133
+        ],
+        "default_device_rgb": [
+          207,
+          66,
+          134
+        ]
+      },
+      {
+        "engine": "pdfium",
+        "t": 0.25,
+        "components": [
+          0.25,
+          0.75,
+          0.25,
+          0.0625
+        ],
+        "icc_rgb": [
+          186,
+          90,
+          129
+        ],
+        "matched_littlecms_rgb": [
+          186,
+          90,
+          129
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          186,
+          93,
+          130
+        ],
+        "default_device_rgb": [
+          181,
+          91,
+          129
+        ]
+      },
+      {
+        "engine": "pdfium",
+        "t": 0.5,
+        "components": [
+          0.5,
+          0.5,
+          0.5,
+          0.125
+        ],
+        "icc_rgb": [
+          134,
+          119,
+          114
+        ],
+        "matched_littlecms_rgb": [
+          134,
+          119,
+          114
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          135,
+          121,
+          116
+        ],
+        "default_device_rgb": [
+          127,
+          114,
+          111
+        ]
+      },
+      {
+        "engine": "pdfium",
+        "t": 0.75,
+        "components": [
+          0.75,
+          0.25,
+          0.75,
+          0.1875
+        ],
+        "icc_rgb": [
+          67,
+          132,
+          92
+        ],
+        "matched_littlecms_rgb": [
+          67,
+          132,
+          92
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          73,
+          133,
+          95
+        ],
+        "default_device_rgb": [
+          60,
+          127,
+          87
+        ]
+      },
+      {
+        "engine": "pdfium",
+        "t": 0.875,
+        "components": [
+          0.875,
+          0.125,
+          0.875,
+          0.21875
+        ],
+        "icc_rgb": [
+          0,
+          133,
+          79
+        ],
+        "matched_littlecms_rgb": [
+          0,
+          133,
+          79
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          0,
+          134,
+          84
+        ],
+        "default_device_rgb": [
+          1,
+          129,
+          74
+        ]
+      },
+      {
+        "engine": "poppler",
+        "t": 0.125,
+        "components": [
+          0.125,
+          0.875,
+          0.125,
+          0.03125
+        ],
+        "icc_rgb": [
+          209,
+          63,
+          130
+        ],
+        "matched_littlecms_rgb": [
+          209,
+          63,
+          130
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          210,
+          70,
+          133
+        ],
+        "default_device_rgb": [
+          208,
+          37,
+          136
+        ]
+      },
+      {
+        "engine": "poppler",
+        "t": 0.25,
+        "components": [
+          0.25,
+          0.75,
+          0.25,
+          0.0625
+        ],
+        "icc_rgb": [
+          184,
+          89,
+          127
+        ],
+        "matched_littlecms_rgb": [
+          184,
+          89,
+          127
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          186,
+          93,
+          130
+        ],
+        "default_device_rgb": [
+          179,
+          67,
+          128
+        ]
+      },
+      {
+        "engine": "poppler",
+        "t": 0.5,
+        "components": [
+          0.5,
+          0.5,
+          0.5,
+          0.125
+        ],
+        "icc_rgb": [
+          132,
+          117,
+          113
+        ],
+        "matched_littlecms_rgb": [
+          132,
+          117,
+          113
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          135,
+          121,
+          116
+        ],
+        "default_device_rgb": [
+          121,
+          107,
+          105
+        ]
+      },
+      {
+        "engine": "poppler",
+        "t": 0.75,
+        "components": [
+          0.75,
+          0.25,
+          0.75,
+          0.1875
+        ],
+        "icc_rgb": [
+          66,
+          130,
+          91
+        ],
+        "matched_littlecms_rgb": [
+          66,
+          130,
+          91
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          73,
+          133,
+          95
+        ],
+        "default_device_rgb": [
+          60,
+          126,
+          81
+        ]
+      },
+      {
+        "engine": "poppler",
+        "t": 0.875,
+        "components": [
+          0.875,
+          0.125,
+          0.875,
+          0.21875
+        ],
+        "icc_rgb": [
+          0,
+          132,
+          78
+        ],
+        "matched_littlecms_rgb": [
+          0,
+          132,
+          78
+        ],
+        "maximum_error": 0,
+        "full_precision_relative_rgb": [
+          0,
+          134,
+          84
+        ],
+        "default_device_rgb": [
+          30,
+          129,
+          70
+        ]
+      }
+    ]
+  },
+  "negative_controls": {
+    "wrong_gradient_rejected": true,
+    "mutated_pdf": {
+      "file": "wrong-gradient.pdf",
+      "sha256": "fffd17847202b4d2a87c74c7a33377fc4424e8ae5463d05f778b83c6e4012381"
+    },
+    "mislabeled_profile_rejected": true
+  },
+  "native_cmyk_components_checked": true,
+  "controlled_checks_passed": true,
+  "baseline": {
+    "default_comparison_passed": false,
+    "fixed_bounds": {
+      "mean_channel_difference_max": 5,
+      "p95_max_channel_difference_max": 20,
+      "pixels_above_10_percent_max": 8
+    },
+    "default_receipt": {
+      "file": "results.json",
+      "sha256": "11d8c96505ac5f4754e06e5e52816ca6454cd58af9f18183797d66c1a872581e"
+    },
+    "original_comparison_exit": 1,
+    "appearance_receipt": {
+      "file": "gallery-appearance.json",
+      "sha256": "a4ec47da343b42ab6d54f479fca1507147fc9ef89c20ba71cda825b708669b23"
+    },
+    "authored_appearance_probes_passed": 50,
+    "failed_pages": [
+      {
+        "mode": "ordinary",
+        "page": 2
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2
+      }
+    ],
+    "default_metrics": [
+      {
+        "mode": "ordinary",
+        "sha256": "ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8",
+        "pages": [
+          {
+            "page": 1,
+            "metrics": {
+              "mean_channel_difference": 0.4550372005044136,
+              "p95_max_channel_difference": 2.0,
+              "pixels_above_10_percent": 0.18745271122320303
+            },
+            "passed": true
+          },
+          {
+            "page": 2,
+            "metrics": {
+              "mean_channel_difference": 1.243686633039092,
+              "p95_max_channel_difference": 23.0,
+              "pixels_above_10_percent": 8.823076923076924
+            },
+            "passed": false
+          },
+          {
+            "page": 3,
+            "metrics": {
+              "mean_channel_difference": 0.048092475830180746,
+              "p95_max_channel_difference": 0.0,
+              "pixels_above_10_percent": 0.17856242118537202
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "mode": "pdfx4",
+        "sha256": "5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab",
+        "pages": [
+          {
+            "page": 1,
+            "metrics": {
+              "mean_channel_difference": 1.6153205128205128,
+              "p95_max_channel_difference": 24.0,
+              "pixels_above_10_percent": 12.556872635561161
+            },
+            "passed": false
+          },
+          {
+            "page": 2,
+            "metrics": {
+              "mean_channel_difference": 1.243686633039092,
+              "p95_max_channel_difference": 23.0,
+              "pixels_above_10_percent": 8.823076923076924
+            },
+            "passed": false
+          },
+          {
+            "page": 3,
+            "metrics": {
+              "mean_channel_difference": 0.24538251366120217,
+              "p95_max_channel_difference": 2.0,
+              "pixels_above_10_percent": 0.1823455233291299
+            },
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "component_checks": [
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "correct_component_and_alpha_samples": 36
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "correct_component_and_alpha_samples": 36
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "correct_component_and_alpha_samples": 36
+      }
+    ],
+    "independent_flat_pdf": {
+      "file": "baseline-flat-controls.pdf",
+      "sha256": "457111a473e376d8d47382c508ef218da466aa5b7cfe484e77d24c74a95a4142"
+    },
+    "flat_renders": [
+      [
+        {
+          "file": "pdfium-1.png",
+          "sha256": "19f25e9648ce5334709ebee30052804033861930fbcac065bdc7e5c43997fdec"
+        },
+        {
+          "file": "poppler-1.png",
+          "sha256": "41da83d8d0d7695749595f9f8221bce44769904da8de4299ce33f1333ec99d91"
+        }
+      ],
+      [
+        {
+          "file": "pdfium-2.png",
+          "sha256": "16c6b9f303821a48bdcbffdef93f3be8d6404f0f68414b970791d25c0c795d95"
+        },
+        {
+          "file": "poppler-2.png",
+          "sha256": "be8cf5849a165d1df307a671bef5dd01464cadf0d05286db486458922bb092dc"
+        }
+      ],
+      [
+        {
+          "file": "pdfium-3.png",
+          "sha256": "19f25e9648ce5334709ebee30052804033861930fbcac065bdc7e5c43997fdec"
+        },
+        {
+          "file": "poppler-3.png",
+          "sha256": "41da83d8d0d7695749595f9f8221bce44769904da8de4299ce33f1333ec99d91"
+        }
+      ],
+      [
+        {
+          "file": "pdfium-4.png",
+          "sha256": "16c6b9f303821a48bdcbffdef93f3be8d6404f0f68414b970791d25c0c795d95"
+        },
+        {
+          "file": "poppler-4.png",
+          "sha256": "be8cf5849a165d1df307a671bef5dd01464cadf0d05286db486458922bb092dc"
+        }
+      ],
+      [
+        {
+          "file": "pdfium-5.png",
+          "sha256": "19f25e9648ce5334709ebee30052804033861930fbcac065bdc7e5c43997fdec"
+        },
+        {
+          "file": "poppler-5.png",
+          "sha256": "41da83d8d0d7695749595f9f8221bce44769904da8de4299ce33f1333ec99d91"
+        }
+      ],
+      [
+        {
+          "file": "pdfium-6.png",
+          "sha256": "16c6b9f303821a48bdcbffdef93f3be8d6404f0f68414b970791d25c0c795d95"
+        },
+        {
+          "file": "poppler-6.png",
+          "sha256": "be8cf5849a165d1df307a671bef5dd01464cadf0d05286db486458922bb092dc"
+        }
+      ]
+    ],
+    "samples": [
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.12109375,
+        "gradient_rgb": [
+          88,
+          144,
+          204
+        ],
+        "independent_flat_rgb": [
+          88,
+          144,
+          204
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.24609375,
+        "gradient_rgb": [
+          180,
+          104,
+          170
+        ],
+        "independent_flat_rgb": [
+          180,
+          104,
+          170
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.49609375,
+        "gradient_rgb": [
+          240,
+          95,
+          136
+        ],
+        "independent_flat_rgb": [
+          240,
+          95,
+          136
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.74609375,
+        "gradient_rgb": [
+          249,
+          169,
+          110
+        ],
+        "independent_flat_rgb": [
+          249,
+          169,
+          110
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.87109375,
+        "gradient_rgb": [
+          254,
+          204,
+          78
+        ],
+        "independent_flat_rgb": [
+          254,
+          204,
+          78
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.12109375,
+        "gradient_rgb": [
+          253,
+          192,
+          93
+        ],
+        "independent_flat_rgb": [
+          253,
+          192,
+          93
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.24609375,
+        "gradient_rgb": [
+          244,
+          142,
+          124
+        ],
+        "independent_flat_rgb": [
+          244,
+          142,
+          124
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.49609375,
+        "gradient_rgb": [
+          219,
+          50,
+          148
+        ],
+        "independent_flat_rgb": [
+          219,
+          50,
+          148
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.74609375,
+        "gradient_rgb": [
+          125,
+          133,
+          193
+        ],
+        "independent_flat_rgb": [
+          125,
+          133,
+          193
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.87109375,
+        "gradient_rgb": [
+          22,
+          154,
+          215
+        ],
+        "independent_flat_rgb": [
+          22,
+          154,
+          215
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.125,
+        "gradient_rgb": [
+          99,
+          141,
+          209
+        ],
+        "independent_flat_rgb": [
+          99,
+          141,
+          209
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.25,
+        "gradient_rgb": [
+          182,
+          76,
+          173
+        ],
+        "independent_flat_rgb": [
+          182,
+          76,
+          173
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.5,
+        "gradient_rgb": [
+          241,
+          63,
+          134
+        ],
+        "independent_flat_rgb": [
+          241,
+          63,
+          134
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.75,
+        "gradient_rgb": [
+          248,
+          159,
+          90
+        ],
+        "independent_flat_rgb": [
+          248,
+          159,
+          90
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.875,
+        "gradient_rgb": [
+          251,
+          202,
+          50
+        ],
+        "independent_flat_rgb": [
+          251,
+          202,
+          50
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.125,
+        "gradient_rgb": [
+          250,
+          183,
+          69
+        ],
+        "independent_flat_rgb": [
+          250,
+          183,
+          69
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.25,
+        "gradient_rgb": [
+          245,
+          118,
+          115
+        ],
+        "independent_flat_rgb": [
+          245,
+          118,
+          115
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.5,
+        "gradient_rgb": [
+          220,
+          27,
+          151
+        ],
+        "independent_flat_rgb": [
+          220,
+          27,
+          151
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.75,
+        "gradient_rgb": [
+          123,
+          127,
+          199
+        ],
+        "independent_flat_rgb": [
+          123,
+          127,
+          199
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "ordinary",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.875,
+        "gradient_rgb": [
+          65,
+          157,
+          220
+        ],
+        "independent_flat_rgb": [
+          65,
+          157,
+          220
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.12109375,
+        "gradient_rgb": [
+          88,
+          144,
+          204
+        ],
+        "independent_flat_rgb": [
+          88,
+          144,
+          204
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.24609375,
+        "gradient_rgb": [
+          180,
+          104,
+          170
+        ],
+        "independent_flat_rgb": [
+          180,
+          104,
+          170
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.49609375,
+        "gradient_rgb": [
+          240,
+          95,
+          136
+        ],
+        "independent_flat_rgb": [
+          240,
+          95,
+          136
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.74609375,
+        "gradient_rgb": [
+          249,
+          169,
+          110
+        ],
+        "independent_flat_rgb": [
+          249,
+          169,
+          110
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.87109375,
+        "gradient_rgb": [
+          254,
+          204,
+          78
+        ],
+        "independent_flat_rgb": [
+          254,
+          204,
+          78
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.12109375,
+        "gradient_rgb": [
+          253,
+          192,
+          93
+        ],
+        "independent_flat_rgb": [
+          253,
+          192,
+          93
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.24609375,
+        "gradient_rgb": [
+          244,
+          142,
+          124
+        ],
+        "independent_flat_rgb": [
+          244,
+          142,
+          124
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.49609375,
+        "gradient_rgb": [
+          219,
+          50,
+          148
+        ],
+        "independent_flat_rgb": [
+          219,
+          50,
+          148
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.74609375,
+        "gradient_rgb": [
+          125,
+          133,
+          193
+        ],
+        "independent_flat_rgb": [
+          125,
+          133,
+          193
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.87109375,
+        "gradient_rgb": [
+          22,
+          154,
+          215
+        ],
+        "independent_flat_rgb": [
+          22,
+          154,
+          215
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.125,
+        "gradient_rgb": [
+          99,
+          141,
+          209
+        ],
+        "independent_flat_rgb": [
+          99,
+          141,
+          209
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.25,
+        "gradient_rgb": [
+          182,
+          76,
+          173
+        ],
+        "independent_flat_rgb": [
+          182,
+          76,
+          173
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.5,
+        "gradient_rgb": [
+          241,
+          63,
+          134
+        ],
+        "independent_flat_rgb": [
+          241,
+          63,
+          134
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.75,
+        "gradient_rgb": [
+          248,
+          159,
+          90
+        ],
+        "independent_flat_rgb": [
+          248,
+          159,
+          90
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.875,
+        "gradient_rgb": [
+          251,
+          202,
+          50
+        ],
+        "independent_flat_rgb": [
+          251,
+          202,
+          50
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.125,
+        "gradient_rgb": [
+          250,
+          183,
+          69
+        ],
+        "independent_flat_rgb": [
+          250,
+          183,
+          69
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.25,
+        "gradient_rgb": [
+          245,
+          118,
+          115
+        ],
+        "independent_flat_rgb": [
+          245,
+          118,
+          115
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.5,
+        "gradient_rgb": [
+          220,
+          27,
+          151
+        ],
+        "independent_flat_rgb": [
+          220,
+          27,
+          151
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.75,
+        "gradient_rgb": [
+          123,
+          127,
+          199
+        ],
+        "independent_flat_rgb": [
+          123,
+          127,
+          199
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.875,
+        "gradient_rgb": [
+          65,
+          157,
+          220
+        ],
+        "independent_flat_rgb": [
+          65,
+          157,
+          220
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.12109375,
+        "gradient_rgb": [
+          88,
+          144,
+          204
+        ],
+        "independent_flat_rgb": [
+          88,
+          144,
+          204
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.24609375,
+        "gradient_rgb": [
+          180,
+          104,
+          170
+        ],
+        "independent_flat_rgb": [
+          180,
+          104,
+          170
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.49609375,
+        "gradient_rgb": [
+          240,
+          95,
+          136
+        ],
+        "independent_flat_rgb": [
+          240,
+          95,
+          136
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.74609375,
+        "gradient_rgb": [
+          249,
+          169,
+          110
+        ],
+        "independent_flat_rgb": [
+          249,
+          169,
+          110
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "axial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.87109375,
+        "gradient_rgb": [
+          254,
+          204,
+          78
+        ],
+        "independent_flat_rgb": [
+          254,
+          204,
+          78
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.12109375,
+        "gradient_rgb": [
+          253,
+          192,
+          93
+        ],
+        "independent_flat_rgb": [
+          253,
+          192,
+          93
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.24609375,
+        "gradient_rgb": [
+          244,
+          142,
+          124
+        ],
+        "independent_flat_rgb": [
+          244,
+          142,
+          124
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.49609375,
+        "gradient_rgb": [
+          219,
+          50,
+          148
+        ],
+        "independent_flat_rgb": [
+          219,
+          50,
+          148
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.74609375,
+        "gradient_rgb": [
+          125,
+          133,
+          193
+        ],
+        "independent_flat_rgb": [
+          125,
+          133,
+          193
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "pdfium",
+        "geometry": "radial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.87109375,
+        "gradient_rgb": [
+          22,
+          154,
+          215
+        ],
+        "independent_flat_rgb": [
+          22,
+          154,
+          215
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.125,
+        "gradient_rgb": [
+          99,
+          141,
+          209
+        ],
+        "independent_flat_rgb": [
+          99,
+          141,
+          209
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.25,
+        "gradient_rgb": [
+          182,
+          76,
+          173
+        ],
+        "independent_flat_rgb": [
+          182,
+          76,
+          173
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.5,
+        "gradient_rgb": [
+          241,
+          63,
+          134
+        ],
+        "independent_flat_rgb": [
+          241,
+          63,
+          134
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.75,
+        "gradient_rgb": [
+          248,
+          159,
+          90
+        ],
+        "independent_flat_rgb": [
+          248,
+          159,
+          90
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "axial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.875,
+        "gradient_rgb": [
+          251,
+          202,
+          50
+        ],
+        "independent_flat_rgb": [
+          251,
+          202,
+          50
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.125,
+        "reader_sample_parameter": 0.125,
+        "gradient_rgb": [
+          250,
+          183,
+          69
+        ],
+        "independent_flat_rgb": [
+          250,
+          183,
+          69
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.25,
+        "reader_sample_parameter": 0.25,
+        "gradient_rgb": [
+          245,
+          118,
+          115
+        ],
+        "independent_flat_rgb": [
+          245,
+          118,
+          115
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.5,
+        "reader_sample_parameter": 0.5,
+        "gradient_rgb": [
+          220,
+          27,
+          151
+        ],
+        "independent_flat_rgb": [
+          220,
+          27,
+          151
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.75,
+        "reader_sample_parameter": 0.75,
+        "gradient_rgb": [
+          123,
+          127,
+          199
+        ],
+        "independent_flat_rgb": [
+          123,
+          127,
+          199
+        ],
+        "maximum_error": 0
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2,
+        "engine": "poppler",
+        "geometry": "radial",
+        "t": 0.875,
+        "reader_sample_parameter": 0.875,
+        "gradient_rgb": [
+          65,
+          157,
+          220
+        ],
+        "independent_flat_rgb": [
+          65,
+          157,
+          220
+        ],
+        "maximum_error": 0
+      }
+    ],
+    "explanation": "On each original failed page, decoded native gradient components match the authored stops. Each reader matches separately authored flat colors at those components, while their RGB previews differ. Explicit profile controls are checked separately. The default whole-page failures remain failures."
+  }
+}

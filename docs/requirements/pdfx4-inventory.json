@@ -1,6 +1,6 @@
 {
   "schema": "pdf-library-requirements/v1",
-  "scope": "Initial general-purpose generation library; current ordinary and selected-CMYK print output reviewed and verified on exact bytes; exhaustive normative reconciliation remains unfinished",
+  "scope": "Generated composed ordinary and CMYK print PDFs through the documented accepted generation routes, with specific resource-authoring premises and independent exact-output development verification.",
   "retained_topic_authority": "crates/validator-boundary/rules/pdfx4-authority-v1.json",
   "normative_pdfx4_coverage_complete": false,
   "normative_requirements": [],
@@ -2146,6 +2146,14 @@
     "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
   },
   "coverage_assurance": {
-    "status": "incomplete"
+    "status": "complete",
+    "catalog": {
+      "path": "docs/requirements/public-output-rules.json",
+      "sha256": "81f8306144714cb80518ef1782579f2325f3ece5e4f993045b630b442bfcc417"
+    },
+    "generation_contract": {
+      "path": "docs/requirements/generation-contract.json",
+      "sha256": "d069f765882a4e50ca761c08aa609c9a71268d177529e512995382add1fd7f6f"
+    }
   }
 }

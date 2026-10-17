@@ -1,15 +1,17 @@
 {
-  "schema": "publisher-pdf-licenses/v1",
+  "schema": "patterboxpdf-licenses/v2",
   "roots": [
     "application-core",
     "color-boundary",
     "document-core",
     "font-boundary",
+    "icc-profile",
     "layout-core",
     "pdf-library-standalone-client",
     "print-core",
     "publisher-color-worker",
     "publisher-font-worker",
+    "publisher-linux-worker-job",
     "publisher-pdf",
     "publisher-raster-worker",
     "publisher-validator-worker",
@@ -19,24 +21,2010 @@
     "raster-capacity",
     "validator-boundary"
   ],
-  "metadata_sha256": "b00c679d8bdbffb8017da5e7b24eb562746d6555fd368240c6ec3de15ffac50a",
-  "additional_metadata": [
+  "supported_targets": [
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu"
+  ],
+  "metadata_inputs": [
     {
-      "sha256": "86fb37868676bbc67d9d3408bbad6cb05859d40dde021268d3594cbdebca721a",
-      "workspace_members": [
+      "target": "x86_64-pc-windows-msvc",
+      "sha256": "e518a033bc2dc4f6b10e105adffb840c7134369dfc45e7e775b521a2881f4c0b",
+      "additional_workspace": false,
+      "roots": [
+        "application-core",
+        "color-boundary",
+        "document-core",
+        "font-boundary",
+        "icc-profile",
+        "layout-core",
+        "print-core",
+        "publisher-color-worker",
+        "publisher-font-worker",
+        "publisher-linux-worker-job",
+        "publisher-pdf",
+        "publisher-raster-worker",
+        "publisher-validator-worker",
+        "publisher-windows-atomic-file",
+        "publisher-worker-job",
+        "raster-boundary",
+        "raster-capacity",
+        "validator-boundary"
+      ]
+    },
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "sha256": "891b348cbc7852e8bb4601000a2a4f1ab60c35e267a2b98f2a1fff923ab4743c",
+      "additional_workspace": true,
+      "roots": [
+        "pdf-library-standalone-client"
+      ]
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "sha256": "88a060ff34442832ea1fda158efd439a667ce30f937d58e7d0c5d9abed167d6a",
+      "additional_workspace": false,
+      "roots": [
+        "application-core",
+        "color-boundary",
+        "document-core",
+        "font-boundary",
+        "icc-profile",
+        "layout-core",
+        "print-core",
+        "publisher-color-worker",
+        "publisher-font-worker",
+        "publisher-linux-worker-job",
+        "publisher-pdf",
+        "publisher-raster-worker",
+        "publisher-validator-worker",
+        "publisher-windows-atomic-file",
+        "publisher-worker-job",
+        "raster-boundary",
+        "raster-capacity",
+        "validator-boundary"
+      ]
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "sha256": "c47358fc257a7f009fe0335f67e13325772b2351cbd0150e0d1a37d444465136",
+      "additional_workspace": true,
+      "roots": [
         "pdf-library-standalone-client"
       ]
     }
   ],
-  "cargo_lock_sha256": "b69c9f22f3acacb897c03f3889d641c5fab41f8a34e5cb34abcfee549c5f6569",
+  "target_closures": [
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "packages": [
+        [
+          "adler2",
+          "2.0.1"
+        ],
+        [
+          "aes",
+          "0.9.3"
+        ],
+        [
+          "aho-corasick",
+          "1.1.5"
+        ],
+        [
+          "alloc-no-stdlib",
+          "2.0.4"
+        ],
+        [
+          "alloc-stdlib",
+          "0.2.4"
+        ],
+        [
+          "anstream",
+          "1.0.0"
+        ],
+        [
+          "anstyle",
+          "1.0.14"
+        ],
+        [
+          "anstyle-parse",
+          "1.0.0"
+        ],
+        [
+          "anstyle-query",
+          "1.1.5"
+        ],
+        [
+          "anstyle-wincon",
+          "3.0.11"
+        ],
+        [
+          "application-core",
+          "0.0.0"
+        ],
+        [
+          "arrayvec",
+          "0.7.8"
+        ],
+        [
+          "atoi_simd",
+          "0.18.1"
+        ],
+        [
+          "autocfg",
+          "1.5.1"
+        ],
+        [
+          "base64",
+          "0.22.1"
+        ],
+        [
+          "bitflags",
+          "1.3.2"
+        ],
+        [
+          "bitflags",
+          "2.13.1"
+        ],
+        [
+          "block-buffer",
+          "0.10.4"
+        ],
+        [
+          "block-buffer",
+          "0.12.1"
+        ],
+        [
+          "block-padding",
+          "0.4.2"
+        ],
+        [
+          "brotli",
+          "8.0.4"
+        ],
+        [
+          "brotli-decompressor",
+          "5.0.3"
+        ],
+        [
+          "bumpalo",
+          "3.20.3"
+        ],
+        [
+          "bytemuck",
+          "1.25.2"
+        ],
+        [
+          "bytemuck_derive",
+          "1.12.0"
+        ],
+        [
+          "byteorder",
+          "1.5.0"
+        ],
+        [
+          "byteorder-lite",
+          "0.1.0"
+        ],
+        [
+          "bytes",
+          "1.12.1"
+        ],
+        [
+          "cbc",
+          "0.2.1"
+        ],
+        [
+          "cc",
+          "1.4.4"
+        ],
+        [
+          "cfg-if",
+          "1.0.4"
+        ],
+        [
+          "cfg-if",
+          "1.0.5"
+        ],
+        [
+          "chrono",
+          "0.4.45"
+        ],
+        [
+          "cipher",
+          "0.5.2"
+        ],
+        [
+          "color-boundary",
+          "0.0.0"
+        ],
+        [
+          "colorchoice",
+          "1.0.5"
+        ],
+        [
+          "const-oid",
+          "0.10.2"
+        ],
+        [
+          "cpubits",
+          "0.1.1"
+        ],
+        [
+          "cpufeatures",
+          "0.2.17"
+        ],
+        [
+          "cpufeatures",
+          "0.3.1"
+        ],
+        [
+          "crc32fast",
+          "1.5.1"
+        ],
+        [
+          "crc32fast",
+          "1.5.2"
+        ],
+        [
+          "crossbeam-deque",
+          "0.8.7"
+        ],
+        [
+          "crossbeam-epoch",
+          "0.9.20"
+        ],
+        [
+          "crossbeam-utils",
+          "0.8.22"
+        ],
+        [
+          "crypto-common",
+          "0.1.7"
+        ],
+        [
+          "crypto-common",
+          "0.2.2"
+        ],
+        [
+          "debug_unsafe",
+          "0.1.4"
+        ],
+        [
+          "defmt",
+          "1.1.1"
+        ],
+        [
+          "defmt-macros",
+          "1.1.1"
+        ],
+        [
+          "defmt-parser",
+          "1.0.0"
+        ],
+        [
+          "digest",
+          "0.10.7"
+        ],
+        [
+          "digest",
+          "0.11.3"
+        ],
+        [
+          "displaydoc",
+          "0.2.7"
+        ],
+        [
+          "document-core",
+          "0.0.0"
+        ],
+        [
+          "dunce",
+          "1.0.5"
+        ],
+        [
+          "either",
+          "1.18.0"
+        ],
+        [
+          "encoding_rs",
+          "0.8.35"
+        ],
+        [
+          "env_filter",
+          "2.0.0"
+        ],
+        [
+          "env_logger",
+          "0.11.11"
+        ],
+        [
+          "equivalent",
+          "1.0.2"
+        ],
+        [
+          "euclid",
+          "0.22.14"
+        ],
+        [
+          "fast-float2",
+          "0.2.4"
+        ],
+        [
+          "fastrand",
+          "2.5.0"
+        ],
+        [
+          "fax",
+          "0.2.7"
+        ],
+        [
+          "fdeflate",
+          "0.3.7"
+        ],
+        [
+          "find-msvc-tools",
+          "0.1.11"
+        ],
+        [
+          "flate2",
+          "1.1.10"
+        ],
+        [
+          "foldhash",
+          "0.2.0"
+        ],
+        [
+          "font-boundary",
+          "0.0.0"
+        ],
+        [
+          "font-types",
+          "0.11.3"
+        ],
+        [
+          "font-types",
+          "0.12.4"
+        ],
+        [
+          "fontique",
+          "0.11.1"
+        ],
+        [
+          "foreign-types",
+          "0.5.0"
+        ],
+        [
+          "foreign-types-macros",
+          "0.2.4"
+        ],
+        [
+          "foreign-types-shared",
+          "0.3.1"
+        ],
+        [
+          "generic-array",
+          "0.14.7"
+        ],
+        [
+          "getrandom",
+          "0.4.3"
+        ],
+        [
+          "grid",
+          "1.0.1"
+        ],
+        [
+          "half",
+          "2.7.1"
+        ],
+        [
+          "harfrust",
+          "0.12.0"
+        ],
+        [
+          "hashbrown",
+          "0.17.1"
+        ],
+        [
+          "hybrid-array",
+          "0.4.14"
+        ],
+        [
+          "icc-profile",
+          "0.0.0"
+        ],
+        [
+          "icu_collections",
+          "2.3.0"
+        ],
+        [
+          "icu_locale_core",
+          "2.3.0"
+        ],
+        [
+          "icu_locale_fallback",
+          "2.3.0"
+        ],
+        [
+          "icu_locale_fallback_data",
+          "2.3.0"
+        ],
+        [
+          "icu_normalizer",
+          "2.3.0"
+        ],
+        [
+          "icu_normalizer_data",
+          "2.3.0"
+        ],
+        [
+          "icu_properties",
+          "2.3.0"
+        ],
+        [
+          "icu_properties_data",
+          "2.3.0"
+        ],
+        [
+          "icu_provider",
+          "2.3.1"
+        ],
+        [
+          "icu_segmenter",
+          "2.3.0"
+        ],
+        [
+          "icu_segmenter_data",
+          "2.3.0"
+        ],
+        [
+          "image",
+          "0.25.10"
+        ],
+        [
+          "indexmap",
+          "2.14.1"
+        ],
+        [
+          "inout",
+          "0.2.2"
+        ],
+        [
+          "is_terminal_polyfill",
+          "1.70.2"
+        ],
+        [
+          "itoa",
+          "1.0.18"
+        ],
+        [
+          "jiff",
+          "0.2.35"
+        ],
+        [
+          "jiff-core",
+          "0.1.0"
+        ],
+        [
+          "jobserver",
+          "0.1.35"
+        ],
+        [
+          "jpeg-decoder",
+          "0.3.2"
+        ],
+        [
+          "kurbo",
+          "0.13.1"
+        ],
+        [
+          "layout-core",
+          "0.0.0"
+        ],
+        [
+          "lcms2",
+          "6.2.0"
+        ],
+        [
+          "lcms2-sys",
+          "4.0.7"
+        ],
+        [
+          "libc",
+          "0.2.189"
+        ],
+        [
+          "linebender_resource_handle",
+          "0.1.1"
+        ],
+        [
+          "litemap",
+          "0.8.3"
+        ],
+        [
+          "log",
+          "0.4.34"
+        ],
+        [
+          "md-5",
+          "0.10.6"
+        ],
+        [
+          "memchr",
+          "2.8.3"
+        ],
+        [
+          "memmap2",
+          "0.9.11"
+        ],
+        [
+          "miniz_oxide",
+          "0.8.9"
+        ],
+        [
+          "miniz_oxide",
+          "0.9.1"
+        ],
+        [
+          "moxcms",
+          "0.8.1"
+        ],
+        [
+          "nom",
+          "8.0.0"
+        ],
+        [
+          "num-traits",
+          "0.2.19"
+        ],
+        [
+          "office_oxide",
+          "0.1.8"
+        ],
+        [
+          "once_cell",
+          "1.21.4"
+        ],
+        [
+          "once_cell_polyfill",
+          "1.70.2"
+        ],
+        [
+          "parlance",
+          "0.1.0"
+        ],
+        [
+          "parley",
+          "0.11.1"
+        ],
+        [
+          "parley_data",
+          "0.11.1"
+        ],
+        [
+          "pdf-library-standalone-client",
+          "0.0.0"
+        ],
+        [
+          "pdf-writer",
+          "0.15.0"
+        ],
+        [
+          "pdf_oxide",
+          "0.3.73"
+        ],
+        [
+          "phf",
+          "0.14.0"
+        ],
+        [
+          "phf_generator",
+          "0.14.0"
+        ],
+        [
+          "phf_macros",
+          "0.14.0"
+        ],
+        [
+          "phf_shared",
+          "0.14.0"
+        ],
+        [
+          "pkg-config",
+          "0.3.34"
+        ],
+        [
+          "png",
+          "0.18.1"
+        ],
+        [
+          "polycool",
+          "0.4.0"
+        ],
+        [
+          "potential_utf",
+          "0.1.6"
+        ],
+        [
+          "print-core",
+          "0.0.0"
+        ],
+        [
+          "proc-macro2",
+          "1.0.107"
+        ],
+        [
+          "publisher-color-worker",
+          "0.0.0"
+        ],
+        [
+          "publisher-font-worker",
+          "0.0.0"
+        ],
+        [
+          "publisher-linux-worker-job",
+          "0.0.0"
+        ],
+        [
+          "publisher-pdf",
+          "0.0.0"
+        ],
+        [
+          "publisher-raster-worker",
+          "0.0.0"
+        ],
+        [
+          "publisher-validator-worker",
+          "0.0.0"
+        ],
+        [
+          "publisher-windows-atomic-file",
+          "0.0.0"
+        ],
+        [
+          "publisher-worker-job",
+          "0.0.0"
+        ],
+        [
+          "pxfm",
+          "0.1.30"
+        ],
+        [
+          "quick-error",
+          "2.0.1"
+        ],
+        [
+          "quick-xml",
+          "0.41.0"
+        ],
+        [
+          "quote",
+          "1.0.47"
+        ],
+        [
+          "raster-boundary",
+          "0.0.0"
+        ],
+        [
+          "raster-capacity",
+          "0.0.0"
+        ],
+        [
+          "rayon",
+          "1.12.0"
+        ],
+        [
+          "rayon-core",
+          "1.13.0"
+        ],
+        [
+          "read-fonts",
+          "0.39.2"
+        ],
+        [
+          "read-fonts",
+          "0.41.0"
+        ],
+        [
+          "regex",
+          "1.13.1"
+        ],
+        [
+          "regex-automata",
+          "0.4.18"
+        ],
+        [
+          "regex-syntax",
+          "0.8.11"
+        ],
+        [
+          "roxmltree",
+          "0.21.1"
+        ],
+        [
+          "rustc-hash",
+          "2.1.3"
+        ],
+        [
+          "rustversion",
+          "1.0.23"
+        ],
+        [
+          "ryu",
+          "1.0.23"
+        ],
+        [
+          "serde",
+          "1.0.228"
+        ],
+        [
+          "serde_core",
+          "1.0.228"
+        ],
+        [
+          "serde_derive",
+          "1.0.228"
+        ],
+        [
+          "serde_json",
+          "1.0.149"
+        ],
+        [
+          "sha2",
+          "0.10.9"
+        ],
+        [
+          "sha2",
+          "0.11.0"
+        ],
+        [
+          "shlex",
+          "2.0.1"
+        ],
+        [
+          "simd-adler32",
+          "0.3.10"
+        ],
+        [
+          "siphasher",
+          "1.0.3"
+        ],
+        [
+          "skrifa",
+          "0.42.1"
+        ],
+        [
+          "skrifa",
+          "0.44.0"
+        ],
+        [
+          "slotmap",
+          "1.1.1"
+        ],
+        [
+          "smallvec",
+          "1.15.2"
+        ],
+        [
+          "stable_deref_trait",
+          "1.2.1"
+        ],
+        [
+          "stringprep",
+          "0.1.5"
+        ],
+        [
+          "subsetter",
+          "0.2.6"
+        ],
+        [
+          "syn",
+          "2.0.119"
+        ],
+        [
+          "syn",
+          "3.0.4"
+        ],
+        [
+          "synstructure",
+          "0.13.2"
+        ],
+        [
+          "taffy",
+          "0.11.0"
+        ],
+        [
+          "thiserror",
+          "2.0.20"
+        ],
+        [
+          "thiserror-impl",
+          "2.0.20"
+        ],
+        [
+          "tiff",
+          "0.11.3"
+        ],
+        [
+          "tinystr",
+          "0.8.4"
+        ],
+        [
+          "tinyvec",
+          "1.12.0"
+        ],
+        [
+          "tinyvec_macros",
+          "0.1.1"
+        ],
+        [
+          "ttf-parser",
+          "0.25.1"
+        ],
+        [
+          "typed-path",
+          "0.12.3"
+        ],
+        [
+          "typenum",
+          "1.20.1"
+        ],
+        [
+          "unicode-bidi",
+          "0.3.18"
+        ],
+        [
+          "unicode-ident",
+          "1.0.24"
+        ],
+        [
+          "unicode-linebreak",
+          "0.1.5"
+        ],
+        [
+          "unicode-normalization",
+          "0.1.25"
+        ],
+        [
+          "unicode-properties",
+          "0.1.4"
+        ],
+        [
+          "utf8_iter",
+          "1.0.4"
+        ],
+        [
+          "utf8parse",
+          "0.2.2"
+        ],
+        [
+          "uuid",
+          "1.26.0"
+        ],
+        [
+          "validator-boundary",
+          "0.0.0"
+        ],
+        [
+          "version_check",
+          "0.9.5"
+        ],
+        [
+          "weezl",
+          "0.1.12"
+        ],
+        [
+          "weezl",
+          "0.2.1"
+        ],
+        [
+          "windows",
+          "0.62.2"
+        ],
+        [
+          "windows-collections",
+          "0.3.2"
+        ],
+        [
+          "windows-core",
+          "0.62.2"
+        ],
+        [
+          "windows-future",
+          "0.3.2"
+        ],
+        [
+          "windows-implement",
+          "0.60.2"
+        ],
+        [
+          "windows-interface",
+          "0.59.3"
+        ],
+        [
+          "windows-link",
+          "0.2.1"
+        ],
+        [
+          "windows-numerics",
+          "0.3.1"
+        ],
+        [
+          "windows-result",
+          "0.4.1"
+        ],
+        [
+          "windows-strings",
+          "0.5.1"
+        ],
+        [
+          "windows-sys",
+          "0.61.2"
+        ],
+        [
+          "windows-threading",
+          "0.2.1"
+        ],
+        [
+          "write-fonts",
+          "0.48.1"
+        ],
+        [
+          "writeable",
+          "0.6.4"
+        ],
+        [
+          "yoke",
+          "0.8.3"
+        ],
+        [
+          "yoke-derive",
+          "0.8.2"
+        ],
+        [
+          "zerocopy",
+          "0.8.56"
+        ],
+        [
+          "zerocopy-derive",
+          "0.8.56"
+        ],
+        [
+          "zerofrom",
+          "0.1.8"
+        ],
+        [
+          "zerofrom-derive",
+          "0.1.7"
+        ],
+        [
+          "zerotrie",
+          "0.2.5"
+        ],
+        [
+          "zerovec",
+          "0.11.8"
+        ],
+        [
+          "zerovec-derive",
+          "0.11.6"
+        ],
+        [
+          "zip",
+          "8.6.0"
+        ],
+        [
+          "zlib-rs",
+          "0.6.7"
+        ],
+        [
+          "zlib-rs",
+          "0.6.8"
+        ],
+        [
+          "zmij",
+          "1.0.23"
+        ],
+        [
+          "zopfli",
+          "0.8.3"
+        ],
+        [
+          "zune-core",
+          "0.5.3"
+        ],
+        [
+          "zune-jpeg",
+          "0.5.15"
+        ]
+      ]
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "packages": [
+        [
+          "adler2",
+          "2.0.1"
+        ],
+        [
+          "aes",
+          "0.9.3"
+        ],
+        [
+          "aho-corasick",
+          "1.1.5"
+        ],
+        [
+          "alloc-no-stdlib",
+          "2.0.4"
+        ],
+        [
+          "alloc-stdlib",
+          "0.2.4"
+        ],
+        [
+          "anstream",
+          "1.0.0"
+        ],
+        [
+          "anstyle",
+          "1.0.14"
+        ],
+        [
+          "anstyle-parse",
+          "1.0.0"
+        ],
+        [
+          "anstyle-query",
+          "1.1.5"
+        ],
+        [
+          "application-core",
+          "0.0.0"
+        ],
+        [
+          "arrayvec",
+          "0.7.8"
+        ],
+        [
+          "atoi_simd",
+          "0.18.1"
+        ],
+        [
+          "autocfg",
+          "1.5.1"
+        ],
+        [
+          "base64",
+          "0.22.1"
+        ],
+        [
+          "bitflags",
+          "1.3.2"
+        ],
+        [
+          "bitflags",
+          "2.13.1"
+        ],
+        [
+          "block-buffer",
+          "0.10.4"
+        ],
+        [
+          "block-buffer",
+          "0.12.1"
+        ],
+        [
+          "block-padding",
+          "0.4.2"
+        ],
+        [
+          "brotli",
+          "8.0.4"
+        ],
+        [
+          "brotli-decompressor",
+          "5.0.3"
+        ],
+        [
+          "bumpalo",
+          "3.20.3"
+        ],
+        [
+          "bytemuck",
+          "1.25.2"
+        ],
+        [
+          "bytemuck_derive",
+          "1.12.0"
+        ],
+        [
+          "byteorder",
+          "1.5.0"
+        ],
+        [
+          "byteorder-lite",
+          "0.1.0"
+        ],
+        [
+          "bytes",
+          "1.12.1"
+        ],
+        [
+          "cbc",
+          "0.2.1"
+        ],
+        [
+          "cc",
+          "1.4.4"
+        ],
+        [
+          "cfg-if",
+          "1.0.4"
+        ],
+        [
+          "cfg-if",
+          "1.0.5"
+        ],
+        [
+          "chrono",
+          "0.4.45"
+        ],
+        [
+          "cipher",
+          "0.5.2"
+        ],
+        [
+          "color-boundary",
+          "0.0.0"
+        ],
+        [
+          "colorchoice",
+          "1.0.5"
+        ],
+        [
+          "const-oid",
+          "0.10.2"
+        ],
+        [
+          "cpubits",
+          "0.1.1"
+        ],
+        [
+          "cpufeatures",
+          "0.2.17"
+        ],
+        [
+          "cpufeatures",
+          "0.3.1"
+        ],
+        [
+          "crc32fast",
+          "1.5.1"
+        ],
+        [
+          "crc32fast",
+          "1.5.2"
+        ],
+        [
+          "crossbeam-deque",
+          "0.8.7"
+        ],
+        [
+          "crossbeam-epoch",
+          "0.9.20"
+        ],
+        [
+          "crossbeam-utils",
+          "0.8.22"
+        ],
+        [
+          "crypto-common",
+          "0.1.7"
+        ],
+        [
+          "crypto-common",
+          "0.2.2"
+        ],
+        [
+          "debug_unsafe",
+          "0.1.4"
+        ],
+        [
+          "defmt",
+          "1.1.1"
+        ],
+        [
+          "defmt-macros",
+          "1.1.1"
+        ],
+        [
+          "defmt-parser",
+          "1.0.0"
+        ],
+        [
+          "digest",
+          "0.10.7"
+        ],
+        [
+          "digest",
+          "0.11.3"
+        ],
+        [
+          "displaydoc",
+          "0.2.7"
+        ],
+        [
+          "dlib",
+          "0.5.3"
+        ],
+        [
+          "document-core",
+          "0.0.0"
+        ],
+        [
+          "dunce",
+          "1.0.5"
+        ],
+        [
+          "either",
+          "1.18.0"
+        ],
+        [
+          "encoding_rs",
+          "0.8.35"
+        ],
+        [
+          "env_filter",
+          "2.0.0"
+        ],
+        [
+          "env_logger",
+          "0.11.11"
+        ],
+        [
+          "equivalent",
+          "1.0.2"
+        ],
+        [
+          "errno",
+          "0.3.14"
+        ],
+        [
+          "euclid",
+          "0.22.14"
+        ],
+        [
+          "fast-float2",
+          "0.2.4"
+        ],
+        [
+          "fastrand",
+          "2.5.0"
+        ],
+        [
+          "fax",
+          "0.2.7"
+        ],
+        [
+          "fdeflate",
+          "0.3.7"
+        ],
+        [
+          "find-msvc-tools",
+          "0.1.11"
+        ],
+        [
+          "flate2",
+          "1.1.10"
+        ],
+        [
+          "foldhash",
+          "0.2.0"
+        ],
+        [
+          "font-boundary",
+          "0.0.0"
+        ],
+        [
+          "font-types",
+          "0.11.3"
+        ],
+        [
+          "font-types",
+          "0.12.4"
+        ],
+        [
+          "fontique",
+          "0.11.1"
+        ],
+        [
+          "foreign-types",
+          "0.5.0"
+        ],
+        [
+          "foreign-types-macros",
+          "0.2.4"
+        ],
+        [
+          "foreign-types-shared",
+          "0.3.1"
+        ],
+        [
+          "generic-array",
+          "0.14.7"
+        ],
+        [
+          "getrandom",
+          "0.4.3"
+        ],
+        [
+          "grid",
+          "1.0.1"
+        ],
+        [
+          "half",
+          "2.7.1"
+        ],
+        [
+          "harfrust",
+          "0.12.0"
+        ],
+        [
+          "hashbrown",
+          "0.17.1"
+        ],
+        [
+          "hybrid-array",
+          "0.4.14"
+        ],
+        [
+          "iana-time-zone",
+          "0.1.65"
+        ],
+        [
+          "icc-profile",
+          "0.0.0"
+        ],
+        [
+          "icu_collections",
+          "2.3.0"
+        ],
+        [
+          "icu_locale_core",
+          "2.3.0"
+        ],
+        [
+          "icu_locale_fallback",
+          "2.3.0"
+        ],
+        [
+          "icu_locale_fallback_data",
+          "2.3.0"
+        ],
+        [
+          "icu_normalizer",
+          "2.3.0"
+        ],
+        [
+          "icu_normalizer_data",
+          "2.3.0"
+        ],
+        [
+          "icu_properties",
+          "2.3.0"
+        ],
+        [
+          "icu_properties_data",
+          "2.3.0"
+        ],
+        [
+          "icu_provider",
+          "2.3.1"
+        ],
+        [
+          "icu_segmenter",
+          "2.3.0"
+        ],
+        [
+          "icu_segmenter_data",
+          "2.3.0"
+        ],
+        [
+          "image",
+          "0.25.10"
+        ],
+        [
+          "indexmap",
+          "2.14.1"
+        ],
+        [
+          "inout",
+          "0.2.2"
+        ],
+        [
+          "is_terminal_polyfill",
+          "1.70.2"
+        ],
+        [
+          "itoa",
+          "1.0.18"
+        ],
+        [
+          "jiff",
+          "0.2.35"
+        ],
+        [
+          "jiff-core",
+          "0.1.0"
+        ],
+        [
+          "jobserver",
+          "0.1.35"
+        ],
+        [
+          "jpeg-decoder",
+          "0.3.2"
+        ],
+        [
+          "kurbo",
+          "0.13.1"
+        ],
+        [
+          "layout-core",
+          "0.0.0"
+        ],
+        [
+          "lcms2",
+          "6.2.0"
+        ],
+        [
+          "lcms2-sys",
+          "4.0.7"
+        ],
+        [
+          "libc",
+          "0.2.189"
+        ],
+        [
+          "libloading",
+          "0.8.9"
+        ],
+        [
+          "linebender_resource_handle",
+          "0.1.1"
+        ],
+        [
+          "linux-raw-sys",
+          "0.12.1"
+        ],
+        [
+          "litemap",
+          "0.8.3"
+        ],
+        [
+          "log",
+          "0.4.34"
+        ],
+        [
+          "md-5",
+          "0.10.6"
+        ],
+        [
+          "memchr",
+          "2.8.3"
+        ],
+        [
+          "memmap2",
+          "0.9.11"
+        ],
+        [
+          "miniz_oxide",
+          "0.8.9"
+        ],
+        [
+          "miniz_oxide",
+          "0.9.1"
+        ],
+        [
+          "moxcms",
+          "0.8.1"
+        ],
+        [
+          "nom",
+          "8.0.0"
+        ],
+        [
+          "num-traits",
+          "0.2.19"
+        ],
+        [
+          "office_oxide",
+          "0.1.8"
+        ],
+        [
+          "once_cell",
+          "1.21.4"
+        ],
+        [
+          "parlance",
+          "0.1.0"
+        ],
+        [
+          "parley",
+          "0.11.1"
+        ],
+        [
+          "parley_data",
+          "0.11.1"
+        ],
+        [
+          "pdf-library-standalone-client",
+          "0.0.0"
+        ],
+        [
+          "pdf-writer",
+          "0.15.0"
+        ],
+        [
+          "pdf_oxide",
+          "0.3.73"
+        ],
+        [
+          "phf",
+          "0.14.0"
+        ],
+        [
+          "phf_generator",
+          "0.14.0"
+        ],
+        [
+          "phf_macros",
+          "0.14.0"
+        ],
+        [
+          "phf_shared",
+          "0.14.0"
+        ],
+        [
+          "pkg-config",
+          "0.3.34"
+        ],
+        [
+          "png",
+          "0.18.1"
+        ],
+        [
+          "polycool",
+          "0.4.0"
+        ],
+        [
+          "potential_utf",
+          "0.1.6"
+        ],
+        [
+          "print-core",
+          "0.0.0"
+        ],
+        [
+          "proc-macro2",
+          "1.0.107"
+        ],
+        [
+          "publisher-color-worker",
+          "0.0.0"
+        ],
+        [
+          "publisher-font-worker",
+          "0.0.0"
+        ],
+        [
+          "publisher-linux-worker-job",
+          "0.0.0"
+        ],
+        [
+          "publisher-pdf",
+          "0.0.0"
+        ],
+        [
+          "publisher-raster-worker",
+          "0.0.0"
+        ],
+        [
+          "publisher-validator-worker",
+          "0.0.0"
+        ],
+        [
+          "publisher-windows-atomic-file",
+          "0.0.0"
+        ],
+        [
+          "publisher-worker-job",
+          "0.0.0"
+        ],
+        [
+          "pxfm",
+          "0.1.30"
+        ],
+        [
+          "quick-error",
+          "2.0.1"
+        ],
+        [
+          "quick-xml",
+          "0.41.0"
+        ],
+        [
+          "quote",
+          "1.0.47"
+        ],
+        [
+          "raster-boundary",
+          "0.0.0"
+        ],
+        [
+          "raster-capacity",
+          "0.0.0"
+        ],
+        [
+          "rayon",
+          "1.12.0"
+        ],
+        [
+          "rayon-core",
+          "1.13.0"
+        ],
+        [
+          "read-fonts",
+          "0.39.2"
+        ],
+        [
+          "read-fonts",
+          "0.41.0"
+        ],
+        [
+          "regex",
+          "1.13.1"
+        ],
+        [
+          "regex-automata",
+          "0.4.18"
+        ],
+        [
+          "regex-syntax",
+          "0.8.11"
+        ],
+        [
+          "roxmltree",
+          "0.21.1"
+        ],
+        [
+          "rustc-hash",
+          "2.1.3"
+        ],
+        [
+          "rustix",
+          "1.1.4"
+        ],
+        [
+          "rustversion",
+          "1.0.23"
+        ],
+        [
+          "ryu",
+          "1.0.23"
+        ],
+        [
+          "serde",
+          "1.0.228"
+        ],
+        [
+          "serde_core",
+          "1.0.228"
+        ],
+        [
+          "serde_derive",
+          "1.0.228"
+        ],
+        [
+          "serde_json",
+          "1.0.149"
+        ],
+        [
+          "sha2",
+          "0.10.9"
+        ],
+        [
+          "sha2",
+          "0.11.0"
+        ],
+        [
+          "shlex",
+          "2.0.1"
+        ],
+        [
+          "simd-adler32",
+          "0.3.10"
+        ],
+        [
+          "siphasher",
+          "1.0.3"
+        ],
+        [
+          "skrifa",
+          "0.42.1"
+        ],
+        [
+          "skrifa",
+          "0.44.0"
+        ],
+        [
+          "slotmap",
+          "1.1.1"
+        ],
+        [
+          "smallvec",
+          "1.15.2"
+        ],
+        [
+          "stable_deref_trait",
+          "1.2.1"
+        ],
+        [
+          "stringprep",
+          "0.1.5"
+        ],
+        [
+          "subsetter",
+          "0.2.6"
+        ],
+        [
+          "syn",
+          "2.0.119"
+        ],
+        [
+          "syn",
+          "3.0.4"
+        ],
+        [
+          "synstructure",
+          "0.13.2"
+        ],
+        [
+          "taffy",
+          "0.11.0"
+        ],
+        [
+          "thiserror",
+          "2.0.20"
+        ],
+        [
+          "thiserror-impl",
+          "2.0.20"
+        ],
+        [
+          "tiff",
+          "0.11.3"
+        ],
+        [
+          "tinystr",
+          "0.8.4"
+        ],
+        [
+          "tinyvec",
+          "1.12.0"
+        ],
+        [
+          "tinyvec_macros",
+          "0.1.1"
+        ],
+        [
+          "ttf-parser",
+          "0.25.1"
+        ],
+        [
+          "typed-path",
+          "0.12.3"
+        ],
+        [
+          "typenum",
+          "1.20.1"
+        ],
+        [
+          "unicode-bidi",
+          "0.3.18"
+        ],
+        [
+          "unicode-ident",
+          "1.0.24"
+        ],
+        [
+          "unicode-linebreak",
+          "0.1.5"
+        ],
+        [
+          "unicode-normalization",
+          "0.1.25"
+        ],
+        [
+          "unicode-properties",
+          "0.1.4"
+        ],
+        [
+          "utf8_iter",
+          "1.0.4"
+        ],
+        [
+          "utf8parse",
+          "0.2.2"
+        ],
+        [
+          "uuid",
+          "1.26.0"
+        ],
+        [
+          "validator-boundary",
+          "0.0.0"
+        ],
+        [
+          "version_check",
+          "0.9.5"
+        ],
+        [
+          "weezl",
+          "0.1.12"
+        ],
+        [
+          "weezl",
+          "0.2.1"
+        ],
+        [
+          "windows-link",
+          "0.2.1"
+        ],
+        [
+          "windows-sys",
+          "0.61.2"
+        ],
+        [
+          "write-fonts",
+          "0.48.1"
+        ],
+        [
+          "writeable",
+          "0.6.4"
+        ],
+        [
+          "yeslogic-fontconfig-sys",
+          "6.0.1"
+        ],
+        [
+          "yoke",
+          "0.8.3"
+        ],
+        [
+          "yoke-derive",
+          "0.8.2"
+        ],
+        [
+          "zerocopy",
+          "0.8.56"
+        ],
+        [
+          "zerocopy-derive",
+          "0.8.56"
+        ],
+        [
+          "zerofrom",
+          "0.1.8"
+        ],
+        [
+          "zerofrom-derive",
+          "0.1.7"
+        ],
+        [
+          "zerotrie",
+          "0.2.5"
+        ],
+        [
+          "zerovec",
+          "0.11.8"
+        ],
+        [
+          "zerovec-derive",
+          "0.11.6"
+        ],
+        [
+          "zip",
+          "8.6.0"
+        ],
+        [
+          "zlib-rs",
+          "0.6.7"
+        ],
+        [
+          "zlib-rs",
+          "0.6.8"
+        ],
+        [
+          "zmij",
+          "1.0.23"
+        ],
+        [
+          "zopfli",
+          "0.8.3"
+        ],
+        [
+          "zune-core",
+          "0.5.3"
+        ],
+        [
+          "zune-jpeg",
+          "0.5.15"
+        ]
+      ]
+    }
+  ],
+  "cargo_lock_sha256": "2476947309b6fc26a07b1878319fdeaefb747146be8841feee229cae0769c0f8",
+  "client_cargo_lock_sha256": "daef953e1107144715d939f21454bfee2e723f3b9b8fd292c15ca9dafd45664f",
   "rust_standard_library": {
     "toolchain": "1.98.0-x86_64-unknown-linux-gnu",
     "notice": "rust-standard-library/COPYRIGHT-library.html",
-    "sha256": "68129500b616d5838629e68f55ff3aed5e096dacf60ce9eb41bbe599a563afa6"
+    "sha256": "68129500b616d5838629e68f55ff3aed5e096dacf60ce9eb41bbe599a563afa6",
+    "license_texts": [
+      {
+        "path": "rust-standard-library/licenses/Apache-2.0.txt",
+        "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff"
+      },
+      {
+        "path": "rust-standard-library/licenses/BSD-2-Clause.txt",
+        "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df"
+      },
+      {
+        "path": "rust-standard-library/licenses/CC-BY-SA-4.0.txt",
+        "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
+      },
+      {
+        "path": "rust-standard-library/licenses/GCC-exception-3.1.txt",
+        "sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54"
+      },
+      {
+        "path": "rust-standard-library/licenses/GPL-2.0-only.txt",
+        "sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af"
+      },
+      {
+        "path": "rust-standard-library/licenses/GPL-3.0-or-later.txt",
+        "sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2"
+      },
+      {
+        "path": "rust-standard-library/licenses/ISC.txt",
+        "sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381"
+      },
+      {
+        "path": "rust-standard-library/licenses/LLVM-exception.txt",
+        "sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e"
+      },
+      {
+        "path": "rust-standard-library/licenses/MIT.txt",
+        "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0"
+      },
+      {
+        "path": "rust-standard-library/licenses/NCSA.txt",
+        "sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630"
+      },
+      {
+        "path": "rust-standard-library/licenses/OFL-1.1.txt",
+        "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd"
+      },
+      {
+        "path": "rust-standard-library/licenses/Unicode-3.0.txt",
+        "sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443"
+      }
+    ]
   },
   "includes_dev_dependencies": true,
   "all_workspace_members": true,
-  "scope": "Windows Cargo closure from the selected roots, including optional features unified by the workspace and development dependencies; may overinclude build-only crates. First-party source is MIT OR Apache-2.0; external terms remain separately recorded.",
+  "scope": "Union of Windows and Linux Cargo closures from the selected roots, including optional features unified by the workspace and development dependencies; may overinclude build-only crates. First-party source is MIT OR Apache-2.0; external terms remain separately recorded.",
   "dependencies": [
     {
       "name": "adler2",
@@ -51,6 +2039,10 @@
       ],
       "cargo_manifest_sha256": "8f30dbd092f3acc475b9d339736cd7b64c6489bc47cd234a7f2232fc52e2d490",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/adler2-2.0.1/LICENSE-0BSD",
@@ -79,6 +2071,10 @@
       ],
       "cargo_manifest_sha256": "d5edac8ac95d105536e0f65a2cc403b3bb5263c726e1a37863a35e1afe5c3422",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/aes-0.9.3/LICENSE-APACHE",
@@ -106,6 +2102,10 @@
         "perf-literal",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/aho-corasick-1.1.5/COPYING",
@@ -130,6 +2130,10 @@
       ],
       "cargo_manifest_sha256": "1f6b69ab89d00e2c180d27279d18448b30d52c83bb4d7a4fc30c319b3b4a8214",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/alloc-no-stdlib-2.0.4/LICENSE",
@@ -150,6 +2154,10 @@
       ],
       "cargo_manifest_sha256": "9b65004149aeacdda9e2aa7cc08c36912d26cd51e8d91914fd63ad5bc1893a01",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/alloc-stdlib-0.2.4/LICENSE",
@@ -172,6 +2180,10 @@
       "enabled_features": [
         "auto",
         "wincon"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -198,6 +2210,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/anstyle-1.0.14/LICENSE-APACHE",
@@ -223,6 +2239,10 @@
         "default",
         "utf8"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/anstyle-parse-1.0.0/LICENSE-APACHE",
@@ -245,6 +2265,10 @@
       "authors": [],
       "cargo_manifest_sha256": "478a0950938a0e6eea2bb824607c056c9ac517a45716841fe940b6e3488323b7",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/anstyle-query-1.1.5/LICENSE-APACHE",
@@ -267,6 +2291,9 @@
       "authors": [],
       "cargo_manifest_sha256": "be7526c599f7d291150912990e4a70cef1e691c96c300c06c784d310dc00efb3",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/anstyle-wincon-3.0.11/LICENSE-APACHE",
@@ -289,6 +2316,10 @@
       "authors": [],
       "cargo_manifest_sha256": "906039aeef2d7271d9dad24358a0c07c7373d6cd9d0db259c1dd15a78a89628f",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -304,6 +2335,10 @@
       ],
       "cargo_manifest_sha256": "20e9a4f27b17531ac0c3ab9f403e52c9d567eea254703df3b3b18ca36d5f7927",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/arrayvec-0.7.8/LICENSE-APACHE",
@@ -331,6 +2366,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/atoi_simd-0.18.1/LICENSE-APACHE",
@@ -355,6 +2394,10 @@
       ],
       "cargo_manifest_sha256": "ed7c832b4250c3be736e040d68688c2b83a5b164a93ef533e61532cbe0d44e99",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/autocfg-1.5.1/LICENSE-APACHE",
@@ -383,6 +2426,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/base64-0.22.1/LICENSE-APACHE",
@@ -408,6 +2455,10 @@
       "cargo_manifest_sha256": "87aced7532a7974eb37ab5fe6037f0abafc36d6b2d74891ecd2bf2f14f50d11e",
       "enabled_features": [
         "default"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -435,6 +2486,10 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/bitflags-2.13.1/LICENSE-APACHE",
@@ -459,6 +2514,10 @@
       ],
       "cargo_manifest_sha256": "c76e4bd298cd6223882238449e31939d75613e82757ca87e249df843decf5f9a",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/block-buffer-0.10.4/LICENSE-APACHE",
@@ -483,6 +2542,10 @@
       ],
       "cargo_manifest_sha256": "f21191120ab1d04327657b7125f25b0e3f2bce34af5e921d3c66d24de11d5e60",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/block-buffer-0.12.1/LICENSE-APACHE",
@@ -507,6 +2570,10 @@
       ],
       "cargo_manifest_sha256": "13996a81a3ed0a5b655ef2fde2df416456afe326467d9f16a879900f16459965",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/block-padding-0.4.2/LICENSE-APACHE",
@@ -536,6 +2603,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/brotli-8.0.4/LICENSE.BSD-3-Clause",
@@ -564,6 +2635,10 @@
         "alloc-stdlib",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/brotli-decompressor-5.0.3/LICENSE",
@@ -585,6 +2660,10 @@
       "cargo_manifest_sha256": "a6d2d81f09f1c739f738032bbcb5ecf4d3ce56d2f75e2e8bae9c753b09a6db4c",
       "enabled_features": [
         "default"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -616,6 +2695,10 @@
         "extern_crate_alloc",
         "min_const_generics"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/bytemuck-1.25.2/LICENSE-APACHE",
@@ -644,6 +2727,10 @@
       ],
       "cargo_manifest_sha256": "706bb66b711d79ebf1d01689c3798293d8cfe7571c9703d221a82f2cdda91e88",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/bytemuck_derive-1.12.0/LICENSE-APACHE",
@@ -675,6 +2762,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/byteorder-1.5.0/COPYING",
@@ -700,6 +2791,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/byteorder-lite-0.1.0/LICENSE-MIT",
@@ -724,6 +2819,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/bytes-1.12.1/LICENSE",
@@ -746,6 +2845,10 @@
       "enabled_features": [
         "block-padding",
         "default"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -771,6 +2874,10 @@
       "enabled_features": [
         "parallel"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/cc-1.4.4/LICENSE-APACHE",
@@ -795,6 +2902,10 @@
       ],
       "cargo_manifest_sha256": "281d508beb1fe3927cf03d3f2f8c9a5117b1e4fe97ae21b9026cf318e8c35273",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/cfg-if-1.0.4/LICENSE-APACHE",
@@ -819,6 +2930,10 @@
       ],
       "cargo_manifest_sha256": "d646663ec1bd4e8e795bd6a386cff9c374880d6237bbfa36bbac08b7f26ce65c",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/cfg-if-1.0.5/LICENSE-APACHE",
@@ -854,6 +2969,10 @@
         "winapi",
         "windows-link"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/chrono-0.4.45/LICENSE.txt",
@@ -876,6 +2995,10 @@
       "enabled_features": [
         "block-padding"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/cipher-0.5.2/LICENSE-APACHE",
@@ -896,8 +3019,12 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "62f309b36234ab5110760ac32daa1978af342429e3ca213c6aa7813421851070",
+      "cargo_manifest_sha256": "c674292b5847c5af1fd9fd57a42aa76f1277a514f5aa7349c3a7c337ea5dc76a",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -911,6 +3038,10 @@
       "authors": [],
       "cargo_manifest_sha256": "403ea406945c6d350b0a0f6b5c01d5bee1e59d522059884b7f15a0b44c64b579",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/colorchoice-1.0.5/LICENSE-APACHE",
@@ -935,6 +3066,10 @@
       ],
       "cargo_manifest_sha256": "591ac78fc8cd99d8a31110e8cb572534bb9d04af23bc48db855a34d4a6c78569",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/const-oid-0.10.2/LICENSE-APACHE",
@@ -959,6 +3094,10 @@
       ],
       "cargo_manifest_sha256": "356af6c2a43e0cae4c7d49193903c64b1d82383b4e5ee5b28b39976f15160bfb",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/cpubits-0.1.1/LICENSE-APACHE",
@@ -983,6 +3122,10 @@
       ],
       "cargo_manifest_sha256": "25160ea4dfa195721d352d42827b882a41f18f4c55fff58e5c3878ecae84ca44",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/cpufeatures-0.2.17/LICENSE-APACHE",
@@ -1007,6 +3150,10 @@
       ],
       "cargo_manifest_sha256": "2e82ee61a94e8ef99197ca59723e9794d0f08363f28bacab680292af6ccdde61",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/cpufeatures-0.3.1/LICENSE-APACHE",
@@ -1035,6 +3182,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/crc32fast-1.5.1/LICENSE-APACHE",
@@ -1062,6 +3213,10 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/crc32fast-1.5.2/LICENSE-APACHE",
@@ -1086,6 +3241,10 @@
       "enabled_features": [
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -1112,6 +3271,10 @@
         "alloc",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/crossbeam-epoch-0.9.20/LICENSE-APACHE",
@@ -1136,6 +3299,10 @@
       "enabled_features": [
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -1163,6 +3330,10 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/crypto-common-0.1.7/LICENSE-APACHE",
@@ -1187,6 +3358,10 @@
       ],
       "cargo_manifest_sha256": "1b47561054dd2fe13246f2f6e19c29eac256269e02c96162fd6efed28247e78a",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/crypto-common-0.2.2/LICENSE-APACHE",
@@ -1211,6 +3386,10 @@
       ],
       "cargo_manifest_sha256": "d8584e342790da85066e8ac4702643c06f917176c610c0f6262ed1fe26a7e71d",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/debug_unsafe-0.1.4/LICENSE-APACHE",
@@ -1237,6 +3416,10 @@
       "enabled_features": [
         "alloc"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/defmt-1.1.1/LICENSE-APACHE",
@@ -1261,6 +3444,10 @@
       ],
       "cargo_manifest_sha256": "76cfa8794026d9f8a67563de3ba71a13de1be77209b168f800c1afe899b6de08",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/defmt-macros-1.1.1/LICENSE-APACHE",
@@ -1285,6 +3472,10 @@
       ],
       "cargo_manifest_sha256": "c4c4df5b09e53450267eacadf1f7f6a0d3d5fc463bc450e199f0d06eba8e6ab3",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/defmt-parser-1.0.0/LICENSE-MIT",
@@ -1319,6 +3510,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/digest-0.10.7/LICENSE-APACHE",
@@ -1348,6 +3543,10 @@
         "default",
         "oid"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/digest-0.11.3/LICENSE-APACHE",
@@ -1372,6 +3571,10 @@
       ],
       "cargo_manifest_sha256": "76473a3a2f0227263f6b6dbf575516c75e4eeaf2d8eb26c6f40f4107983b70da",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/displaydoc-0.2.7/LICENSE-APACHE",
@@ -1380,6 +3583,29 @@
         {
           "path": "texts/displaydoc-0.2.7/LICENSE-MIT",
           "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
+      "name": "dlib",
+      "version": "0.5.3",
+      "license": "MIT",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/elinorbgr/dlib",
+      "links": null,
+      "authors": [
+        "Elinor Berger <elinor@safaradeg.net>"
+      ],
+      "cargo_manifest_sha256": "24f313fe0c6ec29322019de4c0dd36dd3e3abafac60f7d338de8ce4d8eb27b6d",
+      "enabled_features": [],
+      "targets": [
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/dlib-0.5.3/LICENSE.txt",
+          "sha256": "10e5daea68c3ab7da6468ea51860e9d4ac87ea6a9a2d34127beff17b7193b618"
         }
       ],
       "scope": "Cargo source/test dependency; conservative feature union"
@@ -1394,6 +3620,10 @@
       "authors": [],
       "cargo_manifest_sha256": "99adc04ce7f338ce12e2967e830507b83c478a374aa3c2e2cfa31d668d4fb87b",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -1409,6 +3639,10 @@
       ],
       "cargo_manifest_sha256": "4c43171921da7db4e1a52c7eb43aa1f5321a7dee887d6b185d2adb6f3d4d3469",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/dunce-1.0.5/LICENSE",
@@ -1427,6 +3661,10 @@
       "authors": [],
       "cargo_manifest_sha256": "f0cf9ec7dc95332b186eea993b9b043f6ccb536b136bc1345955da0311dcb784",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/either-1.18.0/LICENSE-APACHE",
@@ -1453,6 +3691,10 @@
       "enabled_features": [
         "alloc",
         "default"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -1487,6 +3729,10 @@
         "regex",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/env_filter-2.0.0/LICENSE-APACHE",
@@ -1515,6 +3761,10 @@
         "humantime",
         "regex"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/env_logger-0.11.11/LICENSE-APACHE",
@@ -1537,6 +3787,10 @@
       "authors": [],
       "cargo_manifest_sha256": "92fcf6d8b32d99f40a5053b9026e417c958d6f5f19581c632d675211b7eeb9f9",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/equivalent-1.0.2/LICENSE-APACHE",
@@ -1545,6 +3799,36 @@
         {
           "path": "texts/equivalent-1.0.2/LICENSE-MIT",
           "sha256": "7365cc8878a1d7ce155a58c4ca09c3d7a6be413efa5334a80ea842912b669349"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
+      "name": "errno",
+      "version": "0.3.14",
+      "license": "MIT OR Apache-2.0",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/lambda-fairy/rust-errno",
+      "links": null,
+      "authors": [
+        "Chris Wong <lambda.fairy@gmail.com>",
+        "Dan Gohman <dev@sunfishcode.online>"
+      ],
+      "cargo_manifest_sha256": "a25f16ccaa127602fc0cc9d1c80186619a0b8f42331a27b6f04b6bfa4aa29de2",
+      "enabled_features": [
+        "std"
+      ],
+      "targets": [
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/errno-0.3.14/LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "texts/errno-0.3.14/LICENSE-MIT",
+          "sha256": "8764a597675778ddfd4e25f81b08a05dbcf089ac05662df7613fe67f150e3aa2"
         }
       ],
       "scope": "Cargo source/test dependency; conservative feature union"
@@ -1562,6 +3846,10 @@
       "cargo_manifest_sha256": "6be8b7f663c4a25f5e0c9b411ec509ad5be2caa0d6f7064075e833d848b04c49",
       "enabled_features": [
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -1595,6 +3883,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/fast-float2-0.2.4/LICENSE-APACHE",
@@ -1619,6 +3911,10 @@
       ],
       "cargo_manifest_sha256": "3f01725ad91d1a1705762821e9231ea15ddfa62648143516e68d64021ae31e08",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/fastrand-2.5.0/LICENSE-APACHE",
@@ -1643,6 +3939,10 @@
       ],
       "cargo_manifest_sha256": "60d52f46e11adccef92a5b4d01b8c41632f4f030c496b4f7ce2680d02dffd42c",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/fax-0.2.7/LICENSE",
@@ -1663,6 +3963,10 @@
       ],
       "cargo_manifest_sha256": "d5f832103c61c132a406b738c55d0fbc31de926186ded715816bc56ee04e3c53",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/fdeflate-0.3.7/LICENSE-APACHE",
@@ -1685,6 +3989,10 @@
       "authors": [],
       "cargo_manifest_sha256": "5d4d49b1ad69bc8c86f8a1912996ff3503a6c253bd6039d6e32960b5e6c0cb18",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/find-msvc-tools-0.1.11/LICENSE-APACHE",
@@ -1718,6 +4026,10 @@
         "rust_backend",
         "zlib-rs"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/flate2-1.1.10/LICENSE-APACHE",
@@ -1742,6 +4054,10 @@
       ],
       "cargo_manifest_sha256": "0a76cc29da1c33f4bdb505f5828ecdc20859c4cb9faa402e000f5f10511a27cc",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/foldhash-0.2.0/LICENSE",
@@ -1758,8 +4074,12 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "de713d8234e3106465cff63e0a879abed73fe5957d795016935098341af2365b",
+      "cargo_manifest_sha256": "04e2d218e977eb06b6c819e75877cd90a4b36544ef244854fc6bb9e2844932a8",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -1775,6 +4095,10 @@
       "enabled_features": [
         "bytemuck",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -1801,6 +4125,10 @@
         "bytemuck",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/font-types-0.12.4/LICENSE-APACHE",
@@ -1825,6 +4153,10 @@
       "enabled_features": [
         "std",
         "system"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -1853,6 +4185,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/foreign-types-0.5.0/LICENSE-APACHE",
@@ -1879,6 +4215,10 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/foreign-types-macros-0.2.4/LICENSE-APACHE",
@@ -1903,6 +4243,10 @@
       ],
       "cargo_manifest_sha256": "096ac915be03aa1eb99b12ad4c5552a50bd550de4d1fb9a52e0799319f98f994",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/foreign-types-shared-0.3.1/LICENSE-APACHE",
@@ -1930,6 +4274,10 @@
       "enabled_features": [
         "more_lengths"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/generic-array-0.14.7/LICENSE",
@@ -1952,6 +4300,10 @@
       "enabled_features": [
         "std",
         "wasm_js"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -1979,6 +4331,10 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/grid-1.0.1/LICENSE",
@@ -2002,6 +4358,10 @@
         "alloc",
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2027,6 +4387,10 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/harfrust-0.12.0/LICENSE",
@@ -2047,6 +4411,10 @@
       "enabled_features": [
         "default-hasher",
         "raw-entry"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2072,6 +4440,10 @@
       ],
       "cargo_manifest_sha256": "f6ee14dcb159bf01915d9cb9b0fa99696ebc689e5405953b79e3cb08458022a1",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/hybrid-array-0.4.14/LICENSE-APACHE",
@@ -2085,6 +4457,54 @@
       "scope": "Cargo source/test dependency; conservative feature union"
     },
     {
+      "name": "iana-time-zone",
+      "version": "0.1.65",
+      "license": "MIT OR Apache-2.0",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/strawlab/iana-time-zone",
+      "links": null,
+      "authors": [
+        "Andrew Straw <strawman@astraw.com>",
+        "Ren\u00e9 Kijewski <rene.kijewski@fu-berlin.de>",
+        "Ryan Lopopolo <rjl@hyperbo.la>"
+      ],
+      "cargo_manifest_sha256": "d1ef413992ad304def4305f3127a047bfd5adbeb2c8fd73fd63886a2217cd361",
+      "enabled_features": [
+        "fallback"
+      ],
+      "targets": [
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/iana-time-zone-0.1.65/LICENSE-APACHE",
+          "sha256": "696759d65dfe558ff7d9f031c76db19ec5c0767470fb67c4e8d990820d1e99c9"
+        },
+        {
+          "path": "texts/iana-time-zone-0.1.65/LICENSE-MIT",
+          "sha256": "da28ccc6b158fc2d8cccc74e99794b1cff1d29bd7bbeb019442fcf0c04c6cad9"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
+      "name": "icc-profile",
+      "version": "0.0.0",
+      "license": "MIT OR Apache-2.0",
+      "source": null,
+      "repository": null,
+      "links": null,
+      "authors": [],
+      "cargo_manifest_sha256": "bd49b205c0fbdeda804cdb09fc222d23896ac628f07b2337bb3add86877488e2",
+      "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [],
+      "scope": "project-owned; MIT OR Apache-2.0"
+    },
+    {
       "name": "icu_collections",
       "version": "2.3.0",
       "license": "Unicode-3.0",
@@ -2096,6 +4516,10 @@
       ],
       "cargo_manifest_sha256": "eb60eb645a6c36df23200ec8694c58e030eb2f4ef70a76152e5522080388432f",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_collections-2.3.0/LICENSE",
@@ -2119,6 +4543,10 @@
         "alloc",
         "zerovec"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_locale_core-2.3.0/LICENSE",
@@ -2141,6 +4569,10 @@
       "enabled_features": [
         "compiled_data"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_locale_fallback-2.3.0/LICENSE",
@@ -2161,6 +4593,10 @@
       ],
       "cargo_manifest_sha256": "9c4dbb492b573f2a753c1a1847c2973628ac22884c091f73dfabd470135e0aae",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_locale_fallback_data-2.3.0/LICENSE",
@@ -2183,6 +4619,10 @@
       "enabled_features": [
         "compiled_data"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_normalizer-2.3.0/LICENSE",
@@ -2203,6 +4643,10 @@
       ],
       "cargo_manifest_sha256": "c9bd42cf03d21ec7be29781dbb11387ffc4e1671aebe47bfa792621be794c651",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_normalizer_data-2.3.0/LICENSE",
@@ -2226,6 +4670,10 @@
         "compiled_data",
         "default"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_properties-2.3.0/LICENSE",
@@ -2246,6 +4694,10 @@
       ],
       "cargo_manifest_sha256": "a1daca899288d4f0b78ba1ae2d78d6d754ff6fd906558761908e7b2421de2895",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_properties_data-2.3.0/LICENSE",
@@ -2269,6 +4721,10 @@
         "alloc",
         "baked"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_provider-2.3.1/LICENSE",
@@ -2291,6 +4747,10 @@
       "enabled_features": [
         "compiled_data"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_segmenter-2.3.0/LICENSE",
@@ -2311,6 +4771,10 @@
       ],
       "cargo_manifest_sha256": "bd561e824450a7f3534e74d9a3fc9732b16e49c2d906c99a8a7033268c4e9047",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/icu_segmenter_data-2.3.0/LICENSE",
@@ -2336,6 +4800,10 @@
         "png",
         "tiff"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/image-0.25.10/LICENSE-APACHE",
@@ -2360,6 +4828,10 @@
       "enabled_features": [
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2387,6 +4859,10 @@
       "enabled_features": [
         "block-padding"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/inout-0.2.2/LICENSE-APACHE",
@@ -2410,6 +4886,10 @@
       "cargo_manifest_sha256": "2aaf3bc62750cad372b84b8fb6a8413a6af7c97c2aff3e1ee01124095291ed06",
       "enabled_features": [
         "default"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2435,6 +4915,10 @@
       ],
       "cargo_manifest_sha256": "894c215e4e7e973b556b0e9627bf9b6a719a043fac9b5af9838660816392a09f",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/itoa-1.0.18/LICENSE-APACHE",
@@ -2461,6 +4945,10 @@
       "enabled_features": [
         "alloc",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2491,6 +4979,10 @@
         "std",
         "tz-fat"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/jiff-core-0.1.0/COPYING",
@@ -2515,6 +5007,10 @@
       ],
       "cargo_manifest_sha256": "5475de657d1c10b1c27f76a2d54fdd3162027705f663410b091294cd08482a72",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/jobserver-0.1.35/LICENSE-APACHE",
@@ -2542,6 +5038,10 @@
         "default",
         "rayon"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/jpeg-decoder-0.3.2/LICENSE-APACHE",
@@ -2567,6 +5067,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/kurbo-0.13.1/LICENSE-APACHE",
@@ -2589,6 +5093,10 @@
       "authors": [],
       "cargo_manifest_sha256": "b57b4a7c222334498d4e9a7892b123a925b975764342d0b2d87416002f1fa44f",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -2605,6 +5113,10 @@
       "cargo_manifest_sha256": "dd90ad559a6d45a24f8c9a8d3b06e39dba40fe40eddfd41f6b360551f374ba8f",
       "enabled_features": [
         "static"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2632,6 +5144,10 @@
         "static",
         "static-fallback"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/lcms2-sys-4.0.7/vendor/LICENSE",
@@ -2653,6 +5169,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/libc-0.2.189/LICENSE-APACHE",
@@ -2661,6 +5181,29 @@
         {
           "path": "texts/libc-0.2.189/LICENSE-MIT",
           "sha256": "123a331b5dbf04c30097fa43b8f858bc85df671fe776de498d01f3d6b7c1f69e"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
+      "name": "libloading",
+      "version": "0.8.9",
+      "license": "ISC",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/nagisa/rust_libloading/",
+      "links": null,
+      "authors": [
+        "Simonas Kazlauskas <libloading@kazlauskas.me>"
+      ],
+      "cargo_manifest_sha256": "c70a979f3e8987bcf85b377d310b895b4bbeae29f6b0a28735cf48230087d5e2",
+      "enabled_features": [],
+      "targets": [
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/libloading-0.8.9/LICENSE",
+          "sha256": "b29f8b01452350c20dd1af16ef83b598fea3053578ccc1c7a0ef40e57be2620f"
         }
       ],
       "scope": "Cargo source/test dependency; conservative feature union"
@@ -2675,6 +5218,10 @@
       "authors": [],
       "cargo_manifest_sha256": "7b1037998d67ea7a1be7da89c071ac7f0d93eb974cebbbc7056688abaaa9eb64",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/linebender_resource_handle-0.1.1/LICENSE-APACHE",
@@ -2683,6 +5230,48 @@
         {
           "path": "texts/linebender_resource_handle-0.1.1/LICENSE-MIT",
           "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
+      "name": "linux-raw-sys",
+      "version": "0.12.1",
+      "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/sunfishcode/linux-raw-sys",
+      "links": null,
+      "authors": [
+        "Dan Gohman <dev@sunfishcode.online>"
+      ],
+      "cargo_manifest_sha256": "1d24fe227d87b23fc5220ddf2ca4708e5e0d794a3f77961b71cd8140bf33faa5",
+      "enabled_features": [
+        "auxvec",
+        "elf",
+        "errno",
+        "general",
+        "ioctl",
+        "no_std"
+      ],
+      "targets": [
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/linux-raw-sys-0.12.1/COPYRIGHT",
+          "sha256": "3290ae0fbc9ddb77d2239121d710f0bb9d31b3b4744e6d97fe01e652b4c1870b"
+        },
+        {
+          "path": "texts/linux-raw-sys-0.12.1/LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "texts/linux-raw-sys-0.12.1/LICENSE-Apache-2.0_WITH_LLVM-exception",
+          "sha256": "268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5"
+        },
+        {
+          "path": "texts/linux-raw-sys-0.12.1/LICENSE-MIT",
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
         }
       ],
       "scope": "Cargo source/test dependency; conservative feature union"
@@ -2700,6 +5289,10 @@
       "cargo_manifest_sha256": "0cc7f82691b669873f759afd43bc2c9387088bfb973ad6037decce4d94f31fe3",
       "enabled_features": [
         "alloc"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2724,6 +5317,10 @@
         "alloc",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/log-0.4.34/LICENSE-APACHE",
@@ -2732,6 +5329,37 @@
         {
           "path": "texts/log-0.4.34/LICENSE-MIT",
           "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
+      "name": "md-5",
+      "version": "0.10.6",
+      "license": "MIT OR Apache-2.0",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/RustCrypto/hashes",
+      "links": null,
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "cargo_manifest_sha256": "d6889f7a35144bad6b21ef85f3a6c19dc39a06dac08d0714a7465e0783e74fb7",
+      "enabled_features": [
+        "default",
+        "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/md-5-0.10.6/LICENSE-APACHE",
+          "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+        },
+        {
+          "path": "texts/md-5-0.10.6/LICENSE-MIT",
+          "sha256": "b4eb00df6e2a4d22518fcaa6a2b4646f249b3a3c9814509b22bd2091f1392ff1"
         }
       ],
       "scope": "Cargo source/test dependency; conservative feature union"
@@ -2752,6 +5380,10 @@
         "alloc",
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2779,6 +5411,10 @@
       ],
       "cargo_manifest_sha256": "68107d762f4ea1a1360856e14d048ea68c573993045cabd379165005b0f4a13a",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/memmap2-0.9.11/LICENSE-APACHE",
@@ -2809,6 +5445,10 @@
         "simd",
         "simd-adler32",
         "with-alloc"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2848,6 +5488,10 @@
         "simd",
         "simd-adler32",
         "with-alloc"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -2896,6 +5540,10 @@
         "sse_shaper_fixed_point_paths",
         "sse_shaper_paths"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/moxcms-0.8.1/LICENSE-APACHE.md",
@@ -2924,6 +5572,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/nom-8.0.0/LICENSE",
@@ -2947,6 +5599,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/num-traits-0.2.19/LICENSE-APACHE",
@@ -2969,6 +5625,10 @@
       "authors": [],
       "cargo_manifest_sha256": "8de6727dfb347e161d62325f644146a4dda4bbfd1e61ad0cddac6100234e541a",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/office_oxide-0.1.8/LICENSE-APACHE",
@@ -3002,6 +5662,10 @@
         "race",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/once_cell-1.21.4/LICENSE-APACHE",
@@ -3026,6 +5690,9 @@
       "enabled_features": [
         "default"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/once_cell_polyfill-1.70.2/LICENSE-APACHE",
@@ -3049,6 +5716,10 @@
       "cargo_manifest_sha256": "b077c57e747e175a1ad3ea81a87247a7501ff02dc6ec64e1ea60d26d7f675a05",
       "enabled_features": [
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -3076,6 +5747,10 @@
         "std",
         "system"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/parley-0.11.1/LICENSE-APACHE",
@@ -3100,6 +5775,10 @@
       "enabled_features": [
         "baked"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/parley_data-0.11.1/LICENSE-APACHE",
@@ -3120,8 +5799,12 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "2944a540c1fe8cf7822e3e61ba85f2264ad4d7b4c346cf5261fd4f97a7174edf",
+      "cargo_manifest_sha256": "a6e102ed1959081a4629179aa29190e75de41c1e49479f272ab796e6fd6396b3",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3138,6 +5821,10 @@
       ],
       "cargo_manifest_sha256": "7e764370a714928c5a54547a0e27b2a73e33ea057b94a02806dacbae8c4afb42",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/pdf-writer-0.15.0/LICENSE-APACHE",
@@ -3162,6 +5849,10 @@
       ],
       "cargo_manifest_sha256": "ab8605261c13e6fb9c7b0ce0fc6a2e073e525270dc61d6950b9333b6f14167a4",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/pdf_oxide-0.3.73/LICENSE-APACHE",
@@ -3199,6 +5890,10 @@
         "phf_macros",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/phf-0.14.0/LICENSE",
@@ -3219,6 +5914,10 @@
       ],
       "cargo_manifest_sha256": "98d1a63dcddb3e93dfd8ce69a265aa7366af485556d41bca2316af5389326313",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/phf_generator-0.14.0/LICENSE",
@@ -3239,6 +5938,10 @@
       ],
       "cargo_manifest_sha256": "911505032fcf88f5bc8f82b646f8b72810c98b309a5c4794bed845f3c0fe8c13",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/phf_macros-0.14.0/LICENSE",
@@ -3261,6 +5964,10 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/phf_shared-0.14.0/LICENSE",
@@ -3281,6 +5988,10 @@
       ],
       "cargo_manifest_sha256": "26612dc6bbb8c045f4c91f95fc026b926e9adb942655dddfd21ffecf2595b70b",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/pkg-config-0.3.34/LICENSE-APACHE",
@@ -3305,6 +6016,10 @@
       ],
       "cargo_manifest_sha256": "642c5d3c2bf538404cf1d5c4aac254d033e0854af844610435fd13e910bf93aa",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/png-0.18.1/LICENSE-APACHE",
@@ -3328,6 +6043,10 @@
       "cargo_manifest_sha256": "ccff01863f757fd7af928d11264280cdaa1bda49a9672ede3ca77bb42d407901",
       "enabled_features": [
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -3357,6 +6076,10 @@
         "writeable",
         "zerovec"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/potential_utf-0.1.6/LICENSE",
@@ -3373,11 +6096,16 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "865cd4ab931e26c5a9580d9457c78ba722543fae908abbc40d04ef1411198474",
+      "cargo_manifest_sha256": "b031bbc75ce166d37755d305f3282a1c888b456eb4f738b37f9f7a03b257fa61",
       "enabled_features": [
+        "color-management",
         "default",
         "pdf-oxide-validator",
         "publisher-adapter"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
@@ -3397,6 +6125,10 @@
       "enabled_features": [
         "default",
         "proc-macro"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -3418,8 +6150,12 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "8dbcec9d1114bb47802084fee4b2a09643b0c99184c8d94215b6af203de27831",
+      "cargo_manifest_sha256": "74178e13752d7467274033eb08b7c2c933221784710b1a779eedd9aa2c96a01b",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3431,8 +6167,29 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "c828be76e77b0f0c695d665dfa8997248481cc992415ab1525597cfb25afda30",
+      "cargo_manifest_sha256": "248d40a166666189e326dd163e1c73567ab9265224fc76f393c642c7bccc916b",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [],
+      "scope": "project-owned; MIT OR Apache-2.0"
+    },
+    {
+      "name": "publisher-linux-worker-job",
+      "version": "0.0.0",
+      "license": "MIT OR Apache-2.0",
+      "source": null,
+      "repository": null,
+      "links": null,
+      "authors": [],
+      "cargo_manifest_sha256": "633307826f7629e73636f495c5546f4c5296073b3b332434871e98d214f6f21c",
+      "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3446,6 +6203,10 @@
       "authors": [],
       "cargo_manifest_sha256": "d0a90d502d151326d577d099f5b1e375bcec5a7ba23342dd5e6707d03acef972",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3459,6 +6220,10 @@
       "authors": [],
       "cargo_manifest_sha256": "adb4f11cb469d7c27b29f08ee1f133fc5b5709e8f999f058d1ba0f2fda5150c5",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3472,6 +6237,10 @@
       "authors": [],
       "cargo_manifest_sha256": "1c83f6addb008b9e6c5717535b7d3b4a3137ac06beadb66ee396b7d140b24056",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3485,6 +6254,10 @@
       "authors": [],
       "cargo_manifest_sha256": "51b63ce23277d3d56ddc9de46a37a16b9f8c9b400de043d8cc7c771bddf56ded",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3498,6 +6271,10 @@
       "authors": [],
       "cargo_manifest_sha256": "06de7dc7dd9ab36f35c701c64591bc0a91e7311ed3eed117859676e22921ec03",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3513,6 +6290,10 @@
       ],
       "cargo_manifest_sha256": "9260684ebef37231391bd46c3aaa628fd034746ffba5154a5544791810382966",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/pxfm-0.1.30/LICENSE-APACHE.md",
@@ -3538,6 +6319,10 @@
       ],
       "cargo_manifest_sha256": "d36aca49b7f7fe25c35e8ef7c3a68f7a94fdc777ac80d52b8fe360608a7d9af1",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/quick-error-2.0.1/LICENSE-APACHE",
@@ -3564,6 +6349,10 @@
         "serde",
         "serialize"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/quick-xml-0.41.0/LICENSE-MIT.md",
@@ -3587,6 +6376,10 @@
         "default",
         "proc-macro"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/quote-1.0.47/LICENSE-APACHE",
@@ -3607,8 +6400,12 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "9376383927729ffb5ab4a43d0b2521332ec7e7a7db477fdd86fc73410dc6e9d7",
+      "cargo_manifest_sha256": "cb5ddaa0f6d0f96b84ac578b3ef23a1625d5ddbf92ab564e916f36e29fa8eda2",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3622,6 +6419,10 @@
       "authors": [],
       "cargo_manifest_sha256": "f8c5dabaf29a57d33b35d0ad92169f9a4106918c004f98c037bf735f39a03a1a",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
     },
@@ -3635,6 +6436,10 @@
       "authors": [],
       "cargo_manifest_sha256": "bcc6eda50025991d8db6ccaaad2e26477072a359762451a4e55a7e700ad0e42d",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/rayon-1.12.0/LICENSE-APACHE",
@@ -3657,6 +6462,10 @@
       "authors": [],
       "cargo_manifest_sha256": "ab50ad4709436f6bda04e5345444f1197b1eda2bd3b49f9412c0cb318111b5a2",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/rayon-core-1.13.0/LICENSE-APACHE",
@@ -3681,6 +6490,10 @@
       "enabled_features": [
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -3707,6 +6520,10 @@
         "default",
         "experimental_font_api",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -3750,6 +6567,10 @@
         "unicode-perl",
         "unicode-script",
         "unicode-segment"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -3799,6 +6620,10 @@
         "unicode-segment",
         "unicode-word-boundary"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/regex-automata-0.4.18/LICENSE-APACHE",
@@ -3835,6 +6660,10 @@
         "unicode-script",
         "unicode-segment"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/regex-syntax-0.8.11/LICENSE-APACHE",
@@ -3867,6 +6696,10 @@
         "positions",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/roxmltree-0.21.1/LICENSE-APACHE",
@@ -3894,6 +6727,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/rustc-hash-2.1.3/LICENSE-APACHE",
@@ -3902,6 +6739,46 @@
         {
           "path": "texts/rustc-hash-2.1.3/LICENSE-MIT",
           "sha256": "30fefc3a7d6a0041541858293bcbea2dde4caa4c0a5802f996a7f7e8c0085652"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
+      "name": "rustix",
+      "version": "1.1.4",
+      "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/bytecodealliance/rustix",
+      "links": null,
+      "authors": [
+        "Dan Gohman <dev@sunfishcode.online>",
+        "Jakub Konka <kubkon@jakubkonka.com>"
+      ],
+      "cargo_manifest_sha256": "13302af30f997a373ad50b7aa668d9612483e85be6b455e09d95bbd59fb5296f",
+      "enabled_features": [
+        "alloc",
+        "fs",
+        "std"
+      ],
+      "targets": [
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/rustix-1.1.4/COPYRIGHT",
+          "sha256": "377c2e7c53250cc5905c0b0532d35973392af16ffb9596a41d99d202cf3617c9"
+        },
+        {
+          "path": "texts/rustix-1.1.4/LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "texts/rustix-1.1.4/LICENSE-Apache-2.0_WITH_LLVM-exception",
+          "sha256": "268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5"
+        },
+        {
+          "path": "texts/rustix-1.1.4/LICENSE-MIT",
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
         }
       ],
       "scope": "Cargo source/test dependency; conservative feature union"
@@ -3918,6 +6795,10 @@
       ],
       "cargo_manifest_sha256": "fc211ccd64d3ad59a0715c1a6f8cbfbbd83045f644194394595d16646eee9947",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/rustversion-1.0.23/LICENSE-APACHE",
@@ -3942,6 +6823,10 @@
       ],
       "cargo_manifest_sha256": "410de3eae58a75b9d2558d0a4e3ed43c2c8317781ffbd30a7cbe4aebaa833e1a",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/ryu-1.0.23/LICENSE-APACHE",
@@ -3973,6 +6858,10 @@
         "serde_derive",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/serde-1.0.228/LICENSE-APACHE",
@@ -4002,6 +6891,10 @@
         "result",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/serde_core-1.0.228/LICENSE-APACHE",
@@ -4028,6 +6921,10 @@
       "cargo_manifest_sha256": "3de014980e9645f2e33779acd06919c9f3b717a79e10f56004918d12c4365c27",
       "enabled_features": [
         "default"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4057,6 +6954,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/serde_json-1.0.149/LICENSE-APACHE",
@@ -4083,6 +6984,10 @@
       "enabled_features": [
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4111,6 +7016,10 @@
         "alloc",
         "default",
         "oid"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4144,6 +7053,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/shlex-2.0.1/LICENSE-APACHE",
@@ -4172,6 +7085,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/simd-adler32-0.3.10/LICENSE.md",
@@ -4195,6 +7112,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/siphasher-1.0.3/COPYING",
@@ -4216,6 +7137,10 @@
         "autohint_shaping",
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4240,6 +7165,10 @@
       "cargo_manifest_sha256": "82e3c73ed2b2a9fe2b8584a3caea757d29c65da2cc0a60ef91267b1ea1764257",
       "enabled_features": [
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4267,6 +7196,10 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/slotmap-1.1.1/LICENSE",
@@ -4289,6 +7222,10 @@
       "enabled_features": [
         "const_generics",
         "const_new"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4316,6 +7253,10 @@
       "enabled_features": [
         "alloc"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/stable_deref_trait-1.2.1/LICENSE-APACHE",
@@ -4340,6 +7281,10 @@
       ],
       "cargo_manifest_sha256": "6793c954abec69ecabe2f88e758729fc5e2835c0a8b668236610cccdcb3a0add",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/stringprep-0.1.5/LICENSE-APACHE",
@@ -4367,6 +7312,10 @@
       "enabled_features": [
         "default",
         "variable-fonts"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4408,6 +7357,10 @@
         "visit",
         "visit-mut"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/syn-2.0.119/LICENSE-APACHE",
@@ -4441,6 +7394,10 @@
         "printing",
         "proc-macro"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/syn-3.0.4/LICENSE-APACHE",
@@ -4467,6 +7424,10 @@
       "enabled_features": [
         "default",
         "proc-macro"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4497,6 +7458,10 @@
         "std",
         "taffy_tree"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/taffy-0.11.0/LICENSE.md",
@@ -4522,6 +7487,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/thiserror-2.0.20/LICENSE-APACHE",
@@ -4546,6 +7515,10 @@
       ],
       "cargo_manifest_sha256": "30c237dd0e2a1cdb81608acda8964d8096a055b5540ca65c22538af73bc66c75",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/thiserror-impl-2.0.20/LICENSE-APACHE",
@@ -4576,6 +7549,10 @@
         "jpeg",
         "lzw"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/tiff-0.11.3/LICENSE",
@@ -4603,6 +7580,10 @@
         "alloc",
         "zerovec"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/tinystr-0.8.4/LICENSE",
@@ -4626,6 +7607,10 @@
         "alloc",
         "default",
         "tinyvec_macros"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4655,6 +7640,10 @@
       ],
       "cargo_manifest_sha256": "104cb36d7a1c9f2b345883f74e8d49f6cdfab9b44d00516934cdc1476ed1cc44",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/tinyvec_macros-0.1.1/LICENSE-APACHE.md",
@@ -4693,6 +7682,10 @@
         "std",
         "variable-fonts"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/ttf-parser-0.25.1/LICENSE-APACHE",
@@ -4720,6 +7713,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/typed-path-0.12.3/LICENSE-APACHE",
@@ -4743,6 +7740,10 @@
       "cargo_manifest_sha256": "00785a81eae34b3298dfdde78a6bd96fe3ec000de46edd509bd13b7cab7a9870",
       "enabled_features": [
         "const-generics"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4776,6 +7777,10 @@
         "hardcoded-data",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/unicode-bidi-0.3.18/COPYRIGHT",
@@ -4804,6 +7809,10 @@
       ],
       "cargo_manifest_sha256": "0bb9c0e006a21355cb85c7df72e78dd8ba6fffbb7dc3f1e7a4c19af53cd354da",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/unicode-ident-1.0.24/LICENSE-APACHE",
@@ -4832,6 +7841,10 @@
       ],
       "cargo_manifest_sha256": "7f8e0b5d66e9c5621c5fb57d4b16b801a24061e37ee337e06f8a004e6895a8dc",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/unicode-linebreak-0.1.5/LICENSE",
@@ -4855,6 +7868,10 @@
       "enabled_features": [
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4889,6 +7906,10 @@
         "emoji",
         "general-category"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/unicode-properties-0.1.4/COPYRIGHT",
@@ -4917,6 +7938,10 @@
       ],
       "cargo_manifest_sha256": "df82c17a094e56a7c66d9aba1f68a1c3647518694c25326f09c5634a9012f21e",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/utf8_iter-1.0.4/COPYRIGHT",
@@ -4947,6 +7972,10 @@
       "cargo_manifest_sha256": "ab073da31fea03203d8e78d4d1169905474f9c9e37fa17d734c65f8e67f72c39",
       "enabled_features": [
         "default"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -4980,6 +8009,10 @@
         "std",
         "v4"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/uuid-1.26.0/LICENSE-APACHE",
@@ -5000,9 +8033,13 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "98efdc234b7d268edc72ab93f266186b32f8ffb90c9a9370b888dbd71d602cc8",
+      "cargo_manifest_sha256": "11a6f8b53e94dfb43d6121e522854330846b0b84a4b47db3c8723a9712745264",
       "enabled_features": [
         "publisher-writer-profile"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [],
       "scope": "project-owned; MIT OR Apache-2.0"
@@ -5019,6 +8056,10 @@
       ],
       "cargo_manifest_sha256": "399ea74400a173c02eabe91cb9487d0cf351117857a5d2ebc6231f0efde67681",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/version_check-0.9.5/LICENSE-APACHE",
@@ -5047,6 +8088,10 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/weezl-0.1.12/LICENSE-APACHE",
@@ -5074,6 +8119,10 @@
         "alloc",
         "default",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -5104,6 +8153,9 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-0.62.2/license-apache-2.0",
@@ -5127,6 +8179,9 @@
       "cargo_manifest_sha256": "5f8658fdee2040e7bc5260f259b677ac6263e038ee6d26f25963d40dec5cad48",
       "enabled_features": [
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc"
       ],
       "license_texts": [
         {
@@ -5153,6 +8208,9 @@
         "default",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-core-0.62.2/license-apache-2.0",
@@ -5177,6 +8235,9 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-future-0.3.2/license-apache-2.0",
@@ -5199,6 +8260,9 @@
       "authors": [],
       "cargo_manifest_sha256": "46380b1aaaf5ea3b850f30ceefa9894cd29412feaf41dc7266a9d1577e7b26b0",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-implement-0.60.2/license-apache-2.0",
@@ -5221,6 +8285,9 @@
       "authors": [],
       "cargo_manifest_sha256": "dd3e0b382b8b9efa4047630781b905086f821bfe14927b74bc2e0bdf25f9425f",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-interface-0.59.3/license-apache-2.0",
@@ -5243,6 +8310,10 @@
       "authors": [],
       "cargo_manifest_sha256": "abf0b74b168ec7d7c600f44eb90502c47e44480a199b9adc9ec74ea990605707",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-link-0.2.1/license-apache-2.0",
@@ -5266,6 +8337,9 @@
       "cargo_manifest_sha256": "90f0d96aca9116c10fc101ff1db0aa7f39ed34856d11df9e74ce9734a2f2e1c8",
       "enabled_features": [
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc"
       ],
       "license_texts": [
         {
@@ -5291,6 +8365,9 @@
       "enabled_features": [
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-result-0.4.1/license-apache-2.0",
@@ -5314,6 +8391,9 @@
       "cargo_manifest_sha256": "4d72a51e7a6f71120de32387f66118bb1aed6a6aee72aa058fa6964af7a0a5a6",
       "enabled_features": [
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc"
       ],
       "license_texts": [
         {
@@ -5359,6 +8439,10 @@
         "Win32_System_Threading",
         "default"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-sys-0.61.2/license-apache-2.0",
@@ -5381,6 +8465,9 @@
       "authors": [],
       "cargo_manifest_sha256": "2583042e5480a0d8bae8e6e450f8d22c17e3fdc785bb1060593c62fc93d94190",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc"
+      ],
       "license_texts": [
         {
           "path": "texts/windows-threading-0.2.1/license-apache-2.0",
@@ -5404,6 +8491,10 @@
       "cargo_manifest_sha256": "36fdfb14dbe701d7d725b8800c6dc0835b0a0abe25450703e9c9573a8e00009a",
       "enabled_features": [
         "default"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -5431,10 +8522,39 @@
       "enabled_features": [
         "alloc"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/writeable-0.6.4/LICENSE",
           "sha256": "f367c1b8e1aa262435251e442901da4607b4650e0e63a026f5044473ecfb90f2"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
+      "name": "yeslogic-fontconfig-sys",
+      "version": "6.0.1",
+      "license": "MIT",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/yeslogic/fontconfig-rs",
+      "links": "fontconfig",
+      "authors": [
+        "Austin Bonander <austin.bonander@gmail.com>",
+        "The Servo Project Developers",
+        "YesLogic Pty. Ltd. <info@yeslogic.com>"
+      ],
+      "cargo_manifest_sha256": "133116daa04056c47efaf12a467511e7f652122ee6f07216d0bb27bf83ef399f",
+      "enabled_features": [],
+      "targets": [
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/yeslogic-fontconfig-sys-6.0.1/LICENSE",
+          "sha256": "2ae0635fa25509f3a5ac454f76ad21286a65714b460e55a581e457e07441bf14"
         }
       ],
       "scope": "Cargo source/test dependency; conservative feature union"
@@ -5454,6 +8574,10 @@
         "alloc",
         "derive",
         "zerofrom"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -5475,6 +8599,10 @@
       ],
       "cargo_manifest_sha256": "41bde28d6e288b8d51391bb81b026c0fe68895c39fe83c762197e559445885af",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/yoke-derive-0.8.2/LICENSE",
@@ -5496,6 +8624,10 @@
         "derive",
         "simd",
         "zerocopy-derive"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -5523,6 +8655,10 @@
       "authors": [],
       "cargo_manifest_sha256": "cd5d4924814172c12f01740ea771201ea2a829731c2437dcd4f246d1c775664c",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zerocopy-derive-0.8.56/LICENSE-APACHE",
@@ -5554,6 +8690,10 @@
         "alloc",
         "derive"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zerofrom-0.1.8/LICENSE",
@@ -5574,6 +8714,10 @@
       ],
       "cargo_manifest_sha256": "1d5643b420f128f2415b3a9109d7b86e24b7fef75dc44ba32e84e43791fbfaa0",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zerofrom-derive-0.1.7/LICENSE",
@@ -5597,6 +8741,10 @@
         "alloc",
         "yoke",
         "zerofrom"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -5622,6 +8770,10 @@
         "derive",
         "yoke"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zerovec-0.11.8/LICENSE",
@@ -5642,6 +8794,10 @@
       ],
       "cargo_manifest_sha256": "b34f777e761fd83dea749dc9179aaee9327f0842329894aab47e7fa567e42473",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zerovec-derive-0.11.6/LICENSE",
@@ -5671,6 +8827,10 @@
         "deflate-flate2-zlib-rs",
         "deflate-zopfli"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zip-8.6.0/LICENSE",
@@ -5691,6 +8851,10 @@
       "enabled_features": [
         "rust-allocator",
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -5713,6 +8877,10 @@
         "rust-allocator",
         "std"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zlib-rs-0.6.8/LICENSE",
@@ -5733,6 +8901,10 @@
       ],
       "cargo_manifest_sha256": "b31420c7a806fae5b9ea2438dd4cbb99dcb3a22da67697fdf2776cc44a69527e",
       "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zmij-1.0.23/LICENSE-MIT",
@@ -5756,6 +8928,10 @@
         "std",
         "zlib"
       ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
       "license_texts": [
         {
           "path": "texts/zopfli-0.8.3/COPYING",
@@ -5775,6 +8951,10 @@
       "cargo_manifest_sha256": "c17da79ddd25919908712cdd9a9e7e0273d53bda0b5be554a08270431a325b28",
       "enabled_features": [
         "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -5808,6 +8988,10 @@
         "neon",
         "std",
         "x86"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ],
       "license_texts": [
         {
@@ -5958,6 +9142,673 @@
       "scope": "project-generated fixture; MIT OR Apache-2.0",
       "provenance": "assets/profile-provenance.md",
       "provenance_sha256": "079dda5619f6a9cda5298c8319b1cedbe2e81b4ce3bc0727b7f42dc4d5976038"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/absent-top.otf",
+      "bytes": 3452,
+      "sha256": "8b4c1f53beff66933d5d52153462e318966a14ea376b598750fd4e37db2e4ebc",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/accumulated-fraction.otf",
+      "bytes": 38504,
+      "sha256": "ec0c9d3a4a3b0d515ed2c10cac00fbcc53b7c7e800dda9820346c28c224ba32e",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/ascent-coded-high.otf",
+      "bytes": 3624,
+      "sha256": "122f8d396ed1c321f34e7ea452557e8668ccd736128c47284fdf72479417888c",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/ascent-unencoded-high.otf",
+      "bytes": 3644,
+      "sha256": "9c9cea8056d087ebdfcf57290b41eae0845d7fcb103763addf34ef731a5cf26b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/ascent-unencoded-low.otf",
+      "bytes": 3636,
+      "sha256": "34457df9cee26310c513b37cd912578564f2fe3de3e965e27408db812f569f26",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/default.otf",
+      "bytes": 3420,
+      "sha256": "27cd5a1c50967d41e1be12639be2bb1e537cfcbc4d1439be63be716cd3e795ca",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/empty.otf",
+      "bytes": 3408,
+      "sha256": "c67350a50007c82364b948feca9849f618049b1f2a1361180eda76f6e0eff149",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/explicit-default.otf",
+      "bytes": 3472,
+      "sha256": "73a200b946b5e696aacde6e59d4436e46b90fda12c5cead4a2e08685779409d8",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/explicit-scaled.otf",
+      "bytes": 3488,
+      "sha256": "f216c5f1354a59ac324a4962a4f1309be6069060fb6d8f4bd707f31f165c389b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/explicit-translated.otf",
+      "bytes": 3508,
+      "sha256": "6889b3f80b46899ee0b6a53a73d8cd4d48d8054add5da35b705117cdd0b34dd4",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/fd.otf",
+      "bytes": 3432,
+      "sha256": "273267dec7d5baef5731d34df423b5d6f713da303dd12ccfe1f83dcf45facd42",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex.otf",
+      "bytes": 3424,
+      "sha256": "b5a77ad8b17898f50e2656273bf4c68a4161011621d14ed14d66960031d27444",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex1.otf",
+      "bytes": 3424,
+      "sha256": "7e5e9fc3ca87263c76988e2d4692b2c130056455d8f97e7f41937a10dbc03e1b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex1_fd.otf",
+      "bytes": 3480,
+      "sha256": "c73460944830d7b2a637d3f0647e072b916fd88aeac14a2c658ea4c590dc5d87",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex1_top.otf",
+      "bytes": 3464,
+      "sha256": "2b5210102299501101e0ac0a3d9e7699609dc35108a51ff3c68deb634f54793a",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex_fd.otf",
+      "bytes": 3476,
+      "sha256": "3185733bd48e57f176c7f1c45af9bee206c8c9596da13e79e31bbe4308497a6f",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex_top.otf",
+      "bytes": 3464,
+      "sha256": "efbddd877ad1e0a348ed0d75695eadae45f9025a287e08fe74a746e219e3cdbd",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/fractional.otf",
+      "bytes": 3476,
+      "sha256": "8bd6c0dcf353c60f6321f162543e6bd135c89e2b83274ab916590486b7f1c07c",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex.otf",
+      "bytes": 3420,
+      "sha256": "71217df4d32c668855c59b4a4dcdfcd4999f80dc67d3f36ac5bcd092942886da",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex1.otf",
+      "bytes": 3432,
+      "sha256": "f315bbf0b3b211141623df6b235c6205cfcd7c86b6d5e63b8c9f2e431105753b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex1_fd.otf",
+      "bytes": 3480,
+      "sha256": "93a2dfc1fae7e8d586947b451af48ada684b8ad240b9e467b051feb5935f78ac",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex1_top.otf",
+      "bytes": 3472,
+      "sha256": "fb398cee88b1acc9dce6aa10e4adae037d252e1dfefa698689ddc30bccb4bcac",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex_fd.otf",
+      "bytes": 3476,
+      "sha256": "41d34f7c30fe05898a7b907e22149622915f8105358e0bdded14c40e477dffee",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex_top.otf",
+      "bytes": 3460,
+      "sha256": "4990dbc500ae41beac1b42b8962ea0085e0ffa071d769b4c98ec98d1de7be4dd",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/implicit-default.otf",
+      "bytes": 3460,
+      "sha256": "0b60c2dcb4d659888ece9772a16cbc740f2b8b3fff988da057dca4e61451d6e5",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/implicit-scaled.otf",
+      "bytes": 3480,
+      "sha256": "a08d66328d63ca0cf1805198cc361ec0a8547b22e0174ecda6c9c578fb8dd381",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/implicit-translated.otf",
+      "bytes": 3508,
+      "sha256": "2a7ee0c22b27738ef020c62c4efe17243b2c5e46f060b943851ae5abfe2a5487",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/integer-translation.otf",
+      "bytes": 3488,
+      "sha256": "6492ca56db24fa2e4b520fa63cf9c42fdd78c249ea615a522a2c04eedc86e84b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/no-endchar.otf",
+      "bytes": 3428,
+      "sha256": "2309e563cd2795e2d6e7fa00e762703b77eea9f38921cac11ec1d33b06cb5a26",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/original.ttf",
+      "bytes": 984,
+      "sha256": "7d595cd8e4857c6244d109631d44bebe91c1020f92a9d3c3e68cda2a73720f56",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "project-generated font control; MIT OR Apache-2.0"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/partial.otf",
+      "bytes": 3428,
+      "sha256": "db48a74c7949992915c98c77c00357e94dc7823ddc4beb22a9a4ab26fc1b0336",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/reflected.otf",
+      "bytes": 3448,
+      "sha256": "af1609acaf18a719a26c82d8ab5f3232f6e9a7f8f4878b47f45807644e06ce26",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/subr-no-return.otf",
+      "bytes": 3456,
+      "sha256": "4976f23ab6d275120569bde3a08000ccbe1cf21560b44f65061a2f332bb4ed56",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/tiny-negative.otf",
+      "bytes": 3460,
+      "sha256": "cde827545c1abd7cb226bd0fe91c22d2140ae75e6a3da7b7b5130e67c1fef162",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/tiny-positive.otf",
+      "bytes": 3460,
+      "sha256": "64a001f5e9b1f9ab4d664b6c310ac0f114560927bb176555304490c2b1f5aac2",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/top.otf",
+      "bytes": 3420,
+      "sha256": "3635c28b4ce0c48f4e053e4ef10cd437ba28c53165445de7b7e49dae983bb077",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/width-diff.otf",
+      "bytes": 3428,
+      "sha256": "ad3df0d8d2e8b3ff924eebebe95283d254de0e06f7a885241a168d90dd195d81",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/child-pp1.ttf",
+      "bytes": 1204,
+      "sha256": "4f8fca70143cd54686f5a56bc80218cf1d99ae28da0a980972e0409dd8d1ba03",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/child-pp2-scaled.ttf",
+      "bytes": 1224,
+      "sha256": "84d7171fa4b45c90ccabc05fe0b5e5dab2feae7f110c7a79ed2b10a03751d6d5",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/child-pp2.ttf",
+      "bytes": 1204,
+      "sha256": "b619aaacec51da7d023abe26490dfaa5a9547894417ae30625c95c40696517e3",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/empty-invalid-anchor.ttf",
+      "bytes": 1236,
+      "sha256": "0b0ce05f2804d8c3ad4bd05049dfda5e9c7b075192bd72f1987ba938b1c35322",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/first-point-match-invalid.ttf",
+      "bytes": 1240,
+      "sha256": "47159ce9d297f0f2f62574490fa448610cd4ba3cbb76979c5957367ef2fb6c00",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-negative-x.ttf",
+      "bytes": 1244,
+      "sha256": "15d2358b53a7f0486fb47a16b2c0e935ce72b5c530760b3c76ff653cc934f6ca",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-nested.ttf",
+      "bytes": 1260,
+      "sha256": "b45865f5588065912511ca779497e4719df31d5d83da5ffb2103d11366b62a69",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-rotated.ttf",
+      "bytes": 1240,
+      "sha256": "84f1768874e07a98469889a81abeece5119576f344e2c257a8bad7d3665a9f6a",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-scaled.ttf",
+      "bytes": 1236,
+      "sha256": "1e1895cddbf0605e1794907ff82a655fbb5919178cc6a74a686be871ba1edafc",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-shear.ttf",
+      "bytes": 1236,
+      "sha256": "1f9dfb5177d3be3e5c05ba9b68c2748a21ae61dbc27c9325eb49588936544bd5",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-translated.ttf",
+      "bytes": 1244,
+      "sha256": "59ed3d9190e576ae77f4f732cbca7a6e5801e175ca121474b734aff36b3b0243",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-unequal.ttf",
+      "bytes": 1236,
+      "sha256": "80c7ef028e83833ea9f7011cd1fd9467622146fd4b4759586a0d4a492d7f967d",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked.ttf",
+      "bytes": 1212,
+      "sha256": "a1b6ac709ce4ec1308bf0465dff2d4204bf7e31a68d2cb8fb5c8ac954350468a",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-unmarked-negative-x.ttf",
+      "bytes": 1248,
+      "sha256": "9f3f6c1d3e9edd5d9cf64ebb8b05f64131037bf251c5efc0d1c3064bbcb1e3a1",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-unmarked-rotated.ttf",
+      "bytes": 1248,
+      "sha256": "712305ca1cc95b25502afd4000144ccc3bccb4f78f55d94c36b8576372d0569b",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-unmarked.ttf",
+      "bytes": 1220,
+      "sha256": "13d6153a66e5f1cd02d91f420ccce8f39cf899629a046e286d6618793138a997",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/optional-h-declared-subset.ttf",
+      "bytes": 1292,
+      "sha256": "3631a74928bfbf17a1481273a4f030b6175639dfb2b92d11c8133e471b9dc90d",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/optional-h-unknown-subset.ttf",
+      "bytes": 1288,
+      "sha256": "ea3edfb2f00b2392e955aab6e1eb2f4a0bd330d045cc95551d2b7938b62e0f2a",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/parent-pp1.ttf",
+      "bytes": 1208,
+      "sha256": "26916b6e79b47714645d7c55d58b7704a29c3b9618df42aa1f84d7f020a82323",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/parent-pp2.ttf",
+      "bytes": 1208,
+      "sha256": "c6d913d50108f6b890c79da9add226e51029a6342a74b995fb01fe2662805f09",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/point-match-clear.ttf",
+      "bytes": 1228,
+      "sha256": "c734a87c91f6a4dda7feea8b6b826694a733dd21756104c85fb42fe5acf5ff42",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/point-match-round.ttf",
+      "bytes": 1228,
+      "sha256": "7c279c69bbfcfada1a92471d91ba3c861d3da9784ab7c5f06d5f504a5c995932",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/scaled-offset-clear.ttf",
+      "bytes": 1228,
+      "sha256": "f2288f2f099e33dec485b44115f1ec25963b3627638de9976f9037ddcf114ce9",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/scaled-offset-round.ttf",
+      "bytes": 1228,
+      "sha256": "91da86b6922b89a6a56574cfeef00f948d072017a1c2cf2cfdae032169ad2f73",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/unused-malformed-subset.ttf",
+      "bytes": 1284,
+      "sha256": "ccf9a2eaf95ba7b91c969d07a3d37b201fad8740ab02a9e3f66dc7fefc7cc42c",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/unused-unresolved-full.ttf",
+      "bytes": 1272,
+      "sha256": "7c32a8d5e26c52528d1d48d89b01f0e1e853af550dd76c6038eaa7178eefd414",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/unused-unresolved-subset.ttf",
+      "bytes": 1280,
+      "sha256": "67970d5db5cd83be93104232a3f1c766ffc074aacf059b234d13b94ccdf6b42b",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-cancelled-both.ttf",
+      "bytes": 1252,
+      "sha256": "1e7dd275661552c24285c270f462f8a8302a61d7e33d63f84f577891fe58f1fe",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-cancelled-x.ttf",
+      "bytes": 1328,
+      "sha256": "9db09bed9e721d66090687c6c1f3e58270d2e302f59baecb798350e316bf46ea",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-empty-unused.ttf",
+      "bytes": 1240,
+      "sha256": "1dc35af8d7b2efb1bea539b61269a28460ccaa0314783f91bd2faa8080885b7d",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-pair-malformed.ttf",
+      "bytes": 1320,
+      "sha256": "7d7c2960b564ea0746c51fa9bb9207ef915712c9fe26b2d58f3af908ad205ca9",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-unresolved-absent.ttf",
+      "bytes": 1252,
+      "sha256": "435a1aaa20ebf999dff7bf6595eaf8c0982e44c3be8a1e8e4762a31adb2c831f",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-unresolved-paired.ttf",
+      "bytes": 1336,
+      "sha256": "857fae2aaa4962354d6fed1b8057fc16ed5082bbf04973ab6a30e5de27615d98",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-version-needed.ttf",
+      "bytes": 1336,
+      "sha256": "702787a84b103cb3d3fe77527565f8013e284591c922fadbda54fa29ef8ec384",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-version-unused.ttf",
+      "bytes": 1320,
+      "sha256": "765246bff4df069d4573eeb4f2a5b7d96c6cdbe380cda670b9b07b30a81f5957",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vhea-only-unused.ttf",
+      "bytes": 1268,
+      "sha256": "1293adf3f16ca9dca247586e0f581bb735b9048041cc9f1c63a58ef5d8cc3fb9",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/truetype_program.rs",
+      "sha256": "3cde5d93dfd8ebd68637b0fd571d6d2991793cba773ef27f6b4bdb7e4ee2a86f",
+      "bytes": 56013,
+      "scope": "128 MacRoman mapping scalar identities; upstream data notices retained",
+      "license_expression": "Unicode-3.0 AND PSF-2.0",
+      "provenance": "assets/mac-roman-provenance.json",
+      "provenance_sha256": "968a465006598a1611dcbdd32c74ab1e89f35ce2a318f2ea9b4d2b73fdb7236b",
+      "license_notice": "assets/mac-roman-NOTICE.txt",
+      "license_notice_sha256": "01888d2ed7c3cc19cb39b938d1d7f8ff6f422d48c8fbf42453fd6d911039d2ad"
     }
   ],
   "canonical_terms": [

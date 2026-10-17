@@ -5,21 +5,23 @@ use sha2::{Digest, Sha256};
 use std::{
     collections::BTreeSet,
     fs::{File, OpenOptions},
-    io::{Read, Seek, Write},
+    io::{self, Read, Seek, Write},
     path::{Path, PathBuf},
     process::ExitStatus,
     thread,
     time::{Duration, Instant, SystemTime},
 };
 
-const PROTOCOL_VERSION: u16 = 5;
+const PROTOCOL_VERSION: u16 = 9;
 pub const MAX_FONT_FILE_BYTES: usize = 64 * 1024 * 1024;
 pub const MAX_FONT_GLYPHS_PER_SUBSET: usize = 16_384;
-pub const FONT_ENGINE_IDENTITY: &str = "subsetter-0.2.6/ttf-parser-0.25.1";
-pub const FONT_RULES_IDENTITY: &str =
-    "publisher-v2/font-preparation/v5/inspect-family-aliases-and-publication/cid-cff/fail-closed";
+pub const FONT_ENGINE_IDENTITY: &str =
+    "subsetter-0.2.6/ttf-parser-0.25.1/native-type2-path-exact16-enclosure-v1";
+pub const FONT_RULES_IDENTITY: &str = "publisher-v2/font-preparation/v9/complete-retained-programs/effective-affine-curve-metrics-v5/cid-matrix-normalization-v1/authored-ascent-facts-v1/cap-height-facts-v1";
 const FACE_IDENTITY_DOMAIN: &[u8] = b"publisher-v2/font-face-identity/v1\0";
 const GLYPH_SET_DOMAIN: &[u8] = b"publisher-v2/font-glyph-set/v1\0";
+const ASCENT_FACTS_DOMAIN: &[u8] = b"publisher-v2/font-ascent-facts/v1\0";
+const FONT_FACTS_DOMAIN: &[u8] = b"publisher-v2/font-design-facts/v1\0";
 const RIGHTS_DOMAIN: &[u8] = b"publisher-v2/font-rights/v1\0";
 const POSTSCRIPT_NAME_DOMAIN: &[u8] = b"publisher-v2/font-postscript-name/v1\0";
 #[cfg(not(debug_assertions))]
@@ -34,7 +36,7 @@ const MAX_FONT_FAMILY_BYTES: usize = 1_024;
 const MAX_FONT_FAMILY_CHARS: usize = 256;
 const MAX_FONT_FAMILY_NAMES: usize = 256;
 const MAX_FONT_COLLECTION_FACES: u32 = 16_384;
-#[cfg(windows)]
+#[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
 const WORKER_MEMORY_LIMIT: usize = 512 * 1024 * 1024;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -121,6 +123,8 @@ impl TrustedFontBoundary {
             face_index,
             glyph_ids,
             WirePreparationPolicy::SubsetOnly,
+            None,
+            None,
         )?;
         if prepared.preparation_kind != FontPreparationKind::Subset {
             return Err(FontWorkerError::IdentityDrift);
@@ -147,22 +151,88 @@ impl TrustedFontBoundary {
             face_index,
             glyph_ids,
             WirePreparationPolicy::Publication,
+            None,
+            None,
         )
     }
 
+    /// Supplies complete source-GID roles excluded as accented-only characters
+    /// from PDF Ascent. An empty set affirmatively includes every retained role.
+    /// Facts cover all retained components, and every glyph for full embedding;
+    /// valid nonretained source GIDs may also be included. Native checks validate
+    /// identity and transport, not the semantic truth of authored classification.
+    ///
+    /// # Errors
+    /// Rejects GID0, duplicate or unsorted facts, out-of-range source GIDs,
+    /// and every existing publication preparation failure.
+    pub fn prepare_publication_with_ascent_facts(
+        &self,
+        font_bytes: &[u8],
+        face_index: u32,
+        glyph_ids: &[u16],
+        accented_source_glyph_ids: &[u16],
+    ) -> Result<PreparedPublicationFont, FontWorkerError> {
+        self.prepare_publication_with_font_facts(
+            font_bytes,
+            face_index,
+            glyph_ids,
+            Some(accented_source_glyph_ids),
+            None,
+        )
+    }
+
+    /// Supplies independent source-author facts for unresolved descriptor design.
+    /// `CapHeight` is in final PDF glyph units relative to the transformed baseline.
+    /// None requests inference; Some(0) asserts a zero/no-capital design. Signed
+    /// zero is canonicalized to +0. Native checks cannot prove semantic truth.
+    ///
+    /// # Errors
+    /// Rejects malformed accent sets, nonfinite/out-of-range cap values, a cap
+    /// value conflicting with a computable metric, and existing preparation errors.
+    pub fn prepare_publication_with_font_facts(
+        &self,
+        font_bytes: &[u8],
+        face_index: u32,
+        glyph_ids: &[u16],
+        accented_source_glyph_ids: Option<&[u16]>,
+        cap_height_pdf_units: Option<f32>,
+    ) -> Result<PreparedPublicationFont, FontWorkerError> {
+        self.prepare_with_policy(
+            font_bytes,
+            face_index,
+            glyph_ids,
+            WirePreparationPolicy::Publication,
+            accented_source_glyph_ids,
+            cap_height_pdf_units,
+        )
+    }
+
+    #[expect(
+        clippy::too_many_lines,
+        reason = "One preparation handshake validates the exact report before minting opaque authority"
+    )]
     fn prepare_with_policy(
         &self,
         font_bytes: &[u8],
         face_index: u32,
         glyph_ids: &[u16],
         preparation_policy: WirePreparationPolicy,
+        ascent_facts: Option<&[u16]>,
+        cap_fact: Option<f32>,
     ) -> Result<PreparedPublicationFont, FontWorkerError> {
         let glyph_ids = validate_inputs(font_bytes, glyph_ids)?;
+        let cap_fact = cap_fact.map(validate_cap_fact).transpose()?;
+        if let Some(facts) = ascent_facts {
+            validate_ascent_facts_shape(facts)?;
+        }
         let binding = self.binding.as_ref().map_err(Clone::clone)?;
         let prepared_worker = PreparedWorker::new(binding)?;
         let files = PreparationFiles::new(font_bytes)?;
         let source_hash = Hash32::of(font_bytes);
         let glyph_hash = glyph_set_hash(&glyph_ids);
+        let expected_ascent_hash =
+            ascent_facts.map(|gids| ascent_facts_hash(source_hash, face_index, gids));
+        let expected_font_hash = font_facts_hash(source_hash, face_index, ascent_facts, cap_fact);
         let request = WireRequest::Prepare {
             protocol_version: PROTOCOL_VERSION,
             font_path: files.source.display().to_string(),
@@ -171,6 +241,10 @@ impl TrustedFontBoundary {
             preparation_policy,
             face_index,
             glyph_ids: glyph_ids.clone(),
+            accented_source_glyph_ids: ascent_facts.map(<[u16]>::to_vec),
+            expected_ascent_facts_sha256: expected_ascent_hash.map(Hash32::hex),
+            cap_height_pdf_units: cap_fact,
+            expected_font_facts_sha256: expected_font_hash.map(Hash32::hex),
             expected_glyph_set_sha256: glyph_hash.hex(),
         };
         let report = run_worker(&prepared_worker, &files, &request)?;
@@ -203,6 +277,8 @@ impl TrustedFontBoundary {
             eprintln!("font worker identity drift: {report:#?}");
             return Err(FontWorkerError::IdentityDrift);
         }
+        validate_ascent_facts_binding(&report, expected_ascent_hash)?;
+        validate_font_facts_binding(&report, expected_font_hash, cap_fact)?;
         validate_report(&report, &glyph_ids)?;
         let prepared_bytes = read_exact_bounded(&files.prepared, report.prepared_byte_length)?;
         let prepared_hash = Hash32::of(&prepared_bytes);
@@ -237,6 +313,11 @@ impl TrustedFontBoundary {
             fixed_pitch: report.fixed_pitch,
             italic: report.italic,
             widths: report.widths,
+            requires_ascent_facts: report.requires_ascent_facts,
+            ascent_facts_hash: expected_ascent_hash,
+            requires_cap_height_fact: report.requires_cap_height_fact,
+            font_facts_hash: expected_font_hash,
+            pdf_metrics: report.pdf_metrics.into(),
             remapped_glyphs: report.remapped_glyphs,
             exercise_cid: report.exercise_cid,
             exercise_unicode: char::from_u32(report.exercise_unicode)
@@ -404,6 +485,10 @@ pub enum FontEmbeddingRights {
 /// use font_boundary::PreparedPublicationFont;
 /// let forged = PreparedPublicationFont { prepared_bytes: Vec::new() };
 /// ```
+#[expect(
+    clippy::struct_excessive_bools,
+    reason = "Attested style and descriptor authority are independent observations"
+)]
 pub struct PreparedPublicationFont {
     prepared_bytes: Vec<u8>,
     preparation_kind: FontPreparationKind,
@@ -429,12 +514,56 @@ pub struct PreparedPublicationFont {
     fixed_pitch: bool,
     italic: bool,
     widths: Vec<i32>,
+    requires_ascent_facts: bool,
+    ascent_facts_hash: Option<Hash32>,
+    requires_cap_height_fact: bool,
+    font_facts_hash: Option<Hash32>,
+    pdf_metrics: PdfFontMetrics,
     remapped_glyphs: Vec<RemappedGlyph>,
     exercise_cid: u16,
     exercise_unicode: char,
 }
 
 impl PreparedPublicationFont {
+    /// True when automatic evidence cannot establish PDF Ascent independently
+    /// of unknown glyph roles. Ordinary output retains its compatibility
+    /// heuristic; positive print generation requires authored facts.
+    #[must_use]
+    pub const fn requires_ascent_facts(&self) -> bool {
+        self.requires_ascent_facts
+    }
+    /// Identity of the explicit complete facts, bound to source bytes and face.
+    /// None requests inference; an explicit empty set has a present hash.
+    #[must_use]
+    pub const fn ascent_facts_sha256(&self) -> Option<[u8; 32]> {
+        match self.ascent_facts_hash {
+            Some(hash) => Some(hash.0),
+            None => None,
+        }
+    }
+
+    /// True when no source declaration, established reference or absence proof
+    /// establishes `CapHeight`. Positive print generation requires an author fact.
+    #[must_use]
+    pub const fn requires_cap_height_fact(&self) -> bool {
+        self.requires_cap_height_fact
+    }
+    /// Combined facts identity. Optional-field presence and canonical binary32
+    /// cap bits are bound to source bytes and face; legacy Ascent identity is unchanged.
+    #[must_use]
+    pub const fn font_facts_sha256(&self) -> Option<[u8; 32]> {
+        match self.font_facts_hash {
+            Some(hash) => Some(hash.0),
+            None => None,
+        }
+    }
+
+    /// Precise attested metrics for PDF serialization, in 1000-em units.
+    /// Existing integer accessors remain available for compatibility.
+    #[must_use]
+    pub const fn pdf_metrics(&self) -> &PdfFontMetrics {
+        &self.pdf_metrics
+    }
     /// Exact attested PDF program: TrueType SFNT or raw CID-keyed CFF,
     /// according to `outline_kind`. All parsing stays in the font worker.
     #[must_use]
@@ -547,6 +676,64 @@ impl PreparedPublicationFont {
     }
 }
 
+/// Metrics derived inside confinement from the exact prepared outlines and
+/// original-face design information. A certified numeric bbox enclosure is
+/// encoded outward in whole PDF glyph units; uncertainty can add an adjacent
+/// unit. This is not a mathematically minimal integer rectangle claim. Other
+/// metrics retain fractional precision.
+pub struct PdfFontMetrics {
+    bbox: [f32; 4],
+    ascent: f32,
+    descent: f32,
+    cap_height: Option<f32>,
+    italic_angle: f32,
+    stem_v: f32,
+    widths: Vec<f32>,
+}
+impl PdfFontMetrics {
+    #[must_use]
+    pub const fn bbox(&self) -> [f32; 4] {
+        self.bbox
+    }
+    #[must_use]
+    pub const fn ascent(&self) -> f32 {
+        self.ascent
+    }
+    #[must_use]
+    pub const fn descent(&self) -> f32 {
+        self.descent
+    }
+    #[must_use]
+    pub const fn cap_height(&self) -> Option<f32> {
+        self.cap_height
+    }
+    #[must_use]
+    pub const fn stem_v(&self) -> f32 {
+        self.stem_v
+    }
+    #[must_use]
+    pub const fn italic_angle(&self) -> f32 {
+        self.italic_angle
+    }
+    #[must_use]
+    pub fn widths(&self) -> &[f32] {
+        &self.widths
+    }
+}
+impl From<WirePdfFontMetrics> for PdfFontMetrics {
+    fn from(value: WirePdfFontMetrics) -> Self {
+        Self {
+            bbox: value.bbox,
+            ascent: value.ascent,
+            descent: value.descent,
+            cap_height: value.cap_height,
+            italic_angle: value.italic_angle,
+            stem_v: value.stem_v,
+            widths: value.widths,
+        }
+    }
+}
+
 /// Opaque subset-only compatibility wrapper used by lower-level callers.
 pub struct PreparedFontSubset {
     prepared: PreparedPublicationFont,
@@ -631,6 +818,8 @@ pub enum FontWorkerError {
     TooManyGlyphs { actual: usize, maximum: usize },
     DuplicateGlyph(u16),
     NoGlyphs,
+    InvalidCapHeightFact,
+    InvalidAscentFacts { reason: &'static str },
     ResourceLimit,
     Io(String),
     SpawnFailed(String),
@@ -664,6 +853,10 @@ enum WireRequest {
         face_index: u32,
         glyph_ids: Vec<u16>,
         expected_glyph_set_sha256: String,
+        accented_source_glyph_ids: Option<Vec<u16>>,
+        expected_ascent_facts_sha256: Option<String>,
+        cap_height_pdf_units: Option<f32>,
+        expected_font_facts_sha256: Option<String>,
     },
 }
 
@@ -677,8 +870,8 @@ enum WirePreparationPolicy {
 #[derive(Debug, Deserialize)]
 #[serde(tag = "operation", content = "report", rename_all = "kebab-case")]
 enum WireReport {
-    Inspect(WireInspectionReport),
-    Prepare(WirePreparationReport),
+    Inspect(Box<WireInspectionReport>),
+    Prepare(Box<WirePreparationReport>),
 }
 
 #[derive(Debug, Deserialize)]
@@ -706,6 +899,10 @@ struct WireInspectionReport {
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[expect(
+    clippy::struct_excessive_bools,
+    reason = "Wire fields independently describe font style and descriptor authority"
+)]
 struct WirePreparationReport {
     protocol_version: u16,
     source_sha256: String,
@@ -734,9 +931,26 @@ struct WirePreparationReport {
     fixed_pitch: bool,
     italic: bool,
     widths: Vec<i32>,
+    requires_ascent_facts: bool,
+    ascent_facts_sha256: Option<String>,
+    requires_cap_height_fact: bool,
+    font_facts_sha256: Option<String>,
+    pdf_metrics: WirePdfFontMetrics,
     remapped_glyphs: Vec<RemappedGlyph>,
     exercise_cid: u16,
     exercise_unicode: u32,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct WirePdfFontMetrics {
+    bbox: [f32; 4],
+    ascent: f32,
+    descent: f32,
+    cap_height: Option<f32>,
+    italic_angle: f32,
+    stem_v: f32,
+    widths: Vec<f32>,
 }
 
 #[derive(Clone, Copy, Debug, Deserialize)]
@@ -1030,6 +1244,23 @@ fn validate_report(
         || report.prepared_byte_length == 0
         || report.prepared_byte_length > MAX_FONT_FILE_BYTES
         || report.widths.len() != embedded_glyph_count
+        || report.pdf_metrics.widths.len() != embedded_glyph_count
+        || report
+            .pdf_metrics
+            .bbox
+            .iter()
+            .chain([
+                &report.pdf_metrics.ascent,
+                &report.pdf_metrics.descent,
+                &report.pdf_metrics.stem_v,
+                &report.pdf_metrics.italic_angle,
+            ])
+            .chain(report.pdf_metrics.cap_height.iter())
+            .chain(report.pdf_metrics.widths.iter())
+            .any(|value| !value.is_finite() || value.abs() > 10_000_000.0)
+        || report.pdf_metrics.bbox[0] > report.pdf_metrics.bbox[2]
+        || report.pdf_metrics.bbox[1] > report.pdf_metrics.bbox[3]
+        || report.pdf_metrics.stem_v < 0.0
         || report
             .bbox
             .iter()
@@ -1241,6 +1472,8 @@ fn debug_worker_candidate() -> Option<PathBuf> {
 }
 
 struct PreparedWorker {
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    verified_bytes: Vec<u8>,
     path: PathBuf,
     directory: PathBuf,
     executable_hash: Hash32,
@@ -1259,11 +1492,19 @@ impl PreparedWorker {
         } else {
             "publisher-font-worker"
         });
-        write_exclusive(&path, &bytes)?;
+        let mut prepared = Self {
+            path,
+            directory,
+            executable_hash: binding.executable_hash,
+            #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+            verified_bytes: Vec::new(),
+            identity_lock: None,
+        };
+        write_exclusive(&prepared.path, &bytes)?;
         #[cfg(unix)]
         {
             use std::os::unix::fs::PermissionsExt;
-            std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o500))
+            std::fs::set_permissions(&prepared.path, std::fs::Permissions::from_mode(0o500))
                 .map_err(io_error)?;
         }
         let mut options = OpenOptions::new();
@@ -1273,7 +1514,7 @@ impl PreparedWorker {
             use std::os::windows::fs::OpenOptionsExt;
             options.share_mode(1);
         }
-        let mut lock = options.open(&path).map_err(io_error)?;
+        let mut lock = options.open(&prepared.path).map_err(io_error)?;
         lock.rewind().map_err(io_error)?;
         let mut exact = Vec::new();
         Read::by_ref(&mut lock)
@@ -1283,12 +1524,12 @@ impl PreparedWorker {
         if Hash32::of(&exact) != binding.executable_hash {
             return Err(FontWorkerError::ExecutableIdentityDrift);
         }
-        Ok(Self {
-            path,
-            directory,
-            executable_hash: binding.executable_hash,
-            identity_lock: Some(lock),
-        })
+        prepared.identity_lock = Some(lock);
+        #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+        {
+            prepared.verified_bytes = exact;
+        }
+        Ok(prepared)
     }
 }
 
@@ -1301,6 +1542,7 @@ impl Drop for PreparedWorker {
 }
 
 struct PreparationFiles {
+    output_directory: PathBuf,
     directory: PathBuf,
     source: PathBuf,
     prepared: PathBuf,
@@ -1308,19 +1550,25 @@ struct PreparationFiles {
 impl PreparationFiles {
     fn new(font: &[u8]) -> Result<Self, FontWorkerError> {
         let directory = private_directory("publisher-font-preparation")?;
-        let source = directory.join("source.font");
-        write_exclusive(&source, font)?;
-        Ok(Self {
-            prepared: directory.join("prepared.font"),
+        let output_directory = directory.join("outputs");
+        // Establish cleanup ownership before the first fallible file operation.
+        let files = Self {
+            source: directory.join("source.font"),
+            prepared: output_directory.join("prepared.font"),
+            output_directory,
             directory,
-            source,
-        })
+        };
+        write_exclusive(&files.source, font)?;
+        std::fs::create_dir(&files.output_directory).map_err(io_error)?;
+        Ok(files)
     }
 }
+
 impl Drop for PreparationFiles {
     fn drop(&mut self) {
         let _ = std::fs::remove_file(&self.source);
         let _ = std::fs::remove_file(&self.prepared);
+        let _ = std::fs::remove_dir_all(&self.output_directory);
         let _ = std::fs::remove_dir(&self.directory);
     }
 }
@@ -1377,20 +1625,22 @@ fn run_worker_with_timeout(
             Ok(None) if Instant::now() < deadline => thread::sleep(Duration::from_millis(20)),
             Ok(None) => {
                 child.terminate();
-                // Do not let a hostile descendant retaining inherited pipe
-                // handles extend the caller-visible deadline on non-Windows
-                // test hosts. The Windows Job Object terminates the full tree.
-                drop(writer);
-                drop(reader);
-                drop(stderr_reader);
+                // Both supported backends kill and reap before pipes are joined.
+                let _ = writer.join();
+                let _ = reader.join();
+                let _ = stderr_reader.join();
                 return Err(FontWorkerError::TimedOut);
             }
             Err(error) => {
                 child.terminate();
-                drop(writer);
-                drop(reader);
-                drop(stderr_reader);
-                return Err(FontWorkerError::Io(error.to_string()));
+                let _ = writer.join();
+                let _ = reader.join();
+                let _ = stderr_reader.join();
+                return Err(if error.kind() == io::ErrorKind::TimedOut {
+                    FontWorkerError::TimedOut
+                } else {
+                    FontWorkerError::Io(error.to_string())
+                });
             }
         }
     };
@@ -1513,6 +1763,99 @@ fn face_identity_hash(source: Hash32, face_index: u32) -> Hash32 {
     hasher.update(face_index.to_be_bytes());
     Hash32(hasher.finalize().into())
 }
+fn validate_ascent_facts_shape(gids: &[u16]) -> Result<(), FontWorkerError> {
+    let reason = if gids.len() > usize::from(u16::MAX) {
+        Some("facts exceed source GID capacity")
+    } else if gids.contains(&0) {
+        Some("GID0 cannot be an accented-only role")
+    } else if gids.windows(2).any(|w| w[0] == w[1]) {
+        Some("duplicate accented source GID")
+    } else if gids.windows(2).any(|w| w[0] > w[1]) {
+        Some("accented source GIDs must be sorted")
+    } else {
+        None
+    };
+    if let Some(reason) = reason {
+        Err(FontWorkerError::InvalidAscentFacts { reason })
+    } else {
+        Ok(())
+    }
+}
+fn ascent_facts_hash(source: Hash32, face: u32, gids: &[u16]) -> Hash32 {
+    let mut hasher = Sha256::new();
+    hasher.update(ASCENT_FACTS_DOMAIN);
+    hasher.update(source.0);
+    hasher.update(face.to_be_bytes());
+    hasher.update(u32::try_from(gids.len()).unwrap_or(u32::MAX).to_be_bytes());
+    for gid in gids {
+        hasher.update(gid.to_be_bytes());
+    }
+    Hash32(hasher.finalize().into())
+}
+fn canonical_zero(value: f32) -> f32 {
+    if value == 0. { 0. } else { value }
+}
+fn validate_cap_fact(value: f32) -> Result<f32, FontWorkerError> {
+    if !value.is_finite() || value.abs() > 10_000_000. {
+        return Err(FontWorkerError::InvalidCapHeightFact);
+    }
+    Ok(canonical_zero(value))
+}
+fn font_facts_hash(
+    source: Hash32,
+    face: u32,
+    accented: Option<&[u16]>,
+    cap: Option<f32>,
+) -> Option<Hash32> {
+    if accented.is_none() && cap.is_none() {
+        return None;
+    }
+    let mut hasher = Sha256::new();
+    hasher.update(FONT_FACTS_DOMAIN);
+    hasher.update(source.0);
+    hasher.update(face.to_be_bytes());
+    hasher.update([u8::from(accented.is_some())]);
+    if let Some(gids) = accented {
+        hasher.update(u32::try_from(gids.len()).unwrap_or(u32::MAX).to_be_bytes());
+        for gid in gids {
+            hasher.update(gid.to_be_bytes());
+        }
+    }
+    hasher.update([u8::from(cap.is_some())]);
+    if let Some(value) = cap {
+        hasher.update(canonical_zero(value).to_bits().to_be_bytes());
+    }
+    Some(Hash32(hasher.finalize().into()))
+}
+fn validate_font_facts_binding(
+    report: &WirePreparationReport,
+    expected: Option<Hash32>,
+    cap: Option<f32>,
+) -> Result<(), FontWorkerError> {
+    if report.font_facts_sha256 != expected.map(Hash32::hex)
+        || report.requires_cap_height_fact != report.pdf_metrics.cap_height.is_none()
+        || cap.is_some_and(|value| {
+            report.requires_cap_height_fact
+                || report.pdf_metrics.cap_height.map(f32::to_bits) != Some(value.to_bits())
+        })
+    {
+        Err(FontWorkerError::IdentityDrift)
+    } else {
+        Ok(())
+    }
+}
+fn validate_ascent_facts_binding(
+    report: &WirePreparationReport,
+    expected: Option<Hash32>,
+) -> Result<(), FontWorkerError> {
+    if report.ascent_facts_sha256 != expected.map(Hash32::hex)
+        || (expected.is_some() && report.requires_ascent_facts)
+    {
+        Err(FontWorkerError::IdentityDrift)
+    } else {
+        Ok(())
+    }
+}
 fn glyph_set_hash(glyphs: &[u16]) -> Hash32 {
     let mut hasher = Sha256::new();
     hasher.update(GLYPH_SET_DOMAIN);
@@ -1540,8 +1883,10 @@ fn io_error(error: std::io::Error) -> FontWorkerError {
 struct RunningProcess {
     #[cfg(windows)]
     inner: publisher_worker_job::SandboxedProcess,
-    #[cfg(not(windows))]
-    inner: std::process::Child,
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    inner: publisher_linux_worker_job::SandboxedProcess,
+    #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
+    inner: std::convert::Infallible,
 }
 
 impl RunningProcess {
@@ -1558,15 +1903,14 @@ impl RunningProcess {
             profile
                 .grant_read_execute(&worker.directory)
                 .map_err(|error| error.to_string())?;
-            // The one-run preparation directory contains only the exact source
-            // and output selected by the host. Granting this unique profile
-            // access to that directory lets the worker create its exclusive
-            // output without exposing any other publication or host path.
+            // Source access is read-only. Grant the pre-created private output
+            // directory itself: Windows inheritance does not retroactively
+            // authorize this existing child through a later parent-directory grant.
             profile
                 .grant_read(&files.source)
                 .map_err(|error| error.to_string())?;
             profile
-                .grant_private_working_directory(&files.directory)
+                .grant_private_working_directory(&files.output_directory)
                 .map_err(|error| error.to_string())?;
             let inner = profile
                 .spawn(
@@ -1582,83 +1926,110 @@ impl RunningProcess {
                 .map_err(|error| error.to_string())?;
             Ok(Self { inner })
         }
-        #[cfg(not(windows))]
+        #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
         {
-            let _ = files;
-            let _ = timeout;
-            std::process::Command::new(&worker.path)
-                .env_clear()
-                .current_dir(&worker.directory)
-                .stdin(std::process::Stdio::piped())
-                .stdout(std::process::Stdio::piped())
-                .stderr(std::process::Stdio::piped())
-                .spawn()
-                .map(|inner| Self { inner })
-                .map_err(|error| error.to_string())
+            // The bytes were read and hashed together during preparation. Never
+            // reopen the executable path between identity verification and exec.
+            let executable =
+                publisher_linux_worker_job::PinnedExecutable::from_bytes(&worker.verified_bytes)
+                    .map_err(|error| error.to_string())?;
+            let profile = publisher_linux_worker_job::SandboxProfile::new()
+                .map_err(|error| error.to_string())?;
+            profile
+                .grant_read(&files.source)
+                .map_err(|error| error.to_string())?;
+            profile
+                .grant_private_working_directory(&files.output_directory)
+                .map_err(|error| error.to_string())?;
+            let inner = profile
+                .spawn_pinned(
+                    &executable,
+                    &[],
+                    &files.output_directory,
+                    publisher_linux_worker_job::JobLimits {
+                        process_memory_bytes: WORKER_MEMORY_LIMIT,
+                        job_memory_bytes: WORKER_MEMORY_LIMIT,
+                        cpu_time: timeout,
+                        wall_time: timeout,
+                    },
+                )
+                .map_err(|error| error.to_string())?;
+            Ok(Self { inner })
+        }
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
+        {
+            let _ = (worker, files, timeout);
+            Err("worker confinement requires Windows or qualified x86_64 Linux".into())
         }
     }
 
     fn take_stdin(&mut self) -> Option<Box<dyn Write + Send>> {
-        #[cfg(windows)]
+        #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
         {
             self.inner
                 .take_stdin()
                 .map(|pipe| Box::new(pipe) as Box<dyn Write + Send>)
         }
-        #[cfg(not(windows))]
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
         {
-            self.inner
-                .stdin
-                .take()
-                .map(|pipe| Box::new(pipe) as Box<dyn Write + Send>)
+            match self.inner {}
         }
     }
 
     fn take_stdout(&mut self) -> Option<Box<dyn Read + Send>> {
-        #[cfg(windows)]
+        #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
         {
             self.inner
                 .take_stdout()
                 .map(|pipe| Box::new(pipe) as Box<dyn Read + Send>)
         }
-        #[cfg(not(windows))]
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
         {
-            self.inner
-                .stdout
-                .take()
-                .map(|pipe| Box::new(pipe) as Box<dyn Read + Send>)
+            match self.inner {}
         }
     }
 
     fn take_stderr(&mut self) -> Option<Box<dyn Read + Send>> {
-        #[cfg(windows)]
+        #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
         {
             self.inner
                 .take_stderr()
                 .map(|pipe| Box::new(pipe) as Box<dyn Read + Send>)
         }
-        #[cfg(not(windows))]
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
         {
-            self.inner
-                .stderr
-                .take()
-                .map(|pipe| Box::new(pipe) as Box<dyn Read + Send>)
+            match self.inner {}
         }
     }
 
     fn try_wait(&mut self) -> std::io::Result<Option<ExitStatus>> {
-        self.inner.try_wait()
+        #[cfg(windows)]
+        {
+            self.inner.try_wait()
+        }
+        #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+        {
+            let status = self.inner.try_wait()?;
+            if status.is_some() && self.inner.deadline_terminated() {
+                Err(io::ErrorKind::TimedOut.into())
+            } else {
+                Ok(status)
+            }
+        }
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
+        {
+            match self.inner {}
+        }
     }
 
     fn terminate(&mut self) {
-        #[cfg(windows)]
+        #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
         {
             let _ignored = self.inner.terminate();
         }
-        #[cfg(not(windows))]
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
         {
-            let _ignored = self.inner.kill();
-            let _ignored = self.inner.wait();
+            match self.inner {}
         }
     }
 }
@@ -1666,6 +2037,204 @@ impl RunningProcess {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn authored_ascent_public_api_preserves_fact_presence_and_authority() {
+        let boundary = TrustedFontBoundary::resolve_packaged();
+        let high = include_bytes!(
+            "../../../apps/font-worker/src/tests/fixtures/ascent-unencoded-high.otf"
+        );
+        let automatic = boundary.prepare_publication(high, 0, &[0, 1, 2]).unwrap();
+        assert!(automatic.requires_ascent_facts());
+        assert!(automatic.ascent_facts_sha256().is_none());
+        let authored = boundary
+            .prepare_publication_with_ascent_facts(high, 0, &[0, 1, 2], &[2])
+            .unwrap();
+        assert!(!authored.requires_ascent_facts());
+        assert_eq!(
+            authored.ascent_facts_sha256(),
+            Some(ascent_facts_hash(Hash32::of(high), 0, &[2]).0)
+        );
+        assert_eq!(authored.pdf_metrics().ascent().to_bits(), 880_f32.to_bits());
+        assert_eq!(authored.prepared_bytes(), automatic.prepared_bytes());
+        let legacy = boundary.prepare(high, 0, &[0, 1, 2]).unwrap();
+        assert!(
+            legacy.requires_ascent_facts(),
+            "legacy wrapper preserves unresolved state"
+        );
+        let plain = include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf");
+        let empty = boundary
+            .prepare_publication_with_ascent_facts(plain, 0, &[0, 1], &[])
+            .unwrap();
+        assert!(!empty.requires_ascent_facts());
+        assert!(empty.ascent_facts_sha256().is_some());
+        let legacy = boundary.prepare(plain, 0, &[0, 1]).unwrap();
+        assert!(
+            !legacy.requires_ascent_facts(),
+            "legacy authoritative preparation remains authoritative"
+        );
+        for facts in [&[0][..], &[2, 2][..], &[2, 1][..]] {
+            assert!(matches!(
+                boundary.prepare_publication_with_ascent_facts(high, 0, &[0, 1, 2], facts),
+                Err(FontWorkerError::InvalidAscentFacts { .. })
+            ));
+        }
+        assert!(
+            matches!(boundary.prepare_publication_with_ascent_facts(high,0,&[0,1,2],&[3]),Err(FontWorkerError::WorkerRejected {code,..}) if code=="invalid-ascent-facts")
+        );
+    }
+    #[test]
+    fn authored_ascent_report_hash_and_authority_tampering_is_rejected() {
+        let boundary = TrustedFontBoundary::resolve_packaged();
+        let binding = boundary.binding.as_ref().unwrap();
+        let worker = PreparedWorker::new(binding).unwrap();
+        let font = include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf");
+        let files = PreparationFiles::new(font).unwrap();
+        let source = Hash32::of(font);
+        let expected = ascent_facts_hash(source, 0, &[]);
+        let request = WireRequest::Prepare {
+            protocol_version: PROTOCOL_VERSION,
+            font_path: files.source.display().to_string(),
+            expected_source_sha256: source.hex(),
+            prepared_output_path: files.prepared.display().to_string(),
+            preparation_policy: WirePreparationPolicy::Publication,
+            face_index: 0,
+            glyph_ids: vec![0, 1],
+            expected_glyph_set_sha256: glyph_set_hash(&[0, 1]).hex(),
+            accented_source_glyph_ids: Some(vec![]),
+            expected_ascent_facts_sha256: Some(expected.hex()),
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: font_facts_hash(source, 0, Some(&[]), None)
+                .map(Hash32::hex),
+        };
+        let WireReport::Prepare(mut report) = run_worker(&worker, &files, &request).unwrap() else {
+            panic!("preparation");
+        };
+        assert!(validate_ascent_facts_binding(&report, Some(expected)).is_ok());
+        assert!(validate_ascent_facts_binding(&report, None).is_err());
+        for changed in [
+            ascent_facts_hash(Hash32::of(b"other source"), 0, &[]),
+            ascent_facts_hash(source, 1, &[]),
+            ascent_facts_hash(source, 0, &[1]),
+        ] {
+            assert!(validate_ascent_facts_binding(&report, Some(changed)).is_err());
+        }
+        report.requires_ascent_facts = true;
+        assert!(validate_ascent_facts_binding(&report, Some(expected)).is_err());
+        report.requires_ascent_facts = false;
+        report.ascent_facts_sha256 = None;
+        assert!(validate_ascent_facts_binding(&report, Some(expected)).is_err());
+    }
+    #[test]
+    fn authored_ascent_fact_capacity_uses_source_face_and_large_request_transport() {
+        let font = include_bytes!("../../layout-core/tests/fixtures/NotoSansCJKsc-Regular.otf");
+        // Range/transport evidence only; native validation does not assert the
+        // semantic truth of these authored memberships. The request exceeds
+        // the old256KiB frame and smaller16,384 requested-GID capacity.
+        let facts = (1..60001_u16).collect::<Vec<_>>();
+        let prepared = TrustedFontBoundary::resolve_packaged()
+            .prepare_publication_with_ascent_facts(font, 0, &[0, 41], &facts)
+            .unwrap();
+        assert!(!prepared.requires_ascent_facts());
+        assert!(prepared.ascent_facts_sha256().is_some());
+    }
+
+    #[test]
+    fn authored_cap_height_public_api_preserves_legacy_and_canonical_presence() {
+        let boundary = TrustedFontBoundary::resolve_packaged();
+        let plain = include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf");
+        let automatic = boundary.prepare_publication(plain, 0, &[1]).unwrap();
+        assert!(!automatic.requires_cap_height_fact());
+        assert!(automatic.font_facts_sha256().is_none());
+        let cap = automatic.pdf_metrics().cap_height().unwrap();
+        let authored = boundary
+            .prepare_publication_with_font_facts(plain, 0, &[1], Some(&[]), Some(cap))
+            .unwrap();
+        let legacy = boundary
+            .prepare_publication_with_ascent_facts(plain, 0, &[1], &[])
+            .unwrap();
+        assert_eq!(authored.prepared_bytes(), automatic.prepared_bytes());
+        assert_eq!(authored.ascent_facts_sha256(), legacy.ascent_facts_sha256());
+        assert_eq!(
+            authored.font_facts_sha256(),
+            font_facts_hash(Hash32::of(plain), 0, Some(&[]), Some(cap)).map(|h| h.0)
+        );
+        assert_ne!(authored.font_facts_sha256(), legacy.font_facts_sha256());
+        assert!(
+            matches!(boundary.prepare_publication_with_font_facts(plain,0,&[1],None,Some(cap+1.)),Err(FontWorkerError::WorkerRejected{code,..}) if code=="cap-height-fact-conflict")
+        );
+        for cap in [
+            f32::NAN,
+            f32::INFINITY,
+            -f32::INFINITY,
+            10_000_001.,
+            -10_000_001.,
+        ] {
+            assert!(matches!(
+                boundary.prepare_publication_with_font_facts(plain, 0, &[1], None, Some(cap)),
+                Err(FontWorkerError::InvalidCapHeightFact)
+            ));
+        }
+        let empty = include_bytes!("../../../apps/font-worker/src/tests/fixtures/empty.otf");
+        let positive_zero = boundary
+            .prepare_publication_with_font_facts(empty, 0, &[1], None, Some(0.))
+            .unwrap();
+        let negative_zero = boundary
+            .prepare_publication_with_font_facts(empty, 0, &[1], None, Some(-0.))
+            .unwrap();
+        assert_eq!(
+            positive_zero.font_facts_sha256(),
+            negative_zero.font_facts_sha256()
+        );
+        assert_eq!(
+            negative_zero.pdf_metrics().cap_height().map(f32::to_bits),
+            Some(0_f32.to_bits())
+        );
+    }
+
+    #[test]
+    fn authored_cap_height_report_binding_rejects_hash_presence_value_and_authority_tampering() {
+        let boundary = TrustedFontBoundary::resolve_packaged();
+        let worker = PreparedWorker::new(boundary.binding.as_ref().unwrap()).unwrap();
+        let font = include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf");
+        let files = PreparationFiles::new(font).unwrap();
+        let source = Hash32::of(font);
+        let expected = font_facts_hash(source, 0, None, Some(733.));
+        let request = WireRequest::Prepare {
+            protocol_version: PROTOCOL_VERSION,
+            font_path: files.source.display().to_string(),
+            expected_source_sha256: source.hex(),
+            prepared_output_path: files.prepared.display().to_string(),
+            preparation_policy: WirePreparationPolicy::Publication,
+            face_index: 0,
+            glyph_ids: vec![1],
+            expected_glyph_set_sha256: glyph_set_hash(&[1]).hex(),
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: Some(733.),
+            expected_font_facts_sha256: expected.map(Hash32::hex),
+        };
+        let WireReport::Prepare(mut report) = run_worker(&worker, &files, &request).unwrap() else {
+            panic!("prepare");
+        };
+        assert!(validate_font_facts_binding(&report, expected, Some(733.)).is_ok());
+        for wrong in [
+            None,
+            font_facts_hash(Hash32::of(b"other"), 0, None, Some(733.)),
+            font_facts_hash(source, 1, None, Some(733.)),
+            font_facts_hash(source, 0, Some(&[]), Some(733.)),
+            font_facts_hash(source, 0, None, Some(734.)),
+        ] {
+            assert!(validate_font_facts_binding(&report, wrong, Some(733.)).is_err());
+        }
+        report.requires_cap_height_fact = true;
+        assert!(validate_font_facts_binding(&report, expected, Some(733.)).is_err());
+        report.requires_cap_height_fact = false;
+        report.pdf_metrics.cap_height = None;
+        assert!(validate_font_facts_binding(&report, expected, Some(733.)).is_err());
+        report.pdf_metrics.cap_height = Some(734.);
+        assert!(validate_font_facts_binding(&report, expected, Some(733.)).is_err());
+    }
 
     #[test]
     fn worker_failures_preserve_authoring_denials_without_hiding_integrity_codes() {
@@ -1859,7 +2428,7 @@ mod tests {
         assert_eq!(inspected.into_source_bytes(), font);
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn packaged_font_worker_cannot_read_or_write_outside_its_private_run() {
         let font = include_bytes!("../../layout-core/tests/fixtures/DejaVuSans.ttf");
@@ -1891,6 +2460,10 @@ mod tests {
             preparation_policy: WirePreparationPolicy::SubsetOnly,
             face_index: 0,
             glyph_ids: vec![36],
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&[36]).hex(),
         };
         assert!(matches!(
@@ -1907,7 +2480,7 @@ mod tests {
         std::fs::remove_dir(outside).expect("remove outside directory");
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn packaged_font_worker_returns_a_bounded_resource_failure() {
         let font = include_bytes!("../../layout-core/tests/fixtures/DejaVuSans.ttf");
@@ -1924,6 +2497,10 @@ mod tests {
             prepared_output_path: files.prepared.display().to_string(),
             preparation_policy: WirePreparationPolicy::SubsetOnly,
             face_index: 0,
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&glyph_ids).hex(),
             glyph_ids,
         };
@@ -1936,7 +2513,7 @@ mod tests {
         assert!(!files.prepared.exists());
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn packaged_font_worker_rejects_exact_malformed_font_without_output_or_paths() {
         const MALFORMED_FONT: &[u8] = b"not a font";
@@ -1991,7 +2568,7 @@ mod tests {
         }
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn confined_worker_rejects_malformed_cff_name_index_without_output() {
         const VALID_CFF: &[u8] =
@@ -2055,6 +2632,10 @@ mod tests {
             preparation_policy: WirePreparationPolicy::SubsetOnly,
             face_index: 0,
             glyph_ids: vec![0, 34],
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&[0, 34]).hex(),
         };
         let error = run_worker(&worker, &files, &request)
@@ -2070,7 +2651,7 @@ mod tests {
         assert!(!files.prepared.exists());
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn confined_worker_rejects_two_cff_names_without_output() {
         const FONT: &[u8] =
@@ -2147,6 +2728,10 @@ mod tests {
             preparation_policy: WirePreparationPolicy::SubsetOnly,
             face_index: 0,
             glyph_ids: vec![0, 34],
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&[0, 34]).hex(),
         };
         let error = run_worker(&worker, &files, &request)
@@ -2162,7 +2747,7 @@ mod tests {
         assert!(!files.prepared.exists());
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn confined_worker_refuses_cff_full_embedding_without_output() {
         const CFF: &[u8] =
@@ -2226,6 +2811,10 @@ mod tests {
             preparation_policy: WirePreparationPolicy::Publication,
             face_index: 0,
             glyph_ids: vec![0, 34],
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&[0, 34]).hex(),
         };
         let error = run_worker(&worker, &files, &request)
@@ -2275,60 +2864,19 @@ mod tests {
 
     #[test]
     fn publication_mode_preserves_a_full_font_when_subsetting_is_forbidden() {
-        let mut font = include_bytes!("../../layout-core/tests/fixtures/DejaVuSans.ttf").to_vec();
-        let table_count = usize::from(u16::from_be_bytes([font[4], font[5]]));
-        let os2 = (0..table_count)
-            .map(|index| 12 + index * 16)
-            .find(|offset| font[*offset..*offset + 4] == *b"OS/2")
-            .expect("fixture has OS/2 table");
-        let table_offset = usize::try_from(u32::from_be_bytes([
-            font[os2 + 8],
-            font[os2 + 9],
-            font[os2 + 10],
-            font[os2 + 11],
-        ]))
-        .unwrap();
-        let table_length = usize::try_from(u32::from_be_bytes([
-            font[os2 + 12],
-            font[os2 + 13],
-            font[os2 + 14],
-            font[os2 + 15],
-        ]))
-        .unwrap();
-        let old_padded_end = table_offset + table_length.next_multiple_of(4);
-        let new_length = 96_usize;
-        let shift = new_length - table_length.next_multiple_of(4);
-        font.splice(old_padded_end..old_padded_end, vec![0; shift]);
-        font[os2 + 12..os2 + 16].copy_from_slice(&u32::try_from(new_length).unwrap().to_be_bytes());
-        for index in 0..table_count {
-            let record = 12 + index * 16;
-            let offset = usize::try_from(u32::from_be_bytes([
-                font[record + 8],
-                font[record + 9],
-                font[record + 10],
-                font[record + 11],
-            ]))
-            .unwrap();
-            if offset >= old_padded_end {
-                font[record + 8..record + 12]
-                    .copy_from_slice(&u32::try_from(offset + shift).unwrap().to_be_bytes());
-            }
-        }
-        font[table_offset..table_offset + 2].copy_from_slice(&3_u16.to_be_bytes());
-        font[table_offset + 8..table_offset + 10].copy_from_slice(&0x0108_u16.to_be_bytes());
-
+        // This original coherent control includes an unused point-attached
+        // composite. Its rights require the entire valid program unchanged.
+        let font = include_bytes!("../../../apps/font-worker/src/tests/fixtures/original.ttf");
         let prepared = TrustedFontBoundary::resolve_packaged()
-            .prepare_publication(&font, 0, &[0, 36, 37])
+            .prepare_publication(font, 0, &[0, 1])
             .expect("worker preserves full font");
-
         assert_eq!(prepared.preparation_kind(), FontPreparationKind::Full);
-        assert_eq!(prepared.postscript_name(), "DejaVuSans");
+        assert_eq!(prepared.postscript_name(), "PatterboxU2Original");
         assert_eq!(prepared.prepared_bytes(), font);
         assert_eq!(prepared.prepared_sha256(), prepared.source_sha256());
-        assert_eq!(prepared.used_glyph_count(), 3);
-        assert!(prepared.embedded_glyph_count() > prepared.used_glyph_count());
+        assert_eq!(prepared.used_glyph_count(), 2);
+        assert_eq!(prepared.embedded_glyph_count(), 4);
     }
-
     #[test]
     fn source_replacement_after_pinning_is_rejected() {
         let packaged = resolve_worker().expect("test worker is built");
@@ -2351,116 +2899,233 @@ mod tests {
         std::fs::remove_dir(directory).expect("remove directory");
     }
 
-    #[cfg(unix)]
-    #[test]
-    fn malformed_worker_output_is_rejected() {
-        use std::os::unix::fs::PermissionsExt;
-        let directory =
-            private_directory("publisher-font-malformed-test").expect("private directory");
-        let source = directory.join("worker");
-        write_exclusive(&source, b"#!/bin/sh\ncat >/dev/null\nprintf 'not-json'\n")
-            .expect("write worker");
-        std::fs::set_permissions(&source, std::fs::Permissions::from_mode(0o500))
-            .expect("executable");
-        let bytes = read_bounded(&source, MAX_WORKER_BYTES).expect("read worker");
-        let binding = WorkerBinding {
-            path: source.clone(),
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    fn linux_probe() -> PreparedWorker {
+        let executable = std::env::current_exe().unwrap();
+        let path = executable
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .join("examples/linux-boundary-probe");
+        let bytes = read_bounded(&path, MAX_WORKER_BYTES)
+            .expect("build the linux-boundary-probe example before this native suite");
+        PreparedWorker::new(&WorkerBinding {
+            path,
             executable_hash: Hash32::of(&bytes),
-        };
-        let worker = PreparedWorker::new(&binding).expect("prepare worker");
-        let files = PreparationFiles::new(b"font").expect("stage font input");
-        let request = WireRequest::Prepare {
-            protocol_version: PROTOCOL_VERSION,
-            font_path: "x".into(),
-            expected_source_sha256: "0".repeat(64),
-            prepared_output_path: "y".into(),
-            preparation_policy: WirePreparationPolicy::SubsetOnly,
-            face_index: 0,
-            glyph_ids: vec![1],
-            expected_glyph_set_sha256: "0".repeat(64),
-        };
-        assert!(matches!(
-            run_worker(&worker, &files, &request),
-            Err(FontWorkerError::MalformedReport(_))
-        ));
-        drop(worker);
-        std::fs::remove_file(source).expect("remove source");
-        std::fs::remove_dir(directory).expect("remove directory");
+        })
+        .unwrap()
     }
 
-    #[cfg(unix)]
-    #[test]
-    fn report_larger_than_a_pipe_buffer_is_drained_without_deadlock() {
-        use std::os::unix::fs::PermissionsExt;
-        let directory =
-            private_directory("publisher-font-large-report-test").expect("private directory");
-        let source = directory.join("worker");
-        write_exclusive(
-            &source,
-            b"#!/bin/sh\ncat >/dev/null\nhead -c 262144 /dev/zero | tr '\\000' 'x'\n",
-        )
-        .expect("write worker");
-        std::fs::set_permissions(&source, std::fs::Permissions::from_mode(0o500))
-            .expect("executable");
-        let bytes = read_bounded(&source, MAX_WORKER_BYTES).expect("read worker");
-        let binding = WorkerBinding {
-            path: source.clone(),
-            executable_hash: Hash32::of(&bytes),
-        };
-        let worker = PreparedWorker::new(&binding).expect("prepare worker");
-        let files = PreparationFiles::new(b"font").expect("stage font input");
-        let request = WireRequest::Prepare {
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    fn probe_request(files: &PreparationFiles, mode: &str) -> WireRequest {
+        WireRequest::Inspect {
             protocol_version: PROTOCOL_VERSION,
-            font_path: "x".into(),
-            expected_source_sha256: "0".repeat(64),
-            prepared_output_path: "y".into(),
-            preparation_policy: WirePreparationPolicy::SubsetOnly,
+            font_path: files.source.display().to_string(),
+            expected_source_sha256: mode.into(),
             face_index: 0,
-            glyph_ids: vec![1],
-            expected_glyph_set_sha256: "0".repeat(64),
-        };
-        assert!(matches!(
-            run_worker_with_timeout(&worker, &files, &request, Duration::from_secs(2)),
-            Err(FontWorkerError::MalformedReport(_))
-        ));
-        drop(worker);
-        std::fs::remove_file(source).expect("remove source");
-        std::fs::remove_dir(directory).expect("remove directory");
+        }
     }
 
-    #[cfg(unix)]
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
     #[test]
-    fn nonresponsive_worker_is_terminated_at_deadline() {
+    fn linux_launch_uses_verified_bytes_after_private_path_replacement() {
         use std::os::unix::fs::PermissionsExt;
-        let directory =
-            private_directory("publisher-font-timeout-test").expect("private directory");
-        let source = directory.join("worker");
-        write_exclusive(&source, b"#!/bin/sh\nsleep 10\n").expect("write worker");
-        std::fs::set_permissions(&source, std::fs::Permissions::from_mode(0o500))
-            .expect("executable");
-        let bytes = read_bounded(&source, MAX_WORKER_BYTES).expect("read worker");
-        let binding = WorkerBinding {
-            path: source.clone(),
-            executable_hash: Hash32::of(&bytes),
-        };
-        let worker = PreparedWorker::new(&binding).expect("prepare worker");
-        let files = PreparationFiles::new(b"font").expect("stage font input");
-        let request = WireRequest::Prepare {
+        let worker = PreparedWorker::new(&resolve_worker().unwrap()).unwrap();
+        std::fs::set_permissions(&worker.path, std::fs::Permissions::from_mode(0o600)).unwrap();
+        std::fs::write(&worker.path, b"replaced after the digest check").unwrap();
+        let font = include_bytes!("../../layout-core/tests/fixtures/DejaVuSans.ttf");
+        let files = PreparationFiles::new(font).unwrap();
+        let request = WireRequest::Inspect {
             protocol_version: PROTOCOL_VERSION,
-            font_path: "x".into(),
-            expected_source_sha256: "0".repeat(64),
-            prepared_output_path: "y".into(),
-            preparation_policy: WirePreparationPolicy::SubsetOnly,
+            font_path: files.source.display().to_string(),
+            expected_source_sha256: Hash32::of(font).hex(),
             face_index: 0,
-            glyph_ids: vec![1],
-            expected_glyph_set_sha256: "0".repeat(64),
         };
+        let WireReport::Inspect(report) = run_worker(&worker, &files, &request).unwrap() else {
+            panic!("inspection report")
+        };
+        validate_inspection_report(font, 0, &report).unwrap();
+    }
+
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    #[test]
+    fn linux_real_elf_protocol_failures_clean_up_and_allow_fresh_retry() {
+        let worker = linux_probe();
+        let executable_directory = worker.directory.clone();
+        for mode in [
+            "malformed",
+            "oversized",
+            "stderr",
+            "crash",
+            "early-close",
+            "denials",
+        ] {
+            let files = PreparationFiles::new(b"exact staged input").unwrap();
+            let directory = files.directory.clone();
+            let request_mode = if mode == "early-close" {
+                format!("early-close{}", "x".repeat(128 * 1024))
+            } else {
+                mode.into()
+            };
+            let error = run_worker_with_timeout(
+                &worker,
+                &files,
+                &probe_request(&files, &request_mode),
+                Duration::from_secs(2),
+            )
+            .expect_err("hostile protocol cannot mint a receipt");
+            if mode == "oversized" {
+                assert_eq!(error, FontWorkerError::ResourceLimit);
+            } else {
+                assert!(
+                    matches!(error, FontWorkerError::MalformedReport(_)),
+                    "{mode}: {error:?}"
+                );
+            }
+            if mode == "denials" {
+                assert_eq!(
+                    std::fs::read(files.output_directory.join("denials-proven")).unwrap(),
+                    b"yes"
+                );
+            }
+            if mode == "early-close" {
+                let consumed: usize =
+                    std::fs::read_to_string(files.output_directory.join("early-close-proven"))
+                        .unwrap()
+                        .parse()
+                        .unwrap();
+                assert!(
+                    consumed < request_mode.len(),
+                    "probe must exit before consuming the complete input"
+                );
+            }
+            assert_eq!(std::fs::read(&files.source).unwrap(), b"exact staged input");
+            drop(files);
+            assert!(!directory.exists(), "all private outputs must be removed");
+        }
+        drop(worker);
+        assert!(!executable_directory.exists());
+        TrustedFontBoundary::resolve_packaged()
+            .inspect(
+                include_bytes!("../../layout-core/tests/fixtures/DejaVuSans.ttf"),
+                0,
+            )
+            .unwrap();
+    }
+
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    #[test]
+    fn linux_partial_grant_setup_never_runs_and_cleans_up() {
+        let worker = linux_probe();
+        let files = PreparationFiles::new(b"source").unwrap();
+        let directory = files.directory.clone();
+        std::fs::remove_file(&files.source).unwrap();
         assert!(matches!(
-            run_worker_with_timeout(&worker, &files, &request, Duration::from_millis(100)),
+            run_worker(&worker, &files, &probe_request(&files, "sleep")),
+            Err(FontWorkerError::ConfinementFailed(_))
+        ));
+        assert!(!files.output_directory.join("pid").exists());
+        drop(files);
+        assert!(!directory.exists());
+    }
+
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    #[test]
+    fn linux_active_cancellation_reaps_and_removes_partial_outputs() {
+        use std::sync::{
+            Arc,
+            atomic::{AtomicBool, Ordering},
+        };
+        let worker = linux_probe();
+        let files = PreparationFiles::new(b"exact input").unwrap();
+        let directory = files.directory.clone();
+        let marker = files.output_directory.join("pid");
+        let watcher_marker = marker.clone();
+        let flag = Arc::new(AtomicBool::new(false));
+        let cancellation = Arc::clone(&flag);
+        let watcher = thread::spawn(move || {
+            let deadline = Instant::now() + Duration::from_secs(2);
+            while !watcher_marker.exists() {
+                assert!(Instant::now() < deadline);
+                thread::sleep(Duration::from_millis(5));
+            }
+            cancellation.store(true, Ordering::Release);
+        });
+        let scope = publisher_linux_worker_job::WorkerCancellationScope::enter(flag);
+        let started = Instant::now();
+        assert!(
+            run_worker_with_timeout(
+                &worker,
+                &files,
+                &probe_request(&files, "sleep"),
+                Duration::from_secs(5)
+            )
+            .is_err()
+        );
+        assert!(started.elapsed() < Duration::from_secs(3));
+        watcher.join().unwrap();
+        drop(scope);
+        let pid = std::fs::read_to_string(marker).unwrap();
+        assert!(
+            !Path::new("/proc").join(pid).exists(),
+            "worker must be reaped"
+        );
+        assert!(files.output_directory.join("partial").exists());
+        drop(files);
+        assert!(!directory.exists());
+        TrustedFontBoundary::resolve_packaged()
+            .inspect(
+                include_bytes!("../../layout-core/tests/fixtures/DejaVuSans.ttf"),
+                0,
+            )
+            .unwrap();
+    }
+
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    #[test]
+    fn linux_deadline_kills_sleeping_worker_and_cleans_partial_output() {
+        let worker = linux_probe();
+        let files = PreparationFiles::new(b"input").unwrap();
+        let directory = files.directory.clone();
+        let started = Instant::now();
+        assert!(matches!(
+            run_worker_with_timeout(
+                &worker,
+                &files,
+                &probe_request(&files, "sleep"),
+                Duration::from_millis(250)
+            ),
             Err(FontWorkerError::TimedOut)
         ));
-        drop(worker);
-        std::fs::remove_file(source).expect("remove source");
-        std::fs::remove_dir(directory).expect("remove directory");
+        assert!(started.elapsed() < Duration::from_secs(2));
+        let pid = std::fs::read_to_string(files.output_directory.join("pid")).unwrap();
+        assert!(!Path::new("/proc").join(pid).exists());
+        drop(files);
+        assert!(!directory.exists());
+    }
+
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    #[test]
+    fn linux_deadline_remains_a_timeout_after_the_owner_has_already_reaped() {
+        let worker = linux_probe();
+        let files = PreparationFiles::new(b"input").unwrap();
+        let mut child = RunningProcess::spawn(&worker, &files, Duration::from_millis(250)).unwrap();
+        let input = serde_json::to_vec(&probe_request(&files, "sleep")).unwrap();
+        let mut stdin = child.take_stdin().unwrap();
+        stdin.write_all(&input).unwrap();
+        drop(stdin);
+        // Do not poll: the owner must kill and reap independently.
+        thread::sleep(Duration::from_millis(600));
+        let error = child
+            .try_wait()
+            .expect_err("a reaped deadline must retain its reason");
+        assert_eq!(error.kind(), io::ErrorKind::TimedOut);
+        let pid = std::fs::read_to_string(files.output_directory.join("pid")).unwrap();
+        assert!(!Path::new("/proc").join(pid).exists());
+        child.terminate();
+        let directory = files.directory.clone();
+        drop(files);
+        assert!(!directory.exists());
     }
 }

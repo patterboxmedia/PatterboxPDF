@@ -1,4 +1,7 @@
-#![cfg(all(windows, not(debug_assertions)))]
+#![cfg(all(
+    any(windows, all(target_os = "linux", target_arch = "x86_64")),
+    not(debug_assertions)
+))]
 
 #[test]
 #[ignore = "requires an isolated release test directory without the adjacent sidecar"]
@@ -6,7 +9,11 @@ fn missing_packaged_sidecar_fails_closed() {
     let executable = std::env::current_exe().expect("test executable");
     assert!(
         !executable
-            .with_file_name("publisher-raster-worker.exe")
+            .with_file_name(if cfg!(windows) {
+                "publisher-raster-worker.exe"
+            } else {
+                "publisher-raster-worker"
+            })
             .exists()
     );
     // One authored RGB red pixel; valid input avoids a pre-launch input rejection.

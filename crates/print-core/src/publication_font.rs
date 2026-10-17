@@ -79,6 +79,30 @@ impl ProductionFont {
         &self.evidence
     }
 
+    /// Whether positive print still needs authored accented-glyph roles.
+    #[must_use]
+    pub fn requires_ascent_facts(&self) -> bool {
+        self.program.requires_ascent_facts()
+    }
+
+    /// Whether positive print still needs the author's capital-height metric.
+    #[must_use]
+    pub fn requires_cap_height_fact(&self) -> bool {
+        self.program.requires_cap_height_fact()
+    }
+
+    /// Source/face-bound identity of an explicitly supplied accent set.
+    #[must_use]
+    pub fn ascent_facts_sha256(&self) -> Option<[u8; 32]> {
+        self.program.ascent_facts_sha256()
+    }
+
+    /// Source/face-bound identity of both optional authored font facts.
+    #[must_use]
+    pub fn font_facts_sha256(&self) -> Option<[u8; 32]> {
+        self.program.font_facts_sha256()
+    }
+
     pub(crate) fn program(&self) -> &PreparedPublicationFont {
         &self.program
     }
@@ -176,6 +200,30 @@ pub fn prepare_publication_fonts(
     resources: &[ExactFontResource],
     boundary: &TrustedFontBoundary,
 ) -> Result<Vec<ProductionFont>, ProductionFontError> {
+    prepare_publication_fonts_with_font_facts(publication, resources, boundary, |_| (None, None))
+}
+
+/// Prepares scene-bound fonts with optional facts from each resource's author.
+/// The callback receives the validated exact resource and supplies an optional
+/// complete accented-source-GID set and an optional capital height in PDF glyph
+/// units above the transformed baseline. Missing facts differ from an empty set
+/// or zero. Their semantic truth remains the resource author's responsibility.
+/// The wrapper retains control of the exact source bytes, face and scene GIDs.
+/// Pasteboard-only text and unreferenced resources are excluded as before.
+///
+/// # Errors
+///
+/// Preserves automatic preparation's scene/resource/identity errors and native
+/// fact validation errors. Contradictory facts cannot override computable metrics.
+pub fn prepare_publication_fonts_with_font_facts<F>(
+    publication: &ResolvedPublication,
+    resources: &[ExactFontResource],
+    boundary: &TrustedFontBoundary,
+    mut facts_for: F,
+) -> Result<Vec<ProductionFont>, ProductionFontError>
+where
+    F: FnMut(&ExactFontResource) -> (Option<Vec<u16>>, Option<f32>),
+{
     if publication.budget_state() != PreviewBudgetState::Complete {
         return Err(ProductionFontError::PreviewBudgetIncomplete);
     }
@@ -193,8 +241,15 @@ pub fn prepare_publication_fonts(
                 face_index,
             })?;
         let glyph_ids = usage.glyph_ids.into_iter().collect::<Vec<_>>();
+        let (accented_glyph_ids, cap_height_pdf_units) = facts_for(resource);
         let program = boundary
-            .prepare_publication(&resource.bytes, face_index, &glyph_ids)
+            .prepare_publication_with_font_facts(
+                &resource.bytes,
+                face_index,
+                &glyph_ids,
+                accented_glyph_ids.as_deref(),
+                cap_height_pdf_units,
+            )
             .map_err(|error| ProductionFontError::FontWorker {
                 source_sha256: source_sha256.clone(),
                 face_index,

@@ -1,0 +1,250 @@
+Mac OS Roman mapping data
+=========================
+
+The 128 Unicode scalar identities for bytes 0x80 through 0xFF were transcribed
+from Python 3.12.14 mac_roman mapping data and checked against Apple ROMAN.TXT.
+The Rust decoder is project code. No Python codec implementation is included.
+Change summary: retain the high-byte scalar identities as a finite Rust char
+table; omit the Python encoding/decoding functions and reverse mapping.
+
+Original Apple mapping header and attribution (verbatim)
+------------------------------------------------------
+#=======================================================================
+#   File name:  ROMAN.TXT
+#
+#   Contents:   Map (external version) from Mac OS Roman
+#               character set to Unicode 2.1 and later.
+#
+#   Copyright:  (c) 1994-2002, 2005 by Apple Computer, Inc., all rights
+#               reserved.
+#
+#   Contact:    charsets@apple.com
+#
+#   Changes:
+#
+#       c02  2005-Apr-05    Update header comments. Matches internal xml
+#                           <c1.1> and Text Encoding Converter 2.0.
+#      b4,c1 2002-Dec-19    Update URLs, notes. Matches internal
+#                           utom<b5>.
+#       b03  1999-Sep-22    Update contact e-mail address. Matches
+#                           internal utom<b4>, ufrm<b3>, and Text
+#                           Encoding Converter version 1.5.
+#       b02  1998-Aug-18    Encoding changed for Mac OS 8.5; change
+#                           mapping of 0xDB from CURRENCY SIGN to
+#                           EURO SIGN. Matches internal utom<b3>,
+#                           ufrm<b3>.
+#       n08  1998-Feb-05    Minor update to header comments
+#       n06  1997-Dec-14    Add warning about future changes to 0xDB
+#                           from CURRENCY SIGN to EURO SIGN. Clarify
+#                           some header information
+#       n04  1997-Dec-01    Update to match internal utom<n3>, ufrm<n22>:
+#                           Change standard mapping for 0xBD from U+2126
+#                           to its canonical decomposition, U+03A9.
+#       n03  1995-Apr-15    First version (after fixing some typos).
+#                           Matches internal ufrm<n9>.
+#
+# Standard header:
+# ----------------
+#
+#   Apple, the Apple logo, and Macintosh are trademarks of Apple
+#   Computer, Inc., registered in the United States and other countries.
+#   Unicode is a trademark of Unicode Inc. For the sake of brevity,
+#   throughout this document, "Macintosh" can be used to refer to
+#   Macintosh computers and "Unicode" can be used to refer to the
+#   Unicode standard.
+#
+#   Apple Computer, Inc. ("Apple") makes no warranty or representation,
+#   either express or implied, with respect to this document and the
+#   included data, its quality, accuracy, or fitness for a particular
+#   purpose. In no event will Apple be liable for direct, indirect,
+#   special, incidental, or consequential damages resulting from any
+#   defect or inaccuracy in this document or the included data.
+#
+#   These mapping tables and character lists are subject to change.
+#   The latest tables should be available from the following:
+#
+#   <http://www.unicode.org/Public/MAPPINGS/VENDORS/APPLE/>
+#
+#   For general information about Mac OS encodings and these mapping
+#   tables, see the file "README.TXT".
+#
+# Format:
+# -------
+#
+#   Three tab-separated columns;
+#   '#' begins a comment which continues to the end of the line.
+#     Column #1 is the Mac OS Roman code (in hex as 0xNN)
+#     Column #2 is the corresponding Unicode (in hex as 0xNNNN)
+#     Column #3 is a comment containing the Unicode name
+#
+#   The entries are in Mac OS Roman code order.
+#
+#   One of these mappings requires the use of a corporate character.
+#   See the file "CORPCHAR.TXT" and notes below.
+#
+#   Control character mappings are not shown in this table, following
+#   the conventions of the standard UTC mapping tables. However, the
+#   Mac OS Roman character set uses the standard control characters at
+#   0x00-0x1F and 0x7F.
+#
+# Notes on Mac OS Roman:
+# ----------------------
+#
+#   This is a legacy Mac OS encoding; in the Mac OS X Carbon and Cocoa
+#   environments, it is only supported directly in programming
+#   interfaces for QuickDraw Text, the Script Manager, and related
+#   Text Utilities. For other purposes it is supported via transcoding
+#   to and from Unicode.
+#
+#   This character set is used for at least the following Mac OS
+#   localizations: U.S., British, Canadian French, French, Swiss
+#   French, German, Swiss German, Italian, Swiss Italian, Dutch,
+#   Swedish, Norwegian, Danish, Finnish, Spanish, Catalan,
+#   Portuguese, Brazilian, and the default International system.
+#
+#   Variants of Mac OS Roman are used for Croatian, Icelandic,
+#   Turkish, Romanian, and other encodings. Separate mapping tables
+#   are available for these encodings.
+#
+#   Before Mac OS 8.5, code point 0xDB was CURRENCY SIGN, and was
+#   mapped to U+00A4. In Mac OS 8.5 and later versions, code point
+#   0xDB is changed to EURO SIGN and maps to U+20AC; the standard
+#   Apple fonts are updated for Mac OS 8.5 to reflect this. There is
+#   a "currency sign" variant of the Mac OS Roman encoding that still
+#   maps 0xDB to U+00A4; this can be used for older fonts.
+#
+#   Before Mac OS 8.5, the ROM bitmap versions of the fonts Chicago,
+#   New York, Geneva, and Monaco did not implement the full Mac OS
+#   Roman character set; they only supported character codes up to
+#   0xD8. The TrueType versions of these fonts have always implemented
+#   the full character set, as with the bitmap and TrueType versions
+#   of the other standard Roman fonts.
+#
+#   In all Mac OS encodings, fonts such as Chicago which are used
+#   as "system" fonts (for menus, dialogs, etc.) have four glyphs
+#   at code points 0x11-0x14 for transient use by the Menu Manager.
+#   These glyphs are not intended as characters for use in normal
+#   text, and the associated code points are not generally
+#   interpreted as associated with these glyphs; they are usually
+#   interpreted (if at all) as the control codes DC1-DC4.
+#
+# Unicode mapping issues and notes:
+# ---------------------------------
+#
+#   The following corporate zone Unicode character is used in this
+#   mapping:
+#
+#     0xF8FF  Apple logo
+#
+#   NOTE: The graphic image associated with the Apple logo character
+#   is not authorized for use without permission of Apple, and
+#   unauthorized use might constitute trademark infringement.
+#
+# Details of mapping changes in each version:
+# -------------------------------------------
+#
+#   Changes from version n08 to version b02:
+#
+#   - Encoding changed for Mac OS 8.5; change mapping of 0xDB from
+#   CURRENCY SIGN (U+00A4) to EURO SIGN (U+20AC).
+#
+#   Changes from version n03 to version n04:
+#
+#   - Change mapping of 0xBD from U+2126 to its canonical
+#     decomposition, U+03A9.
+#
+
+Unicode data permission notice (verbatim)
+-----------------------------------------
+UNICODE LICENSE V3
+
+COPYRIGHT AND PERMISSION NOTICE
+
+Copyright © 1991-2026 Unicode, Inc.
+
+NOTICE TO USER: Carefully read the following legal agreement. BY
+DOWNLOADING, INSTALLING, COPYING OR OTHERWISE USING DATA FILES, AND/OR
+SOFTWARE, YOU UNEQUIVOCALLY ACCEPT, AND AGREE TO BE BOUND BY, ALL OF THE
+TERMS AND CONDITIONS OF THIS AGREEMENT. IF YOU DO NOT AGREE, DO NOT
+DOWNLOAD, INSTALL, COPY, DISTRIBUTE OR USE THE DATA FILES OR SOFTWARE.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of data files and any associated documentation (the "Data Files") or
+software and any associated documentation (the "Software") to deal in the
+Data Files or Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, and/or sell
+copies of the Data Files or Software, and to permit persons to whom the
+Data Files or Software are furnished to do so, provided that either (a)
+this copyright and permission notice appear with all copies of the Data
+Files or Software, or (b) this copyright and permission notice appear in
+associated Documentation.
+
+THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
+THIRD PARTY RIGHTS.
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE
+BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES,
+OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA
+FILES OR SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall
+not be used in advertising or otherwise to promote the sale, use or other
+dealings in these Data Files or Software without prior written
+authorization of the copyright holder.
+
+Python mapping provenance permission notice (verbatim)
+----------------------------------------------------
+PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2
+--------------------------------------------
+
+1. This LICENSE AGREEMENT is between the Python Software Foundation
+("PSF"), and the Individual or Organization ("Licensee") accessing and
+otherwise using this software ("Python") in source or binary form and
+its associated documentation.
+
+2. Subject to the terms and conditions of this License Agreement, PSF hereby
+grants Licensee a nonexclusive, royalty-free, world-wide license to reproduce,
+analyze, test, perform and/or display publicly, prepare derivative works,
+distribute, and otherwise use Python alone or in any derivative version,
+provided, however, that PSF's License Agreement and PSF's notice of copyright,
+i.e., "Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
+2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023 Python Software Foundation;
+All Rights Reserved" are retained in Python alone or in any derivative version
+prepared by Licensee.
+
+3. In the event Licensee prepares a derivative work that is based on
+or incorporates Python or any part thereof, and wants to make
+the derivative work available to others as provided herein, then
+Licensee hereby agrees to include in any such work a brief summary of
+the changes made to Python.
+
+4. PSF is making Python available to Licensee on an "AS IS"
+basis.  PSF MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+IMPLIED.  BY WAY OF EXAMPLE, BUT NOT LIMITATION, PSF MAKES NO AND
+DISCLAIMS ANY REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS
+FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF PYTHON WILL NOT
+INFRINGE ANY THIRD PARTY RIGHTS.
+
+5. PSF SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF PYTHON
+FOR ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR LOSS AS
+A RESULT OF MODIFYING, DISTRIBUTING, OR OTHERWISE USING PYTHON,
+OR ANY DERIVATIVE THEREOF, EVEN IF ADVISED OF THE POSSIBILITY THEREOF.
+
+6. This License Agreement will automatically terminate upon a material
+breach of its terms and conditions.
+
+7. Nothing in this License Agreement shall be deemed to create any
+relationship of agency, partnership, or joint venture between PSF and
+Licensee.  This License Agreement does not grant permission to use PSF
+trademarks or trade name in a trademark sense to endorse or promote
+products or services of Licensee, or any third party.
+
+8. By copying, installing or otherwise using Python, Licensee
+agrees to be bound by the terms and conditions of this License
+Agreement.
+
+

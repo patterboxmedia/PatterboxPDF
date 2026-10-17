@@ -15,6 +15,7 @@ The Cargo workspace has no path dependency outside this project. It contains the
 | `crates/*-boundary`, `crates/raster-capacity` | Worker protocols, resource limits and lifecycle checks |
 | `apps/*-worker` | Isolated color, font, raster and PDF profile processing |
 | `crates/windows-worker-job`, `crates/windows-atomic-file` | Windows process/resource and atomic-file support |
+| `crates/linux-worker-job` | Native Ubuntu process/resource confinement for font/color/raster workers |
 | `examples/standalone-client` | Separate Cargo workspace consuming the default public interface |
 | `scripts`, `tests/unit`, `examples/pdf-candidate` | Development corpus construction, checker review and supporting fixtures |
 | `artifacts` | Frozen imported evidence and newly generated local setup outputs; excluded from Git by default |
@@ -25,10 +26,10 @@ The public boundary accepts finished pages, resources and export options. It doe
 
 Prepared exact font programs and compressed raster planes can share ownership between the compatibility view and finished resources. Raster memory admission remains alive until every owning view is dropped. Traversal shares the low-level font and image emitters, rather than retaining a second PDF serializer. Coordinates are converted from compatibility micrometres/Y-down geometry into PDF points/Y-up at that adapter boundary.
 
-The public PDF/X entry rejects unmanaged RGB. A private compatibility diagnostic entry preserves the old preflight probe that can deliberately emit an unmanaged candidate for a blocking finding. Managed production output uses the public fail-closed entry. The exception is inaccessible to external callers.
+The finished-page print entry rejects unmanaged RGB and unresolved font authorities. The optional adapter also exposes intentional diagnostic candidate routes; their return of bytes does not establish strict print generation. Managed adapter routes with enforced prepared fonts lower into the same checked finished-page writer. The generation contract names each route and its branch conditions.
 
 Callas is an independent development checker. It is outside generation, the runtime and the source package. qpdf is a pinned tool for optional inspection/validation paths; the writer itself does not require it. The optional `TrustedValidatorBoundary` implements the imported compatibility profile, with its narrower content assumptions. That profile can reject a supported native structure outside its scope; it is not a universal validator for this library's generation features. New output receives focused independent parsing and exact-byte development analysis. The source archive includes no native runtime binaries. Cargo dependencies, workers and optional inspection tools are built or acquired separately.
 
 The finished-page boundary generates ordinary RGB/Gray/CMYK content and bounded CMYK print output. Native axial/radial gradients use component functions and matching gray opacity shadings. Items select defined PDF blend modes; each page or isolated group selects its own composition space from painted content. Shared objects are allocated deterministically, while page/Form resource dictionaries contain their direct stream usage.
 
-Font/profile preparation has Windows-specific runtime evidence. Reading/editing, paragraph layout and additional color/gradient families have separate future scope. See `../ROADMAP.md` for completion evidence and deferred decisions. Application UI, integration and document formats do not determine that queue.
+Font/profile preparation has current native Windows and Ubuntu qualification, including source-matched extracted archive builds, exact resource/output inspection and real refusal controls. Linux refuses the optional trusted validator before launching it. Reading/editing, paragraph layout and additional color/gradient families have separate future scope. See `../ROADMAP.md` for completion evidence and deferred decisions. Application UI, integration and document formats do not determine that queue.
