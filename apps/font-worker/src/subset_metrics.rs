@@ -1,12 +1,16 @@
+use super::{cff_program::Error, truetype_program::Program};
 use ttf_parser::{Face, GlyphId};
 
-pub fn normalize(bytes: &mut Vec<u8>) -> Result<(), ()> {
+pub fn normalize(
+    source: &Face<'_>,
+    bytes: &mut Vec<u8>,
+    remapped: &[super::RemappedGlyph],
+) -> Result<(), Error> {
     let face = Face::parse(bytes, 0).map_err(|_| ())?;
     if face.tables().glyf.is_none() {
         return Ok(());
     }
-    ensure_hint_tables(bytes)?;
-    let face = Face::parse(bytes, 0).map_err(|_| ())?;
+    let program = Program::parse(&face, false)?;
     let mut advance_max = 0_u16;
     let mut extrema: Option<[i32; 3]> = None;
     let mut bbox: Option<[i16; 4]> = None;
@@ -14,53 +18,88 @@ pub fn normalize(bytes: &mut Vec<u8>) -> Result<(), ()> {
         let glyph = GlyphId(gid);
         let advance = face.glyph_hor_advance(glyph).ok_or(())?;
         advance_max = advance_max.max(advance);
-        // The parser calculates outlines, including transformed composites;
-        // it does not trust the glyf table's cached glyph bounding boxes.
-        if let Some(bounds) = face.glyph_bounding_box(glyph) {
+        // Aggregate caches use retained raw glyf control-point rectangles.
+        // The final strict program parse checks those rectangles against actual
+        // geometry; an alternate outline parser must not redefine them here.
+        if let Some(bounds) = program.cached_bounds(usize::from(gid))? {
             let left = i32::from(face.glyph_hor_side_bearing(glyph).ok_or(())?);
-            let extent = left + i32::from(bounds.x_max) - i32::from(bounds.x_min);
+            let extent = left + i32::from(bounds[2]) - i32::from(bounds[0]);
             let right = i32::from(advance) - extent;
             extrema = Some(extrema.map_or([left, right, extent], |old| {
                 [old[0].min(left), old[1].min(right), old[2].max(extent)]
             }));
-            bbox = Some(bbox.map_or(
-                [bounds.x_min, bounds.y_min, bounds.x_max, bounds.y_max],
-                |old| {
-                    [
-                        old[0].min(bounds.x_min),
-                        old[1].min(bounds.y_min),
-                        old[2].max(bounds.x_max),
-                        old[3].max(bounds.y_max),
-                    ]
-                },
-            ));
+            bbox = Some(bbox.map_or(bounds, |old| {
+                [
+                    old[0].min(bounds[0]),
+                    old[1].min(bounds[1]),
+                    old[2].max(bounds[2]),
+                    old[3].max(bounds[3]),
+                ]
+            }));
         }
     }
     let extrema = extrema.unwrap_or([0; 3]);
     let bbox = bbox.unwrap_or([0; 4]);
-    let (head_record, head_offset, head_length) = table(bytes, *b"head")?;
-    let (hhea_record, hhea_offset, hhea_length) = table(bytes, *b"hhea")?;
-    if head_length < 54 || hhea_length < 36 {
-        return Err(());
+    let input = Program::parse(source, false)?;
+    let originals = program.subset_source_glyphs(&input, remapped)?;
+    // A subset must preserve the context of every retained source component,
+    // including its tail. Optional unused source context remains deferred.
+    for &gid in originals.values() {
+        input.width(usize::from(gid))?;
     }
-    bytes[head_offset + 8..head_offset + 12].fill(0);
+    let mut tables = collect_tables(bytes)?;
+    let head = tables.get_mut(b"head").ok_or(())?;
     for (index, value) in bbox.into_iter().enumerate() {
-        let start = head_offset + 36 + index * 2;
-        bytes[start..start + 2].copy_from_slice(&value.to_be_bytes());
+        let start = 36 + index * 2;
+        head[start..start + 2].copy_from_slice(&value.to_be_bytes());
     }
-    bytes[hhea_offset + 10..hhea_offset + 12].copy_from_slice(&advance_max.to_be_bytes());
+    let hhea = tables.get_mut(b"hhea").ok_or(())?;
+    hhea[10..12].copy_from_slice(&advance_max.to_be_bytes());
     for (index, value) in extrema.into_iter().enumerate() {
-        let start = hhea_offset + 12 + index * 2;
-        bytes[start..start + 2]
+        let start = 12 + index * 2;
+        hhea[start..start + 2]
             .copy_from_slice(&i16::try_from(value).map_err(|_| ())?.to_be_bytes());
     }
-    for (record, offset, length) in [
-        (head_record, head_offset, head_length),
-        (hhea_record, hhea_offset, hhea_length),
-    ] {
-        let value = checksum(&bytes[offset..offset + length]);
-        bytes[record + 4..record + 8].copy_from_slice(&value.to_be_bytes());
+    if let Some(vertical) = input.vertical_metrics() {
+        let mut vhea = source
+            .raw_face()
+            .table(ttf_parser::Tag::from_bytes(b"vhea"))
+            .ok_or(())?
+            .to_vec();
+        let mut vmtx = Vec::new();
+        let mut maximum = 0;
+        let mut extrema: Option<[i32; 3]> = None;
+        for cid in 0..face.number_of_glyphs() {
+            let &(advance, top) = vertical
+                .get(usize::from(*originals.get(&cid).ok_or(())?))
+                .ok_or(())?;
+            maximum = maximum.max(advance);
+            vmtx.extend(advance.to_be_bytes());
+            vmtx.extend(top.to_be_bytes());
+            if let Some(bounds) = program.cached_bounds(usize::from(cid))? {
+                let top = i32::from(top);
+                let extent = top + i32::from(bounds[3]) - i32::from(bounds[1]);
+                let bottom = i32::from(advance) - extent;
+                extrema = Some(extrema.map_or([top, bottom, extent], |old| {
+                    [old[0].min(top), old[1].min(bottom), old[2].max(extent)]
+                }));
+            }
+        }
+        vhea[10..12].copy_from_slice(&maximum.to_be_bytes());
+        vhea[34..36].copy_from_slice(&face.number_of_glyphs().to_be_bytes());
+        for (i, value) in extrema.unwrap_or([0; 3]).into_iter().enumerate() {
+            vhea[12 + i * 2..14 + i * 2]
+                .copy_from_slice(&i16::try_from(value).map_err(|_| ())?.to_be_bytes());
+        }
+        tables.insert(*b"vhea", vhea);
+        tables.insert(*b"vmtx", vmtx);
     }
+    // Unhinted sources may omit these. Preserve existing programs verbatim.
+    for tag in [*b"cvt ", *b"prep", *b"fpgm"] {
+        tables.entry(tag).or_default();
+    }
+    rebuild(bytes, tables)?;
+    let (_, head_offset, _) = table(bytes, *b"head")?;
     let adjustment = 0xb1b0_afba_u32.wrapping_sub(checksum(bytes));
     bytes[head_offset + 8..head_offset + 12].copy_from_slice(&adjustment.to_be_bytes());
     Ok(())
@@ -72,10 +111,18 @@ pub fn has_hint_tables(bytes: &[u8]) -> bool {
         .all(|tag| table(bytes, tag).is_ok())
 }
 
-fn ensure_hint_tables(bytes: &mut Vec<u8>) -> Result<(), ()> {
-    if has_hint_tables(bytes) {
-        return Ok(());
+pub fn replace_table(bytes: &mut Vec<u8>, tag: [u8; 4], replacement: Vec<u8>) -> Result<(), ()> {
+    let mut tables = collect_tables(bytes)?;
+    if tables.insert(tag, replacement).is_none() {
+        return Err(());
     }
+    rebuild(bytes, tables)?;
+    let (_, head, _) = table(bytes, *b"head")?;
+    let adjustment = 0xb1b0_afba_u32.wrapping_sub(checksum(bytes));
+    bytes[head + 8..head + 12].copy_from_slice(&adjustment.to_be_bytes());
+    Ok(())
+}
+fn collect_tables(bytes: &[u8]) -> Result<std::collections::BTreeMap<[u8; 4], Vec<u8>>, ()> {
     let count = usize::from(u16::from_be_bytes(
         bytes.get(4..6).ok_or(())?.try_into().map_err(|_| ())?,
     ));
@@ -93,11 +140,12 @@ fn ensure_hint_tables(bytes: &mut Vec<u8>) -> Result<(), ()> {
         }
         tables.insert(tag, payload);
     }
-    // Unhinted source fonts can omit these tables. An embedded subset carries
-    // explicit empty programs/CVT; existing programs are preserved byte-for-byte.
-    for tag in [*b"cvt ", *b"prep", *b"fpgm"] {
-        tables.entry(tag).or_default();
-    }
+    Ok(tables)
+}
+fn rebuild(
+    bytes: &mut Vec<u8>,
+    tables: std::collections::BTreeMap<[u8; 4], Vec<u8>>,
+) -> Result<(), ()> {
     let count = u16::try_from(tables.len()).map_err(|_| ())?;
     let power = 1_u16
         .checked_shl(u16::BITS - count.leading_zeros() - 1)
@@ -165,7 +213,7 @@ fn table(bytes: &[u8], tag: [u8; 4]) -> Result<(usize, usize, usize), ()> {
     Err(())
 }
 
-fn checksum(bytes: &[u8]) -> u32 {
+pub(super) fn checksum(bytes: &[u8]) -> u32 {
     bytes.chunks(4).fold(0_u32, |sum, chunk| {
         let mut word = [0; 4];
         word[..chunk.len()].copy_from_slice(chunk);

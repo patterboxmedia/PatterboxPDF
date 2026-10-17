@@ -121,6 +121,7 @@ pub use profile::{
 #[cfg(feature = "publisher-adapter")]
 pub use publication_font::{
     ProductionFont, ProductionFontError, ProductionFontEvidence, prepare_publication_fonts,
+    prepare_publication_fonts_with_font_facts,
 };
 #[cfg(feature = "publisher-adapter")]
 pub use publisher_adapter::PublisherSceneAdapter;

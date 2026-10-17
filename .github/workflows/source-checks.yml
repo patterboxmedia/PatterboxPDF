@@ -45,6 +45,10 @@ jobs:
         run: python tests/unit/output-rules.test.py
       - name: Audit current output evidence
         run: python scripts/verify-output-rules.py
+      - name: Accepted-input contract regressions
+        run: python tests/unit/accepted-inputs.test.py
+      - name: Audit accepted generation inputs
+        run: python scripts/verify-accepted-inputs.py
       - name: Build and verify licensed source archive
         run: |
           mkdir -p artifacts

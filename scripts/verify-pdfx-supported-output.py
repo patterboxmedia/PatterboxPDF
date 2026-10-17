@@ -21,10 +21,6 @@ import struct
 import xml.etree.ElementTree as ET
 import zlib
 
-from fontTools.cffLib import CFFFontSet
-from fontTools.pens.basePen import NullPen
-from fontTools.pens.boundsPen import BoundsPen
-from fontTools.ttLib import TTFont
 from PIL import ImageCms
 from pypdf import PdfReader
 from pypdf.generic import (ArrayObject, BooleanObject, ByteStringObject,
@@ -138,7 +134,7 @@ def inspect_nonstream_lines(data, reader):
     return max(map(len,re.split(rb'\r\n|\r|\n',nonstream_bytes(data,reader))),default=0)
 
 
-def inspect_serialized_file(data, reader):
+def inspect_serialized_file(data, reader, observations=None):
     problems = []
     def require(condition, detail):
         if not condition: raise ValueError(detail)
@@ -149,11 +145,16 @@ def inspect_serialized_file(data, reader):
         header = re.match(rb'xref\r?\n0 (\d+)\r?\n',data[offset:])
         require(header is not None, 'Unsupported classic xref subsection')
         count = int(header[1]); cursor = offset+header.end()
+        entries = []
+        if observations is not None:
+            observations['serialized_xref'] = {'offset': offset, 'count': count,
+                'trailer_size': int(reader.trailer.get('/Size', 0)), 'entries': entries}
         require(count == reader.trailer.get('/Size') and count > 1, 'Trailer Size differs from xref')
         for number in range(count):
             record = data[cursor:cursor+20]; cursor += 20
             require(re.fullmatch(rb'\d{10} \d{5} [nf](?: \n|\r\n)',record) is not None, 'xref record is not exactly twenty bytes')
             position,generation = int(record[:10]),int(record[11:16])
+            entries.append({'object': number, 'offset': position, 'generation': generation})
             if number == 0:
                 require(position == 0 and generation == 65535 and record[17:18] == b'f', 'Invalid free object zero')
             else:
@@ -212,199 +213,14 @@ def string_bytes(value):
     raise ValueError('Expected a PDF string')
 
 
-def inspect_multistage_lut(payload, expected_channels):
-    """Decode embedded curves, matrix and CLUT using tag-relative offsets."""
-    problems, spans = [], []
-    def require(condition, detail):
-        if not condition: raise ValueError(detail)
-    def u32(start):
-        require(start+4 <= len(payload), 'Truncated multistage integer')
-        return int.from_bytes(payload[start:start+4], 'big')
-    def span(start, size, kind):
-        end = start+size
-        require(start >= 32 and start%4 == 0 and end <= len(payload), 'Multistage element bounds')
-        spans.append((start,end,kind))
-        return end
-    def curves(start, count):
-        for _ in range(count):
-            require(start+12 <= len(payload) and not any(payload[start+4:start+8]), 'Invalid embedded curve header')
-            kind = payload[start:start+4]
-            if kind == b'curv':
-                size = 12+2*u32(start+8)
-            elif kind == b'para':
-                function = int.from_bytes(payload[start+8:start+10], 'big')
-                require(function <= 4 and payload[start+10:start+12] == bytes(2), 'Invalid parametric curve function')
-                size = 12+4*(1,3,4,5,7)[function]
-            else:
-                raise ValueError('Invalid embedded curve signature')
-            end = span(start,size,'curve')
-            padded = (end+3)&~3
-            require(padded <= len(payload) and not any(payload[end:padded]), 'Nonzero embedded curve padding')
-            start = padded
-    try:
-        require(len(payload) >= 32 and not any(payload[4:8]+payload[10:12]), 'Invalid multistage header')
-        inputs, outputs = payload[8:10]
-        require(1 <= inputs <= 15 and 1 <= outputs <= 15 and
-                (expected_channels is None or (inputs,outputs) == expected_channels), 'Multistage channel count')
-        b, matrix, m, clut, a = (u32(start) for start in (12,16,20,24,28))
-        require(b and bool(a) == bool(clut) and bool(m) == bool(matrix)
-                and (inputs == outputs or clut), 'Invalid multistage stage combination')
-        forward = payload[:4] == b'mAB '
-        side = outputs if forward else inputs
-        curves(b,side)
-        if a: curves(a,inputs if forward else outputs)
-        if m:
-            require(side == 3, 'Matrix stage requires three channels')
-            curves(m,side); span(matrix,48,'matrix')
-        if clut:
-            span(clut,20,'CLUT header')
-            grids = payload[clut:clut+16]
-            precision = payload[clut+16]
-            require(all(n >= 2 for n in grids[:inputs]) and not any(grids[inputs:])
-                    and precision in (1,2) and not any(payload[clut+17:clut+20]), 'Invalid multistage CLUT header')
-            end = span(clut,20+math.prod(grids[:inputs])*outputs*precision,'CLUT')
-            require(not any(payload[end:min((end+3)&~3,len(payload))]), 'Nonzero multistage CLUT padding')
-            spans = [item for item in spans if item[2] != 'CLUT header']
-        unique = sorted(set(spans))
-        for left,right in zip(unique,unique[1:]):
-            require(left[1] <= right[0], 'Overlapping multistage elements')
-    except (ValueError,IndexError) as error:
-        problems.append(str(error))
-    return problems
-
-
 def inspect_profile_bytes(data):
-    """Check header, required printer tags and present binary payload layouts.
-
-    This byte decoder is independent of the Rust admission code and native
-    color engine. Unknown private types are retained as opaque private data.
-    """
-    problems = []
-    def check(condition, detail):
-        if not condition:
-            problems.append(detail)
-        return bool(condition)
-    def uint(offset, size=4, source=data):
-        if offset < 0 or offset+size > len(source):
-            raise ValueError('Truncated profile integer')
-        return int.from_bytes(source[offset:offset+size], 'big')
-    if not check(len(data) >= 132, 'Truncated profile'):
-        return problems
-    check(uint(0) == len(data), 'Profile size differs from exact bytes')
-    check(data[8:12] in (b'\x02\x20\x00\x00',b'\x04\x00\x00\x00',b'\x04\x10\x00\x00',b'\x04\x20\x00\x00'), 'Unsupported profile version')
-    check(data[12:20] == b'prtrCMYK' and data[20:24] in (b'XYZ ',b'Lab ') and data[36:40] == b'acsp', 'Profile class/color/PCS/signature differs')
-    try:
-        datetime.datetime(*(uint(offset,2) for offset in range(24,36,2)))
-    except ValueError:
-        check(False, 'Invalid profile creation date')
-    check(data[68:80] == bytes.fromhex('0000f6d6000100000000d32d'), 'Header illuminant differs from D50')
-    check(not any(data[84 if data[8] == 2 else 100:128]), 'Nonzero reserved header bytes')
-    check(uint(44)&0xffff&~3 == 0, 'Unsupported reserved profile flag semantics')
-    check(uint(56,8)&0xffffffff&~(3 if data[8] == 2 else 15) == 0, 'Unsupported reserved device attribute semantics')
-    check(uint(64) <= 3, 'Invalid rendering intent')
-    check(data[40:44] in (bytes(4),b'APPL',b'MSFT',b'SGI ',b'SUNW',b'TGNT'), 'Unsupported platform identifier')
-    check(not any(data[48:56]), 'Nonzero manufacturer/model needs independent registry evidence outside these control profiles')
-    if data[8] == 4 and any(data[84:100]):
-        identity = bytearray(data)
-        identity[64:68] = bytes(4); identity[84:100] = bytes(16)
-        if data[9] == 0:
-            identity[56:64] = bytes(8)
-        else:
-            identity[44:48] = bytes(4)
-        check(hashlib.md5(identity).digest() == data[84:100], 'Profile ID differs from edition-specific digest')
-    count = uint(128)
-    if not check(132+12*count <= len(data), 'Truncated tag table'):
-        return problems
-    tags, ranges = {}, []
-    for index in range(count):
-        record = 132+index*12
-        name, offset, size = data[record:record+4],uint(record+4),uint(record+8)
-        check(name not in tags, 'Duplicate tag signature')
-        tags[name] = (offset,size)
-        if not check(offset >= 132+12*count and offset % 4 == 0 and size >= 8 and offset+size <= len(data), 'Tag range is invalid'):
-            continue
-        ranges.append((offset,offset+size))
-        payload = data[offset:offset+size]; kind = payload[:4]
-        check(not any(payload[4:8]), 'Nonzero reserved tag bytes')
-        expected = ({b'desc':b'desc',b'cprt':b'text',b'wtpt':b'XYZ ',b'bkpt':b'XYZ '} if data[8] == 2
-                    else {b'desc':b'mluc',b'cprt':b'mluc',b'wtpt':b'XYZ ',b'bkpt':b'XYZ '})
-        check(name not in expected or kind == expected[name], 'Incorrect required tag data type')
-        if name in (b'A2B0',b'A2B1',b'A2B2',b'B2A0',b'B2A1',b'B2A2',b'gamt'):
-            allowed = {b'mft1', b'mft2'}
-            if data[8] == 4:
-                allowed.add(b'mAB ' if name.startswith(b'A2B') else b'mBA ')
-            check(kind in allowed, 'Incorrect transform tag data type')
-        if kind == b'XYZ ':
-            check(size >= 20 and (size-8)%12 == 0 and (name not in (b'wtpt',b'bkpt') or size == 20), 'Invalid XYZ tag size')
-            check(all(int.from_bytes(payload[start:start+4], 'big', signed=True) >= 0 for start in range(8,size,4)), 'Negative XYZ component')
-        elif kind == b'text':
-            check(size >= 9 and payload[-1] == 0 and payload[8:].isascii(), 'Invalid ASCII text payload')
-        elif kind == b'desc':
-            try:
-                ascii_count = uint(8,source=payload)
-                unicode_start = 12+ascii_count
-                unicode_count = uint(unicode_start+4,source=payload)
-                script_start = unicode_start+8+unicode_count*2
-                check(ascii_count > 0 and unicode_start <= size and payload[unicode_start-1] == 0
-                      and payload[12:unicode_start].isascii() and script_start+70 == size
-                      and payload[script_start+2] <= 67, 'Invalid text description layout')
-                if unicode_count:
-                    text = payload[unicode_start+8:script_start]
-                    check(text[-2:] == bytes(2), 'Unicode description lacks a terminator')
-                    text.decode('utf-16-be',errors='strict')
-                script_count = payload[script_start+2]
-                if script_count:
-                    check(payload[script_start+3+script_count-1] == 0, 'Script description lacks a terminator')
-                    check(payload[script_start:script_start+2] == bytes(2), 'Non-Roman ScriptCode needs separate decoding evidence')
-                    payload[script_start+3:script_start+3+script_count].decode('mac-roman',errors='strict')
-            except (ValueError,IndexError):
-                check(False,'Truncated text description')
-        elif kind == b'mluc':
-            try:
-                records, stride = uint(8,source=payload),uint(12,source=payload)
-                if check(stride == 12 and 16+records*stride <= size, 'Invalid localized text records'):
-                    locales = set()
-                    for row in range(records):
-                        start = 16+row*stride; locale = payload[start:start+4]
-                        length, text_offset = uint(start+4,source=payload),uint(start+8,source=payload)
-                        check(locale not in locales and re.fullmatch(rb'[a-z]{2}[A-Z]{2}',locale) is not None, 'Invalid or unsupported localized text locale');locales.add(locale)
-                        if check(length%2 == 0 and text_offset >= 16+records*stride and text_offset+length <= size,'Invalid localized text bounds'):
-                            payload[text_offset:text_offset+length].decode('utf-16-be',errors='strict')
-            except (ValueError,UnicodeError):
-                check(False,'Invalid localized text payload')
-        elif kind == b'mft2':
-            if not check(size >= 52,'Truncated LUT16 header'):
-                continue
-            inputs,outputs,grid = payload[8:11]
-            entries_in,entries_out = uint(48,2,payload),uint(50,2,payload)
-            if check(1 <= inputs <= 15 and 1 <= outputs <= 15 and grid >= 2
-                     and payload[11] == 0 and 2 <= entries_in <= 4096 and 2 <= entries_out <= 4096,'Invalid LUT16 dimensions'):
-                check(size == 52+2*(inputs*entries_in+grid**inputs*outputs+outputs*entries_out),'Invalid LUT16 sample layout')
-                expected_channels = ((4,3) if name.startswith(b'A2B') else (3,4) if name.startswith(b'B2A') else (3,1) if name == b'gamt' else None)
-                check(expected_channels is None or expected_channels == (inputs,outputs),'LUT16 channels differ from device/PCS role')
-                if data[20:24] != b'XYZ ' or name.startswith(b'A2B'):
-                    check(payload[12:48] == b''.join((65536 if n%4 == 0 else 0).to_bytes(4,'big') for n in range(9)), 'Non-XYZ LUT16 matrix is not identity')
-        elif kind in (b'mAB ', b'mBA '):
-            expected_channels = ((4,3) if name.startswith(b'A2B') else (3,4) if name.startswith(b'B2A') else (3,1) if name == b'gamt' else None)
-            problems.extend(inspect_multistage_lut(payload, expected_channels))
-        elif kind == b'sf32':
-            check(size >= 12 and (size-8)%4 == 0,'Invalid fixed-point array')
-            check(name != b'chad' or size == 44, 'Adaptation matrix must have nine components')
-            check(name != b'arts' or size >= 44, 'Private transform matrix needs at least nine components')
-    check({b'desc',b'cprt',b'wtpt',b'gamt',b'A2B0',b'A2B1',b'A2B2',b'B2A0',b'B2A1',b'B2A2'} <= set(tags),'Required printer tag absent')
-    unique = sorted(set(ranges))
-    check(all(left[1] <= right[0] for left,right in zip(unique,unique[1:])),'Partially overlapping tag payloads')
-    if data[8] == 4 and unique:
-        cursor = 132+12*count
-        for start,end in unique:
-            check(start == cursor,'Noncontiguous v4 tag payload')
-            cursor = (end+3)&~3
-            check(not any(data[end:cursor]),'Nonzero v4 tag padding')
-        check(cursor == len(data),'v4 trailing padding/size differs')
-    return problems
-
+    return font_evaluator('verify-icc-profile').inspect_profile_bytes(data)
 
 class Inspection:
+    @staticmethod
+    def receiver_real(value):
+        return 0 if 0 < abs(float(value)) < 2**-126 else value
+
     def __init__(self, reader, mode):
         self.reader, self.mode = reader, mode
         self.findings, self.observations = [], {'objects': 0, 'streams': 0, 'fonts': [], 'profiles': [], 'dictionary_keys': {}, 'names': {}, 'resource_roles': []}
@@ -465,7 +281,9 @@ class Inspection:
             # interpreted as reals. Their spelling alone does not make them
             # invalid integers; dictionary-specific integer fields are checked
             # where they are consumed.
-            valid = math.isfinite(number) and abs(number) <= 3.403e38 and (number == 0 or abs(number) >= 1.175e-38)
+            # Receiver underflow is permitted. Relationships that depend on a
+            # positive value are checked at their consuming geometry/function.
+            valid = math.isfinite(number) and abs(number) <= 3.403e38
             self.require(valid, 'numeric-limits', path, 'Numeric value exceeds the supported architectural range')
         elif isinstance(value, (ArrayObject, list)):
             for index, item in enumerate(value):
@@ -635,8 +453,10 @@ class Inspection:
                          and float(function.get('/N', 0)) == 1, 'shading-functions', path, 'Invalid linear component function')
         elif kind == 3:
             children, bounds, encode = function.get('/Functions', []), function.get('/Bounds', []), function.get('/Encode', [])
+            received = [0, *(self.receiver_real(n) for n in bounds), 1]
             self.require(len(children) >= 1 and len(bounds) == len(children)-1 and len(encode) == 2*len(children)
                          and [0, *bounds, 1] == sorted(set([0, *bounds, 1]))
+                         and received == sorted(set(received))
                          and list(encode) == [0, 1]*len(children), 'shading-functions', path, 'Invalid stitching intervals')
             for index, child in enumerate(children):
                 self.function(child, count, f'{path}/Functions/{index}')
@@ -646,10 +466,11 @@ class Inspection:
     def shading(self, shading, path):
         count = {'/DeviceGray': 1, '/DeviceRGB': 3, '/DeviceCMYK': 4}.get(shading.get('/ColorSpace'))
         kind, coords = shading.get('/ShadingType'), shading.get('/Coords', [])
-        self.require(isinstance(kind,NumberObject) and all(isinstance(n,(NumberObject,FloatObject)) for n in coords)
+        if not self.require(isinstance(kind,NumberObject) and all(isinstance(n,(NumberObject,FloatObject)) for n in coords)
                      and ('/Domain' not in shading or list(shading['/Domain']) == [0,1])
                      and ('/Extend' not in shading or isinstance(shading['/Extend'],ArrayObject) and len(shading['/Extend']) == 2 and all(isinstance(n,BooleanObject) for n in shading['/Extend']))
-                     and ('/AntiAlias' not in shading or isinstance(shading['/AntiAlias'],BooleanObject)), 'shading-functions', path, 'Invalid shading field types/defaults')
+                     and ('/AntiAlias' not in shading or isinstance(shading['/AntiAlias'],BooleanObject)), 'shading-functions', path, 'Invalid shading field types/defaults'):
+            return
         if '/Background' in shading:
             background = shading['/Background']
             self.require(isinstance(background,ArrayObject) and len(background) == count and all(isinstance(n,(NumberObject,FloatObject)) and 0 <= n <= 1 for n in background), 'shading-functions', path, 'Invalid shading background')
@@ -659,8 +480,14 @@ class Inspection:
                          and box[0] < box[2] and box[1] < box[3], 'shading-functions', path, 'Invalid shading BBox')
         self.require(kind in (2, 3) and len(coords) == (4 if kind == 2 else 6) and bool(count),
                      'shading-functions', path, 'Unsupported shading geometry or color space')
+        received = [self.receiver_real(n) for n in coords]
+        if kind == 2 and len(coords) == 4:
+            self.require(coords[:2] != coords[2:] and received[:2] != received[2:],
+                         'shading-functions', path, 'Collapsed axial geometry')
         if kind == 3 and len(coords) == 6:
-            self.require(coords[2] >= 0 and coords[5] >= 0, 'shading-functions', path, 'Negative radial radius')
+            self.require(coords[2] >= 0 and coords[5] >= 0 and (received[2] > 0 or received[5] > 0)
+                         and coords[:3] != coords[3:] and received[:3] != received[3:],
+                         'shading-functions', path, 'Invalid or receiver-collapsed radial geometry')
         if count:
             self.function(shading.get('/Function'), count, path + '/Function')
 
@@ -669,6 +496,7 @@ class Inspection:
         if key in self.fonts:
             return self.fonts[key]
         parsed = None
+        measured = None
         try:
             if font.get('/Type') != '/Font' or font.get('/Subtype') != '/Type0' or font.get('/Encoding') != '/Identity-H' or len(font['/DescendantFonts']) != 1:
                 raise ValueError('Unsupported composite encoding')
@@ -702,46 +530,28 @@ class Inspection:
             binary = font_evaluator('pdf_font_program_rules').inspect_font_program(data, kind)
             self.require(not binary['findings'], 'font-program-layout', path, json.dumps(binary['findings']))
             hint = None
-            advances = {}
+            metric_rules = font_evaluator('verify-font-metrics')
+            measured = metric_rules._program(data, programs[0])
+            advances = {cid: f32(measured['advances'][gid]) for cid,gid in measured['cid_to_gid'].items()}
             if programs[0] == '/FontFile2':
-                program = TTFont(io.BytesIO(data), lazy=False)
-                upm = program['head'].unitsPerEm
-                scale = f32(1000 / upm)
-                for gid, name in enumerate(program.getGlyphOrder()):
-                    advances[gid] = f32(program['hmtx'][name][0] * scale)
-                head = program['head']
-                bounds = [getattr(head, key) for key in ('xMin', 'yMin', 'xMax', 'yMax')]
                 hint = font_evaluator('pdf_truetype_hint_execution').inspect_truetype_hints(data)
                 self.require(not hint['findings'], 'font-hint-execution', path, json.dumps(hint['findings']))
                 self.require(child.get('/CIDToGIDMap') == '/Identity', 'font-programs', path, 'Unsupported CID to GID map')
-            else:
-                program = CFFFontSet(); program.decompile(io.BytesIO(data), None)
-                top = program.topDictIndex[0]
-                matrix = getattr(top, 'FontMatrix', [0.001, 0, 0, 0.001, 0, 0])
-                scale = matrix[0] * 1000
-                boxes = []
-                for gid, name in enumerate(top.charset):
-                    charstring = top.CharStrings[name]
-                    pen = BoundsPen(top.CharStrings); charstring.draw(pen)
-                    if pen.bounds:
-                        boxes.append(pen.bounds)
-                    cid = binary['observations']['cid_charset'][gid]
-                    advances[cid] = f32(charstring.width * f32(scale))
-                bounds = [choose((box[index] for box in boxes), default=0)
-                          for index, choose in enumerate((min, min, max, max))]
             required = ('/FontName', '/Flags', '/FontBBox', '/ItalicAngle', '/Ascent', '/Descent', '/StemV')
             self.require(all(key in descriptor for key in required), 'font-descriptors', path, 'Missing required descriptor field')
-            expected_bbox = [f32(value * f32(scale)) for value in bounds]
+            bounds = metric_rules._union(measured['bounds'])
             declared_bbox = list(map(float, descriptor.get('/FontBBox', [])))
-            self.require(len(declared_bbox) == 4 and all(f32(a) == b for a,b in zip(declared_bbox, expected_bbox)),
-                         'font-descriptors', path, 'Descriptor bounding box differs from embedded outlines')
+            enclosure = font_evaluator('pdf_font_program_rules').inspect_font_bbox_enclosure(
+                declared_bbox, bounds, measured['numeric_uncertainty'])
+            exact_geometry = declared_bbox == bounds
+            self.require(exact_geometry or enclosure['passed'],
+                         'font-descriptors', path, 'Descriptor bounding box fails independent effective-outline enclosure')
             self.require(all(math.isfinite(float(descriptor.get(key, math.nan))) for key in required[3:])
                          and descriptor.get('/StemV', -1) >= 0, 'font-descriptors', path, 'Invalid descriptor metric')
-            destinations = re.findall(rb'<[0-9A-Fa-f]{4}>\s*<([0-9A-Fa-f]+)>', font['/ToUnicode'].get_object().get_data())
-            latin = any(any('A' <= ch <= 'Z' or 'a' <= ch <= 'z' for ch in bytes.fromhex(value.decode()).decode('utf-16be'))
-                        for value in destinations)
-            self.require(not latin or math.isfinite(float(descriptor.get('/CapHeight', math.nan)))
-                         and descriptor.get('/CapHeight', 0) > 0, 'font-descriptors', path, 'Latin glyph mapping requires a positive capital height')
+            if self.mode == 'pdfx4' or '/CapHeight' in descriptor:
+                cap_height = descriptor.get('/CapHeight')
+                self.require(isinstance(cap_height,(NumberObject,FloatObject)) and math.isfinite(float(cap_height)),
+                             'font-descriptors',path,'Positive print writer requires finite capital height, including zero; source applicability and value require the separate measurement')
             widths, values, index = {}, list(child.get('/W', [])), 0
             previous = -1
             while index < len(values):
@@ -781,10 +591,15 @@ class Inspection:
             self.observations['fonts'].append({'path': path, 'program_sha256': sha(data), 'glyphs': len(advances),
                                                'widths': len(widths), 'maximum_decimal_width_error': max(errors, default=0),
                                                'program_layout': binary['observations'],
+                                               'bbox_enclosure': enclosure, 'bbox_equals_nominal_geometry': exact_geometry,
+                                               'bounds_method': measured['bounds_method'],
                                                'unicode_map': unicode_map['observations'],
                                                'hint_execution': hint['observations'] if hint else None})
         except Exception as error:
             self.require(False, 'font-programs', path, type(error).__name__ + ': ' + str(error))
+        finally:
+            if measured is not None and 'font' in measured:
+                measured['font'].close()
         self.fonts[key] = parsed
         return parsed
 
@@ -797,10 +612,18 @@ class Inspection:
             return
         active = active | {identity}
         try:
-            operations = ContentStream(stream, self.reader).operations
+            parsed = ContentStream(stream, self.reader)
+            raw_content = parsed.get_data()
+            operations = parsed.operations
         except Exception as error:
             self.require(False, 'known-operators', path, 'Content parse failed: ' + type(error).__name__)
             return
+        matrices = font_evaluator('pdf_numeric_rules').inspect_content_matrices(raw_content)
+        expected_matrices = sum(op in (b'cm', b'Tm') for _, op in operations)
+        self.require(matrices['passed'] and len(matrices['matrices']) == expected_matrices,
+                     'known-operators', path, '; '.join(matrices['findings']) or 'Exact matrix inventory differs')
+        self.observations.setdefault('encoded_matrices', []).extend(
+            dict(row, path=path) for row in matrices['matrices'])
         current_font, initial, text, marked = None, depth, False, 0
         state, font_stack = 'page', []
         self.require(self.mode != 'pdfx4' or depth <= 28, 'graphics-state-depth', path, 'Implicit Form save exceeds 28')
@@ -868,7 +691,10 @@ class Inspection:
             for arg in args:
                 self.walk(arg, here)
                 for string in strings(arg):
-                    self.require(len(string_bytes(string)) <= 32767, 'content-string-limit', here, 'Content string exceeds 32767 bytes')
+                    raw_string = string_bytes(string)
+                    self.observations.setdefault('content_strings', []).append(
+                        {'path': here, 'operator': op.decode('ascii'), 'bytes': len(raw_string), 'sha256': sha(raw_string)})
+                    self.require(len(raw_string) <= 32767, 'content-string-limit', here, 'Content string exceeds 32767 bytes')
             if op == b'q':
                 depth += 1
                 font_stack.append(current_font)
@@ -1054,6 +880,8 @@ class Inspection:
                     valid = len(box) == 4 and all(isinstance(n, (NumberObject, FloatObject)) for n in box) and box[0] < box[2] and box[1] < box[3]
                     if self.require(valid, 'page-boxes', path+key, 'Invalid rectangle'):
                         boxes[key] = box
+            self.observations.setdefault('page_boxes', []).append(
+                {'page': index+1, 'boxes': {key: [float(value) for value in box] for key, box in boxes.items()}})
             if self.mode == 'pdfx4':
                 self.require('/MediaBox' in boxes and (('/TrimBox' in boxes) != ('/ArtBox' in boxes)), 'page-boxes', path, 'Missing media or unique trim/art box')
             def contains(outer, inner):
@@ -1076,7 +904,7 @@ def inspect_pdf(path, mode='pdfx4', qpdf=None):
     data = path.read_bytes()
     reader = PdfReader(io.BytesIO(data), strict=True)
     inspection = Inspection(reader, mode)
-    serialized = inspect_serialized_file(data,reader)
+    serialized = inspect_serialized_file(data,reader,inspection.observations)
     inspection.require(not serialized, 'base-format', '/File', '; '.join(serialized))
     try:
         longest = inspect_nonstream_lines(data, reader)

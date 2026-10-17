@@ -25,7 +25,7 @@ const MAX_REPORT_BYTES: u64 = 64 * 1024;
 const WORKER_MEMORY_LIMIT: usize = raster_capacity::MAX_RASTER_COLOR_WORKER_BYTES;
 const CONVERSION_TIMEOUT: Duration = Duration::from_secs(120);
 const INSPECTION_RULES: &str =
-    "publisher-v2/output-intent/v1/CMYK-printer/bidirectional-XYZ-relative";
+    "patterboxpdf/output-intent/v2/exact-edition-types/all-intents-bidirectional";
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 struct WorkerBinding {
@@ -1132,9 +1132,10 @@ mod tests {
         let ColorWorkerError::WorkerRejected(detail) = error else {
             panic!("expected structured ICC rejection, got {error:?}");
         };
-        assert!(
-            detail.starts_with("invalid-icc: output profile: tag payload is outside the profile"),
-            "stable failure stage: {detail}"
+        assert_eq!(
+            detail,
+            "invalid-icc: output profile: exact ICC byte validation: MalformedTagTable",
+            "exact byte validation rejects the malformed table before conversion"
         );
         assert!(detail.len() <= 256, "failure detail must be bounded");
         assert!(!detail.contains(&files.directory.display().to_string()));

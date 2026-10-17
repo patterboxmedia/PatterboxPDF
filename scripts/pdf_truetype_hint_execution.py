@@ -1,6 +1,6 @@
 """Development-only execution of exact embedded TrueType programs with FreeType.
 
-Every GID is loaded with native hinting at the declared representative sizes.
+Fonts with bytecode load every GID at the declared representative sizes.
 This exercises reachable fpgm, prep and glyph instructions under those conditions;
 it does not prove every branch, size, transform, variation or renderer. Binary
 table/limit checks belong to the separate embedded-program structural evaluator.
@@ -47,6 +47,7 @@ def inspect_truetype_hints(data):
             'glyph_order': 'all GIDs in ascending order',
             'transform': 'identity',
             'variation': 'default instance',
+            'tricky_font_policy': 'Native hinting remains enabled; no unscaled-outline inference for tricky fonts',
         },
         'coverage_limit': (
             'FreeType native instruction execution at the declared conditions only; '
@@ -89,6 +90,15 @@ def inspect_truetype_hints(data):
                 'glyph_instruction_bytes': sum(lengths),
                 'maximum_glyph_instruction_bytes': max(lengths, default=0),
             }
+        programs=observations['programs']
+        observations['hint_programs_absent']=not any(programs[key] for key in
+            ('fpgm_bytes','prep_bytes','glyph_instruction_bytes'))
+        if observations['hint_programs_absent']:
+            observations['coverage_method']='exact absence of all executable hint streams'
+            observations['engine_execution']='not invoked: there is no bytecode to execute; outline validity is checked separately'
+            observations['coverage_limit']='No bytecode execution claim; structure, geometry and metrics need their separate independent checks.'
+            return report
+        observations['coverage_method']='finite native pedantic execution'
 
         library = ft.FT_Library()
         error = ft.FT_Init_FreeType(ctypes.byref(library))
@@ -131,6 +141,7 @@ def inspect_truetype_hints(data):
             try:
                 if face.contents.num_glyphs != observations['glyph_count']:
                     raise ValueError('FreeType and fontTools disagree on the glyph count')
+                size['tricky_font'] = bool(face.contents.face_flags & ft.FT_FACE_FLAG_TRICKY)
                 error = ft.FT_Set_Pixel_Sizes(face, ppem, ppem)
                 if error:
                     finding('truetype-hint-execution', 'FT_Set_Pixel_Sizes failed',

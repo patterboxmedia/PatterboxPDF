@@ -89,6 +89,14 @@ def edit_font(data, edit):
 
 
 class TrueTypeHintExecution(unittest.TestCase):
+    def test_exact_bytecode_absence_does_not_depend_on_engine_phantom_support(self):
+        for name in ('child-pp1','child-pp2'):
+            data=(ROOT/'apps/font-worker/src/tests/components'/(name+'.ttf')).read_bytes()
+            report=hints.inspect_truetype_hints(data)
+            self.assertEqual(report['findings'],[])
+            self.assertIs(report['observations'].get('hint_programs_absent'),True)
+            self.assertEqual(report['observations']['glyph_loads_attempted'],0)
+
     def test_original_programs_execute_for_every_gid_and_size(self):
         data = original_font()
         report = hints.inspect_truetype_hints(data)

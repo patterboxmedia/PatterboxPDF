@@ -1,0 +1,1490 @@
+{
+  "schema": "pdf-library-original-component-controls/v1",
+  "provenance": "Original simple rectangles and component records, generated here without source font assets or private artifacts; same MIT OR Apache-2.0 original-control terms as ../fixtures/original.ttf. No source font art or hint programs.",
+  "scope": "Unhinted coordinates, transformed child horizontal phantom attachments, original recursively inherited component horizontal metrics, and parent horizontal phantom numbering at final composite n/n+1 (source inference; no normative worked example).",
+  "interpretation_boundaries": {
+    "selected_horizontal_metrics": "A selected USE_MY_METRICS component with b != 0 or a < 0 has unsupported component metric context. This is the documented project interpretation boundary, not a normative definition of rotation. Positive scales, translations and c-only x shear preserve original component metrics.",
+    "vertical_anchors": "Supported paired vhea/vmtx establishes vertical Y only; X is unspecified. Missing pairs leave both coordinates unestablished. Exact-zero transform coefficients or empty geometry can eliminate an unknown coordinate dependency. Only an actual unresolved geometry dependency is refused.",
+    "source_and_retained_scope": "Only typed interpretation-context errors may be deferred for an unused source glyph. Structural errors are never deferred. All retained prepared glyphs, including unused full-font glyphs, must resolve."
+  },
+  "controls": {
+    "scaled-offset-clear.ttf": {
+      "sha256": "f2288f2f099e33dec485b44115f1ec25963b3627638de9976f9037ddcf114ce9",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        5
+      ],
+      "raw_bounds_exact": [
+        5.5,
+        0.5,
+        55.5,
+        50.5
+      ],
+      "cache_bounds": [
+        5,
+        0,
+        56,
+        51
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": 0,
+      "expected_outline_bounds": [
+        5.5,
+        0.5,
+        55.5,
+        50.5
+      ],
+      "expected_cap_height": 50.5,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        100
+      ]
+    },
+    "scaled-offset-round.ttf": {
+      "sha256": "91da86b6922b89a6a56574cfeef00f948d072017a1c2cf2cfdae032169ad2f73",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        5
+      ],
+      "raw_bounds_exact": [
+        5.5,
+        0.5,
+        55.5,
+        50.5
+      ],
+      "cache_bounds": [
+        5,
+        0,
+        56,
+        51
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": 0,
+      "expected_outline_bounds": [
+        5.5,
+        0.5,
+        55.5,
+        50.5
+      ],
+      "expected_cap_height": 50.5,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        100
+      ]
+    },
+    "point-match-clear.ttf": {
+      "sha256": "c734a87c91f6a4dda7feea8b6b826694a733dd21756104c85fb42fe5acf5ff42",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        5
+      ],
+      "raw_bounds_exact": [
+        5.5,
+        0.5,
+        55.5,
+        80.5
+      ],
+      "cache_bounds": [
+        5,
+        0,
+        56,
+        81
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": 0,
+      "expected_outline_bounds": [
+        5.5,
+        0.5,
+        55.5,
+        80.5
+      ],
+      "expected_cap_height": 80.5,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        100
+      ]
+    },
+    "point-match-round.ttf": {
+      "sha256": "7c279c69bbfcfada1a92471d91ba3c861d3da9784ab7c5f06d5f504a5c995932",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        5
+      ],
+      "raw_bounds_exact": [
+        5.5,
+        0.5,
+        55.5,
+        80.5
+      ],
+      "cache_bounds": [
+        5,
+        0,
+        56,
+        81
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": 0,
+      "expected_outline_bounds": [
+        5.5,
+        0.5,
+        55.5,
+        80.5
+      ],
+      "expected_cap_height": 80.5,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        100
+      ]
+    },
+    "child-pp1.ttf": {
+      "sha256": "4f8fca70143cd54686f5a56bc80218cf1d99ae28da0a980972e0409dd8d1ba03",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        155,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        155,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        165,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        165,
+        100
+      ]
+    },
+    "child-pp2.ttf": {
+      "sha256": "b619aaacec51da7d023abe26490dfaa5a9547894417ae30625c95c40696517e3",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": [
+        -185,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        -185,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -205,
+      "expected_outline_bounds": [
+        20,
+        0,
+        315,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        315,
+        100
+      ]
+    },
+    "metrics-unmarked.ttf": {
+      "sha256": "13d6153a66e5f1cd02d91f420ccce8f39cf899629a046e286d6618793138a997",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -40,
+      "expected_outline_bounds": [
+        50,
+        0,
+        150,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        150,
+        100
+      ]
+    },
+    "metrics-marked.ttf": {
+      "sha256": "a1b6ac709ce4ec1308bf0465dff2d4204bf7e31a68d2cb8fb5c8ac954350468a",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        120,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        100
+      ]
+    },
+    "metrics-marked-scaled.ttf": {
+      "sha256": "1e1895cddbf0605e1794907ff82a655fbb5919178cc6a74a686be871ba1edafc",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        5,
+        0,
+        55,
+        50
+      ],
+      "cache_bounds": [
+        5,
+        0,
+        55,
+        50
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        15,
+        0,
+        65,
+        50
+      ],
+      "expected_cap_height": 50,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        100
+      ]
+    },
+    "metrics-marked-translated.ttf": {
+      "sha256": "59ed3d9190e576ae77f4f732cbca7a6e5801e175ca121474b734aff36b3b0243",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        85,
+        20,
+        185,
+        120
+      ],
+      "cache_bounds": [
+        85,
+        20,
+        185,
+        120
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        95,
+        20,
+        195,
+        120
+      ],
+      "expected_cap_height": 120,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        195,
+        120
+      ]
+    },
+    "metrics-marked-nested.ttf": {
+      "sha256": "b45865f5588065912511ca779497e4719df31d5d83da5ffb2103d11366b62a69",
+      "source_gid": 4,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        120,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        100
+      ]
+    },
+    "child-pp2-scaled.ttf": {
+      "sha256": "84d7171fa4b45c90ccabc05fe0b5e5dab2feae7f110c7a79ed2b10a03751d6d5",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": [
+        -37.5,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        -38,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -58,
+      "expected_outline_bounds": [
+        20.5,
+        0,
+        168,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        168,
+        100
+      ]
+    },
+    "parent-pp1.ttf": {
+      "sha256": "26916b6e79b47714645d7c55d58b7704a29c3b9618df42aa1f84d7f020a82323",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        0
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": 10,
+      "expected_outline_bounds": [
+        0,
+        0,
+        100,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        0,
+        0,
+        120,
+        100
+      ]
+    },
+    "parent-pp2.ttf": {
+      "sha256": "c6d913d50108f6b890c79da9add226e51029a6342a74b995fb01fe2662805f09",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        900,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        900,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -40,
+      "expected_outline_bounds": [
+        50,
+        0,
+        940,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        940,
+        100
+      ]
+    },
+    "first-point-match-invalid.ttf": {
+      "sha256": "47159ce9d297f0f2f62574490fa448610cd4ba3cbb76979c5957367ef2fb6c00",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        0
+      ],
+      "raw_bounds_exact": [
+        0,
+        0,
+        40,
+        80
+      ],
+      "cache_bounds": [
+        0,
+        0,
+        40,
+        80
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": 0,
+      "expected_outline_bounds": [
+        0,
+        0,
+        40,
+        80
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "malformed-font",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "metrics-marked-shear.ttf": {
+      "sha256": "1f9dfb5177d3be3e5c05ba9b68c2748a21ae61dbc27c9325eb49588936544bd5",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        135,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        135,
+        100
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        145,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        145,
+        100
+      ]
+    },
+    "metrics-marked-unequal.ttf": {
+      "sha256": "80c7ef028e83833ea9f7011cd1fd9467622146fd4b4759586a0d4a492d7f967d",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        5,
+        0,
+        55,
+        125
+      ],
+      "cache_bounds": [
+        5,
+        0,
+        55,
+        125
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        15,
+        0,
+        65,
+        125
+      ],
+      "expected_cap_height": 125,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        125
+      ]
+    },
+    "metrics-marked-rotated.ttf": {
+      "sha256": "84f1768874e07a98469889a81abeece5119576f344e2c257a8bad7d3665a9f6a",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        -100,
+        10,
+        0,
+        110
+      ],
+      "cache_bounds": [
+        -100,
+        10,
+        0,
+        110
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        -90,
+        10,
+        10,
+        110
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "unsupported-component-metric-context",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "metrics-unmarked-rotated.ttf": {
+      "sha256": "712305ca1cc95b25502afd4000144ccc3bccb4f78f55d94c36b8576372d0569b",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        -100,
+        10,
+        0,
+        110
+      ],
+      "cache_bounds": [
+        -100,
+        10,
+        0,
+        110
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -150,
+      "expected_outline_bounds": [
+        50,
+        10,
+        150,
+        110
+      ],
+      "expected_cap_height": 110,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        150,
+        110
+      ]
+    },
+    "metrics-marked-negative-x.ttf": {
+      "sha256": "15d2358b53a7f0486fb47a16b2c0e935ce72b5c530760b3c76ff653cc934f6ca",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        -110,
+        0,
+        -10,
+        100
+      ],
+      "cache_bounds": [
+        -110,
+        0,
+        -10,
+        100
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        -100,
+        0,
+        0,
+        100
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "unsupported-component-metric-context",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "metrics-unmarked-negative-x.ttf": {
+      "sha256": "9f3f6c1d3e9edd5d9cf64ebb8b05f64131037bf251c5efc0d1c3064bbcb1e3a1",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        -110,
+        0,
+        -10,
+        100
+      ],
+      "cache_bounds": [
+        -110,
+        0,
+        -10,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -160,
+      "expected_outline_bounds": [
+        50,
+        0,
+        150,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        150,
+        100
+      ]
+    },
+    "vertical-unresolved-absent.ttf": {
+      "sha256": "435a1aaa20ebf999dff7bf6595eaf8c0982e44c3be8a1e8e4762a31adb2c831f",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": null,
+      "cache_bounds": [
+        10,
+        -110,
+        150,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": null,
+      "expected_cap_height": null,
+      "expected_outcome": "unsupported-vertical-phantom-context",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "vertical-unresolved-paired.ttf": {
+      "sha256": "857fae2aaa4962354d6fed1b8057fc16ed5082bbf04973ab6a30e5de27615d98",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": null,
+      "cache_bounds": [
+        10,
+        -80,
+        150,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": null,
+      "expected_cap_height": null,
+      "expected_outcome": "unsupported-vertical-phantom-context",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": true,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "vertical-cancelled-x.ttf": {
+      "sha256": "9db09bed9e721d66090687c6c1f3e58270d2e302f59baecb798350e316bf46ea",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        150,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        150,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        160,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": true,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        160,
+        100
+      ]
+    },
+    "vertical-cancelled-both.ttf": {
+      "sha256": "1e7dd275661552c24285c270f462f8a8302a61d7e33d63f84f577891fe58f1fe",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        150,
+        180
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        150,
+        180
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        160,
+        180
+      ],
+      "expected_cap_height": 180,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        160,
+        180
+      ]
+    },
+    "vertical-empty-unused.ttf": {
+      "sha256": "1dc35af8d7b2efb1bea539b61269a28460ccaa0314783f91bd2faa8080885b7d",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        120,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        120,
+        100
+      ]
+    },
+    "empty-invalid-anchor.ttf": {
+      "sha256": "0b0ce05f2804d8c3ad4bd05049dfda5e9c7b075192bd72f1987ba938b1c35322",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        120,
+        100
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "malformed-font",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "vhea-only-unused.ttf": {
+      "sha256": "1293adf3f16ca9dca247586e0f581bb735b9048041cc9f1c63a58ef5d8cc3fb9",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -40,
+      "expected_outline_bounds": [
+        50,
+        0,
+        150,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        150,
+        100
+      ]
+    },
+    "vertical-pair-malformed.ttf": {
+      "sha256": "7d7c2960b564ea0746c51fa9bb9207ef915712c9fe26b2d58f3af908ad205ca9",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -40,
+      "expected_outline_bounds": [
+        50,
+        0,
+        150,
+        100
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "malformed-font",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": true,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "unused-unresolved-subset.ttf": {
+      "sha256": "67970d5db5cd83be93104232a3f1c766ffc074aacf059b234d13b94ccdf6b42b",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -40,
+      "expected_outline_bounds": [
+        50,
+        0,
+        150,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "subset",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        20,
+        0,
+        150,
+        100
+      ]
+    },
+    "unused-unresolved-full.ttf": {
+      "sha256": "7c32a8d5e26c52528d1d48d89b01f0e1e853af550dd76c6038eaa7178eefd414",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -40,
+      "expected_outline_bounds": [
+        50,
+        0,
+        150,
+        100
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "unsupported-component-metric-context",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "unused-malformed-subset.ttf": {
+      "sha256": "ccf9a2eaf95ba7b91c969d07a3d37b201fad8740ab02a9e3f66dc7fefc7cc42c",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -40,
+      "expected_outline_bounds": [
+        50,
+        0,
+        150,
+        100
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "malformed-font",
+      "expected_preparation_kind": "subset",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    },
+    "optional-h-unknown-subset.ttf": {
+      "sha256": "ea3edfb2f00b2392e955aab6e1eb2f4a0bd330d045cc95551d2b7938b62e0f2a",
+      "source_gid": 1,
+      "raw_hmtx": [
+        600,
+        20
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        120,
+        100
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "subset",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": 700
+      },
+      "expected_pdf_bbox": [
+        20,
+        0,
+        120,
+        100
+      ]
+    },
+    "optional-h-declared-subset.ttf": {
+      "sha256": "3631a74928bfbf17a1481273a4f030b6175639dfb2b92d11c8133e471b9dc90d",
+      "source_gid": 1,
+      "raw_hmtx": [
+        600,
+        20
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 600,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        120,
+        100
+      ],
+      "expected_cap_height": 700,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "subset",
+      "vertical_metric_pair": false,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        20,
+        0,
+        120,
+        100
+      ]
+    },
+    "vertical-version-unused.ttf": {
+      "sha256": "765246bff4df069d4573eeb4f2a5b7d96c6cdbe380cda670b9b07b30a81f5957",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        50
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        110,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -40,
+      "expected_outline_bounds": [
+        50,
+        0,
+        150,
+        100
+      ],
+      "expected_cap_height": 100,
+      "expected_outcome": "prepared",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": true,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": [
+        5,
+        0,
+        150,
+        100
+      ]
+    },
+    "vertical-version-needed.ttf": {
+      "sha256": "702787a84b103cb3d3fe77527565f8013e284591c922fadbda54fa29ef8ec384",
+      "source_gid": 3,
+      "raw_hmtx": [
+        900,
+        20
+      ],
+      "raw_bounds_exact": [
+        10,
+        0,
+        150,
+        100
+      ],
+      "cache_bounds": [
+        10,
+        0,
+        150,
+        100
+      ],
+      "expected_resolved_advance": 900,
+      "expected_resolved_pp1_x": -10,
+      "expected_outline_bounds": [
+        20,
+        0,
+        160,
+        100
+      ],
+      "expected_cap_height": null,
+      "expected_outcome": "unsupported-vertical-metrics-version",
+      "expected_preparation_kind": "full",
+      "vertical_metric_pair": true,
+      "vertical_context_note": "Vertical X is unestablished; absent pair also leaves Y unestablished. Exact-zero local coefficients/empty geometry can make those coordinates irrelevant.",
+      "source_facts_for_positive_print": {
+        "accented_source_glyph_ids": [],
+        "cap_height_pdf_units": null
+      },
+      "expected_pdf_bbox": null
+    }
+  }
+}

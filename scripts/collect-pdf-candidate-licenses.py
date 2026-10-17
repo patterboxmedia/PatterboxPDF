@@ -10,6 +10,7 @@ import json
 import os
 import re
 import shutil
+import struct
 from pathlib import Path
 
 
@@ -18,6 +19,112 @@ def digest(data):
 
 
 SUPPORTED_TARGETS = ("x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu")
+CHARACTER_MAPPING_FILES = ('third_party/character-mappings/mac-roman-provenance.json',
+                           'third_party/character-mappings/NOTICE.txt')
+
+
+def collect_character_mapping(root, destination):
+    """Retain the mapping data's upstream notices separately from project code."""
+    provenance_path, notice_path = (root/name for name in CHARACTER_MAPPING_FILES)
+    provenance_data = provenance_path.read_bytes()
+    provenance = json.loads(provenance_data)
+    implementation = provenance['implementation']
+    source = root/'apps/font-worker/src/truetype_program.rs'
+    data, notice = source.read_bytes(), notice_path.read_bytes()
+    block = re.search(rb'const MAC_ROMAN:\s*\[char;\s*128\]\s*=\s*\[(.*?)\];', data, re.S)
+    values = [int(value, 16) for value in re.findall(rb"'\\u\{([0-9a-fA-F]+)\}'", block[1])] if block else []
+    if (provenance.get('schema') != 'pdf-library-character-mapping-provenance/v1'
+            or implementation['path'] != 'apps/font-worker/src/truetype_program.rs'
+            or implementation['first_byte'] != 128 or implementation['entries'] != 128
+            or len(values) != 128 or digest(struct.pack('>128I', *values)) != implementation['codepoints_sha256']
+            or provenance.get('license_expression') != 'Unicode-3.0 AND PSF-2.0'
+            or provenance['notice']['path'] != CHARACTER_MAPPING_FILES[1]
+            or provenance['notice']['sha256'] != digest(notice)):
+        raise ValueError('character mapping data or upstream notice identity disagreement')
+    output = destination/'assets'
+    output.mkdir(exist_ok=True)
+    (output/'mac-roman-provenance.json').write_bytes(provenance_data)
+    (output/'mac-roman-NOTICE.txt').write_bytes(notice)
+    return [{'path': implementation['path'], 'sha256': digest(data), 'bytes': len(data),
+             'scope': '128 MacRoman mapping scalar identities; upstream data notices retained',
+             'license_expression': provenance['license_expression'],
+             'provenance': 'assets/mac-roman-provenance.json', 'provenance_sha256': digest(provenance_data),
+             'license_notice': 'assets/mac-roman-NOTICE.txt', 'license_notice_sha256': digest(notice)}]
+
+
+def collect_font_controls(root, destination):
+    directory = root/'apps/font-worker/src/tests/fixtures'
+    if not directory.is_dir():
+        return []
+    provenance_path = directory/'provenance.json'
+    provenance = json.loads(provenance_path.read_bytes())
+    controls = provenance['controls']
+    actual = {path.name for path in directory.iterdir() if path.suffix in {'.otf', '.ttf'}}
+    if not controls or set(controls) != actual:
+        raise ValueError('font control provenance coverage disagreement')
+    source = root/'crates/layout-core/tests/fixtures/NotoSansCJKsc-Regular.otf'
+    if (provenance['cff_original_source_asset'] != source.relative_to(root).as_posix()
+            or provenance['cff_original_source_sha256'] != digest(source.read_bytes())):
+        raise ValueError('font control source identity disagreement')
+    license_data = (directory/'LICENSE-OFL').read_bytes()
+    if license_data != (source.parent/'LICENSE-NotoSansCJK').read_bytes():
+        raise ValueError('font control OFL notice disagreement')
+    output = destination/'assets'
+    output.mkdir(exist_ok=True)
+    notice = output/'font-controls-OFL.txt'
+    notice.write_bytes(license_data)
+    retained_provenance = output/'font-controls-provenance.json'
+    retained_provenance.write_bytes(provenance_path.read_bytes())
+    assets = []
+    for name, expected in sorted(controls.items()):
+        if not re.fullmatch(r'[^/\\]+\.(?:otf|ttf)', name):
+            raise ValueError('unsafe font control provenance path')
+        path = directory/name
+        data = path.read_bytes()
+        if digest(data) != expected:
+            raise ValueError('font control identity disagreement: '+name)
+        asset = {'path': path.relative_to(root).as_posix(), 'bytes': len(data), 'sha256': expected,
+                 'provenance': 'assets/'+retained_provenance.name,
+                 'provenance_sha256': digest(retained_provenance.read_bytes())}
+        if path.suffix == '.otf':
+            asset.update(scope='renamed OFL-1.1 derivative font control',
+                         license_notice='assets/'+notice.name, license_notice_sha256=digest(license_data))
+        else:
+            asset['scope'] = 'project-generated font control; MIT OR Apache-2.0'
+        assets.append(asset)
+    return assets
+
+
+def collect_component_controls(root, destination):
+    """Keep original component controls separate from renamed upstream fonts."""
+    directory = root/'apps/font-worker/src/tests/components'
+    if not directory.is_dir():
+        return []
+    provenance_data = (directory/'provenance.json').read_bytes()
+    provenance = json.loads(provenance_data)
+    controls = provenance.get('controls')
+    if (provenance.get('schema') != 'pdf-library-original-component-controls/v1'
+            or not isinstance(controls, dict) or not controls):
+        raise ValueError('component control provenance schema disagreement')
+    if any(not re.fullmatch(r'[^/\\]+\.ttf', name) for name in controls):
+        raise ValueError('unsafe component control provenance path')
+    actual = {path.name for path in directory.iterdir() if path.suffix in {'.otf', '.ttf'}}
+    if set(controls) != actual:
+        raise ValueError('component control provenance coverage disagreement')
+    output = destination/'assets'
+    output.mkdir(exist_ok=True)
+    retained = output/'component-controls-provenance.json'
+    retained.write_bytes(provenance_data)
+    assets = []
+    for name, control in sorted(controls.items()):
+        data = (directory/name).read_bytes()
+        if not isinstance(control, dict) or control.get('sha256') != digest(data):
+            raise ValueError('component control identity disagreement: '+name)
+        assets.append({'path': (directory/name).relative_to(root).as_posix(),
+                       'bytes': len(data), 'sha256': digest(data),
+                       'scope': 'project-generated component font control; MIT OR Apache-2.0',
+                       'provenance': 'assets/'+retained.name, 'provenance_sha256': digest(provenance_data)})
+    return assets
 
 
 def metadata_union(inputs, *, all_workspace, include_dev):
@@ -198,6 +305,9 @@ def collect(metadata_file, destination, rust_sysroot, *, all_workspace=False, in
                        "sha256": digest(path.read_bytes()), "scope": "project-generated fixture; MIT OR Apache-2.0",
                        "provenance": "assets/profile-provenance.md",
                        "provenance_sha256": digest((destination / "assets/profile-provenance.md").read_bytes())})
+    assets.extend(collect_font_controls(root, destination))
+    assets.extend(collect_component_controls(root, destination))
+    assets.extend(collect_character_mapping(root, destination))
     output = {
         "schema": "patterboxpdf-licenses/v2",
         "roots": roots,

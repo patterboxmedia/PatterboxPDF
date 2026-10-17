@@ -11,6 +11,7 @@ use layout_core::{ExactFontResource, ResolvedGlyphFallback, ResolvedPublication}
 use print_core::{
     FontPreparationKind, ProductionFontError, ScenePdfOptions, ScenePdfWriter,
     SceneSerializationError, TrustedFontBoundary, prepare_publication_fonts,
+    prepare_publication_fonts_with_font_facts,
 };
 use sha2::{Digest, Sha256};
 
@@ -124,6 +125,13 @@ fn retain_font_tag_pdf_if_requested(bytes: &[u8]) {
 }
 
 fn full_font_fixture() -> ExactFontResource {
+    fn checksum(bytes: &[u8]) -> u32 {
+        bytes.chunks(4).fold(0u32, |sum, chunk| {
+            let mut word = [0; 4];
+            word[..chunk.len()].copy_from_slice(chunk);
+            sum.wrapping_add(u32::from_be_bytes(word))
+        })
+    }
     let mut bytes = include_bytes!("../../layout-core/tests/fixtures/DejaVuSans.ttf").to_vec();
     let table_count = usize::from(u16::from_be_bytes([bytes[4], bytes[5]]));
     let os2 = (0..table_count)
@@ -166,10 +174,129 @@ fn full_font_fixture() -> ExactFontResource {
     // Editable embedding plus the OpenType no-subsetting bit.
     bytes[table_offset..table_offset + 2].copy_from_slice(&3_u16.to_be_bytes());
     bytes[table_offset + 8..table_offset + 10].copy_from_slice(&0x0108_u16.to_be_bytes());
+    // This synthetic full-font source must have truthful caches. The retained
+    // DejaVu source has several one-unit stale glyph boxes and bit1 bearings;
+    // subset preparation normally rebuilds them, whereas full mode preserves
+    // every byte. Repair the test source before asking full mode to attest it.
+    refresh_full_font_metric_caches(&mut bytes);
+    let records = (0..table_count)
+        .map(|i| {
+            let record = 12 + i * 16;
+            let at = usize::try_from(u32::from_be_bytes(
+                bytes[record + 8..record + 12].try_into().unwrap(),
+            ))
+            .unwrap();
+            let length = usize::try_from(u32::from_be_bytes(
+                bytes[record + 12..record + 16].try_into().unwrap(),
+            ))
+            .unwrap();
+            (record, at, length)
+        })
+        .collect::<Vec<_>>();
+    let head = records
+        .iter()
+        .find(|(record, _, _)| &bytes[*record..*record + 4] == b"head")
+        .unwrap()
+        .1;
+    bytes[head + 8..head + 12].fill(0);
+    for (record, at, length) in records {
+        let sum = checksum(&bytes[at..at + length]);
+        bytes[record + 4..record + 8].copy_from_slice(&sum.to_be_bytes());
+    }
+    let adjustment = 0xb1b0_afba_u32.wrapping_sub(checksum(&bytes));
+    bytes[head + 8..head + 12].copy_from_slice(&adjustment.to_be_bytes());
+    assert_eq!(checksum(&bytes), 0xb1b0_afba);
     ExactFontResource {
         source: AssetHash::for_bytes(&bytes),
         face_index: 0,
         bytes,
+    }
+}
+
+fn refresh_full_font_metric_caches(bytes: &mut [u8]) {
+    struct IgnoreOutline;
+    impl ttf_parser::OutlineBuilder for IgnoreOutline {
+        fn move_to(&mut self, _: f32, _: f32) {}
+        fn line_to(&mut self, _: f32, _: f32) {}
+        fn quad_to(&mut self, _: f32, _: f32, _: f32, _: f32) {}
+        fn curve_to(&mut self, _: f32, _: f32, _: f32, _: f32, _: f32, _: f32) {}
+        fn close(&mut self) {}
+    }
+    let table_offset = |tag: &[u8; 4]| {
+        bytes[12..12 + 16 * usize::from(u16::from_be_bytes([bytes[4], bytes[5]]))]
+            .as_chunks::<16>()
+            .0
+            .iter()
+            .find_map(|record| {
+                (&record[..4] == tag).then(|| {
+                    usize::try_from(u32::from_be_bytes(record[8..12].try_into().unwrap())).unwrap()
+                })
+            })
+            .unwrap()
+    };
+    let (head, hhea, hmtx, loca, glyf) = (
+        table_offset(b"head"),
+        table_offset(b"hhea"),
+        table_offset(b"hmtx"),
+        table_offset(b"loca"),
+        table_offset(b"glyf"),
+    );
+    let metrics = usize::from(u16::from_be_bytes(
+        bytes[hhea + 34..hhea + 36].try_into().unwrap(),
+    ));
+    let long = bytes[head + 51] == 1;
+    let face = ttf_parser::Face::parse(bytes, 0).unwrap();
+    let boxes = (0..face.number_of_glyphs())
+        .filter_map(|gid| {
+            let bounds = face.outline_glyph(ttf_parser::GlyphId(gid), &mut IgnoreOutline)?;
+            let advance = face.glyph_hor_advance(ttf_parser::GlyphId(gid)).unwrap();
+            Some((usize::from(gid), bounds, advance))
+        })
+        .collect::<Vec<_>>();
+    let mut global = [i16::MAX, i16::MAX, i16::MIN, i16::MIN];
+    let mut extrema = [i32::MAX, i32::MAX, i32::MIN];
+    for (gid, bounds, advance) in boxes {
+        let offset = if long {
+            usize::try_from(u32::from_be_bytes(
+                bytes[loca + 4 * gid..loca + 4 * gid + 4]
+                    .try_into()
+                    .unwrap(),
+            ))
+            .unwrap()
+        } else {
+            usize::from(u16::from_be_bytes(
+                bytes[loca + 2 * gid..loca + 2 * gid + 2]
+                    .try_into()
+                    .unwrap(),
+            )) * 2
+        };
+        let values = [bounds.x_min, bounds.y_min, bounds.x_max, bounds.y_max];
+        for (i, value) in values.into_iter().enumerate() {
+            bytes[glyf + offset + 2 + i * 2..glyf + offset + 4 + i * 2]
+                .copy_from_slice(&value.to_be_bytes());
+            global[i] = if i < 2 {
+                global[i].min(value)
+            } else {
+                global[i].max(value)
+            };
+        }
+        let bearing_at = hmtx
+            + if gid < metrics {
+                4 * gid + 2
+            } else {
+                4 * metrics + 2 * (gid - metrics)
+            };
+        bytes[bearing_at..bearing_at + 2].copy_from_slice(&bounds.x_min.to_be_bytes());
+        extrema[0] = extrema[0].min(i32::from(bounds.x_min));
+        extrema[1] = extrema[1].min(i32::from(advance) - i32::from(bounds.x_max));
+        extrema[2] = extrema[2].max(i32::from(bounds.x_max));
+    }
+    for (i, value) in global.into_iter().enumerate() {
+        bytes[head + 36 + i * 2..head + 38 + i * 2].copy_from_slice(&value.to_be_bytes());
+    }
+    for (i, value) in extrema.into_iter().enumerate() {
+        bytes[hhea + 12 + i * 2..hhea + 14 + i * 2]
+            .copy_from_slice(&i16::try_from(value).unwrap().to_be_bytes());
     }
 }
 
@@ -1310,4 +1437,246 @@ fn pasteboard_only_text_does_not_prepare_or_embed_a_font() {
     .unwrap();
 
     assert!(fonts.is_empty());
+}
+
+fn high_emoji_publication() -> (ResolvedPublication, ExactFontResource) {
+    let resource = variant_font_fixture(include_bytes!(
+        "../../layout-core/tests/fixtures/NotoEmoji-Regular.ttf"
+    ));
+    let document = document("adapter-authoring-facts");
+    let page_id = document.pages[0].id.clone();
+    let mut session = DocumentSession::new(document).unwrap();
+    session
+        .execute(
+            Revision::initial(),
+            Transaction::single(
+                "Add exact monochrome emoji",
+                Command::AddObject {
+                    location: ObjectLocation::Page(page_id),
+                    object: exact_text(&resource, "\u{1f004}", "Mahjong tile"),
+                },
+            ),
+        )
+        .unwrap();
+    let publication = ResolvedPublication::resolve_output_with_font_resources(
+        &ProjectSnapshot::from_session(&session),
+        core::slice::from_ref(&resource),
+    )
+    .unwrap();
+    (publication, resource)
+}
+
+fn registered_adapter_font(
+    font: print_core::ProductionFont,
+) -> print_core::finished::FinishedDocument {
+    use print_core::finished::{
+        FinishedDocument, FinishedPage, FinishedPageBoxes, FinishedResources, PdfBox,
+    };
+    let area = PdfBox::new(0., 0., 612., 792.);
+    FinishedDocument {
+        pages: vec![FinishedPage {
+            boxes: FinishedPageBoxes {
+                media: area,
+                bleed: area,
+                trim: area,
+            },
+            items: vec![],
+        }],
+        resources: FinishedResources {
+            fonts: vec![font.into_finished_resource("adapter-font".into()).unwrap()],
+            images: vec![],
+        },
+    }
+}
+
+#[test]
+fn automatic_adapter_font_preserves_missing_ascent_authority_before_print() {
+    use print_core::finished::{FinishedOutputMode, FinishedPdfError, FinishedPdfOptions};
+    use print_core::{FinishedPdfWriter, PdfCandidateMetadata};
+    // The actual monochrome tile is above .notdef and has no automatic accent
+    // role. Its author knows this is an unaccented symbol; the automatic wrapper
+    // has no such assertion. The font-wide capital declaration is usable.
+    let (publication, resource) = high_emoji_publication();
+    let mut fonts = prepare_publication_fonts(
+        &publication,
+        core::slice::from_ref(&resource),
+        &TrustedFontBoundary::resolve_packaged(),
+    )
+    .unwrap();
+    assert_eq!(fonts.len(), 1);
+    let document = registered_adapter_font(fonts.pop().unwrap());
+    let metadata = PdfCandidateMetadata::at_utc("Adapter facts", "2026-10-17T00:00:00Z").unwrap();
+    FinishedPdfWriter::write(
+        &document,
+        &FinishedPdfOptions {
+            metadata: metadata.clone(),
+            mode: FinishedOutputMode::Ordinary,
+        },
+    )
+    .unwrap();
+    assert!(matches!(
+        FinishedPdfWriter::write(
+            &document,
+            &FinishedPdfOptions {
+                metadata,
+                mode: FinishedOutputMode::PdfX4 {
+                    output_profile: include_bytes!("fixtures/SWOP2006coated_300_mth.icc"),
+                },
+            },
+        ),
+        Err(FinishedPdfError::FontAscentFactsRequired(id)) if id == "adapter-font"
+    ));
+}
+
+fn retain_adapter_facts_output(
+    document: &print_core::finished::FinishedDocument,
+    ordinary: &[u8],
+    print: &[u8],
+) {
+    let Some(path) = std::env::var_os("PATTERBOX_ADAPTER_FACTS_OUTPUT") else {
+        return;
+    };
+    let path = std::path::PathBuf::from(path);
+    assert!(path.is_absolute());
+    std::fs::create_dir(&path).unwrap();
+    let program = document.resources.fonts[0].program();
+    let optional_hash = |value: Option<[u8; 32]>| {
+        value.map_or_else(
+            || "null".to_owned(),
+            |hash| format!("\"{}\"", hex_sha256(hash)),
+        )
+    };
+    let anchors = program
+        .remapped_glyphs()
+        .iter()
+        .map(|entry| {
+            format!(
+                "{{\"source_gid\":{},\"cid\":{}}}",
+                entry.source_glyph_id(),
+                entry.cid()
+            )
+        })
+        .collect::<Vec<_>>()
+        .join(",");
+    // Export identity/anchor observations only. The independent checker
+    // measures metrics from the retained program and original source.
+    let witness = format!(
+        concat!(
+            "{{\"source_sha256\":\"{}\",\"prepared_sha256\":\"{}\",",
+            "\"face_index\":{},\"outline_kind\":\"{:?}\",\"preparation_kind\":\"{:?}\",",
+            "\"remapping\":[{}],\"ascent_facts_sha256\":{},\"font_facts_sha256\":{}}}"
+        ),
+        hex_sha256(program.source_sha256()),
+        hex_sha256(program.prepared_sha256()),
+        program.face_index(),
+        program.outline_kind(),
+        program.preparation_kind(),
+        anchors,
+        optional_hash(program.ascent_facts_sha256()),
+        optional_hash(program.font_facts_sha256()),
+    );
+    for (name, bytes) in [
+        ("ordinary.pdf", ordinary),
+        ("print.pdf", print),
+        ("prepared.font", program.prepared_bytes()),
+        ("prepared.json", witness.as_bytes()),
+    ] {
+        std::fs::write(path.join(name), bytes).unwrap();
+    }
+}
+
+#[test]
+fn adapter_font_facts_preserve_authority_through_finished_print() {
+    use print_core::finished::{FinishedOutputMode, FinishedPdfOptions};
+    use print_core::{FinishedPdfWriter, PdfCandidateMetadata};
+    let (publication, resource) = high_emoji_publication();
+    let mut calls = 0;
+    let mut fonts = prepare_publication_fonts_with_font_facts(
+        &publication,
+        core::slice::from_ref(&resource),
+        &TrustedFontBoundary::resolve_packaged(),
+        |selected| {
+            calls += 1;
+            assert_eq!(selected.source, resource.source);
+            assert_eq!(selected.face_index, resource.face_index);
+            assert_eq!(selected.bytes, resource.bytes);
+            (Some(vec![]), None)
+        },
+    )
+    .unwrap();
+    assert_eq!(calls, 1);
+    assert_eq!(fonts.len(), 1);
+    let font = fonts.pop().unwrap();
+    assert!(!font.requires_ascent_facts());
+    assert!(!font.requires_cap_height_fact());
+    assert!(font.ascent_facts_sha256().is_some());
+    assert!(font.font_facts_sha256().is_some());
+    assert_eq!(font.evidence().scene_digest, publication.semantic_digest());
+    assert_eq!(
+        hex_sha256(font.evidence().source_sha256),
+        resource.source.as_str()
+    );
+    let document = registered_adapter_font(font);
+    let metadata = PdfCandidateMetadata::at_utc("Adapter facts", "2026-10-17T00:00:00Z").unwrap();
+    let ordinary = FinishedPdfWriter::write(
+        &document,
+        &FinishedPdfOptions {
+            metadata: metadata.clone(),
+            mode: FinishedOutputMode::Ordinary,
+        },
+    )
+    .unwrap();
+    let pdf = FinishedPdfWriter::write(
+        &document,
+        &FinishedPdfOptions {
+            metadata,
+            mode: FinishedOutputMode::PdfX4 {
+                output_profile: include_bytes!("fixtures/SWOP2006coated_300_mth.icc"),
+            },
+        },
+    )
+    .unwrap();
+    assert!(pdf.bytes().starts_with(b"%PDF-1.6"));
+    retain_adapter_facts_output(&document, ordinary.bytes(), pdf.bytes());
+}
+
+#[test]
+fn adapter_font_facts_validate_resources_before_callback() {
+    let (publication, mut resource) = high_emoji_publication();
+    resource.source = AssetHash::for_bytes(b"a different source");
+    let mut called = false;
+    let result = prepare_publication_fonts_with_font_facts(
+        &publication,
+        &[resource],
+        &TrustedFontBoundary::resolve_packaged(),
+        |_| {
+            called = true;
+            (Some(vec![]), None)
+        },
+    );
+    assert!(!called);
+    assert!(matches!(
+        result,
+        Err(ProductionFontError::InvalidResourceHash { .. })
+    ));
+}
+
+#[test]
+fn adapter_font_facts_propagate_native_conflicts() {
+    let (publication, resource) = high_emoji_publication();
+    // This pinned source declares 2163 FUnits at 2048 UPM. An author fact
+    // cannot replace that computable declaration with a different value.
+    let result = prepare_publication_fonts_with_font_facts(
+        &publication,
+        core::slice::from_ref(&resource),
+        &TrustedFontBoundary::resolve_packaged(),
+        |_| (Some(vec![]), Some(2163. * 1000. / 2048. + 1.)),
+    );
+    assert!(matches!(
+        result,
+        Err(ProductionFontError::FontWorker {
+            error: print_core::FontWorkerError::WorkerRejected { code, .. },
+            ..
+        }) if code == "cap-height-fact-conflict"
+    ));
 }

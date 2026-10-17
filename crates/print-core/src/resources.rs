@@ -19,10 +19,6 @@ pub(crate) struct FontReferences {
     pub cid_set: Ref,
     pub to_unicode: Ref,
 }
-#[expect(
-    clippy::cast_precision_loss,
-    reason = "the confined worker bounds font metrics to PDF-safe integer ranges and pdf-writer intentionally represents them as f32"
-)]
 pub(crate) fn write_prepared_font(
     pdf: &mut Pdf,
     program: &PreparedPublicationFont,
@@ -86,7 +82,7 @@ pub(crate) fn write_prepared_font(
             .name(base_font)
             .flags(flags)
             .bbox(Rect::new(bbox[0], bbox[1], bbox[2], bbox[3]))
-            .italic_angle(program.italic_angle_millidegrees() as f32 / 1_000.0)
+            .italic_angle(metrics.italic_angle())
             .ascent(metrics.ascent())
             .descent(metrics.descent())
             .stem_v(metrics.stem_v())

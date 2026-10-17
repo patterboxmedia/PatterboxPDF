@@ -24,6 +24,19 @@ def metadata_inputs():
             for target in package.SUPPORTED_TARGETS for client in (False, True)]
 
 
+def component_controls(root):
+    directory = root/'apps/font-worker/src/tests/components'
+    directory.mkdir(parents=True)
+    controls = {'attachment.ttf': b'Original synthetic attachment control.\n',
+                'metrics.ttf': b'Original synthetic metrics control.\n'}
+    for name, data in controls.items():
+        (directory/name).write_bytes(data)
+    provenance = {'schema': 'pdf-library-original-component-controls/v1',
+                  'controls': {name: {'sha256': package.sha(data)} for name, data in controls.items()}}
+    (directory/'provenance.json').write_text(json.dumps(provenance), encoding='utf-8')
+    return directory, provenance
+
+
 def public_fixture(root):
     """An isolated, neutral source tree; no developer history is copied into it."""
     original = Path(__file__).resolve().parents[2]
@@ -33,7 +46,11 @@ def public_fixture(root):
         path.write_bytes(data)
     for name in package.ROOT_FILES:
         write(name, (original/name).read_bytes() if name in package.LICENSE_HASHES else b'fixture\n')
-    members = {'crates/print-core': 'print-core', 'crates/linux-worker-job': 'publisher-linux-worker-job'}
+    for name in (*package.CHARACTER_MAPPING_FILES, 'apps/font-worker/src/truetype_program.rs'):
+        write(name, (original/name).read_bytes())
+    members = {'crates/print-core': 'print-core', 'crates/linux-worker-job': 'publisher-linux-worker-job',
+               'crates/icc-profile': 'icc-profile', 'apps/font-worker': 'publisher-font-worker',
+               'crates/layout-core': 'layout-core'}
     write('Cargo.toml', ('[workspace]\nmembers = '+json.dumps(list(members))+'\n'
                         '[workspace.package]\nversion = "0.0.0"\nlicense = "MIT OR Apache-2.0"\n').encode())
     owned = []
@@ -81,10 +98,138 @@ def public_fixture(root):
               'canonical_terms': [{'path': notice_files[0], 'sha256': notice_sha}],
               'rust_standard_library': {'notice': notice_files[3], 'sha256': notice_sha,
                                          'license_texts': [{'path': notice_files[4], 'sha256': notice_sha}]}}
+    control_root = package.FONT_CONTROL_ROOT
+    controls = {'renamed.otf': b'Synthetic renamed control.\n', 'original.ttf': b'Original synthetic control.\n'}
+    source = 'crates/layout-core/tests/fixtures/NotoSansCJKsc-Regular.otf'
+    write(source, b'Synthetic source asset.\n')
+    license_data = b'Synthetic test-only license record.\n'
+    write('crates/layout-core/tests/fixtures/LICENSE-NotoSansCJK', license_data)
+    write(control_root+'LICENSE-OFL', license_data)
+    for name, data in controls.items():
+        write(control_root+name, data)
+    write(control_root+'provenance.json', json.dumps({
+        'cff_original_source_asset': source, 'cff_original_source_sha256': package.sha(b'Synthetic source asset.\n'),
+        'controls': {name: package.sha(data) for name, data in controls.items()}}).encode())
+    notice['example_assets'].append({'path': source, 'sha256': package.sha(b'Synthetic source asset.\n'),
+                                     'provenance': notice_files[2], 'provenance_sha256': notice_sha})
+    notice['example_assets'].extend(collector.collect_font_controls(root, root/'third_party/cargo-notices'))
+    notice['example_assets'].extend(collector.collect_character_mapping(root, root/'third_party/cargo-notices'))
     write('third_party/cargo-notices/dependencies.json', json.dumps(notice).encode())
 
 
 class SourcePackageTests(unittest.TestCase):
+    def test_package_refuses_missing_or_reassigned_character_mapping_notices(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            public_fixture(root)
+            _, files = package.collect(root)
+            notices = json.loads(files['third_party/cargo-notices/dependencies.json'])
+            missing = copy.deepcopy(notices)
+            missing['example_assets'] = [row for row in missing['example_assets']
+                                        if row['path'] != 'apps/font-worker/src/truetype_program.rs']
+            with self.assertRaisesRegex(ValueError, 'mapping'):
+                package.audit_character_mapping_notices(files, missing)
+            reassigned = copy.deepcopy(notices)
+            row = next(row for row in reassigned['example_assets']
+                       if row['path'] == 'apps/font-worker/src/truetype_program.rs')
+            row['license_notice'] = 'assets/profile-provenance.md'
+            with self.assertRaisesRegex(ValueError, 'mapping'):
+                package.audit_character_mapping_notices(files, reassigned)
+            source = 'apps/font-worker/src/truetype_program.rs'
+            changed = {**files, source: files[source].replace(b"'\\u{c4}'", b"'\\u{c5}'", 1)}
+            row['license_notice'] = 'assets/mac-roman-NOTICE.txt'
+            row['sha256'] = package.sha(changed[source])
+            with self.assertRaisesRegex(ValueError, 'mapping'):
+                package.audit_character_mapping_notices(changed, reassigned)
+
+    def test_character_mapping_collection_retains_exact_data_and_upstream_notices(self):
+        original = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for name in ('apps/font-worker/src/truetype_program.rs',
+                         'third_party/character-mappings/mac-roman-provenance.json',
+                         'third_party/character-mappings/NOTICE.txt'):
+                path = root/name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes((original/name).read_bytes())
+            output = root/'notices'
+            output.mkdir()
+            assets = collector.collect_character_mapping(root, output)
+            self.assertEqual(len(assets), 1)
+            row = assets[0]
+            self.assertEqual(row['path'], 'apps/font-worker/src/truetype_program.rs')
+            self.assertEqual(row['license_expression'], 'Unicode-3.0 AND PSF-2.0')
+            self.assertEqual((output/row['license_notice']).read_bytes(),
+                             (root/'third_party/character-mappings/NOTICE.txt').read_bytes())
+            self.assertEqual((output/row['provenance']).read_bytes(),
+                             (root/'third_party/character-mappings/mac-roman-provenance.json').read_bytes())
+            notice = root/'third_party/character-mappings/NOTICE.txt'
+            notice.write_bytes(notice.read_bytes()+b'changed notice')
+            with self.assertRaisesRegex(ValueError, 'mapping'):
+                collector.collect_character_mapping(root, output)
+            notice.write_bytes((original/'third_party/character-mappings/NOTICE.txt').read_bytes())
+            source = root/row['path']
+            source.write_bytes(source.read_bytes().replace(b"'\\u{c4}'", b"'\\u{c5}'", 1))
+            with self.assertRaisesRegex(ValueError, 'mapping'):
+                collector.collect_character_mapping(root, output)
+
+    def test_component_control_collection_binds_original_assets_and_refuses_drift(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            directory, provenance = component_controls(root)
+            output = root/'notices'
+            output.mkdir()
+            assets = collector.collect_component_controls(root, output)
+            self.assertEqual({row['path'] for row in assets},
+                             {'apps/font-worker/src/tests/components/'+name for name in provenance['controls']})
+            for row in assets:
+                self.assertEqual(row['scope'], 'project-generated component font control; MIT OR Apache-2.0')
+                self.assertNotIn('license_notice', row)
+                self.assertEqual((output/row['provenance']).read_bytes(), (directory/'provenance.json').read_bytes())
+                self.assertEqual(package.sha((output/row['provenance']).read_bytes()), row['provenance_sha256'])
+            mutations = [('schema', {**provenance, 'schema': 'unknown/v1'}, None),
+                         ('path', {**provenance, 'controls': {'../escape.ttf': {'sha256': '0'*64}}}, None),
+                         ('identity', provenance, ('attachment.ttf', b'changed')),
+                         ('coverage', provenance, ('unlisted.ttf', b'unlisted'))]
+            for label, altered, program in mutations:
+                with self.subTest(label=label):
+                    (directory/'provenance.json').write_text(json.dumps(altered), encoding='utf-8')
+                    if program:
+                        (directory/program[0]).write_bytes(program[1])
+                    with self.assertRaises(ValueError):
+                        collector.collect_component_controls(root, output)
+                    if program:
+                        if program[0] == 'attachment.ttf':
+                            (directory/program[0]).write_bytes(b'Original synthetic attachment control.\n')
+                        else:
+                            (directory/program[0]).unlink()
+
+    def test_package_refuses_component_controls_without_exact_original_provenance(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            public_fixture(root)
+            directory, _ = component_controls(root)
+            with self.assertRaisesRegex(ValueError, 'component'):
+                package.collect(root)
+            notice_path = root/'third_party/cargo-notices/dependencies.json'
+            notices = json.loads(notice_path.read_bytes())
+            notices['example_assets'].extend(collector.collect_component_controls(root, notice_path.parent))
+            notice_path.write_text(json.dumps(notices), encoding='utf-8')
+            _, files = package.collect(root)
+            receipt = package.build(root, root/'package')
+            package.verify_archive(root/'package'/receipt['archive'])
+            altered = copy.deepcopy(notices)
+            next(row for row in altered['example_assets'] if row['path'].endswith('/attachment.ttf'))['provenance'] = 'assets/profile-provenance.md'
+            with self.assertRaisesRegex(ValueError, 'component'):
+                package.audit_component_control_notices(files, altered)
+            altered = copy.deepcopy(notices)
+            next(row for row in altered['example_assets'] if row['path'].endswith('/attachment.ttf'))['scope'] = 'unknown terms'
+            with self.assertRaisesRegex(ValueError, 'license'):
+                package.audit_component_control_notices(files, altered)
+            with self.assertRaisesRegex(ValueError, 'component'):
+                package.audit_component_control_notices({**files,
+                    directory.relative_to(root).as_posix()+'/unlisted.ttf': b'unlisted'}, notices)
+
     def test_target_graph_union_preserves_platform_only_dependencies(self):
         with tempfile.TemporaryDirectory() as temporary:
             inputs = []
@@ -108,6 +253,15 @@ class SourcePackageTests(unittest.TestCase):
         self.assertIn('scripts/pdf_font_program_rules.py', names)
         self.assertIn('tests/unit/font-program-rules.test.py', names)
         self.assertIn('crates/linux-worker-job/src/process.rs', names)
+        for name in ('scripts/pdf_numeric_rules.py', 'scripts/verify-icc-profile.py', 'scripts/verify-accepted-inputs.py',
+                     'tests/unit/icc-profile.test.py', 'tests/unit/accepted-inputs.test.py',
+                     'docs/requirements/generation-contract.json', 'crates/icc-profile/Cargo.toml'):
+            self.assertIn(name, names)
+        for name in ('docs/requirements/accepted-input-' 'contract.json', 'scripts/verify-accepted-input-' 'contract.py',
+                     'tests/unit/accepted-input-' 'contract.test.py'):
+            self.assertNotIn(name, names)
+        for name in ('supported-inputs', 'color', 'linux', 'windows'):
+            self.assertIn('docs/verification/current/accepted-inputs-20261016/'+name+'.json', names)
         self.assertNotIn('tests/unit/requirements-inventory.test.py', names)
         self.assertNotIn('crates/linux-worker-job/evidence/native-ubuntu-20261016.json', names)
         self.assertEqual({name for name in names if name.startswith('docs/requirements/')},
@@ -118,6 +272,49 @@ class SourcePackageTests(unittest.TestCase):
         package.audit_public_inventory({'schema': 'pdf-library-requirements/v1',
                                         'normative_requirements': [], 'writer_contracts': [],
                                         'coverage_assurance': {'status': 'incomplete'}})
+
+    def test_shared_icc_dependency_is_collected_on_both_targets_and_client_roots(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            inputs = []
+            for target in package.SUPPORTED_TARGETS:
+                for client in (False, True):
+                    root_name = 'client' if client else 'print-core'
+                    keys = (root_name, 'icc-profile', 'md-5')
+                    metadata = {'workspace_members': [root_name] if client else [root_name, 'icc-profile'],
+                        'packages': [{'id': key, 'name': key, 'version': '1.0',
+                                      'source': 'registry' if key == 'md-5' else None} for key in keys],
+                        'resolve': {'nodes': [{'id': key, 'features': [], 'deps':
+                            [{'pkg': 'md-5' if key == 'icc-profile' else 'icc-profile', 'dep_kinds': [{'kind': None}]}]
+                            if key != 'md-5' else []} for key in keys]}}
+                    path = Path(temporary)/(target+str(client)+'.json')
+                    path.write_text(json.dumps(metadata), encoding='utf-8')
+                    inputs.append((target, path, client))
+            packages, _, roots, closures, receipts, targets = collector.metadata_union(inputs, all_workspace=True, include_dev=True)
+            self.assertEqual(set(packages), {'print-core', 'client', 'icc-profile', 'md-5'})
+            self.assertIn('icc-profile', roots)
+            self.assertEqual(targets['icc-profile'], set(package.SUPPORTED_TARGETS))
+            self.assertEqual(targets['md-5'], set(package.SUPPORTED_TARGETS))
+            self.assertEqual(len(receipts), 4)
+            self.assertTrue(all({'icc-profile', 'md-5', 'client', 'print-core'}.issubset(value) for value in closures.values()))
+
+    def test_font_control_notices_reject_omission_forged_provenance_and_unlisted_program(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            public_fixture(root)
+            _, files = package.collect(root)
+            notices = json.loads(files['third_party/cargo-notices/dependencies.json'])
+            package.audit_font_control_notices(files, notices)
+            omitted = copy.deepcopy(notices)
+            omitted['example_assets'] = [row for row in omitted['example_assets']
+                                        if row['path'] != package.FONT_CONTROL_ROOT+'renamed.otf']
+            with self.assertRaisesRegex(ValueError, 'asset notice'):
+                package.audit_font_control_notices(files, omitted)
+            forged = copy.deepcopy(notices)
+            next(row for row in forged['example_assets'] if row['path'] == package.FONT_CONTROL_ROOT+'original.ttf')['provenance'] = 'assets/profile-provenance.md'
+            with self.assertRaisesRegex(ValueError, 'asset notice'):
+                package.audit_font_control_notices(files, forged)
+            with self.assertRaisesRegex(ValueError, 'provenance coverage'):
+                package.audit_font_control_notices({**files, package.FONT_CONTROL_ROOT+'unlisted.otf': b'new program'}, notices)
 
     def test_notice_union_rejects_omitted_linux_dependency_or_target(self):
         notices = {'schema': 'patterboxpdf-licenses/v2', 'supported_targets': list(package.SUPPORTED_TARGETS),
@@ -192,9 +389,17 @@ class SourcePackageTests(unittest.TestCase):
                      ('changed license', {}, ('LICENSE-APACHE', b'other grant')),
                      ('package mismatch', {}, ('Cargo.toml', files['Cargo.toml'].replace(b'MIT OR Apache-2.0', b'UNLICENSED'))),
                      ('registry enabled', {}, ('examples/standalone-client/Cargo.toml', files['examples/standalone-client/Cargo.toml'].replace(b'publish = false', b'publish = true'))),
+                     ('ICC registry enabled', {}, ('crates/icc-profile/Cargo.toml', files['crates/icc-profile/Cargo.toml'].replace(b'publish = false', b'publish = true'))),
+                     ('ICC notice omitted', {}, ('third_party/cargo-notices/dependencies.json', json.dumps({**json.loads(files['third_party/cargo-notices/dependencies.json']),
+                         'dependencies': [row for row in json.loads(files['third_party/cargo-notices/dependencies.json'])['dependencies'] if row['name'] != 'icc-profile']}).encode())),
                      ('notice drift', {}, ('third_party/cargo-notices/canonical/MIT.txt', b'changed notice')),
                      ('fixture drift', {}, ('crates/print-core/tests/fixtures/generated-srgb.icc', b'changed asset')),
                      ('unlisted note', {}, ('docs/unlisted-note.json', b'{}')),
+                     ('missing numeric helper', {}, ('scripts/pdf_numeric_rules.py', None)),
+                     ('missing family contract', {}, ('docs/requirements/generation-contract.json', None)),
+                     ('private family contract', {}, ('docs/requirements/accepted-input-' 'contract.json', b'{}')),
+                     ('private family auditor', {}, ('scripts/verify-accepted-input-' 'contract.py', b'# private')),
+                     ('private family test', {}, ('tests/unit/accepted-input-' 'contract.test.py', b'# private')),
                      ('unlisted receipt', {}, ('docs/verification/current/unlisted.json', b'{}')),
                      ('unlisted unit test', {}, ('tests/unit/unlisted.test.py', b'# fixture'))]
             for label, changes, mutation in cases:

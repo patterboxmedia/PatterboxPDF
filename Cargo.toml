@@ -9,6 +9,7 @@ members = [
   "crates/color-boundary",
   "crates/document-core",
   "crates/font-boundary",
+  "crates/icc-profile",
   "crates/layout-core",
   "crates/linux-worker-job",
   "crates/print-core",

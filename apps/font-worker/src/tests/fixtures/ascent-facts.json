@@ -1,0 +1,36 @@
+{
+  "schema": "patterbox-authored-ascent-controls/v1",
+  "scope": "Complete authored role set for retained source GIDs0,1,2; semantic truth is the authored premise",
+  "controls": {
+    "ascent-unencoded-high.otf": {
+      "source_sha256": "9c9cea8056d087ebdfcf57290b41eae0845d7fcb103763addf34ef731a5cf26b",
+      "accented_source_glyph_ids": [
+        2
+      ],
+      "role": "H plus authored circumflex; accented-only role",
+      "cmap_identity": null,
+      "authored_glyph_height": 1100,
+      "expected_ascent": 880
+    },
+    "ascent-coded-high.otf": {
+      "source_sha256": "122f8d396ed1c321f34e7ea452557e8668ccd736128c47284fdf72479417888c",
+      "accented_source_glyph_ids": [
+        2
+      ],
+      "role": "H plus authored circumflex; accented-only role",
+      "cmap_identity": "U+0124",
+      "authored_glyph_height": 1100,
+      "expected_ascent": 880
+    },
+    "ascent-unencoded-low.otf": {
+      "source_sha256": "34457df9cee26310c513b37cd912578564f2fe3de3e965e27408db812f569f26",
+      "accented_source_glyph_ids": [
+        2
+      ],
+      "role": "H plus authored circumflex; accented-only role",
+      "cmap_identity": null,
+      "authored_glyph_height": 800,
+      "expected_ascent": 880
+    }
+  }
+}

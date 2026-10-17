@@ -3,8 +3,6 @@ pub const MAX_ICC_PROFILE_BYTES: usize = 16 * 1024 * 1024;
 use sha2::{Digest, Sha256};
 
 const ICC_HEADER_LEN: usize = 128;
-const ICC_TAG_COUNT_LEN: usize = 4;
-const ICC_TAG_RECORD_LEN: usize = 12;
 
 /// SHA-256 identity for the exact ICC bytes used by an evaluation.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -111,6 +109,7 @@ pub enum ProfileError {
     BadSignature,
     InvalidVersionEncoding([u8; 4]),
     UnsupportedVersion([u8; 4]),
+    InvalidHeader,
     MissingTags,
     MalformedTagTable,
     MissingRequiredOutputTransforms,
@@ -204,7 +203,7 @@ pub fn inspect_output_intent(profile: &[u8]) -> Result<OutputIntentFacts, Profil
         return Err(ProfileError::UnsupportedProfileConnectionSpace(pcs));
     }
 
-    validate_tag_table(profile)?;
+    icc_profile::screen_output(profile).map_err(profile_format_error)?;
     let receipt = color_boundary::TrustedColorBoundary::resolve_packaged()
         .inspect_output_profile(profile)
         .map_err(|error| profile_worker_error(&error))?;
@@ -264,394 +263,53 @@ fn profile_worker_error(error: &color_boundary::ColorWorkerError) -> ProfileErro
     }
 }
 
+#[cfg(test)]
 fn validate_tag_table(profile: &[u8]) -> Result<(), ProfileError> {
-    validate_tag_table_with(profile, validate_tag_payload)
+    icc_profile::validate_tag_table_with(profile, icc_profile::validate_tag_payload)
+        .map_err(profile_format_error)
 }
-
+#[cfg(test)]
 fn validate_tag_table_with(
     profile: &[u8],
-    mut validate_payload: impl FnMut(&[u8], &[u8], &[u8]) -> Result<(), ProfileError>,
+    mut body: impl FnMut(&[u8], &[u8], &[u8]) -> Result<(), ProfileError>,
 ) -> Result<(), ProfileError> {
-    let count_end = ICC_HEADER_LEN
-        .checked_add(ICC_TAG_COUNT_LEN)
-        .ok_or(ProfileError::MalformedTagTable)?;
-    if profile.len() < count_end {
-        return Err(ProfileError::TooShort);
-    }
-    let tag_count = u32::from_be_bytes(
-        profile[ICC_HEADER_LEN..count_end]
-            .try_into()
-            .expect("four byte slice"),
-    );
-    let tag_count = usize::try_from(tag_count).map_err(|_| ProfileError::MalformedTagTable)?;
-    if tag_count == 0 {
-        return Err(ProfileError::MissingTags);
-    }
-    let table_bytes = tag_count
-        .checked_mul(ICC_TAG_RECORD_LEN)
-        .ok_or(ProfileError::MalformedTagTable)?;
-    let table_end = count_end
-        .checked_add(table_bytes)
-        .ok_or(ProfileError::MalformedTagTable)?;
-    if table_end > profile.len() {
-        return Err(ProfileError::MalformedTagTable);
-    }
-
-    let mut has_device_to_pcs = false;
-    let mut has_pcs_to_device = false;
-    let mut signatures = std::collections::BTreeSet::new();
-    let mut records = Vec::with_capacity(tag_count);
-    for index in 0..tag_count {
-        let record_start = count_end + index * ICC_TAG_RECORD_LEN;
-        let signature = &profile[record_start..record_start + 4];
-        let offset = u32::from_be_bytes(
-            profile[record_start + 4..record_start + 8]
-                .try_into()
-                .expect("four byte slice"),
-        );
-        let size = u32::from_be_bytes(
-            profile[record_start + 8..record_start + 12]
-                .try_into()
-                .expect("four byte slice"),
-        );
-        let offset = usize::try_from(offset).map_err(|_| ProfileError::MalformedTagTable)?;
-        let size = usize::try_from(size).map_err(|_| ProfileError::MalformedTagTable)?;
-        let end = offset
-            .checked_add(size)
-            .ok_or(ProfileError::MalformedTagTable)?;
-        if offset < table_end || offset % 4 != 0 || size < 8 || end > profile.len() {
-            return Err(ProfileError::MalformedTagTable);
-        }
-        if !signatures.insert(signature) {
-            return Err(ProfileError::MalformedTagTable);
-        }
-        records.push((signature, offset, end));
-        has_device_to_pcs |= signature == b"A2B0";
-        has_pcs_to_device |= signature == b"B2A0";
-    }
-
-    if !has_device_to_pcs || !has_pcs_to_device {
-        return Err(ProfileError::MissingRequiredOutputTransforms);
-    }
-    // Every admitted edition requires the printer's description, copyright,
-    // media white point, gamut and all three forward/reverse intent tables.
-    // A native engine's ability to build one transform does not prove these
-    // required resources exist in the exact profile being embedded.
-    if [
-        b"desc", b"cprt", b"wtpt", b"gamt", b"A2B0", b"A2B1", b"A2B2", b"B2A0", b"B2A1", b"B2A2",
-    ]
-    .iter()
-    .any(|signature| !signatures.contains(signature.as_slice()))
-    {
-        return Err(ProfileError::MissingRequiredOutputTags);
-    }
-    records.sort_unstable_by_key(|record| (record.1, record.2));
-    // Complete aliases are valid; reject partial overlaps before payload scans.
-    if records.windows(2).any(|pair| {
-        let left = (pair[0].1, pair[0].2);
-        let right = (pair[1].1, pair[1].2);
-        left != right && left.1 > right.0
-    }) {
-        return Err(ProfileError::MalformedTagTable);
-    }
-    for &(signature, offset, end) in &records {
-        validate_tag_role(signature, &profile[offset..end], profile)?;
-    }
-    let mut previous_range = None;
-    for (signature, offset, end) in records {
-        if previous_range != Some((offset, end)) {
-            validate_payload(signature, &profile[offset..end], profile)?;
-            previous_range = Some((offset, end));
-        }
-    }
-    Ok(())
+    icc_profile::validate_tag_table_with(profile, |s, p, profile| {
+        body(s, p, profile).map_err(|_| icc_profile::Error::MalformedTagTable)
+    })
+    .map_err(profile_format_error)
 }
-
-fn validate_tag_role(signature: &[u8], payload: &[u8], profile: &[u8]) -> Result<(), ProfileError> {
-    let malformed = ProfileError::MalformedTagTable;
-    let kind = &payload[..4];
-    let expected = match signature {
-        b"desc" => Some(if profile[8] == 2 { b"desc" } else { b"mluc" }.as_slice()),
-        b"cprt" => Some(if profile[8] == 2 { b"text" } else { b"mluc" }.as_slice()),
-        b"wtpt" | b"bkpt" => Some(b"XYZ ".as_slice()),
-        _ => None,
-    };
-    if expected.is_some_and(|expected| kind != expected)
-        || (matches!(signature, b"wtpt" | b"bkpt") && payload.len() != 20)
-    {
-        return Err(malformed);
-    }
-    let (channels, v4_kind) = match signature {
-        b"A2B0" | b"A2B1" | b"A2B2" => (Some((4, 3)), b"mAB "),
-        b"B2A0" | b"B2A1" | b"B2A2" => (Some((3, 4)), b"mBA "),
-        b"gamt" => (Some((3, 1)), b"mBA "),
-        _ => (None, b"    "),
-    };
-    if channels.is_some()
-        && kind != b"mft1"
-        && kind != b"mft2"
-        && (profile[8] != 4 || kind != v4_kind)
-    {
-        return Err(malformed);
-    }
-    match kind {
-        // This parser checks only a fixed header, extent and nine matrix values.
-        b"mft2" => validate_lut16(signature, payload, profile)?,
-        b"mAB " | b"mBA "
-            if payload.len() < 32
-                || channels.is_some_and(|expected| {
-                    expected != (usize::from(payload[8]), usize::from(payload[9]))
-                }) =>
-        {
-            return Err(malformed);
-        }
-        _ => {}
-    }
-    Ok(())
-}
-
+#[cfg(test)]
 fn validate_tag_payload(
     signature: &[u8],
     payload: &[u8],
     profile: &[u8],
 ) -> Result<(), ProfileError> {
-    let malformed = ProfileError::MalformedTagTable;
-    if payload[4..8].iter().any(|byte| *byte != 0) {
-        return Err(malformed);
-    }
-    let kind = &payload[..4];
-    match kind {
-        b"XYZ " => {
-            if payload.len() < 20
-                || !(payload.len() - 8).is_multiple_of(12)
-                || ((signature == b"wtpt" || signature == b"bkpt") && payload.len() != 20)
-                || payload[8..]
-                    .as_chunks::<4>()
-                    .0
-                    .iter()
-                    .any(|value| i32::from_be_bytes(*value) < 0)
-            {
-                return Err(malformed);
-            }
-        }
-        b"text" => {
-            if payload.len() < 9 || payload.last() != Some(&0) || !payload[8..].is_ascii() {
-                return Err(malformed);
-            }
-        }
-        b"desc" => {
-            let ascii_count = profile_u32(payload, 8).ok_or(malformed)?;
-            let unicode_start = 12_usize.checked_add(ascii_count).ok_or(malformed)?;
-            let unicode_count = profile_u32(payload, unicode_start + 4).ok_or(malformed)?;
-            let script_start = unicode_count
-                .checked_mul(2)
-                .and_then(|size| unicode_start.checked_add(8 + size))
-                .ok_or(malformed)?;
-            if ascii_count == 0
-                || unicode_start > payload.len()
-                || payload[unicode_start - 1] != 0
-                || !payload[12..unicode_start].is_ascii()
-                || script_start
-                    .checked_add(70)
-                    .is_none_or(|end| end != payload.len())
-                || payload[script_start + 2] > 67
-            {
-                return Err(malformed);
-            }
-        }
-        b"mft2" => validate_lut16(signature, payload, profile)?,
-        b"mAB " | b"mBA " => validate_multistage_lut(signature, payload)?,
-        b"sf32" if payload.len() < 12 || !(payload.len() - 8).is_multiple_of(4) => {
-            return Err(malformed);
-        }
-        _ => {} // Other admitted standard/private types are decoded by the confined native engine.
-    }
-    Ok(())
+    icc_profile::validate_tag_payload(signature, payload, profile).map_err(profile_format_error)
 }
-
-fn profile_u32(bytes: &[u8], offset: usize) -> Option<usize> {
-    let value = u32::from_be_bytes(bytes.get(offset..offset.checked_add(4)?)?.try_into().ok()?);
-    usize::try_from(value).ok()
-}
-
+#[cfg(test)]
 fn validate_multistage_lut(signature: &[u8], payload: &[u8]) -> Result<(), ProfileError> {
-    let malformed = ProfileError::MalformedTagTable;
-    if payload.len() < 32 || payload[10..12] != [0; 2] {
-        return Err(malformed);
-    }
-    let inputs = usize::from(payload[8]);
-    let outputs = usize::from(payload[9]);
-    let expected = match signature {
-        b"A2B0" | b"A2B1" | b"A2B2" => Some((4, 3)),
-        b"B2A0" | b"B2A1" | b"B2A2" => Some((3, 4)),
-        b"gamt" => Some((3, 1)),
-        _ => None,
-    };
-    if !(1..=15).contains(&inputs)
-        || !(1..=15).contains(&outputs)
-        || expected.is_some_and(|value| value != (inputs, outputs))
-    {
-        return Err(malformed);
-    }
-    let [b, matrix, m, clut, a] = [12, 16, 20, 24, 28]
-        .map(|offset| profile_u32(payload, offset).expect("complete multistage header"));
-    if b == 0
-        || (a == 0) != (clut == 0)
-        || (m == 0) != (matrix == 0)
-        || (inputs != outputs && clut == 0)
-    {
-        return Err(malformed);
-    }
-    let forward = &payload[..4] == b"mAB ";
-    let side = if forward { outputs } else { inputs };
-    let mut ranges = Vec::new();
-    multistage_curves(payload, b, side, &mut ranges)?;
-    if a != 0 {
-        multistage_curves(
-            payload,
-            a,
-            if forward { inputs } else { outputs },
-            &mut ranges,
-        )?;
-    }
-    if m != 0 {
-        if side != 3 {
-            return Err(malformed);
-        }
-        multistage_curves(payload, m, side, &mut ranges)?;
-        ranges.push(multistage_range(payload, matrix, 48)?);
-    }
-    if clut != 0 {
-        multistage_range(payload, clut, 20)?;
-        let grids = &payload[clut..clut + 16];
-        let precision = usize::from(payload[clut + 16]);
-        if grids[..inputs].iter().any(|value| *value < 2)
-            || grids[inputs..].iter().any(|value| *value != 0)
-            || !matches!(precision, 1 | 2)
-            || payload[clut + 17..clut + 20] != [0; 3]
-        {
-            return Err(malformed);
-        }
-        let clut_extent = grids[..inputs]
-            .iter()
-            .try_fold(outputs * precision, |total, grid| {
-                total.checked_mul(usize::from(*grid))
-            })
-            .and_then(|samples| samples.checked_add(20))
-            .ok_or(malformed)?;
-        ranges.push(multistage_range(payload, clut, clut_extent)?);
-    }
-    ranges.sort_unstable();
-    ranges.dedup();
-    if ranges.windows(2).any(|pair| pair[0].1 > pair[1].0) {
-        return Err(malformed);
-    }
-    Ok(())
+    icc_profile::validate_multistage_lut(signature, payload).map_err(profile_format_error)
+}
+#[cfg(test)]
+fn profile_u32(bytes: &[u8], offset: usize) -> Option<usize> {
+    icc_profile::profile_u32(bytes, offset)
 }
 
-fn multistage_range(
-    payload: &[u8],
-    start: usize,
-    size: usize,
-) -> Result<(usize, usize), ProfileError> {
-    let end = start
-        .checked_add(size)
-        .ok_or(ProfileError::MalformedTagTable)?;
-    if start < 32 || !start.is_multiple_of(4) || end > payload.len() {
-        return Err(ProfileError::MalformedTagTable);
+fn profile_format_error(error: icc_profile::Error) -> ProfileError {
+    use icc_profile::Error;
+    match error {
+        Error::TooShort => ProfileError::TooShort,
+        Error::BadSignature => ProfileError::BadSignature,
+        Error::InvalidVersionEncoding(v) => ProfileError::InvalidVersionEncoding(v),
+        Error::UnsupportedVersion(v) => ProfileError::UnsupportedVersion(v),
+        Error::MissingTags => ProfileError::MissingTags,
+        Error::MissingRequiredOutputTransforms => ProfileError::MissingRequiredOutputTransforms,
+        Error::MissingRequiredOutputTags => ProfileError::MissingRequiredOutputTags,
+        Error::NotPrinter => ProfileError::NotPrinter,
+        Error::NotCmyk => ProfileError::NotCmyk,
+        Error::Header | Error::ProfileId => ProfileError::InvalidHeader,
+        _ => ProfileError::MalformedTagTable,
     }
-    Ok((start, end))
-}
-
-fn multistage_curves(
-    payload: &[u8],
-    mut start: usize,
-    count: usize,
-    ranges: &mut Vec<(usize, usize)>,
-) -> Result<(), ProfileError> {
-    let malformed = ProfileError::MalformedTagTable;
-    for _ in 0..count {
-        multistage_range(payload, start, 12)?;
-        if payload[start + 4..start + 8] != [0; 4] {
-            return Err(malformed);
-        }
-        let size = match &payload[start..start + 4] {
-            b"curv" => profile_u32(payload, start + 8)
-                .and_then(|count| count.checked_mul(2))
-                .and_then(|samples| samples.checked_add(12))
-                .ok_or(malformed)?,
-            b"para" => {
-                let function =
-                    usize::from(u16::from_be_bytes([payload[start + 8], payload[start + 9]]));
-                if function > 4 || payload[start + 10..start + 12] != [0; 2] {
-                    return Err(malformed);
-                }
-                12 + 4 * [1, 3, 4, 5, 7][function]
-            }
-            _ => return Err(malformed),
-        };
-        let range = multistage_range(payload, start, size)?;
-        ranges.push(range);
-        start = range
-            .1
-            .checked_add(3)
-            .map(|end| end & !3)
-            .ok_or(malformed)?;
-        if start > payload.len() || payload[range.1..start].iter().any(|byte| *byte != 0) {
-            return Err(malformed);
-        }
-    }
-    Ok(())
-}
-
-fn validate_lut16(signature: &[u8], payload: &[u8], profile: &[u8]) -> Result<(), ProfileError> {
-    let malformed = ProfileError::MalformedTagTable;
-    if payload.len() < 52 {
-        return Err(malformed);
-    }
-    let inputs = usize::from(payload[8]);
-    let outputs = usize::from(payload[9]);
-    let grid = usize::from(payload[10]);
-    let input_entries = usize::from(u16::from_be_bytes([payload[48], payload[49]]));
-    let output_entries = usize::from(u16::from_be_bytes([payload[50], payload[51]]));
-    let expected_channels = match signature {
-        b"A2B0" | b"A2B1" | b"A2B2" => Some((4, 3)),
-        b"B2A0" | b"B2A1" | b"B2A2" => Some((3, 4)),
-        b"gamt" => Some((3, 1)),
-        _ => None,
-    };
-    if !(1..=15).contains(&inputs)
-        || !(1..=15).contains(&outputs)
-        || grid < 2
-        || payload[11] != 0
-        || !(2..=4096).contains(&input_entries)
-        || !(2..=4096).contains(&output_entries)
-        || expected_channels.is_some_and(|expected| expected != (inputs, outputs))
-    {
-        return Err(malformed);
-    }
-    let expected_size = grid
-        .checked_pow(u32::try_from(inputs).map_err(|_| malformed)?)
-        .and_then(|clut| clut.checked_mul(outputs))
-        .and_then(|samples| samples.checked_add(inputs * input_entries + outputs * output_entries))
-        .and_then(|samples| samples.checked_mul(2))
-        .and_then(|bytes| bytes.checked_add(52));
-    if expected_size != Some(payload.len()) {
-        return Err(malformed);
-    }
-    let xyz_input = &profile[20..24] == b"XYZ "
-        && signature != b"A2B0"
-        && signature != b"A2B1"
-        && signature != b"A2B2";
-    if !xyz_input {
-        for index in 0..9 {
-            let expected = if index % 4 == 0 { 65536 } else { 0 };
-            if profile_u32(payload, 12 + index * 4) != Some(expected) {
-                return Err(malformed);
-            }
-        }
-    }
-    Ok(())
 }
 
 #[cfg(test)]
@@ -667,6 +325,8 @@ mod tests {
         profile[16..20].copy_from_slice(b"CMYK");
         profile[20..24].copy_from_slice(b"Lab ");
         profile[36..40].copy_from_slice(b"acsp");
+        profile[24..36].copy_from_slice(&[7, 234, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0]);
+        profile[68..80].copy_from_slice(&[0, 0, 0xf6, 0xd6, 0, 1, 0, 0, 0, 0, 0xd3, 0x2d]);
         profile
     }
 
@@ -1061,6 +721,8 @@ mod tests {
         profile[16..20].copy_from_slice(b"CMYK");
         profile[20..24].copy_from_slice(b"Lab ");
         profile[36..40].copy_from_slice(b"acsp");
+        profile[24..36].copy_from_slice(&[7, 234, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0]);
+        profile[68..80].copy_from_slice(&[0, 0, 0xf6, 0xd6, 0, 1, 0, 0, 0, 0, 0xd3, 0x2d]);
         profile[128..132].copy_from_slice(&1_u32.to_be_bytes());
         profile[132..136].copy_from_slice(b"A2B0");
         profile[136..140].copy_from_slice(&156_u32.to_be_bytes());

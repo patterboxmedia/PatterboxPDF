@@ -5,6 +5,7 @@
     "color-boundary",
     "document-core",
     "font-boundary",
+    "icc-profile",
     "layout-core",
     "pdf-library-standalone-client",
     "print-core",
@@ -27,13 +28,14 @@
   "metadata_inputs": [
     {
       "target": "x86_64-pc-windows-msvc",
-      "sha256": "83c7ae73facf59aab25ca8d81035866a8d2755919de8459f792ea2e6bdfa502b",
+      "sha256": "e518a033bc2dc4f6b10e105adffb840c7134369dfc45e7e775b521a2881f4c0b",
       "additional_workspace": false,
       "roots": [
         "application-core",
         "color-boundary",
         "document-core",
         "font-boundary",
+        "icc-profile",
         "layout-core",
         "print-core",
         "publisher-color-worker",
@@ -51,7 +53,7 @@
     },
     {
       "target": "x86_64-pc-windows-msvc",
-      "sha256": "c54c28267222acd88457d8eb601a39419d5eb04c0e55fda6f91371d93b5e5695",
+      "sha256": "891b348cbc7852e8bb4601000a2a4f1ab60c35e267a2b98f2a1fff923ab4743c",
       "additional_workspace": true,
       "roots": [
         "pdf-library-standalone-client"
@@ -59,13 +61,14 @@
     },
     {
       "target": "x86_64-unknown-linux-gnu",
-      "sha256": "cccb94598199caedba8a36efd32255025a2832ec5a96432bc5a3d229b1ee873b",
+      "sha256": "88a060ff34442832ea1fda158efd439a667ce30f937d58e7d0c5d9abed167d6a",
       "additional_workspace": false,
       "roots": [
         "application-core",
         "color-boundary",
         "document-core",
         "font-boundary",
+        "icc-profile",
         "layout-core",
         "print-core",
         "publisher-color-worker",
@@ -83,7 +86,7 @@
     },
     {
       "target": "x86_64-unknown-linux-gnu",
-      "sha256": "582f046bc2558e533c2b0ca28f4b50bfbe6036975422db7c1354a7be1f44e483",
+      "sha256": "c47358fc257a7f009fe0335f67e13325772b2351cbd0150e0d1a37d444465136",
       "additional_workspace": true,
       "roots": [
         "pdf-library-standalone-client"
@@ -427,6 +430,10 @@
           "0.4.14"
         ],
         [
+          "icc-profile",
+          "0.0.0"
+        ],
+        [
           "icu_collections",
           "2.3.0"
         ],
@@ -537,6 +544,10 @@
         [
           "log",
           "0.4.34"
+        ],
+        [
+          "md-5",
+          "0.10.6"
         ],
         [
           "memchr",
@@ -1372,6 +1383,10 @@
           "0.1.65"
         ],
         [
+          "icc-profile",
+          "0.0.0"
+        ],
+        [
           "icu_collections",
           "2.3.0"
         ],
@@ -1490,6 +1505,10 @@
         [
           "log",
           "0.4.34"
+        ],
+        [
+          "md-5",
+          "0.10.6"
         ],
         [
           "memchr",
@@ -1946,8 +1965,8 @@
       ]
     }
   ],
-  "cargo_lock_sha256": "2524356728e4c7ced5377b295caa4d556a09cf23771525718b5fbab62f9ff66b",
-  "client_cargo_lock_sha256": "8a9a7a4939591341391fdb72e8bdb09ae5c3960de77ce634f237ccc279ac721f",
+  "cargo_lock_sha256": "2476947309b6fc26a07b1878319fdeaefb747146be8841feee229cae0769c0f8",
+  "client_cargo_lock_sha256": "daef953e1107144715d939f21454bfee2e723f3b9b8fd292c15ca9dafd45664f",
   "rust_standard_library": {
     "toolchain": "1.98.0-x86_64-unknown-linux-gnu",
     "notice": "rust-standard-library/COPYRIGHT-library.html",
@@ -4469,6 +4488,23 @@
       "scope": "Cargo source/test dependency; conservative feature union"
     },
     {
+      "name": "icc-profile",
+      "version": "0.0.0",
+      "license": "MIT OR Apache-2.0",
+      "source": null,
+      "repository": null,
+      "links": null,
+      "authors": [],
+      "cargo_manifest_sha256": "bd49b205c0fbdeda804cdb09fc222d23896ac628f07b2337bb3add86877488e2",
+      "enabled_features": [],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [],
+      "scope": "project-owned; MIT OR Apache-2.0"
+    },
+    {
       "name": "icu_collections",
       "version": "2.3.0",
       "license": "Unicode-3.0",
@@ -5298,6 +5334,37 @@
       "scope": "Cargo source/test dependency; conservative feature union"
     },
     {
+      "name": "md-5",
+      "version": "0.10.6",
+      "license": "MIT OR Apache-2.0",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "repository": "https://github.com/RustCrypto/hashes",
+      "links": null,
+      "authors": [
+        "RustCrypto Developers"
+      ],
+      "cargo_manifest_sha256": "d6889f7a35144bad6b21ef85f3a6c19dc39a06dac08d0714a7465e0783e74fb7",
+      "enabled_features": [
+        "default",
+        "std"
+      ],
+      "targets": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
+      ],
+      "license_texts": [
+        {
+          "path": "texts/md-5-0.10.6/LICENSE-APACHE",
+          "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+        },
+        {
+          "path": "texts/md-5-0.10.6/LICENSE-MIT",
+          "sha256": "b4eb00df6e2a4d22518fcaa6a2b4646f249b3a3c9814509b22bd2091f1392ff1"
+        }
+      ],
+      "scope": "Cargo source/test dependency; conservative feature union"
+    },
+    {
       "name": "memchr",
       "version": "2.8.3",
       "license": "Unlicense OR MIT",
@@ -5732,7 +5799,7 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "2944a540c1fe8cf7822e3e61ba85f2264ad4d7b4c346cf5261fd4f97a7174edf",
+      "cargo_manifest_sha256": "a6e102ed1959081a4629179aa29190e75de41c1e49479f272ab796e6fd6396b3",
       "enabled_features": [],
       "targets": [
         "x86_64-pc-windows-msvc",
@@ -6029,7 +6096,7 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "865cd4ab931e26c5a9580d9457c78ba722543fae908abbc40d04ef1411198474",
+      "cargo_manifest_sha256": "b031bbc75ce166d37755d305f3282a1c888b456eb4f738b37f9f7a03b257fa61",
       "enabled_features": [
         "color-management",
         "default",
@@ -6083,7 +6150,7 @@
       "repository": null,
       "links": null,
       "authors": [],
-      "cargo_manifest_sha256": "8dbcec9d1114bb47802084fee4b2a09643b0c99184c8d94215b6af203de27831",
+      "cargo_manifest_sha256": "74178e13752d7467274033eb08b7c2c933221784710b1a779eedd9aa2c96a01b",
       "enabled_features": [],
       "targets": [
         "x86_64-pc-windows-msvc",
@@ -9075,6 +9142,673 @@
       "scope": "project-generated fixture; MIT OR Apache-2.0",
       "provenance": "assets/profile-provenance.md",
       "provenance_sha256": "079dda5619f6a9cda5298c8319b1cedbe2e81b4ce3bc0727b7f42dc4d5976038"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/absent-top.otf",
+      "bytes": 3452,
+      "sha256": "8b4c1f53beff66933d5d52153462e318966a14ea376b598750fd4e37db2e4ebc",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/accumulated-fraction.otf",
+      "bytes": 38504,
+      "sha256": "ec0c9d3a4a3b0d515ed2c10cac00fbcc53b7c7e800dda9820346c28c224ba32e",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/ascent-coded-high.otf",
+      "bytes": 3624,
+      "sha256": "122f8d396ed1c321f34e7ea452557e8668ccd736128c47284fdf72479417888c",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/ascent-unencoded-high.otf",
+      "bytes": 3644,
+      "sha256": "9c9cea8056d087ebdfcf57290b41eae0845d7fcb103763addf34ef731a5cf26b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/ascent-unencoded-low.otf",
+      "bytes": 3636,
+      "sha256": "34457df9cee26310c513b37cd912578564f2fe3de3e965e27408db812f569f26",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/default.otf",
+      "bytes": 3420,
+      "sha256": "27cd5a1c50967d41e1be12639be2bb1e537cfcbc4d1439be63be716cd3e795ca",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/empty.otf",
+      "bytes": 3408,
+      "sha256": "c67350a50007c82364b948feca9849f618049b1f2a1361180eda76f6e0eff149",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/explicit-default.otf",
+      "bytes": 3472,
+      "sha256": "73a200b946b5e696aacde6e59d4436e46b90fda12c5cead4a2e08685779409d8",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/explicit-scaled.otf",
+      "bytes": 3488,
+      "sha256": "f216c5f1354a59ac324a4962a4f1309be6069060fb6d8f4bd707f31f165c389b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/explicit-translated.otf",
+      "bytes": 3508,
+      "sha256": "6889b3f80b46899ee0b6a53a73d8cd4d48d8054add5da35b705117cdd0b34dd4",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/fd.otf",
+      "bytes": 3432,
+      "sha256": "273267dec7d5baef5731d34df423b5d6f713da303dd12ccfe1f83dcf45facd42",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex.otf",
+      "bytes": 3424,
+      "sha256": "b5a77ad8b17898f50e2656273bf4c68a4161011621d14ed14d66960031d27444",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex1.otf",
+      "bytes": 3424,
+      "sha256": "7e5e9fc3ca87263c76988e2d4692b2c130056455d8f97e7f41937a10dbc03e1b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex1_fd.otf",
+      "bytes": 3480,
+      "sha256": "c73460944830d7b2a637d3f0647e072b916fd88aeac14a2c658ea4c590dc5d87",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex1_top.otf",
+      "bytes": 3464,
+      "sha256": "2b5210102299501101e0ac0a3d9e7699609dc35108a51ff3c68deb634f54793a",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex_fd.otf",
+      "bytes": 3476,
+      "sha256": "3185733bd48e57f176c7f1c45af9bee206c8c9596da13e79e31bbe4308497a6f",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/flex_top.otf",
+      "bytes": 3464,
+      "sha256": "efbddd877ad1e0a348ed0d75695eadae45f9025a287e08fe74a746e219e3cdbd",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/fractional.otf",
+      "bytes": 3476,
+      "sha256": "8bd6c0dcf353c60f6321f162543e6bd135c89e2b83274ab916590486b7f1c07c",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex.otf",
+      "bytes": 3420,
+      "sha256": "71217df4d32c668855c59b4a4dcdfcd4999f80dc67d3f36ac5bcd092942886da",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex1.otf",
+      "bytes": 3432,
+      "sha256": "f315bbf0b3b211141623df6b235c6205cfcd7c86b6d5e63b8c9f2e431105753b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex1_fd.otf",
+      "bytes": 3480,
+      "sha256": "93a2dfc1fae7e8d586947b451af48ada684b8ad240b9e467b051feb5935f78ac",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex1_top.otf",
+      "bytes": 3472,
+      "sha256": "fb398cee88b1acc9dce6aa10e4adae037d252e1dfefa698689ddc30bccb4bcac",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex_fd.otf",
+      "bytes": 3476,
+      "sha256": "41d34f7c30fe05898a7b907e22149622915f8105358e0bdded14c40e477dffee",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/hflex_top.otf",
+      "bytes": 3460,
+      "sha256": "4990dbc500ae41beac1b42b8962ea0085e0ffa071d769b4c98ec98d1de7be4dd",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/implicit-default.otf",
+      "bytes": 3460,
+      "sha256": "0b60c2dcb4d659888ece9772a16cbc740f2b8b3fff988da057dca4e61451d6e5",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/implicit-scaled.otf",
+      "bytes": 3480,
+      "sha256": "a08d66328d63ca0cf1805198cc361ec0a8547b22e0174ecda6c9c578fb8dd381",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/implicit-translated.otf",
+      "bytes": 3508,
+      "sha256": "2a7ee0c22b27738ef020c62c4efe17243b2c5e46f060b943851ae5abfe2a5487",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/integer-translation.otf",
+      "bytes": 3488,
+      "sha256": "6492ca56db24fa2e4b520fa63cf9c42fdd78c249ea615a522a2c04eedc86e84b",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/no-endchar.otf",
+      "bytes": 3428,
+      "sha256": "2309e563cd2795e2d6e7fa00e762703b77eea9f38921cac11ec1d33b06cb5a26",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/original.ttf",
+      "bytes": 984,
+      "sha256": "7d595cd8e4857c6244d109631d44bebe91c1020f92a9d3c3e68cda2a73720f56",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "project-generated font control; MIT OR Apache-2.0"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/partial.otf",
+      "bytes": 3428,
+      "sha256": "db48a74c7949992915c98c77c00357e94dc7823ddc4beb22a9a4ab26fc1b0336",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/reflected.otf",
+      "bytes": 3448,
+      "sha256": "af1609acaf18a719a26c82d8ab5f3232f6e9a7f8f4878b47f45807644e06ce26",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/subr-no-return.otf",
+      "bytes": 3456,
+      "sha256": "4976f23ab6d275120569bde3a08000ccbe1cf21560b44f65061a2f332bb4ed56",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/tiny-negative.otf",
+      "bytes": 3460,
+      "sha256": "cde827545c1abd7cb226bd0fe91c22d2140ae75e6a3da7b7b5130e67c1fef162",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/tiny-positive.otf",
+      "bytes": 3460,
+      "sha256": "64a001f5e9b1f9ab4d664b6c310ac0f114560927bb176555304490c2b1f5aac2",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/top.otf",
+      "bytes": 3420,
+      "sha256": "3635c28b4ce0c48f4e053e4ef10cd437ba28c53165445de7b7e49dae983bb077",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/width-diff.otf",
+      "bytes": 3428,
+      "sha256": "ad3df0d8d2e8b3ff924eebebe95283d254de0e06f7a885241a168d90dd195d81",
+      "provenance": "assets/font-controls-provenance.json",
+      "provenance_sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8",
+      "scope": "renamed OFL-1.1 derivative font control",
+      "license_notice": "assets/font-controls-OFL.txt",
+      "license_notice_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/child-pp1.ttf",
+      "bytes": 1204,
+      "sha256": "4f8fca70143cd54686f5a56bc80218cf1d99ae28da0a980972e0409dd8d1ba03",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/child-pp2-scaled.ttf",
+      "bytes": 1224,
+      "sha256": "84d7171fa4b45c90ccabc05fe0b5e5dab2feae7f110c7a79ed2b10a03751d6d5",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/child-pp2.ttf",
+      "bytes": 1204,
+      "sha256": "b619aaacec51da7d023abe26490dfaa5a9547894417ae30625c95c40696517e3",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/empty-invalid-anchor.ttf",
+      "bytes": 1236,
+      "sha256": "0b0ce05f2804d8c3ad4bd05049dfda5e9c7b075192bd72f1987ba938b1c35322",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/first-point-match-invalid.ttf",
+      "bytes": 1240,
+      "sha256": "47159ce9d297f0f2f62574490fa448610cd4ba3cbb76979c5957367ef2fb6c00",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-negative-x.ttf",
+      "bytes": 1244,
+      "sha256": "15d2358b53a7f0486fb47a16b2c0e935ce72b5c530760b3c76ff653cc934f6ca",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-nested.ttf",
+      "bytes": 1260,
+      "sha256": "b45865f5588065912511ca779497e4719df31d5d83da5ffb2103d11366b62a69",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-rotated.ttf",
+      "bytes": 1240,
+      "sha256": "84f1768874e07a98469889a81abeece5119576f344e2c257a8bad7d3665a9f6a",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-scaled.ttf",
+      "bytes": 1236,
+      "sha256": "1e1895cddbf0605e1794907ff82a655fbb5919178cc6a74a686be871ba1edafc",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-shear.ttf",
+      "bytes": 1236,
+      "sha256": "1f9dfb5177d3be3e5c05ba9b68c2748a21ae61dbc27c9325eb49588936544bd5",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-translated.ttf",
+      "bytes": 1244,
+      "sha256": "59ed3d9190e576ae77f4f732cbca7a6e5801e175ca121474b734aff36b3b0243",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked-unequal.ttf",
+      "bytes": 1236,
+      "sha256": "80c7ef028e83833ea9f7011cd1fd9467622146fd4b4759586a0d4a492d7f967d",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-marked.ttf",
+      "bytes": 1212,
+      "sha256": "a1b6ac709ce4ec1308bf0465dff2d4204bf7e31a68d2cb8fb5c8ac954350468a",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-unmarked-negative-x.ttf",
+      "bytes": 1248,
+      "sha256": "9f3f6c1d3e9edd5d9cf64ebb8b05f64131037bf251c5efc0d1c3064bbcb1e3a1",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-unmarked-rotated.ttf",
+      "bytes": 1248,
+      "sha256": "712305ca1cc95b25502afd4000144ccc3bccb4f78f55d94c36b8576372d0569b",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/metrics-unmarked.ttf",
+      "bytes": 1220,
+      "sha256": "13d6153a66e5f1cd02d91f420ccce8f39cf899629a046e286d6618793138a997",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/optional-h-declared-subset.ttf",
+      "bytes": 1292,
+      "sha256": "3631a74928bfbf17a1481273a4f030b6175639dfb2b92d11c8133e471b9dc90d",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/optional-h-unknown-subset.ttf",
+      "bytes": 1288,
+      "sha256": "ea3edfb2f00b2392e955aab6e1eb2f4a0bd330d045cc95551d2b7938b62e0f2a",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/parent-pp1.ttf",
+      "bytes": 1208,
+      "sha256": "26916b6e79b47714645d7c55d58b7704a29c3b9618df42aa1f84d7f020a82323",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/parent-pp2.ttf",
+      "bytes": 1208,
+      "sha256": "c6d913d50108f6b890c79da9add226e51029a6342a74b995fb01fe2662805f09",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/point-match-clear.ttf",
+      "bytes": 1228,
+      "sha256": "c734a87c91f6a4dda7feea8b6b826694a733dd21756104c85fb42fe5acf5ff42",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/point-match-round.ttf",
+      "bytes": 1228,
+      "sha256": "7c279c69bbfcfada1a92471d91ba3c861d3da9784ab7c5f06d5f504a5c995932",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/scaled-offset-clear.ttf",
+      "bytes": 1228,
+      "sha256": "f2288f2f099e33dec485b44115f1ec25963b3627638de9976f9037ddcf114ce9",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/scaled-offset-round.ttf",
+      "bytes": 1228,
+      "sha256": "91da86b6922b89a6a56574cfeef00f948d072017a1c2cf2cfdae032169ad2f73",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/unused-malformed-subset.ttf",
+      "bytes": 1284,
+      "sha256": "ccf9a2eaf95ba7b91c969d07a3d37b201fad8740ab02a9e3f66dc7fefc7cc42c",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/unused-unresolved-full.ttf",
+      "bytes": 1272,
+      "sha256": "7c32a8d5e26c52528d1d48d89b01f0e1e853af550dd76c6038eaa7178eefd414",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/unused-unresolved-subset.ttf",
+      "bytes": 1280,
+      "sha256": "67970d5db5cd83be93104232a3f1c766ffc074aacf059b234d13b94ccdf6b42b",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-cancelled-both.ttf",
+      "bytes": 1252,
+      "sha256": "1e7dd275661552c24285c270f462f8a8302a61d7e33d63f84f577891fe58f1fe",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-cancelled-x.ttf",
+      "bytes": 1328,
+      "sha256": "9db09bed9e721d66090687c6c1f3e58270d2e302f59baecb798350e316bf46ea",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-empty-unused.ttf",
+      "bytes": 1240,
+      "sha256": "1dc35af8d7b2efb1bea539b61269a28460ccaa0314783f91bd2faa8080885b7d",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-pair-malformed.ttf",
+      "bytes": 1320,
+      "sha256": "7d7c2960b564ea0746c51fa9bb9207ef915712c9fe26b2d58f3af908ad205ca9",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-unresolved-absent.ttf",
+      "bytes": 1252,
+      "sha256": "435a1aaa20ebf999dff7bf6595eaf8c0982e44c3be8a1e8e4762a31adb2c831f",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-unresolved-paired.ttf",
+      "bytes": 1336,
+      "sha256": "857fae2aaa4962354d6fed1b8057fc16ed5082bbf04973ab6a30e5de27615d98",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-version-needed.ttf",
+      "bytes": 1336,
+      "sha256": "702787a84b103cb3d3fe77527565f8013e284591c922fadbda54fa29ef8ec384",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vertical-version-unused.ttf",
+      "bytes": 1320,
+      "sha256": "765246bff4df069d4573eeb4f2a5b7d96c6cdbe380cda670b9b07b30a81f5957",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/vhea-only-unused.ttf",
+      "bytes": 1268,
+      "sha256": "1293adf3f16ca9dca247586e0f581bb735b9048041cc9f1c63a58ef5d8cc3fb9",
+      "scope": "project-generated component font control; MIT OR Apache-2.0",
+      "provenance": "assets/component-controls-provenance.json",
+      "provenance_sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/truetype_program.rs",
+      "sha256": "3cde5d93dfd8ebd68637b0fd571d6d2991793cba773ef27f6b4bdb7e4ee2a86f",
+      "bytes": 56013,
+      "scope": "128 MacRoman mapping scalar identities; upstream data notices retained",
+      "license_expression": "Unicode-3.0 AND PSF-2.0",
+      "provenance": "assets/mac-roman-provenance.json",
+      "provenance_sha256": "968a465006598a1611dcbdd32c74ab1e89f35ce2a318f2ea9b4d2b73fdb7236b",
+      "license_notice": "assets/mac-roman-NOTICE.txt",
+      "license_notice_sha256": "01888d2ed7c3cc19cb39b938d1d7f8ff6f422d48c8fbf42453fd6d911039d2ad"
     }
   ],
   "canonical_terms": [

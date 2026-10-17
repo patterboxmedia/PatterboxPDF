@@ -825,6 +825,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "icc-profile"
+version = "0.0.0"
+dependencies = [
+ "md-5",
+]
+
+[[package]]
 name = "icu_collections"
 version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1151,6 +1158,16 @@ name = "log"
 version = "0.4.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9f8bd3e56ce4dfc153cf470fffbfa98c7620958b312ca5c3a4b8d5181fd13c6"
+
+[[package]]
+name = "md-5"
+version = "0.10.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d89e7ee0cfbedfc4da3340218492196241d89eefb6dab27de5df917a6d2e78cf"
+dependencies = [
+ "cfg-if",
+ "digest 0.10.7",
+]
 
 [[package]]
 name = "memchr"
@@ -1492,6 +1509,7 @@ dependencies = [
  "flate2",
  "font-boundary",
  "getrandom",
+ "icc-profile",
  "image",
  "layout-core",
  "lcms2",
@@ -1522,6 +1540,7 @@ dependencies = [
 name = "publisher-color-worker"
 version = "0.0.0"
 dependencies = [
+ "icc-profile",
  "lcms2",
  "raster-capacity",
  "serde",

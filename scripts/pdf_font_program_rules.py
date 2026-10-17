@@ -8,6 +8,7 @@ Unsupported execution constructs produce findings rather than implied coverage.
 import io
 import math
 import struct
+from fractions import Fraction
 
 from fontTools.ttLib import TTFont
 
@@ -21,6 +22,90 @@ class _Invalid(ValueError):
 def _require(condition, rule, detail):
     if not condition:
         raise _Invalid(rule, detail)
+
+
+def truetype_geometry(font,allow_unresolved=False):
+    """Resolve unhinted points and horizontal metric origins independently.
+
+    fontTools decodes simple points and component records. The equations here
+    also handle horizontal phantom attachments and original component metrics,
+    which its generic contour flattener/ordinary hmtx getters do not resolve.
+    ROUND_XY_TO_GRID acts in device space and does not round design coordinates.
+    """
+    glyf, hmtx = font['glyf'], font['hmtx'].metrics
+    complete, active = {}, set()
+
+    def resolve(name):
+        if name in complete:
+            if 'unresolved' in complete[name]:raise _Invalid(*complete[name]['unresolved'])
+            return complete[name]
+        _require(name not in active,'truetype-components','Cyclic component graph')
+        active.add(name)
+        glyph = glyf[name]
+        advance, bearing = hmtx[name]
+        left = Fraction(getattr(glyph,'xMin',0)-bearing)
+        metric = ((left,Fraction(0)),(left+advance,Fraction(0)))
+        vertical=((None,None),(None,None))
+        if ('vhea' in font and 'vmtx' in font
+                and font['vhea'].tableVersion in (0x10000,0x11000)):
+            height,top_bearing=font['vmtx'].metrics[name]
+            top=Fraction(getattr(glyph,'yMax',0)+top_bearing)
+            vertical=((None,top),(None,top-height))
+        if not glyph.isComposite():
+            points, ends, flags = glyph.getCoordinates(glyf)
+            result = {'points':[tuple(map(Fraction,p)) for p in points],
+                      'ends':list(ends),'flags':bytearray(flags),'phantoms':(*metric,*vertical)}
+        else:
+            children = [(component,resolve(component.glyphName)) for component in glyph.components]
+            count = sum(len(child['points']) for _,child in children)
+            points, ends, flags = [], [], bytearray()
+            for position,(component,child) in enumerate(children):
+                _require(position>0 or not hasattr(component,'firstPt'),
+                         'truetype-components','The first component must establish an XY placement')
+                matrix = getattr(component,'transform',((1,0),(0,1)))
+                a,b,c,d = (Fraction(value) for row in matrix for value in row)
+                def transformed(point):
+                    x,y=point
+                    def coordinate(first,second):
+                        if (first and x is None) or (second and y is None):return None
+                        return (first*x if first else 0)+(second*y if second else 0)
+                    return coordinate(a,c),coordinate(b,d)
+                placed=[transformed(p) for p in child['points']]
+                if hasattr(component,'firstPt'):
+                    child_anchors=[*placed,*(transformed(p) for p in child['phantoms'])]
+                    parent = component.firstPt
+                    if parent < len(points):anchor=points[parent]
+                    elif count <= parent < count+4:anchor=(*metric,*vertical)[parent-count]
+                    else:raise _Invalid('truetype-components','Parent attachment point is unavailable')
+                    _require(0 <= component.secondPt < len(child_anchors),
+                             'truetype-components','Child attachment point is unavailable')
+                    other=child_anchors[component.secondPt]
+                    _require(not placed or None not in (*anchor,*other),
+                             'truetype-phantom-context','Actual geometry depends on an unestablished vertical phantom coordinate')
+                    move=(anchor[0]-other[0],anchor[1]-other[1]) if placed else (0,0)
+                else:
+                    move=Fraction(component.x),Fraction(component.y)
+                    if component.flags & 0x0800:move=transformed(move)
+                first=len(points)
+                points.extend((x+move[0],y+move[1]) for x,y in placed)
+                ends.extend(first+end for end in child['ends'])
+                flags.extend(child['flags'])
+                if component.flags & 0x0200:
+                    _require(b==0 and a>=0,'truetype-component-metric-context',
+                             'Selected component moves the horizontal metric axis outside the supported positive horizontal ray')
+                    metric=child['phantoms'][:2]
+            result={'points':points,'ends':ends,'flags':flags,'phantoms':(*metric,*vertical)}
+        active.remove(name)
+        complete[name]=result
+        return result
+
+    for name in font.getGlyphOrder():
+        try:resolve(name)
+        except _Invalid as error:
+            if not allow_unresolved or error.rule not in ('truetype-phantom-context','truetype-component-metric-context'):raise
+            active.clear()
+            complete[name]={'unresolved':(error.rule,str(error))}
+    return complete
 
 
 def _integer(value, rule, label):
@@ -110,6 +195,29 @@ def _raw_glyph(raw, n):
     return components, instructions
 
 
+def _language_tag_syntax(text):
+    """BCP47 structure and duplicate rules; registry/meaning are context facts."""
+    import re
+    text=text.lower()
+    grandfathered={'en-gb-oed','i-ami','i-bnn','i-default','i-enochian','i-hak',
+        'i-klingon','i-lux','i-mingo','i-navajo','i-pwn','i-tao','i-tay','i-tsu',
+        'sgn-be-fr','sgn-be-nl','sgn-ch-de','art-lojban','cel-gaulish','no-bok',
+        'no-nyn','zh-guoyu','zh-hakka','zh-min','zh-min-nan','zh-xiang'}
+    if text in grandfathered or re.fullmatch(r'x(?:-[a-z0-9]{1,8})+',text):
+        return True
+    match=re.fullmatch(
+        r'(?:[a-z]{2,3}(?:-[a-z]{3}){0,3}|[a-z]{4}|[a-z]{5,8})'
+        r'(?:-[a-z]{4})?(?:-(?:[a-z]{2}|[0-9]{3}))?'
+        r'(?P<variants>(?:-(?:[0-9][a-z0-9]{3}|[a-z0-9]{5,8}))*)'
+        r'(?P<extensions>(?:-[0-9a-wy-z](?:-[a-z0-9]{2,8})+)*)'
+        r'(?:-x(?:-[a-z0-9]{1,8})+)?',text)
+    if match is None:
+        return False
+    variants=match['variants'].split('-')[1:]
+    singletons=[value for value in match['extensions'].split('-') if len(value)==1]
+    return len(variants)==len(set(variants)) and len(singletons)==len(set(singletons))
+
+
 def _name_post(data, tables, n, advances, observations):
     def table(tag):
         offset, length = tables[tag]
@@ -118,27 +226,70 @@ def _name_post(data, tables, n, advances, observations):
         raw = table('name')
         _require(len(raw) >= 6, 'truetype-name', 'Truncated name header')
         version, count, base = struct.unpack_from('>3H', raw)
-        _require(version == 0, 'truetype-name-unresolved', 'Selected name version needs separate analysis')
+        _require(version in (0,1), 'truetype-name', 'Undefined name table version')
         _require(6 + 12 * count <= base <= len(raw), 'truetype-name', 'Invalid name record/storage extent')
-        keys = []; encodings = set(); postscript_names = []
+        languages=[]
+        if version==1:
+            at=6+12*count
+            _require(at+2<=base, 'truetype-name', 'Missing language record count')
+            language_count=struct.unpack_from('>H',raw,at)[0]
+            _require(at+2+4*language_count<=base, 'truetype-name', 'Language records exceed storage boundary')
+            for i in range(language_count):
+                length,offset=struct.unpack_from('>2H',raw,at+2+4*i)
+                _require(base+offset+length<=len(raw), 'truetype-name', 'Language string extends outside table')
+                try:
+                    language=raw[base+offset:base+offset+length].decode('utf-16-be',errors='strict')
+                except UnicodeError as error:
+                    raise _Invalid('truetype-name', 'Malformed UTF16 language tag') from error
+                _require(_language_tag_syntax(language), 'truetype-name', 'Invalid BCP47 language-tag syntax')
+                languages.append(language)
+        keys = []; encodings = set(); postscript_names = []; uninterpreted = []; ignored_identity = []
         from fontTools.misc.encodingTools import getEncoding
         for i in range(count):
             platform, encoding, language, name, length, offset = struct.unpack_from('>6H', raw, 6 + 12 * i)
             keys.append((platform, encoding, language, name)); encodings.add((platform, encoding))
+            mac_cid_sentinel = platform == 1 and name == 20 and language == 0xffff
+            if version == 1 and language >= 0x8000 and not mac_cid_sentinel:
+                _require(language-0x8000<len(languages),
+                         'truetype-name', 'Name record refers to an absent language tag')
             _require(base + offset + length <= len(raw), 'truetype-name', 'Name string extends outside table')
-            codec = getEncoding(platform, encoding, language)
-            _require(codec is not None, 'truetype-name-unresolved', 'Selected name encoding needs separate analysis')
+            legacy_windows = platform == 3 and encoding in (3,4,5)
+            codec = ('utf-16-be' if platform == 0 or (platform == 3 and not legacy_windows)
+                     else {3:'gbk',4:'cp950',5:'cp949'}[encoding] if legacy_windows
+                     else getEncoding(platform, encoding, language))
+            record = {'platform':platform, 'encoding':encoding, 'language':language, 'name_id':name}
+            identity_encoding = platform == 0 or (platform == 3 and encoding in (0,1,10)) or (platform == 1 and encoding == 0)
+            if name == 6 and not identity_encoding:
+                ignored_identity.append(record)
+            if codec is None:
+                uninterpreted.append({**record, 'interpretation':'not interpreted'})
+                continue
             try:
                 text = raw[base + offset:base + offset + length].decode(codec, errors='strict')
             except UnicodeError as error:
+                if legacy_windows:
+                    # Code-page choices are recommendations; Win4/nameID2 also
+                    # expressly permits UTF16BE. Other declared contexts remain
+                    # source metadata, not evidence of malformed UTF16.
+                    if encoding == 4 and name == 2:
+                        try:
+                            raw[base+offset:base+offset+length].decode('utf-16-be', errors='strict')
+                            continue
+                        except UnicodeError:
+                            pass
+                    uninterpreted.append({**record, 'interpretation':'not interpreted',
+                                          'context':'Legacy Windows naming encoding declaration'})
+                    continue
                 raise _Invalid('truetype-name', 'Malformed encoded name string') from error
-            if name == 6:
+            if name == 6 and identity_encoding:
                 _require(0 < len(text) <= 63 and all(33 <= ord(char) <= 126 and char not in '[](){}<>/%' for char in text),
                          'truetype-name', 'Invalid original PostScript name')
                 postscript_names.append(text)
         _require(keys == sorted(keys), 'truetype-name', 'Name records are not sorted')
         _require(len(set(postscript_names)) <= 1, 'truetype-name', 'Original PostScript names disagree across records')
-        observations.update(name_format=version, name_record_count=count, name_encodings=sorted(encodings))
+        observations.update(name_format=version, name_record_count=count, name_encodings=sorted(encodings),
+                            name_language_tags=languages, name_language_registry='Resource-author context; native and development checks establish syntax and references only',
+                            name_uninterpreted_records=uninterpreted, name_ignored_postscript_identity_records=ignored_identity)
     if 'post' in tables:
         raw = table('post')
         _require(len(raw) >= 32, 'truetype-post', 'Truncated post header')
@@ -223,14 +374,25 @@ def _truetype(data, report):
     n = maxp.numGlyphs
     _require(maxp.tableVersion == 0x10000 and 0 < n <= 65535 and 1 <= hhea.numberOfHMetrics <= n,
              'truetype-structure', 'Invalid glyph or horizontal-metric count')
-    _require(maxp.maxZones == 2, 'truetype-maxp', 'Referenced maxp format requires two zones')
+    _require(maxp.maxZones in (1, 2), 'truetype-maxp', 'TrueType maxZones must be one or two; actual twilight-zone use is a program condition')
+    if 'vhea' in tables and 'vmtx' in tables:
+        vhea=font.reader['vhea']
+        version=int.from_bytes(vhea[:4],'big')
+        if version in (0x10000,0x11000):
+            _require(len(vhea)==36 and not any(vhea[24:34])
+                     and (version!=0x10000 or vhea[8:10]==bytes(2)),
+                     'truetype-vertical-metrics','Malformed supported vertical header')
+            count=int.from_bytes(vhea[34:36],'big')
+            _require(1<=count<=n and tables['vmtx'][1]==4*count+2*(n-count),
+                     'truetype-vertical-metrics','Vertical metrics length/count mismatch')
     _require(tables['hmtx'][1] == 4 * hhea.numberOfHMetrics + 2 * (n - hhea.numberOfHMetrics),
              'truetype-structure', 'hmtx length disagrees with glyph/metric counts')
     _require(tables['loca'][1] == (n + 1) * (2 if head.indexToLocFormat == 0 else 4),
              'truetype-structure', 'loca length disagrees with glyph count')
     locations = list(font['loca'].locations)
     _require(locations[0] == 0 and all(a <= b for a, b in zip(locations, locations[1:]))
-             and all(at % 2 == 0 for at in locations) and locations[-1] <= tables['glyf'][1],
+             and (head.indexToLocFormat == 1 or all(at % 2 == 0 for at in locations))
+             and locations[-1] <= tables['glyf'][1],
              'truetype-structure', 'Invalid glyph-location extents')
     glyf_offset, glyf_length = tables['glyf']
     _require(not any(data[glyf_offset + locations[-1]:glyf_offset + glyf_length]),
@@ -263,15 +425,15 @@ def _truetype(data, report):
     if 'post' in tables and data[tables['post'][0] + 4:tables['post'][0] + 8] == b'\0' * 4:
         _require(hhea.caretOffset == 0, 'truetype-hhea-format', 'Non-slanted font has a nonzero caret offset')
     glyf, metrics = font['glyf'], font['hmtx'].metrics
+    geometry = truetype_geometry(font)
     actual_bounds, sidebearings, rights, extents = [], [], [], []
     advances = []
     for name in font.getGlyphOrder():
         glyph = glyf[name]
         advance, lsb = metrics[name]
         advances.append(advance)
-        # getCoordinates recursively applies composite transforms and point
-        # attachment. Raw component glyph boxes are not aggregate bounds.
-        coordinates, ends, flags = glyph.getCoordinates(glyf)
+        decoded = geometry[name]
+        coordinates, ends, flags = decoded['points'],decoded['ends'],decoded['flags']
         if not len(coordinates):
             continue
         raw_bounds = (min(p[0] for p in coordinates), min(p[1] for p in coordinates),
@@ -614,7 +776,11 @@ class _Type2:
         if op in (34, 35, 36, 37):
             _require(self.path, 'type2-path', 'Flex precedes moveto')
             _require(len(self.stack) == {34: 7, 35: 13, 36: 9, 37: 11}[op], 'type2-arity', 'Incorrect flex operand count')
-            raise _Invalid('type2-flex-unresolved', 'Present flex requires independent joined-curve geometry analysis')
+            # All four operators construct two joined cubics. Their complete
+            # affine geometry is independently measured by fontTools below;
+            # flexDepth controls raster flex substitution, not the path bounds.
+            self.stack.clear()
+            return
         if op in (3, 4, 10, 11, 12, 15, 24):
             b = self.pop(); a = self.pop()
             _require(op != 12 or b != 0, 'type2-arithmetic', 'Division by zero')
@@ -720,14 +886,10 @@ def _cff(data, report):
     _require(0 < len(fds) <= 256, 'cff-cid', 'FDArray must contain 1..256 entries')
     local_sets = []; matrices = []; fd_operators = []; private_operators = []
     top_matrix = top.get((12, 7), [0.001, 0, 0, 0.001, 0, 0])
-    if top_matrix != [0.001, 0, 0, 0.001, 0, 0]:
-        finding('cff-font-matrix-unresolved', 'Nondefault Top FontMatrix requires separate transformed-metric analysis')
     for fd_data in fds:
         fd = _dictionary(fd_data, repeats=repeats); check_sids(fd)
         fd_operators.append(list(map(str, fd)))
         matrix = fd.get((12, 7), [1, 0, 0, 1, 0, 0]); matrices.append(matrix)
-        if matrix != [1, 0, 0, 1, 0, 0]:
-            finding('cff-font-matrix-unresolved', 'Nonidentity FD FontMatrix requires separate composition/metric analysis')
         _require(18 in fd, 'cff-private', 'Every Font DICT requires a Private DICT')
         size, start = (_integer(x, 'cff-private', 'Private size/offset') for x in fd[18])
         private = _dictionary(reader.take(start, size, 'cff-private'), True, repeats)
@@ -769,6 +931,7 @@ def _cff(data, report):
         raise _Invalid('cff-fdselect', 'Unsupported FDSelect format')
     _require(all(fd < len(fds) for fd in selection), 'cff-fdselect', 'Glyph selects an absent Font DICT')
     maximum_stack = 0; maximum_depth = 0; maximum_hints = 0; escaped_operators = set(); zero_rolls = 0
+    painted = []
     for gid, program in enumerate(charstrings):
         interpreter = _Type2(local_sets[selection[gid]], global_subrs)
         try:
@@ -779,16 +942,40 @@ def _cff(data, report):
         maximum_depth = max(maximum_depth, interpreter.max_depth)
         maximum_hints = max(maximum_hints, len(interpreter.hints))
         escaped_operators.update(interpreter.escaped_operators); zero_rolls += interpreter.zero_rolls
+        painted.append(interpreter.path)
     report['observations'].update(glyph_count=n, cid_charset=cids, font_dict_count=len(fds), global_subr_count=len(global_subrs),
                                   local_subr_counts=list(map(len, local_sets)), max_type2_stack=maximum_stack,
                                   max_type2_subr_depth=maximum_depth, max_type2_hints=maximum_hints)
     report['observations'].update(top_font_matrix=top_matrix, fd_font_matrices=matrices,
                                   top_dict_operators=list(map(str, top)), fd_dict_operators=fd_operators,
                                   private_dict_operators=private_operators,
-                                  matrix_analysis='default Top matrix and identity FDs only; other shapes are unresolved',
+                                  matrix_analysis='Top composed with selected relative FD; transform curves before extrema; raw CFF defaults applied once',
                                   reachable_type2_escaped_operators=sorted(escaped_operators),
                                   reachable_flex_absent=not escaped_operators.intersection((34, 35, 36, 37)),
                                   zero_count_rolls_treated_as_no_op=zero_rolls)
+    # This decoder does not share the producer's path implementation or its
+    # extrema calculation. Each transformed curve is passed to BoundsPen.
+    from fontTools.cffLib import CFFFontSet
+    from fontTools.pens.boundsPen import BoundsPen
+    from fontTools.pens.transformPen import TransformPen
+    from fontTools.misc.transform import Transform
+    cff = CFFFontSet(); cff.decompile(io.BytesIO(data), None)
+    decoded = cff.topDictIndex[0]
+    geometry = []
+    for gid, name in enumerate(decoded.charset):
+        effective = Transform(*top_matrix).transform(Transform(*matrices[selection[gid]]))
+        effective = Transform(1000, 0, 0, 1000, 0, 0).transform(effective)
+        pen = BoundsPen(decoded.CharStrings)
+        char = decoded.CharStrings[name]
+        if not painted[gid]:
+            geometry.append({'gid': gid, 'effective_pdf_matrix': list(effective), 'filled_bounds': None,
+                             'advance_displacement_x': None, 'outline': 'completed empty charstring'})
+            continue
+        char.draw(TransformPen(pen, effective))
+        geometry.append({'gid': gid, 'effective_pdf_matrix': list(effective),
+                         'filled_bounds': list(pen.bounds) if pen.bounds is not None else None,
+                         'advance_displacement_x': char.width * effective.xx})
+    report['observations']['geometry'] = geometry
     if repeats:
         finding('cff-dict-unresolved', 'Repeated DICT keys require separate effective-value analysis: ' + ', '.join(repeats))
 
@@ -812,3 +999,30 @@ def inspect_font_program(data, kind):
     except Exception as error:
         report['findings'].append({'rule': 'font-program-structure', 'detail': type(error).__name__ + ': ' + str(error)})
     return report
+
+
+def inspect_font_bbox_enclosure(declared, raw, uncertainty):
+    """Independent nominal geometry plus a conditional representation bound.
+
+    Containment is primary. A single OUTWARD adjacent unit is allowed only
+    at an independently integral extremum with an identified source rounding
+    mechanism. This does not prove exact symbolic extrema for all glyphs.
+    """
+    import math
+    ideal = [math.floor(raw[0]), math.floor(raw[1]), math.ceil(raw[2]), math.ceil(raw[3])]
+    result = {'ideal_geometry': raw, 'ideal_integer_encoding': ideal, 'emitted': declared,
+              'source_numeric_uncertainty': uncertainty, 'conditional_adjacent_units': []}
+    try:
+        contains = all(declared[i] <= raw[i] for i in (0, 1)) and all(declared[i] >= raw[i] for i in (2, 3))
+        expansion = [ideal[i]-declared[i] if i<2 else declared[i]-ideal[i] for i in range(4)]
+        result.update(contains_nominal_geometry=contains, outward_integer_expansion=expansion)
+        valid = contains and all(math.isfinite(x) and x == math.trunc(x) for x in declared)
+        for i, distance in enumerate(expansion):
+            if distance:
+                permitted = bool(uncertainty) and distance == 1 and raw[i] == math.trunc(raw[i])
+                result['conditional_adjacent_units'].append({'coordinate': i, 'permitted': permitted})
+                valid = valid and permitted
+        result['passed'] = bool(valid)
+    except (TypeError, ValueError, OverflowError, IndexError):
+        result['passed'] = False
+    return result

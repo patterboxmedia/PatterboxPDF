@@ -7,6 +7,7 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
+import struct
 import tomllib
 import zipfile
 
@@ -14,17 +15,20 @@ ROOT_FILES = (".gitattributes", ".gitignore", "LICENSE-MIT", "LICENSE-APACHE", "
 PUBLIC_DOCS = ("architecture.md", "development.md", "api.md", "release.md",
                "supported-platforms.md", "verification-status.md", "color-behavior.md", "requirements/README.md",
                "requirements/public-technical-sources.md", "requirements/supported-output-review.md",
-               "requirements/pdfx4-inventory.json", "requirements/public-output-rules.json")
+               "requirements/pdfx4-inventory.json", "requirements/public-output-rules.json",
+               "requirements/generation-contract.json")
 PUBLIC_SCRIPTS = ("build-source-package.py", "verify-requirements.py", "stage-workers.py", "verify-public-api.py",
                   "verify-feature-gallery.py", "verify-feature-gallery-appearance.py", "cargo-xwin-wsl.cmd",
                   "verify-cmyk-gradients.py", "verify-pdfx-supported-output.py", "pdf_font_program_rules.py",
                   "pdf_truetype_hint_execution.py", "verify-linux-runtime.py",
                   "pdf_text_metadata_rules.py", "verify-font-metrics.py", "verify-output-rules.py",
-                  "collect-pdf-candidate-licenses.py")
+                  "collect-pdf-candidate-licenses.py", "pdf_numeric_rules.py",
+                  "verify-icc-profile.py", "verify-accepted-inputs.py", "verify-composition-corpus.py")
 PUBLIC_TESTS = ("source-package.test.py", "font-map-metadata.test.py", "worker-staging.test.py",
                 "pdfx-supported-output.test.py", "font-program-rules.test.py", "cmyk-gradient-verification.test.py",
                 "truetype-hint-execution.test.py", "linux-runtime-verification.test.py",
-                "text-metadata-rules.test.py", "font-metrics-verification.test.py", "output-rules.test.py")
+                "text-metadata-rules.test.py", "font-metrics-verification.test.py", "output-rules.test.py",
+                "icc-profile.test.py", "accepted-inputs.test.py")
 PUBLIC_RECEIPTS = (
     "corpus-fidelity.json", "corpus-generation.json", "corpus-independent.json", "corpus-scope.json",
     "corpus-structure.json", "fixture-isolation.json", "standalone-api.json", "standalone-fidelity.json",
@@ -41,12 +45,18 @@ PUBLIC_RECEIPTS = (
     "public-release-20261016/public-api.json", "public-release-20261016/source-isolation.json",
     "three-area-20261016/supported-output.json", "three-area-20261016/color.json",
     "three-area-20261016/linux.json", "three-area-20261016/windows.json",
+    "accepted-inputs-20261016/supported-inputs.json", "accepted-inputs-20261016/color.json",
+    "accepted-inputs-20261016/linux.json", "accepted-inputs-20261016/windows.json",
 )
 SUPPORTED_TARGETS = ("x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu")
 FORBIDDEN_PARTS = {".git", ".codex", ".agents", ".tools", "target", "artifacts", "node_modules", "__pycache__"}
 FORBIDDEN_SUFFIXES = {".exe", ".dll", ".pyd", ".so", ".dylib", ".kfpx", ".pyc"}
 TEXT_SUFFIXES = {".rs", ".toml", ".json", ".md", ".txt", ".py", ".mjs", ".cmd", ".lock", ".html"}
 HOME_PATH = re.compile(r"(?i)(?:[a-z]:[\\/]+Users[\\/]+|/mnt/[a-z]/Users/|/home/)([a-z0-9_.-]+)")
+FONT_CONTROL_ROOT = "apps/font-worker/src/tests/fixtures/"
+COMPONENT_CONTROL_ROOT = "apps/font-worker/src/tests/components/"
+CHARACTER_MAPPING_FILES = ('third_party/character-mappings/mac-roman-provenance.json',
+                           'third_party/character-mappings/NOTICE.txt')
 
 
 LICENSE_EXPRESSION = "MIT OR Apache-2.0"
@@ -174,6 +184,92 @@ def audit_notices(files, *, require_union=True):
         check(notice_root + notice['path'], notice['sha256'])
     for notice in json.loads(files['third_party/upstream/receipt.json'])['notices']:
         check(notice['path'], notice['sha256'])
+    audit_font_control_notices(files, notices)
+    audit_component_control_notices(files, notices)
+    audit_character_mapping_notices(files, notices)
+
+
+def audit_character_mapping_notices(files, notices):
+    provenance_path, notice_path = CHARACTER_MAPPING_FILES
+    if provenance_path not in files or notice_path not in files:
+        raise ValueError('character mapping provenance or notice missing')
+    provenance = json.loads(files[provenance_path])
+    implementation = provenance['implementation']
+    path = 'apps/font-worker/src/truetype_program.rs'
+    source = files.get(path, b'')
+    block = re.search(rb'const MAC_ROMAN:\s*\[char;\s*128\]\s*=\s*\[(.*?)\];', source, re.S)
+    values = [int(value, 16) for value in re.findall(rb"'\\u\{([0-9a-fA-F]+)\}'", block[1])] if block else []
+    rows = [row for row in notices['example_assets'] if row['path'] == path]
+    if (provenance.get('schema') != 'pdf-library-character-mapping-provenance/v1'
+            or implementation['path'] != path or implementation['first_byte'] != 128 or implementation['entries'] != 128
+            or len(values) != 128 or sha(struct.pack('>128I', *values)) != implementation['codepoints_sha256']
+            or provenance.get('license_expression') != 'Unicode-3.0 AND PSF-2.0'
+            or provenance['notice']['path'] != notice_path or provenance['notice']['sha256'] != sha(files[notice_path])
+            or len(rows) != 1):
+        raise ValueError('character mapping data or notice coverage disagreement')
+    row = rows[0]
+    prefix = 'third_party/cargo-notices/'
+    if (row['sha256'] != sha(source) or row.get('license_expression') != provenance['license_expression']
+            or files.get(prefix+row['provenance']) != files[provenance_path]
+            or files.get(prefix+row.get('license_notice', '')) != files[notice_path]):
+        raise ValueError('character mapping upstream notice disagreement')
+
+
+def audit_font_control_notices(files, notices):
+    programs = {name for name in files if name.startswith(FONT_CONTROL_ROOT)
+                and PurePosixPath(name).suffix in {'.otf', '.ttf'}}
+    if not programs:
+        return
+    provenance_path = FONT_CONTROL_ROOT+'provenance.json'
+    provenance = json.loads(files[provenance_path])
+    expected = {FONT_CONTROL_ROOT+name: digest for name, digest in provenance['controls'].items()}
+    if set(expected) != programs:
+        raise ValueError('font control provenance coverage disagreement')
+    assets = {row['path']: row for row in notices['example_assets']}
+    for name, digest in expected.items():
+        if not re.fullmatch(r'[^/\\]+\.(?:otf|ttf)', name[len(FONT_CONTROL_ROOT):]):
+            raise ValueError('unsafe font control provenance path')
+        row = assets.get(name)
+        if (sha(files[name]) != digest or row is None or row['sha256'] != digest
+                or files['third_party/cargo-notices/'+row['provenance']] != files[provenance_path]):
+            raise ValueError('font control asset notice disagreement: '+name)
+        if name.endswith('.otf'):
+            notice = row.get('license_notice')
+            if (not notice or files['third_party/cargo-notices/'+notice] != files[FONT_CONTROL_ROOT+'LICENSE-OFL']
+                    or files[FONT_CONTROL_ROOT+'LICENSE-OFL'] != files['crates/layout-core/tests/fixtures/LICENSE-NotoSansCJK']):
+                raise ValueError('font control OFL notice disagreement: '+name)
+        elif row.get('scope') != 'project-generated font control; MIT OR Apache-2.0':
+            raise ValueError('original font control license disagreement: '+name)
+
+
+def audit_component_control_notices(files, notices):
+    programs = {name for name in files if name.startswith(COMPONENT_CONTROL_ROOT)
+                and PurePosixPath(name).suffix in {'.otf', '.ttf'}}
+    if not programs:
+        return
+    provenance_path = COMPONENT_CONTROL_ROOT+'provenance.json'
+    if provenance_path not in files:
+        raise ValueError('component control provenance missing')
+    provenance = json.loads(files[provenance_path])
+    controls = provenance.get('controls')
+    if (provenance.get('schema') != 'pdf-library-original-component-controls/v1'
+            or not isinstance(controls, dict) or not controls):
+        raise ValueError('component control provenance schema disagreement')
+    if any(not re.fullmatch(r'[^/\\]+\.ttf', name) for name in controls):
+        raise ValueError('unsafe component control provenance path')
+    if {COMPONENT_CONTROL_ROOT+name for name in controls} != programs:
+        raise ValueError('component control provenance coverage disagreement')
+    assets = {row['path']: row for row in notices['example_assets']}
+    for name, control in controls.items():
+        path = COMPONENT_CONTROL_ROOT+name
+        row = assets.get(path)
+        if (not isinstance(control, dict) or control.get('sha256') != sha(files[path])
+                or row is None or row['sha256'] != control['sha256']
+                or files.get('third_party/cargo-notices/'+row['provenance']) != files[provenance_path]):
+            raise ValueError('component control asset notice disagreement: '+name)
+        if (row.get('scope') != 'project-generated component font control; MIT OR Apache-2.0'
+                or 'license_notice' in row):
+            raise ValueError('original component control license disagreement: '+name)
 
 
 def audit_notice_coverage(notices, locked):
@@ -225,6 +321,7 @@ def declared_paths(workspace, notices, upstream):
     paths.update("tests/unit/" + p for p in PUBLIC_TESTS)
     paths.update("docs/verification/current/" + p for p in PUBLIC_RECEIPTS)
     paths.add('crates/linux-worker-job/README.md')
+    paths.update(CHARACTER_MAPPING_FILES)
     for member in workspace["workspace"]["members"]:
         paths.add(member + "/Cargo.toml")
     paths.update('examples/standalone-client/'+name for name in ('Cargo.toml', 'Cargo.lock', 'README.md'))

@@ -1,7 +1,12 @@
 //! Bounded, machine-readable font inspection and publication preparation worker.
 
+mod cff_normalize;
+mod cff_program;
+mod enclosure;
+mod outline;
 mod pdf_metrics;
 mod subset_metrics;
+mod truetype_program;
 
 use layout_core::fonts::{FontEmbeddingEligibility, FontEmbeddingLicense, inspect_font_face};
 use serde::{Deserialize, Serialize};
@@ -16,16 +21,19 @@ use std::{
 use subsetter::GlyphRemapper;
 use ttf_parser::{Face, GlyphId, Style, Tag, name_id};
 
-const PROTOCOL_VERSION: u16 = 6;
-const MAX_REQUEST_BYTES: u64 = 256 * 1024;
+const PROTOCOL_VERSION: u16 = 9;
+const MAX_REQUEST_BYTES: u64 = 1024 * 1024;
 const MAX_FONT_FILE_BYTES: usize = 64 * 1024 * 1024;
 const MAX_FONT_GLYPHS_PER_SUBSET: usize = 16_384;
 const MAX_FONT_FAMILY_BYTES: usize = 1_024;
 const MAX_FONT_FAMILY_CHARS: usize = 256;
 const MAX_FONT_FAMILY_NAMES: usize = 256;
-const ENGINE_IDENTITY: &str = "subsetter-0.2.6/ttf-parser-0.25.1";
-const RULES_IDENTITY: &str = "publisher-v2/font-preparation/v6/inspect-family-aliases-and-publication/cid-cff/fail-closed/precise-metrics-v1";
+const ENGINE_IDENTITY: &str =
+    "subsetter-0.2.6/ttf-parser-0.25.1/native-type2-path-exact16-enclosure-v1";
+const RULES_IDENTITY: &str = "publisher-v2/font-preparation/v9/complete-retained-programs/effective-affine-curve-metrics-v5/cid-matrix-normalization-v1/authored-ascent-facts-v1/cap-height-facts-v1";
 const GLYPH_SET_DOMAIN: &[u8] = b"publisher-v2/font-glyph-set/v1\0";
+const ASCENT_FACTS_DOMAIN: &[u8] = b"publisher-v2/font-ascent-facts/v1\0";
+const FONT_FACTS_DOMAIN: &[u8] = b"publisher-v2/font-design-facts/v1\0";
 const RIGHTS_DOMAIN: &[u8] = b"publisher-v2/font-rights/v1\0";
 const POSTSCRIPT_NAME_DOMAIN: &[u8] = b"publisher-v2/font-postscript-name/v1\0";
 
@@ -52,6 +60,10 @@ enum WorkerRequest {
         face_index: u32,
         glyph_ids: Vec<u16>,
         expected_glyph_set_sha256: String,
+        accented_source_glyph_ids: Option<Vec<u16>>,
+        expected_ascent_facts_sha256: Option<String>,
+        cap_height_pdf_units: Option<f32>,
+        expected_font_facts_sha256: Option<String>,
     },
 }
 
@@ -92,6 +104,10 @@ struct InspectionReport {
 }
 
 #[derive(Debug, Serialize)]
+#[expect(
+    clippy::struct_excessive_bools,
+    reason = "Wire fields independently describe font style and descriptor authority"
+)]
 struct PreparationReport {
     protocol_version: u16,
     source_sha256: String,
@@ -120,6 +136,10 @@ struct PreparationReport {
     fixed_pitch: bool,
     italic: bool,
     widths: Vec<i32>,
+    requires_ascent_facts: bool,
+    ascent_facts_sha256: Option<String>,
+    requires_cap_height_fact: bool,
+    font_facts_sha256: Option<String>,
     pdf_metrics: pdf_metrics::PdfMetrics,
     remapped_glyphs: Vec<RemappedGlyph>,
     exercise_cid: u16,
@@ -223,10 +243,17 @@ enum WorkerError {
     InputUnavailable(String),
     SourceHashMismatch,
     GlyphSetHashMismatch,
+    InvalidAscentFacts(&'static str),
+    AscentFactsHashMismatch,
+    InvalidCapHeightFact,
+    CapHeightFactConflict,
+    FontFactsHashMismatch,
+    UnsupportedVerticalPhantomContext,
+    UnresolvedHorizontalMetrics,
+    UnsupportedVerticalMetricsVersion,
     EmbeddingDenied(&'static str),
     MalformedFont,
     SubsetFailed,
-    NoUnicodeGlyph,
     UnsupportedFullFontContainer,
     OutputUnavailable(String),
 }
@@ -285,6 +312,10 @@ fn process_request(request: &WorkerRequest) -> Result<WorkerReport, WorkerError>
             face_index,
             glyph_ids,
             expected_glyph_set_sha256,
+            accented_source_glyph_ids,
+            expected_ascent_facts_sha256,
+            cap_height_pdf_units,
+            expected_font_facts_sha256,
         } => {
             if *protocol_version != PROTOCOL_VERSION {
                 return Err(WorkerError::UnsupportedProtocol);
@@ -297,6 +328,10 @@ fn process_request(request: &WorkerRequest) -> Result<WorkerReport, WorkerError>
                 face_index: *face_index,
                 glyph_ids,
                 expected_glyph_set_sha256,
+                accented_source_glyph_ids: accented_source_glyph_ids.as_deref(),
+                expected_ascent_facts_sha256: expected_ascent_facts_sha256.as_deref(),
+                cap_height_pdf_units: *cap_height_pdf_units,
+                expected_font_facts_sha256: expected_font_facts_sha256.as_deref(),
             };
             process_preparation(&request)
                 .map(Box::new)
@@ -313,6 +348,10 @@ struct PreparationRequest<'a> {
     face_index: u32,
     glyph_ids: &'a [u16],
     expected_glyph_set_sha256: &'a str,
+    accented_source_glyph_ids: Option<&'a [u16]>,
+    expected_ascent_facts_sha256: Option<&'a str>,
+    cap_height_pdf_units: Option<f32>,
+    expected_font_facts_sha256: Option<&'a str>,
 }
 
 fn process_inspection(
@@ -431,6 +470,21 @@ fn process_preparation(request: &PreparationRequest<'_>) -> Result<PreparationRe
 
     let source_face =
         Face::parse(&source, request.face_index).map_err(|_| WorkerError::MalformedFont)?;
+    let ascent_facts_sha256 = validate_ascent_facts(request, &source_face, source_hash)?;
+    let cap_fact = request
+        .cap_height_pdf_units
+        .map(canonical_cap_fact)
+        .transpose()?;
+    let font_facts_sha256 = font_facts_hash(
+        source_hash,
+        request.face_index,
+        request.accented_source_glyph_ids,
+        cap_fact,
+    )
+    .map(hex);
+    if font_facts_sha256.as_deref() != request.expected_font_facts_sha256 {
+        return Err(WorkerError::FontFactsHashMismatch);
+    }
     let postscript_name = exact_postscript_name(&source_face)?;
     let postscript_name_hash = domain_hash(POSTSCRIPT_NAME_DOMAIN, postscript_name.as_bytes());
     if request
@@ -481,14 +535,17 @@ fn process_preparation(request: &PreparationRequest<'_>) -> Result<PreparationRe
         return Err(WorkerError::SubsetFailed);
     }
     if matches!(preparation_kind, PreparationKind::Subset) {
-        subset_metrics::normalize(&mut prepared).map_err(|()| WorkerError::SubsetFailed)?;
+        subset_metrics::normalize(&source_face, &mut prepared, &remapped_glyphs)
+            .map_err(|error| font_program_error(&error))?;
+        cff_normalize::normalize(&source_face, &mut prepared, &remapped_glyphs)
+            .map_err(|()| WorkerError::SubsetFailed)?;
     } else if source_face.tables().glyf.is_some() && !subset_metrics::has_hint_tables(&prepared) {
         // A full-font embedding must preserve the source bytes. It cannot be
         // repaired into a different program when mandatory tables are absent.
         return Err(WorkerError::MalformedFont);
     }
-    let (exercise_cid, exercise_unicode) =
-        select_exercise_glyph(&source_face, &remapped_glyphs).ok_or(WorkerError::NoUnicodeGlyph)?;
+    let (exercise_cid, exercise_unicode) = select_exercise_glyph(&source_face, &remapped_glyphs)
+        .ok_or(WorkerError::InvalidGlyphSet)?;
     let face = Face::parse(&prepared, 0).map_err(|_| WorkerError::MalformedFont)?;
     let outline_kind = if face.tables().glyf.is_some() {
         OutlineKind::TrueType
@@ -500,12 +557,24 @@ fn process_preparation(request: &PreparationRequest<'_>) -> Result<PreparationRe
     let units_per_em = i64::from(face.units_per_em());
     let scaled = |value: i16| scale_1000(i64::from(value), units_per_em);
     let bbox = face.global_bounding_box();
-    let pdf_metrics = pdf_metrics::prepare(
+    let mut pdf_metrics = pdf_metrics::prepare(
         &source_face,
         &face,
         &remapped_glyphs,
         matches!(preparation_kind, PreparationKind::Full),
-    );
+        request.accented_source_glyph_ids,
+    )
+    .map_err(|error| font_program_error(&error))?;
+    if let Some(cap) = cap_fact {
+        if pdf_metrics
+            .cap_height
+            .is_some_and(|native| canonical_zero(native).to_bits() != cap.to_bits())
+        {
+            return Err(WorkerError::CapHeightFactConflict);
+        }
+        pdf_metrics.cap_height = Some(cap);
+        pdf_metrics.requires_cap_height_fact = false;
+    }
     let widths = (0..face.number_of_glyphs())
         .map(|gid| {
             scale_1000(
@@ -579,6 +648,10 @@ fn process_preparation(request: &PreparationRequest<'_>) -> Result<PreparationRe
         fixed_pitch: face.is_monospaced(),
         italic: face.is_italic(),
         widths,
+        requires_ascent_facts: pdf_metrics.requires_ascent_facts,
+        ascent_facts_sha256,
+        requires_cap_height_fact: pdf_metrics.requires_cap_height_fact,
+        font_facts_sha256,
         pdf_metrics,
         remapped_glyphs,
         exercise_cid,
@@ -669,32 +742,65 @@ const fn inspection_license_name(license: EmbeddingLicense) -> &'static str {
     }
 }
 
-fn exact_postscript_name(face: &Face<'_>) -> Result<String, WorkerError> {
-    let names = face
-        .names()
-        .into_iter()
-        .filter(|name| name.name_id == name_id::POST_SCRIPT_NAME)
-        .filter_map(|name| name.to_string())
-        .filter(|name| valid_postscript_name(name))
-        .collect::<BTreeSet<_>>();
-    if names.len() != 1 {
-        return Err(WorkerError::MalformedFont);
+fn font_program_error(error: &cff_program::Error) -> WorkerError {
+    match error {
+        cff_program::Error::Malformed => WorkerError::MalformedFont,
+        cff_program::Error::ResourceLimit => WorkerError::ResourceLimit,
+        cff_program::Error::UnsupportedVerticalPhantomContext => {
+            WorkerError::UnsupportedVerticalPhantomContext
+        }
+        cff_program::Error::UnresolvedHorizontalMetrics => WorkerError::UnresolvedHorizontalMetrics,
+        cff_program::Error::UnsupportedVerticalMetricsVersion => {
+            WorkerError::UnsupportedVerticalMetricsVersion
+        }
     }
-    names.into_iter().next().ok_or(WorkerError::MalformedFont)
+}
+
+fn exact_postscript_name(face: &Face<'_>) -> Result<String, WorkerError> {
+    let raw = face
+        .raw_face()
+        .table(Tag::from_bytes(b"name"))
+        .ok_or(WorkerError::MalformedFont)?;
+    truetype_program::name_table(raw)
+        .map_err(|_| WorkerError::MalformedFont)?
+        .ok_or(WorkerError::MalformedFont)
 }
 
 fn exact_family_names(face: &Face<'_>) -> Result<Vec<String>, WorkerError> {
     let mut names = BTreeSet::new();
+    let raw = face
+        .raw_face()
+        .table(Tag::from_bytes(b"name"))
+        .ok_or(WorkerError::MalformedFont)?;
+    truetype_program::name_table(raw).map_err(|_| WorkerError::MalformedFont)?;
+    let count = usize::from(u16::from_be_bytes([raw[2], raw[3]]));
+    let storage = usize::from(u16::from_be_bytes([raw[4], raw[5]]));
+    let mut decoded = Vec::new();
+    for record in raw[6..6 + count * 12].as_chunks::<12>().0 {
+        let id = u16::from_be_bytes([record[6], record[7]]);
+        if !matches!(id, 1 | 16 | 21) {
+            continue;
+        }
+        let platform = u16::from_be_bytes([record[0], record[1]]);
+        let encoding = u16::from_be_bytes([record[2], record[3]]);
+        let length = usize::from(u16::from_be_bytes([record[8], record[9]]));
+        let at = storage + usize::from(u16::from_be_bytes([record[10], record[11]]));
+        if let Some(value) =
+            truetype_program::decode_known_name(platform, encoding, &raw[at..at + length])
+                .map_err(|_| WorkerError::MalformedFont)?
+        {
+            decoded.push((id, value));
+        }
+    }
     for name_id in [
         name_id::TYPOGRAPHIC_FAMILY,
         name_id::WWS_FAMILY,
         name_id::FAMILY,
     ] {
-        for name in face
-            .names()
-            .into_iter()
-            .filter(|name| name.name_id == name_id)
-            .filter_map(|name| name.to_string())
+        for name in decoded
+            .iter()
+            .filter(|(id, _)| *id == name_id)
+            .map(|(_, name)| name)
             .map(|name| name.trim().to_owned())
             .filter(|name| {
                 !name.is_empty()
@@ -714,7 +820,6 @@ fn exact_family_names(face: &Face<'_>) -> Result<Vec<String>, WorkerError> {
         Ok(names.into_iter().collect())
     }
 }
-
 fn valid_postscript_name(value: &str) -> bool {
     !value.is_empty()
         && value.len() <= 63
@@ -747,6 +852,13 @@ fn select_exercise_glyph(face: &Face<'_>, remapped: &[RemappedGlyph]) -> Option<
                 .and_then(|glyph| by_source.get(&glyph.0).copied())
                 .map(|cid| (cid, u32::from(character)))
         })
+        .or_else(|| {
+            remapped
+                .iter()
+                .find(|glyph| glyph.cid != 0)
+                .or_else(|| remapped.first())
+                .map(|glyph| (glyph.cid, u32::from(char::REPLACEMENT_CHARACTER)))
+        })
 }
 
 fn license_name(license: FontEmbeddingLicense) -> &'static str {
@@ -757,6 +869,83 @@ fn license_name(license: FontEmbeddingLicense) -> &'static str {
     }
 }
 
+fn ascent_facts_hash(source: [u8; 32], face: u32, gids: &[u16]) -> [u8; 32] {
+    let mut hasher = Sha256::new();
+    hasher.update(ASCENT_FACTS_DOMAIN);
+    hasher.update(source);
+    hasher.update(face.to_be_bytes());
+    hasher.update(u32::try_from(gids.len()).unwrap_or(u32::MAX).to_be_bytes());
+    for gid in gids {
+        hasher.update(gid.to_be_bytes());
+    }
+    hasher.finalize().into()
+}
+fn canonical_zero(value: f32) -> f32 {
+    if value == 0. { 0. } else { value }
+}
+fn canonical_cap_fact(value: f32) -> Result<f32, WorkerError> {
+    if !value.is_finite() || value.abs() > 10_000_000. {
+        return Err(WorkerError::InvalidCapHeightFact);
+    }
+    Ok(canonical_zero(value))
+}
+fn font_facts_hash(
+    source: [u8; 32],
+    face: u32,
+    accented: Option<&[u16]>,
+    cap: Option<f32>,
+) -> Option<[u8; 32]> {
+    if accented.is_none() && cap.is_none() {
+        return None;
+    }
+    let mut hasher = Sha256::new();
+    hasher.update(FONT_FACTS_DOMAIN);
+    hasher.update(source);
+    hasher.update(face.to_be_bytes());
+    hasher.update([u8::from(accented.is_some())]);
+    if let Some(gids) = accented {
+        hasher.update(u32::try_from(gids.len()).unwrap_or(u32::MAX).to_be_bytes());
+        for gid in gids {
+            hasher.update(gid.to_be_bytes());
+        }
+    }
+    hasher.update([u8::from(cap.is_some())]);
+    if let Some(value) = cap {
+        hasher.update(canonical_zero(value).to_bits().to_be_bytes());
+    }
+    Some(hasher.finalize().into())
+}
+fn validate_ascent_facts(
+    request: &PreparationRequest<'_>,
+    face: &Face<'_>,
+    source: [u8; 32],
+) -> Result<Option<String>, WorkerError> {
+    let actual = if let Some(gids) = request.accented_source_glyph_ids {
+        let reason = if gids.len() > usize::from(face.number_of_glyphs()) {
+            Some("facts exceed selected source GID capacity")
+        } else if gids.contains(&0) {
+            Some("GID0 cannot be an accented-only role")
+        } else if gids.windows(2).any(|w| w[0] == w[1]) {
+            Some("duplicate accented source GID")
+        } else if gids.windows(2).any(|w| w[0] > w[1]) {
+            Some("accented source GIDs must be sorted")
+        } else if gids.iter().any(|gid| *gid >= face.number_of_glyphs()) {
+            Some("accented source GID outside selected face")
+        } else {
+            None
+        };
+        if let Some(reason) = reason {
+            return Err(WorkerError::InvalidAscentFacts(reason));
+        }
+        Some(hex(ascent_facts_hash(source, request.face_index, gids)))
+    } else {
+        None
+    };
+    if actual.as_deref() != request.expected_ascent_facts_sha256 {
+        return Err(WorkerError::AscentFactsHashMismatch);
+    }
+    Ok(actual)
+}
 fn glyph_set_hash(glyphs: &[u16]) -> [u8; 32] {
     let mut hasher = Sha256::new();
     hasher.update(GLYPH_SET_DOMAIN);
@@ -838,10 +1027,17 @@ impl WorkerError {
             Self::InputUnavailable(_) => "input-unavailable",
             Self::SourceHashMismatch => "source-hash-mismatch",
             Self::GlyphSetHashMismatch => "glyph-set-hash-mismatch",
+            Self::InvalidAscentFacts(_) => "invalid-ascent-facts",
+            Self::AscentFactsHashMismatch => "ascent-facts-hash-mismatch",
+            Self::InvalidCapHeightFact => "invalid-cap-height-fact",
+            Self::CapHeightFactConflict => "cap-height-fact-conflict",
+            Self::FontFactsHashMismatch => "font-facts-hash-mismatch",
+            Self::UnsupportedVerticalPhantomContext => "unsupported-vertical-phantom-context",
+            Self::UnresolvedHorizontalMetrics => "unsupported-component-metric-context",
+            Self::UnsupportedVerticalMetricsVersion => "unsupported-vertical-metrics-version",
             Self::EmbeddingDenied(_) => "embedding-denied",
             Self::MalformedFont => "malformed-font",
             Self::SubsetFailed => "subset-failed",
-            Self::NoUnicodeGlyph => "no-unicode-glyph",
             Self::UnsupportedFullFontContainer => "unsupported-full-font-container",
             Self::OutputUnavailable(_) => "output-unavailable",
         }
@@ -857,7 +1053,7 @@ impl WorkerError {
                 debug_assert!(!value.is_empty());
                 "output unavailable".to_owned()
             }
-            Self::EmbeddingDenied(value) => (*value).to_owned(),
+            Self::EmbeddingDenied(value) | Self::InvalidAscentFacts(value) => (*value).to_owned(),
             other => format!("{other:?}"),
         }
     }
@@ -869,6 +1065,7 @@ mod tests {
     use std::sync::atomic::{AtomicU64, Ordering};
 
     use super::*;
+    include!("tests/accepted_inputs.rs");
 
     const FONT: &[u8] = include_bytes!("../../../crates/layout-core/tests/fixtures/DejaVuSans.ttf");
 
@@ -917,6 +1114,10 @@ mod tests {
             face_index: 0,
             expected_glyph_set_sha256: hex(glyph_set_hash(&glyph_ids)),
             glyph_ids,
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
         }
     }
 
@@ -998,6 +1199,7 @@ mod tests {
         }
         font[table_offset..table_offset + 2].copy_from_slice(&3_u16.to_be_bytes());
         font[table_offset + 8..table_offset + 10].copy_from_slice(&fs_type.to_be_bytes());
+        repair_checksums(&mut font);
         font
     }
 
@@ -1054,7 +1256,7 @@ mod tests {
         );
         assert_eq!(
             report.pdf_metrics.bbox.map(f32::to_bits),
-            [7.8125_f32, -176.757_81, 675.781_25, 729.003_9].map(f32::to_bits)
+            [7.0_f32, -177.0, 676.0, 730.0].map(f32::to_bits)
         );
         assert_eq!(report.bbox, [7, -177, 675, 729]);
     }
@@ -1138,13 +1340,13 @@ mod tests {
 
     #[test]
     fn no_subsetting_rights_require_publication_policy_and_preserve_full_font() {
-        let font = font_with_fs_type(FONT, 0x0108);
+        let font = font_with_fs_type(include_bytes!("tests/fixtures/original.ttf"), 0x0108);
         let directory = TestDirectory::new();
         let subset_request = request(
             &directory,
             &font,
             PreparationPolicy::SubsetOnly,
-            vec![0, 36, 37],
+            vec![0, 1, 2],
         );
         let error =
             process_request(&subset_request).expect_err("subset-only must reject full font");
@@ -1154,7 +1356,7 @@ mod tests {
             &directory,
             &font,
             PreparationPolicy::Publication,
-            vec![0, 36, 37],
+            vec![0, 1, 2],
         );
         let report = preparation_report(
             process_request(&publication_request).expect("publication keeps full font"),

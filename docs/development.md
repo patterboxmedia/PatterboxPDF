@@ -24,6 +24,7 @@ python tests/unit/requirements-inventory.test.py
 python scripts/verify-requirements.py
 python tests/unit/output-rules.test.py
 python scripts/verify-output-rules.py
+python tests/unit/accepted-inputs.test.py
 ```
 
 To run native drawing tests, first build the required workers and test executable, then stage the workers beside it. Resource admission is process-wide, so run the resource tests sequentially:
@@ -64,9 +65,7 @@ target/client/x86_64-unknown-linux-gnu/release/pdf-library-standalone-client --o
 The output directory must be new. Staging recognizes the caller's ELF identity.
 The trusted validator remains explicitly unsupported on Linux.
 
-The native qualification runner rebuilds matching workers and test programs,
-executes all required cases with zero ignored/filtered tests, exercises the
-separate caller and binds shared-library/kernel/tool identities:
+The native qualification runner rebuilds matching workers and test programs. Its required suites cover confinement, resource boundaries, worker binary/process tests, ICC structures, print metadata and numeric emission. It lists and executes every case in each selected suite, rejects missing required names and nonzero ignored/filtered/failed counts, exercises the separate caller and binds shared-library/kernel/tool identities:
 
 ```sh
 python3 scripts/verify-linux-runtime.py --qpdf /path/to/qpdf --target-dir target/linux-qualification --output artifacts/linux-proof
@@ -76,3 +75,33 @@ Its output folder must be new. Python needs pypdf; the broader font/color/output
 inspection uses fontTools, Pillow, freetype-py, pypdfium2, numpy, qpdf, Poppler and
 LittleCMS as documented by each verifier. These are development dependencies.
 Libraries and resource workers do not acquire or invoke a commercial checker.
+
+## Current generation verification
+
+Rebuild and restage workers together after upgrading. Font preparation uses protocol 9; a sidecar from the earlier protocol is incompatible. The staging manifest binds actual executables, while preparation receipts bind the exact admitted bytes and policy. Python inspectors are development tools and are not called by generation.
+
+The public examples reproduce supported input families through the same caller
+boundary. After the Ubuntu builds above, prepare and inspect a retained CFF control:
+
+```sh
+python3 scripts/stage-workers.py --runtime target/x86_64-unknown-linux-gnu/release --caller target/client/x86_64-unknown-linux-gnu/release/examples/accepted-font-input
+target/client/x86_64-unknown-linux-gnu/release/examples/accepted-font-input apps/font-worker/src/tests/fixtures/default.otf 1 H artifacts/checked-font used --profile crates/print-core/tests/fixtures/SWOP2006coated_300_mth.icc
+python3 scripts/verify-pdfx-supported-output.py artifacts/checked-font/print.pdf --mode pdfx4 --qpdf /path/to/qpdf --output artifacts/checked-font/outer.json
+python3 scripts/verify-font-metrics.py --pdf artifacts/checked-font/print.pdf --source-font apps/font-worker/src/tests/fixtures/default.otf --preparation-report artifacts/checked-font/prepared.json --output artifacts/checked-font/metrics.json
+python3 scripts/verify-icc-profile.py --profile crates/print-core/tests/fixtures/SWOP2006coated_300_mth.icc --output artifacts/checked-font/profile.json
+```
+
+Use new output directories for subsequent runs. The [standalone guide](../examples/standalone-client/README.md)
+documents selected faces, logical text and separately authored font facts. Native
+font-control generators and their process probes live beside the checked fixtures
+under `apps/font-worker/src/tests`. The composition example has a separate
+`verify-composition-corpus.py` inspector for authored path, image, gradient and
+metadata measurements. Each inspector reports the exact input and evaluator hashes;
+the neutral catalog audit checks the saved evidence bindings:
+
+```sh
+python3 scripts/verify-accepted-inputs.py
+python3 scripts/verify-output-rules.py
+```
+
+The source archive includes the independent ICC/numeric/family helpers, tiny font controls, their generator/provenance and applicable asset notices. Standalone generation does not need those development tools. Final qualification must be repeated from the extracted source rather than relying on a previously built worker.

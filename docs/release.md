@@ -1,12 +1,18 @@
 # PatterboxPDF source release
 
-First-party source and original project material are available under your choice of MIT or Apache 2.0 (`MIT OR Apache-2.0`). The complete grants are in the root `LICENSE-MIT` and `LICENSE-APACHE`. Existing upstream copyright notices remain intact. Dependencies, fonts and the upstream CMYK fixture retain their separate terms in `third_party/cargo-notices/dependencies.json`; project-generated fixtures use the first-party dual license.
+First-party source and original material are available under your choice of MIT or Apache 2.0 (`MIT OR Apache-2.0`). The complete grants are in `LICENSE-MIT` and `LICENSE-APACHE`. Upstream notices remain intact. Dependencies, fonts, profiles and character mapping data retain their separate terms in `third_party/cargo-notices/dependencies.json`. Original project fixtures use the first-party dual license; derivatives of upstream fonts retain their recorded upstream terms.
 
-This is a GitHub source release. All first-party Cargo packages, including the separate example client, retain `publish = false`. Rust crate, worker and compatibility names are retained. See [development](development.md) and the [standalone guide](../examples/standalone-client/README.md) for Windows and Ubuntu setup and the current qualification boundary.
+This release distributes source through GitHub. All first-party Cargo packages, including the standalone client, retain `publish = false`. Existing crate, worker and compatibility names remain available. [Development](development.md) and the [standalone guide](../examples/standalone-client/README.md) describe Windows and Ubuntu setup.
 
-The explicit package allowlist includes source, required redistribution-safe fixtures, both root licenses, current public documentation, sanitized evidence and exact third-party notices. Dependencies are acquired separately through the pinned Cargo lockfiles. The archive contains no build outputs, commercial tools/profiles, raw licensed reports, personal instructions, credentials or machine-specific provenance history.
+Current source qualification passes 368 native Windows tests and 319 native Ubuntu tests. Both platforms pass the expanded font, profile and composition workflows. [Verification status](verification-status.md) records the actual outputs, controls and limitations.
 
-Build a new package and verify it without extracting:
+Independent source and exact-output review accepted the documented input contract and specific authoring premises. Public family/catalog audits pass. The source handoff separately qualifies the exact archive and both advertised native workflows.
+
+## Package and verify source
+
+The package allowlist includes source, required redistribution-safe fixtures, both root licenses, public documentation, neutral evidence and exact third-party notices. Dependencies are acquired separately through the pinned Cargo lockfiles. Build outputs, commercial tools, raw licensed reports, personal instructions, credentials and machine-specific provenance history are excluded.
+
+Build an archive and verify its inventory without extracting:
 
 ```powershell
 New-Item -ItemType Directory -Path artifacts -Force | Out-Null
@@ -14,16 +20,22 @@ python scripts/build-source-package.py artifacts/source-review-001
 python scripts/build-source-package.py --verify artifacts/source-review-001/patterboxpdf-0.0.0-source.zip
 ```
 
-The licensed v2 policy requires both complete root license texts, matching first-party manifest and notice identities, and disabled registry publication. The verifier also supports retained v1 archives with their original `license_pending` policy; it rejects unknown schemas and conflicting policies. Every policy checks inventory lengths/hashes, notices/assets, escaping/duplicate paths, symlinks, private paths and forbidden binary/report payloads. Fixed ZIP timestamps and `* -text` Git attributes preserve exact source bytes, including retained CRLF receipts and notices.
+Use a new output directory for another package. The verifier checks complete root license texts, first-party manifest and notice identities, disabled registry publication, target-specific dependency notices, asset provenance, exact inventory lengths/hashes, duplicate or escaping paths, symlinks and excluded payloads. Fixed ZIP timestamps and `* -text` Git attributes preserve exact source bytes.
 
-Extract the audited archive into a new directory. For a public Git baseline, initialize only this curated tree and compare every Git blob and a fresh checkout to the archive inventory before building. Build required workers and the separate client from that checkout into fresh targets, then run the ordinary and print examples. Record the archive/manifest identity, baseline commit/tree, source equality and exact output identities in an adjacent isolation receipt. Packaging alone does not prove a usable build.
+The notice inventory records the union of Windows and Linux workspace/source-test dependencies and the separate client, with target membership and both lockfiles. Upstream license texts and external font/profile hashes remain pinned. Original component controls have their own project provenance and dual-license record, separate from upstream font derivatives. The Macintosh Roman mapping data retains its Apple attribution, Unicode data notice and Python extraction provenance. Package guards verify all 128 scalar identities and reject missing or reassigned notices.
 
-Historical build results identify exact source archives and generated output bytes. Archive007 predates the October 16 licensing decision and retains its original pending policy. The current notice metadata records the union of Windows and Linux Cargo source/test dependency closures plus the separate client, with exact target membership and both lockfiles; exact registry/upstream notices and external asset hashes remain pinned. The public notice collector and pinned notice output are included for reproducibility.
+## Qualify the extracted package
 
-Ordinary drawing and decoded images need no workers. Exact fonts and bounded CMYK print preparation use confined resource workers. Current native qualification passes on Windows and Ubuntu, including real resource preparation, confinement and worker refusals. Earlier CMYK gallery comparisons remain failed on three pages; the controlled investigation explains their cause. No historical exact-file checker verdict transfers to changed bytes. See [verification status](verification-status.md).
+Extract the audited archive into a new directory. Build the required workers and separate client from that source using its own manifests and lockfiles. Stage matching workers, then execute native confinement/resource tests and the ordinary/print workflows on both targets. Run independent output checks against the exact resulting PDFs.
 
-## October 16 source isolation
+An adjacent isolation receipt must identify the archive and source manifest, confirm extracted source equality, record actual native execution and bind the resulting output identities. Packaging alone does not prove a usable build. A newly prepared package cannot borrow an earlier archive's qualification.
 
-The [source isolation receipt](verification/current/public-release-20261016/source-isolation.json) records the licensed archive identity and the source-equality checks for the fresh Windows build. All 713 payloads, including the source manifest, matched the ZIP, Git blobs and fresh checkout before and after the fresh Windows builds. The separate workers/client and ordinary/print gallery ran successfully. Independent structure/resource and qpdf checks passed; fifty appearance probes passed while the three documented CMYK whole-page comparisons remained failed.
+The current handoff passed extraction/source equality and builds/workflows from initially absent targets on Windows and Ubuntu. Its compiled source inputs match the full native and independent resource/output qualification. Keep the adjacent isolation receipt with the exact archive; it identifies the actual inputs, execution and outputs.
 
-This record is follow-up verification documentation for that frozen baseline. Its licensing and build evidence does not include remote publication; repository/readback verification is recorded separately when performed.
+Ordinary drawing and decoded images need no workers. Font and CMYK profile preparation use confined workers. Current generation and independent verification use free tools; the writer needs neither qpdf nor a commercial checker.
+
+## Retained evidence
+
+The earlier [source isolation receipt](verification/current/public-release-20261016/source-isolation.json) remains attached to its original archive and source baseline. It is historical evidence rather than qualification of this changed source. Historical commercial-checker results likewise remain attached to their original exact PDFs.
+
+The three original CMYK whole-page reader comparisons retain their failed verdicts at unchanged bounds. Controlled component/color evidence explains the reader differences. See [color behavior](color-behavior.md) and [verification status](verification-status.md). Source-release qualification does not establish unrestricted PDF/X-4 feature coverage, identical reader previews or physical printer acceptance.

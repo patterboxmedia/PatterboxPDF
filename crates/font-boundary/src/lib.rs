@@ -12,13 +12,16 @@ use std::{
     time::{Duration, Instant, SystemTime},
 };
 
-const PROTOCOL_VERSION: u16 = 6;
+const PROTOCOL_VERSION: u16 = 9;
 pub const MAX_FONT_FILE_BYTES: usize = 64 * 1024 * 1024;
 pub const MAX_FONT_GLYPHS_PER_SUBSET: usize = 16_384;
-pub const FONT_ENGINE_IDENTITY: &str = "subsetter-0.2.6/ttf-parser-0.25.1";
-pub const FONT_RULES_IDENTITY: &str = "publisher-v2/font-preparation/v6/inspect-family-aliases-and-publication/cid-cff/fail-closed/precise-metrics-v1";
+pub const FONT_ENGINE_IDENTITY: &str =
+    "subsetter-0.2.6/ttf-parser-0.25.1/native-type2-path-exact16-enclosure-v1";
+pub const FONT_RULES_IDENTITY: &str = "publisher-v2/font-preparation/v9/complete-retained-programs/effective-affine-curve-metrics-v5/cid-matrix-normalization-v1/authored-ascent-facts-v1/cap-height-facts-v1";
 const FACE_IDENTITY_DOMAIN: &[u8] = b"publisher-v2/font-face-identity/v1\0";
 const GLYPH_SET_DOMAIN: &[u8] = b"publisher-v2/font-glyph-set/v1\0";
+const ASCENT_FACTS_DOMAIN: &[u8] = b"publisher-v2/font-ascent-facts/v1\0";
+const FONT_FACTS_DOMAIN: &[u8] = b"publisher-v2/font-design-facts/v1\0";
 const RIGHTS_DOMAIN: &[u8] = b"publisher-v2/font-rights/v1\0";
 const POSTSCRIPT_NAME_DOMAIN: &[u8] = b"publisher-v2/font-postscript-name/v1\0";
 #[cfg(not(debug_assertions))]
@@ -120,6 +123,8 @@ impl TrustedFontBoundary {
             face_index,
             glyph_ids,
             WirePreparationPolicy::SubsetOnly,
+            None,
+            None,
         )?;
         if prepared.preparation_kind != FontPreparationKind::Subset {
             return Err(FontWorkerError::IdentityDrift);
@@ -146,22 +151,88 @@ impl TrustedFontBoundary {
             face_index,
             glyph_ids,
             WirePreparationPolicy::Publication,
+            None,
+            None,
         )
     }
 
+    /// Supplies complete source-GID roles excluded as accented-only characters
+    /// from PDF Ascent. An empty set affirmatively includes every retained role.
+    /// Facts cover all retained components, and every glyph for full embedding;
+    /// valid nonretained source GIDs may also be included. Native checks validate
+    /// identity and transport, not the semantic truth of authored classification.
+    ///
+    /// # Errors
+    /// Rejects GID0, duplicate or unsorted facts, out-of-range source GIDs,
+    /// and every existing publication preparation failure.
+    pub fn prepare_publication_with_ascent_facts(
+        &self,
+        font_bytes: &[u8],
+        face_index: u32,
+        glyph_ids: &[u16],
+        accented_source_glyph_ids: &[u16],
+    ) -> Result<PreparedPublicationFont, FontWorkerError> {
+        self.prepare_publication_with_font_facts(
+            font_bytes,
+            face_index,
+            glyph_ids,
+            Some(accented_source_glyph_ids),
+            None,
+        )
+    }
+
+    /// Supplies independent source-author facts for unresolved descriptor design.
+    /// `CapHeight` is in final PDF glyph units relative to the transformed baseline.
+    /// None requests inference; Some(0) asserts a zero/no-capital design. Signed
+    /// zero is canonicalized to +0. Native checks cannot prove semantic truth.
+    ///
+    /// # Errors
+    /// Rejects malformed accent sets, nonfinite/out-of-range cap values, a cap
+    /// value conflicting with a computable metric, and existing preparation errors.
+    pub fn prepare_publication_with_font_facts(
+        &self,
+        font_bytes: &[u8],
+        face_index: u32,
+        glyph_ids: &[u16],
+        accented_source_glyph_ids: Option<&[u16]>,
+        cap_height_pdf_units: Option<f32>,
+    ) -> Result<PreparedPublicationFont, FontWorkerError> {
+        self.prepare_with_policy(
+            font_bytes,
+            face_index,
+            glyph_ids,
+            WirePreparationPolicy::Publication,
+            accented_source_glyph_ids,
+            cap_height_pdf_units,
+        )
+    }
+
+    #[expect(
+        clippy::too_many_lines,
+        reason = "One preparation handshake validates the exact report before minting opaque authority"
+    )]
     fn prepare_with_policy(
         &self,
         font_bytes: &[u8],
         face_index: u32,
         glyph_ids: &[u16],
         preparation_policy: WirePreparationPolicy,
+        ascent_facts: Option<&[u16]>,
+        cap_fact: Option<f32>,
     ) -> Result<PreparedPublicationFont, FontWorkerError> {
         let glyph_ids = validate_inputs(font_bytes, glyph_ids)?;
+        let cap_fact = cap_fact.map(validate_cap_fact).transpose()?;
+        if let Some(facts) = ascent_facts {
+            validate_ascent_facts_shape(facts)?;
+        }
         let binding = self.binding.as_ref().map_err(Clone::clone)?;
         let prepared_worker = PreparedWorker::new(binding)?;
         let files = PreparationFiles::new(font_bytes)?;
         let source_hash = Hash32::of(font_bytes);
         let glyph_hash = glyph_set_hash(&glyph_ids);
+        let expected_ascent_hash =
+            ascent_facts.map(|gids| ascent_facts_hash(source_hash, face_index, gids));
+        let expected_font_hash = font_facts_hash(source_hash, face_index, ascent_facts, cap_fact);
         let request = WireRequest::Prepare {
             protocol_version: PROTOCOL_VERSION,
             font_path: files.source.display().to_string(),
@@ -170,6 +241,10 @@ impl TrustedFontBoundary {
             preparation_policy,
             face_index,
             glyph_ids: glyph_ids.clone(),
+            accented_source_glyph_ids: ascent_facts.map(<[u16]>::to_vec),
+            expected_ascent_facts_sha256: expected_ascent_hash.map(Hash32::hex),
+            cap_height_pdf_units: cap_fact,
+            expected_font_facts_sha256: expected_font_hash.map(Hash32::hex),
             expected_glyph_set_sha256: glyph_hash.hex(),
         };
         let report = run_worker(&prepared_worker, &files, &request)?;
@@ -202,6 +277,8 @@ impl TrustedFontBoundary {
             eprintln!("font worker identity drift: {report:#?}");
             return Err(FontWorkerError::IdentityDrift);
         }
+        validate_ascent_facts_binding(&report, expected_ascent_hash)?;
+        validate_font_facts_binding(&report, expected_font_hash, cap_fact)?;
         validate_report(&report, &glyph_ids)?;
         let prepared_bytes = read_exact_bounded(&files.prepared, report.prepared_byte_length)?;
         let prepared_hash = Hash32::of(&prepared_bytes);
@@ -236,6 +313,10 @@ impl TrustedFontBoundary {
             fixed_pitch: report.fixed_pitch,
             italic: report.italic,
             widths: report.widths,
+            requires_ascent_facts: report.requires_ascent_facts,
+            ascent_facts_hash: expected_ascent_hash,
+            requires_cap_height_fact: report.requires_cap_height_fact,
+            font_facts_hash: expected_font_hash,
             pdf_metrics: report.pdf_metrics.into(),
             remapped_glyphs: report.remapped_glyphs,
             exercise_cid: report.exercise_cid,
@@ -404,6 +485,10 @@ pub enum FontEmbeddingRights {
 /// use font_boundary::PreparedPublicationFont;
 /// let forged = PreparedPublicationFont { prepared_bytes: Vec::new() };
 /// ```
+#[expect(
+    clippy::struct_excessive_bools,
+    reason = "Attested style and descriptor authority are independent observations"
+)]
 pub struct PreparedPublicationFont {
     prepared_bytes: Vec<u8>,
     preparation_kind: FontPreparationKind,
@@ -429,6 +514,10 @@ pub struct PreparedPublicationFont {
     fixed_pitch: bool,
     italic: bool,
     widths: Vec<i32>,
+    requires_ascent_facts: bool,
+    ascent_facts_hash: Option<Hash32>,
+    requires_cap_height_fact: bool,
+    font_facts_hash: Option<Hash32>,
     pdf_metrics: PdfFontMetrics,
     remapped_glyphs: Vec<RemappedGlyph>,
     exercise_cid: u16,
@@ -436,6 +525,39 @@ pub struct PreparedPublicationFont {
 }
 
 impl PreparedPublicationFont {
+    /// True when automatic evidence cannot establish PDF Ascent independently
+    /// of unknown glyph roles. Ordinary output retains its compatibility
+    /// heuristic; positive print generation requires authored facts.
+    #[must_use]
+    pub const fn requires_ascent_facts(&self) -> bool {
+        self.requires_ascent_facts
+    }
+    /// Identity of the explicit complete facts, bound to source bytes and face.
+    /// None requests inference; an explicit empty set has a present hash.
+    #[must_use]
+    pub const fn ascent_facts_sha256(&self) -> Option<[u8; 32]> {
+        match self.ascent_facts_hash {
+            Some(hash) => Some(hash.0),
+            None => None,
+        }
+    }
+
+    /// True when no source declaration, established reference or absence proof
+    /// establishes `CapHeight`. Positive print generation requires an author fact.
+    #[must_use]
+    pub const fn requires_cap_height_fact(&self) -> bool {
+        self.requires_cap_height_fact
+    }
+    /// Combined facts identity. Optional-field presence and canonical binary32
+    /// cap bits are bound to source bytes and face; legacy Ascent identity is unchanged.
+    #[must_use]
+    pub const fn font_facts_sha256(&self) -> Option<[u8; 32]> {
+        match self.font_facts_hash {
+            Some(hash) => Some(hash.0),
+            None => None,
+        }
+    }
+
     /// Precise attested metrics for PDF serialization, in 1000-em units.
     /// Existing integer accessors remain available for compatibility.
     #[must_use]
@@ -555,12 +677,16 @@ impl PreparedPublicationFont {
 }
 
 /// Metrics derived inside confinement from the exact prepared outlines and
-/// original-face design information, without integer quantization.
+/// original-face design information. A certified numeric bbox enclosure is
+/// encoded outward in whole PDF glyph units; uncertainty can add an adjacent
+/// unit. This is not a mathematically minimal integer rectangle claim. Other
+/// metrics retain fractional precision.
 pub struct PdfFontMetrics {
     bbox: [f32; 4],
     ascent: f32,
     descent: f32,
     cap_height: Option<f32>,
+    italic_angle: f32,
     stem_v: f32,
     widths: Vec<f32>,
 }
@@ -586,6 +712,10 @@ impl PdfFontMetrics {
         self.stem_v
     }
     #[must_use]
+    pub const fn italic_angle(&self) -> f32 {
+        self.italic_angle
+    }
+    #[must_use]
     pub fn widths(&self) -> &[f32] {
         &self.widths
     }
@@ -597,6 +727,7 @@ impl From<WirePdfFontMetrics> for PdfFontMetrics {
             ascent: value.ascent,
             descent: value.descent,
             cap_height: value.cap_height,
+            italic_angle: value.italic_angle,
             stem_v: value.stem_v,
             widths: value.widths,
         }
@@ -687,6 +818,8 @@ pub enum FontWorkerError {
     TooManyGlyphs { actual: usize, maximum: usize },
     DuplicateGlyph(u16),
     NoGlyphs,
+    InvalidCapHeightFact,
+    InvalidAscentFacts { reason: &'static str },
     ResourceLimit,
     Io(String),
     SpawnFailed(String),
@@ -720,6 +853,10 @@ enum WireRequest {
         face_index: u32,
         glyph_ids: Vec<u16>,
         expected_glyph_set_sha256: String,
+        accented_source_glyph_ids: Option<Vec<u16>>,
+        expected_ascent_facts_sha256: Option<String>,
+        cap_height_pdf_units: Option<f32>,
+        expected_font_facts_sha256: Option<String>,
     },
 }
 
@@ -762,6 +899,10 @@ struct WireInspectionReport {
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[expect(
+    clippy::struct_excessive_bools,
+    reason = "Wire fields independently describe font style and descriptor authority"
+)]
 struct WirePreparationReport {
     protocol_version: u16,
     source_sha256: String,
@@ -790,6 +931,10 @@ struct WirePreparationReport {
     fixed_pitch: bool,
     italic: bool,
     widths: Vec<i32>,
+    requires_ascent_facts: bool,
+    ascent_facts_sha256: Option<String>,
+    requires_cap_height_fact: bool,
+    font_facts_sha256: Option<String>,
     pdf_metrics: WirePdfFontMetrics,
     remapped_glyphs: Vec<RemappedGlyph>,
     exercise_cid: u16,
@@ -803,6 +948,7 @@ struct WirePdfFontMetrics {
     ascent: f32,
     descent: f32,
     cap_height: Option<f32>,
+    italic_angle: f32,
     stem_v: f32,
     widths: Vec<f32>,
 }
@@ -1107,6 +1253,7 @@ fn validate_report(
                 &report.pdf_metrics.ascent,
                 &report.pdf_metrics.descent,
                 &report.pdf_metrics.stem_v,
+                &report.pdf_metrics.italic_angle,
             ])
             .chain(report.pdf_metrics.cap_height.iter())
             .chain(report.pdf_metrics.widths.iter())
@@ -1616,6 +1763,99 @@ fn face_identity_hash(source: Hash32, face_index: u32) -> Hash32 {
     hasher.update(face_index.to_be_bytes());
     Hash32(hasher.finalize().into())
 }
+fn validate_ascent_facts_shape(gids: &[u16]) -> Result<(), FontWorkerError> {
+    let reason = if gids.len() > usize::from(u16::MAX) {
+        Some("facts exceed source GID capacity")
+    } else if gids.contains(&0) {
+        Some("GID0 cannot be an accented-only role")
+    } else if gids.windows(2).any(|w| w[0] == w[1]) {
+        Some("duplicate accented source GID")
+    } else if gids.windows(2).any(|w| w[0] > w[1]) {
+        Some("accented source GIDs must be sorted")
+    } else {
+        None
+    };
+    if let Some(reason) = reason {
+        Err(FontWorkerError::InvalidAscentFacts { reason })
+    } else {
+        Ok(())
+    }
+}
+fn ascent_facts_hash(source: Hash32, face: u32, gids: &[u16]) -> Hash32 {
+    let mut hasher = Sha256::new();
+    hasher.update(ASCENT_FACTS_DOMAIN);
+    hasher.update(source.0);
+    hasher.update(face.to_be_bytes());
+    hasher.update(u32::try_from(gids.len()).unwrap_or(u32::MAX).to_be_bytes());
+    for gid in gids {
+        hasher.update(gid.to_be_bytes());
+    }
+    Hash32(hasher.finalize().into())
+}
+fn canonical_zero(value: f32) -> f32 {
+    if value == 0. { 0. } else { value }
+}
+fn validate_cap_fact(value: f32) -> Result<f32, FontWorkerError> {
+    if !value.is_finite() || value.abs() > 10_000_000. {
+        return Err(FontWorkerError::InvalidCapHeightFact);
+    }
+    Ok(canonical_zero(value))
+}
+fn font_facts_hash(
+    source: Hash32,
+    face: u32,
+    accented: Option<&[u16]>,
+    cap: Option<f32>,
+) -> Option<Hash32> {
+    if accented.is_none() && cap.is_none() {
+        return None;
+    }
+    let mut hasher = Sha256::new();
+    hasher.update(FONT_FACTS_DOMAIN);
+    hasher.update(source.0);
+    hasher.update(face.to_be_bytes());
+    hasher.update([u8::from(accented.is_some())]);
+    if let Some(gids) = accented {
+        hasher.update(u32::try_from(gids.len()).unwrap_or(u32::MAX).to_be_bytes());
+        for gid in gids {
+            hasher.update(gid.to_be_bytes());
+        }
+    }
+    hasher.update([u8::from(cap.is_some())]);
+    if let Some(value) = cap {
+        hasher.update(canonical_zero(value).to_bits().to_be_bytes());
+    }
+    Some(Hash32(hasher.finalize().into()))
+}
+fn validate_font_facts_binding(
+    report: &WirePreparationReport,
+    expected: Option<Hash32>,
+    cap: Option<f32>,
+) -> Result<(), FontWorkerError> {
+    if report.font_facts_sha256 != expected.map(Hash32::hex)
+        || report.requires_cap_height_fact != report.pdf_metrics.cap_height.is_none()
+        || cap.is_some_and(|value| {
+            report.requires_cap_height_fact
+                || report.pdf_metrics.cap_height.map(f32::to_bits) != Some(value.to_bits())
+        })
+    {
+        Err(FontWorkerError::IdentityDrift)
+    } else {
+        Ok(())
+    }
+}
+fn validate_ascent_facts_binding(
+    report: &WirePreparationReport,
+    expected: Option<Hash32>,
+) -> Result<(), FontWorkerError> {
+    if report.ascent_facts_sha256 != expected.map(Hash32::hex)
+        || (expected.is_some() && report.requires_ascent_facts)
+    {
+        Err(FontWorkerError::IdentityDrift)
+    } else {
+        Ok(())
+    }
+}
 fn glyph_set_hash(glyphs: &[u16]) -> Hash32 {
     let mut hasher = Sha256::new();
     hasher.update(GLYPH_SET_DOMAIN);
@@ -1797,6 +2037,204 @@ impl RunningProcess {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn authored_ascent_public_api_preserves_fact_presence_and_authority() {
+        let boundary = TrustedFontBoundary::resolve_packaged();
+        let high = include_bytes!(
+            "../../../apps/font-worker/src/tests/fixtures/ascent-unencoded-high.otf"
+        );
+        let automatic = boundary.prepare_publication(high, 0, &[0, 1, 2]).unwrap();
+        assert!(automatic.requires_ascent_facts());
+        assert!(automatic.ascent_facts_sha256().is_none());
+        let authored = boundary
+            .prepare_publication_with_ascent_facts(high, 0, &[0, 1, 2], &[2])
+            .unwrap();
+        assert!(!authored.requires_ascent_facts());
+        assert_eq!(
+            authored.ascent_facts_sha256(),
+            Some(ascent_facts_hash(Hash32::of(high), 0, &[2]).0)
+        );
+        assert_eq!(authored.pdf_metrics().ascent().to_bits(), 880_f32.to_bits());
+        assert_eq!(authored.prepared_bytes(), automatic.prepared_bytes());
+        let legacy = boundary.prepare(high, 0, &[0, 1, 2]).unwrap();
+        assert!(
+            legacy.requires_ascent_facts(),
+            "legacy wrapper preserves unresolved state"
+        );
+        let plain = include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf");
+        let empty = boundary
+            .prepare_publication_with_ascent_facts(plain, 0, &[0, 1], &[])
+            .unwrap();
+        assert!(!empty.requires_ascent_facts());
+        assert!(empty.ascent_facts_sha256().is_some());
+        let legacy = boundary.prepare(plain, 0, &[0, 1]).unwrap();
+        assert!(
+            !legacy.requires_ascent_facts(),
+            "legacy authoritative preparation remains authoritative"
+        );
+        for facts in [&[0][..], &[2, 2][..], &[2, 1][..]] {
+            assert!(matches!(
+                boundary.prepare_publication_with_ascent_facts(high, 0, &[0, 1, 2], facts),
+                Err(FontWorkerError::InvalidAscentFacts { .. })
+            ));
+        }
+        assert!(
+            matches!(boundary.prepare_publication_with_ascent_facts(high,0,&[0,1,2],&[3]),Err(FontWorkerError::WorkerRejected {code,..}) if code=="invalid-ascent-facts")
+        );
+    }
+    #[test]
+    fn authored_ascent_report_hash_and_authority_tampering_is_rejected() {
+        let boundary = TrustedFontBoundary::resolve_packaged();
+        let binding = boundary.binding.as_ref().unwrap();
+        let worker = PreparedWorker::new(binding).unwrap();
+        let font = include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf");
+        let files = PreparationFiles::new(font).unwrap();
+        let source = Hash32::of(font);
+        let expected = ascent_facts_hash(source, 0, &[]);
+        let request = WireRequest::Prepare {
+            protocol_version: PROTOCOL_VERSION,
+            font_path: files.source.display().to_string(),
+            expected_source_sha256: source.hex(),
+            prepared_output_path: files.prepared.display().to_string(),
+            preparation_policy: WirePreparationPolicy::Publication,
+            face_index: 0,
+            glyph_ids: vec![0, 1],
+            expected_glyph_set_sha256: glyph_set_hash(&[0, 1]).hex(),
+            accented_source_glyph_ids: Some(vec![]),
+            expected_ascent_facts_sha256: Some(expected.hex()),
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: font_facts_hash(source, 0, Some(&[]), None)
+                .map(Hash32::hex),
+        };
+        let WireReport::Prepare(mut report) = run_worker(&worker, &files, &request).unwrap() else {
+            panic!("preparation");
+        };
+        assert!(validate_ascent_facts_binding(&report, Some(expected)).is_ok());
+        assert!(validate_ascent_facts_binding(&report, None).is_err());
+        for changed in [
+            ascent_facts_hash(Hash32::of(b"other source"), 0, &[]),
+            ascent_facts_hash(source, 1, &[]),
+            ascent_facts_hash(source, 0, &[1]),
+        ] {
+            assert!(validate_ascent_facts_binding(&report, Some(changed)).is_err());
+        }
+        report.requires_ascent_facts = true;
+        assert!(validate_ascent_facts_binding(&report, Some(expected)).is_err());
+        report.requires_ascent_facts = false;
+        report.ascent_facts_sha256 = None;
+        assert!(validate_ascent_facts_binding(&report, Some(expected)).is_err());
+    }
+    #[test]
+    fn authored_ascent_fact_capacity_uses_source_face_and_large_request_transport() {
+        let font = include_bytes!("../../layout-core/tests/fixtures/NotoSansCJKsc-Regular.otf");
+        // Range/transport evidence only; native validation does not assert the
+        // semantic truth of these authored memberships. The request exceeds
+        // the old256KiB frame and smaller16,384 requested-GID capacity.
+        let facts = (1..60001_u16).collect::<Vec<_>>();
+        let prepared = TrustedFontBoundary::resolve_packaged()
+            .prepare_publication_with_ascent_facts(font, 0, &[0, 41], &facts)
+            .unwrap();
+        assert!(!prepared.requires_ascent_facts());
+        assert!(prepared.ascent_facts_sha256().is_some());
+    }
+
+    #[test]
+    fn authored_cap_height_public_api_preserves_legacy_and_canonical_presence() {
+        let boundary = TrustedFontBoundary::resolve_packaged();
+        let plain = include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf");
+        let automatic = boundary.prepare_publication(plain, 0, &[1]).unwrap();
+        assert!(!automatic.requires_cap_height_fact());
+        assert!(automatic.font_facts_sha256().is_none());
+        let cap = automatic.pdf_metrics().cap_height().unwrap();
+        let authored = boundary
+            .prepare_publication_with_font_facts(plain, 0, &[1], Some(&[]), Some(cap))
+            .unwrap();
+        let legacy = boundary
+            .prepare_publication_with_ascent_facts(plain, 0, &[1], &[])
+            .unwrap();
+        assert_eq!(authored.prepared_bytes(), automatic.prepared_bytes());
+        assert_eq!(authored.ascent_facts_sha256(), legacy.ascent_facts_sha256());
+        assert_eq!(
+            authored.font_facts_sha256(),
+            font_facts_hash(Hash32::of(plain), 0, Some(&[]), Some(cap)).map(|h| h.0)
+        );
+        assert_ne!(authored.font_facts_sha256(), legacy.font_facts_sha256());
+        assert!(
+            matches!(boundary.prepare_publication_with_font_facts(plain,0,&[1],None,Some(cap+1.)),Err(FontWorkerError::WorkerRejected{code,..}) if code=="cap-height-fact-conflict")
+        );
+        for cap in [
+            f32::NAN,
+            f32::INFINITY,
+            -f32::INFINITY,
+            10_000_001.,
+            -10_000_001.,
+        ] {
+            assert!(matches!(
+                boundary.prepare_publication_with_font_facts(plain, 0, &[1], None, Some(cap)),
+                Err(FontWorkerError::InvalidCapHeightFact)
+            ));
+        }
+        let empty = include_bytes!("../../../apps/font-worker/src/tests/fixtures/empty.otf");
+        let positive_zero = boundary
+            .prepare_publication_with_font_facts(empty, 0, &[1], None, Some(0.))
+            .unwrap();
+        let negative_zero = boundary
+            .prepare_publication_with_font_facts(empty, 0, &[1], None, Some(-0.))
+            .unwrap();
+        assert_eq!(
+            positive_zero.font_facts_sha256(),
+            negative_zero.font_facts_sha256()
+        );
+        assert_eq!(
+            negative_zero.pdf_metrics().cap_height().map(f32::to_bits),
+            Some(0_f32.to_bits())
+        );
+    }
+
+    #[test]
+    fn authored_cap_height_report_binding_rejects_hash_presence_value_and_authority_tampering() {
+        let boundary = TrustedFontBoundary::resolve_packaged();
+        let worker = PreparedWorker::new(boundary.binding.as_ref().unwrap()).unwrap();
+        let font = include_bytes!("../../../apps/font-worker/src/tests/fixtures/default.otf");
+        let files = PreparationFiles::new(font).unwrap();
+        let source = Hash32::of(font);
+        let expected = font_facts_hash(source, 0, None, Some(733.));
+        let request = WireRequest::Prepare {
+            protocol_version: PROTOCOL_VERSION,
+            font_path: files.source.display().to_string(),
+            expected_source_sha256: source.hex(),
+            prepared_output_path: files.prepared.display().to_string(),
+            preparation_policy: WirePreparationPolicy::Publication,
+            face_index: 0,
+            glyph_ids: vec![1],
+            expected_glyph_set_sha256: glyph_set_hash(&[1]).hex(),
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: Some(733.),
+            expected_font_facts_sha256: expected.map(Hash32::hex),
+        };
+        let WireReport::Prepare(mut report) = run_worker(&worker, &files, &request).unwrap() else {
+            panic!("prepare");
+        };
+        assert!(validate_font_facts_binding(&report, expected, Some(733.)).is_ok());
+        for wrong in [
+            None,
+            font_facts_hash(Hash32::of(b"other"), 0, None, Some(733.)),
+            font_facts_hash(source, 1, None, Some(733.)),
+            font_facts_hash(source, 0, Some(&[]), Some(733.)),
+            font_facts_hash(source, 0, None, Some(734.)),
+        ] {
+            assert!(validate_font_facts_binding(&report, wrong, Some(733.)).is_err());
+        }
+        report.requires_cap_height_fact = true;
+        assert!(validate_font_facts_binding(&report, expected, Some(733.)).is_err());
+        report.requires_cap_height_fact = false;
+        report.pdf_metrics.cap_height = None;
+        assert!(validate_font_facts_binding(&report, expected, Some(733.)).is_err());
+        report.pdf_metrics.cap_height = Some(734.);
+        assert!(validate_font_facts_binding(&report, expected, Some(733.)).is_err());
+    }
 
     #[test]
     fn worker_failures_preserve_authoring_denials_without_hiding_integrity_codes() {
@@ -2022,6 +2460,10 @@ mod tests {
             preparation_policy: WirePreparationPolicy::SubsetOnly,
             face_index: 0,
             glyph_ids: vec![36],
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&[36]).hex(),
         };
         assert!(matches!(
@@ -2055,6 +2497,10 @@ mod tests {
             prepared_output_path: files.prepared.display().to_string(),
             preparation_policy: WirePreparationPolicy::SubsetOnly,
             face_index: 0,
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&glyph_ids).hex(),
             glyph_ids,
         };
@@ -2186,6 +2632,10 @@ mod tests {
             preparation_policy: WirePreparationPolicy::SubsetOnly,
             face_index: 0,
             glyph_ids: vec![0, 34],
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&[0, 34]).hex(),
         };
         let error = run_worker(&worker, &files, &request)
@@ -2278,6 +2728,10 @@ mod tests {
             preparation_policy: WirePreparationPolicy::SubsetOnly,
             face_index: 0,
             glyph_ids: vec![0, 34],
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&[0, 34]).hex(),
         };
         let error = run_worker(&worker, &files, &request)
@@ -2357,6 +2811,10 @@ mod tests {
             preparation_policy: WirePreparationPolicy::Publication,
             face_index: 0,
             glyph_ids: vec![0, 34],
+            accented_source_glyph_ids: None,
+            expected_ascent_facts_sha256: None,
+            cap_height_pdf_units: None,
+            expected_font_facts_sha256: None,
             expected_glyph_set_sha256: glyph_set_hash(&[0, 34]).hex(),
         };
         let error = run_worker(&worker, &files, &request)
@@ -2406,60 +2864,19 @@ mod tests {
 
     #[test]
     fn publication_mode_preserves_a_full_font_when_subsetting_is_forbidden() {
-        let mut font = include_bytes!("../../layout-core/tests/fixtures/DejaVuSans.ttf").to_vec();
-        let table_count = usize::from(u16::from_be_bytes([font[4], font[5]]));
-        let os2 = (0..table_count)
-            .map(|index| 12 + index * 16)
-            .find(|offset| font[*offset..*offset + 4] == *b"OS/2")
-            .expect("fixture has OS/2 table");
-        let table_offset = usize::try_from(u32::from_be_bytes([
-            font[os2 + 8],
-            font[os2 + 9],
-            font[os2 + 10],
-            font[os2 + 11],
-        ]))
-        .unwrap();
-        let table_length = usize::try_from(u32::from_be_bytes([
-            font[os2 + 12],
-            font[os2 + 13],
-            font[os2 + 14],
-            font[os2 + 15],
-        ]))
-        .unwrap();
-        let old_padded_end = table_offset + table_length.next_multiple_of(4);
-        let new_length = 96_usize;
-        let shift = new_length - table_length.next_multiple_of(4);
-        font.splice(old_padded_end..old_padded_end, vec![0; shift]);
-        font[os2 + 12..os2 + 16].copy_from_slice(&u32::try_from(new_length).unwrap().to_be_bytes());
-        for index in 0..table_count {
-            let record = 12 + index * 16;
-            let offset = usize::try_from(u32::from_be_bytes([
-                font[record + 8],
-                font[record + 9],
-                font[record + 10],
-                font[record + 11],
-            ]))
-            .unwrap();
-            if offset >= old_padded_end {
-                font[record + 8..record + 12]
-                    .copy_from_slice(&u32::try_from(offset + shift).unwrap().to_be_bytes());
-            }
-        }
-        font[table_offset..table_offset + 2].copy_from_slice(&3_u16.to_be_bytes());
-        font[table_offset + 8..table_offset + 10].copy_from_slice(&0x0108_u16.to_be_bytes());
-
+        // This original coherent control includes an unused point-attached
+        // composite. Its rights require the entire valid program unchanged.
+        let font = include_bytes!("../../../apps/font-worker/src/tests/fixtures/original.ttf");
         let prepared = TrustedFontBoundary::resolve_packaged()
-            .prepare_publication(&font, 0, &[0, 36, 37])
+            .prepare_publication(font, 0, &[0, 1])
             .expect("worker preserves full font");
-
         assert_eq!(prepared.preparation_kind(), FontPreparationKind::Full);
-        assert_eq!(prepared.postscript_name(), "DejaVuSans");
+        assert_eq!(prepared.postscript_name(), "PatterboxU2Original");
         assert_eq!(prepared.prepared_bytes(), font);
         assert_eq!(prepared.prepared_sha256(), prepared.source_sha256());
-        assert_eq!(prepared.used_glyph_count(), 3);
-        assert!(prepared.embedded_glyph_count() > prepared.used_glyph_count());
+        assert_eq!(prepared.used_glyph_count(), 2);
+        assert_eq!(prepared.embedded_glyph_count(), 4);
     }
-
     #[test]
     fn source_replacement_after_pinning_is_rejected() {
         let packaged = resolve_worker().expect("test worker is built");

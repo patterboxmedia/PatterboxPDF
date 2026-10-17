@@ -1,29 +1,29 @@
-# Generated-output rules
+# Generation contract and output checks
 
-PatterboxPDF implements a bounded PDF 1.6 generation interface and a selected-CMYK
-PDF/X-4 output mode. Public checks describe the structures this interface emits.
-They do not certify arbitrary PDFs or establish unrestricted PDF/X-4 conformance.
+PatterboxPDF's [generation contract](generation-contract.json) records the supported ordinary and CMYK PDF/X-4 input families, successful entry points, native admission/construction rules, resource premises and independent evidence. The finished-page interface generates new PDFs from typed content and resources.
 
-The current output-rule catalog binds each checked rule to implementation paths,
-an independent evaluator, exact positive PDFs and exercised negative controls.
-Four current evidence records cover supported output, CMYK preview behavior,
-Linux execution and Windows execution. The catalog audit verifies identities and
-verdict consistency; it does not rerun a PDF analysis.
+Font workers check the required structure and retained geometry of supported programs. The writer embeds the exact prepared bytes; rights-required full programs remain unchanged. When the font cannot establish accent roles or a capital height, truthful source/face-bound author facts supply the missing information. A fact cannot override a conflicting computable metric.
 
-The current catalog passes with 37 rules, four exact positive PDFs, 37 exercised negative controls and three source-font metric checks. Native Windows and Ubuntu receipts also pass, including fresh extracted-source execution.
+Profile preparation checks supported ICC editions, raw headers, tag/type roles, retained data and native transform usability. Registration and original-measurement declarations have the specific context stated in the contract. Optional characterization or legacy PostScript payloads must satisfy their declared language and operand meaning. Font-name language registration has its stated authoring context too. These premises do not exempt byte-testable framing, encoding or geometry from native checks.
 
-pdfx4-inventory.json retains earlier topic and writer-contract bindings.
-The supported-output catalog is a separate finite verification contract.
-Historical receipts describe their original source and exact PDFs. Changed output
-requires new analysis.
+Public content variants, geometry, numbers, metadata, strings, resources and composition have enforced rules. Strict adapter generation and intentional diagnostic candidates are named separately. Each supported family must link its source rules, implementation, independent predicates, actual native cases and meaningful output controls. A finite corpus probes those invariants; a sample count alone does not establish the whole domain.
 
-Run python scripts/verify-output-rules.py for current catalog bindings and
-python scripts/verify-requirements.py for retained topic bindings. The public
-verify-pdfx-supported-output.py inspector reads exact PDF bytes with independent
-PDF/font/profile tools and qpdf. Its controls exercise rejected and valid output.
-Native worker tests separately establish preparation and process confinement.
+Current source qualification passes 368 Windows tests and 319 Ubuntu tests, with no ignored cases. Each platform's font corpus has 131 cases and 218 actual PDFs, of which 212 receive complete descriptor qualification. The remaining six are ordinary compatibility outputs whose print routes correctly require missing author facts. Profile coverage has eight admitted profiles and nine expected refusals; composition covers four authored documents with repeat, mutation and registration-order checks. All 37 output rules have actual negative controls and four exact positive PDFs.
 
-See [supported output](supported-output-review.md),
-[technical references](public-technical-sources.md),
-[color behavior](../color-behavior.md) and
-[platform support](../supported-platforms.md) for the contracts and practical limits.
+Independent source and exact-output review accepted the current family contract and specific authoring premises. The public family/catalog audits pass and bind 3,726 measured comparisons. Source archive qualification additionally verifies the exact payload, compiled input equality and fresh advertised workflows on both supported targets.
+
+The output-rule catalog binds implementation and evaluator identities to exact PDFs and exercised controls. Catalog audits check declared identities and consistency; they do not regenerate or analyze the PDFs. Historical records retain their original scope and exact bytes.
+
+Run these audits from the source root:
+
+```text
+python scripts/verify-accepted-inputs.py
+python scripts/verify-output-rules.py
+python scripts/verify-requirements.py
+```
+
+The independent PDF, font and profile inspectors use free development tools, including qpdf. They remain outside generation and resource-worker runtime. [Development](../development.md) describes building and executing the native workflows.
+
+The three historical CMYK screen-comparison failures remain recorded with unchanged bounds. Reader appearance, physical printing, arbitrary embedded resource languages and unrestricted PDF/X-4 feature coverage need their own evidence.
+
+See [supported output](supported-output-review.md), [technical references](public-technical-sources.md), [color behavior](../color-behavior.md) and [platform support](../supported-platforms.md).

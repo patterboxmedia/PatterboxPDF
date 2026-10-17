@@ -1,38 +1,32 @@
 # PatterboxPDF
 
-An independent Rust PDF generation library for unrelated applications. Its initial finished-page interface supports ordinary PDFs and a bounded CMYK PDF/X-4 mode. Publisher is a future consumer; its document model and UI do not define this library.
+A reusable Rust library for generating ordinary PDFs and CMYK PDF/X-4 files from composed pages. Callers provide paths, positioned glyphs, decoded eight-bit images, transforms and clips. Axial and radial gradients support multiple stops, hard transitions and varying opacity. All sixteen PDF blend modes and isolated groups are available.
 
-The initial generation implementation is complete. Callers supply composed pages, paths, positioned glyphs, decoded eight-bit RGB/Gray/CMYK images, transforms and clips. Native axial/radial gradients support multiple stops, hard transitions and varying alpha. Items support all sixteen PDF blend modes, isolated group opacity and local blending spaces. Shared resources are reused, and each page/Form lists its direct resource usage.
+The [generation contract](docs/requirements/generation-contract.json) describes the supported input families, resource requirements and generation checks. The library serves unrelated applications. Publisher is one possible consumer.
 
-Ordinary graphics and decoded images work without worker executables. Exact font and print-profile preparation use confined workers. Native Windows x86_64 MSVC and Ubuntu x86_64 GNU preparation are qualified in their recorded environments. The default library excludes application authoring dependencies; the optional publisher-adapter preserves imported document compatibility. Reading/editing/merging, paragraph layout/shaping, forms/signatures, spot colors and additional gradient families have separate future scope.
+Ordinary graphics and decoded images work directly. Font and print-profile preparation use confined native workers on the recorded Windows and Ubuntu environments. Reading, editing, merging, paragraph layout, shaping, forms, signatures, spot colors and additional gradient families have separate future scope.
 
 ## Use the library
 
 - [Public API](docs/api.md): coordinates, resources, gradients, compositing and output modes.
-- [Standalone examples](examples/standalone-client/README.md): worker-free graphics and prepared-resource print workflows.
-- [Local development](docs/development.md): build and test commands.
-- [Platform support](docs/supported-platforms.md): Windows and Ubuntu execution, resource workers and environment requirements.
-- [Architecture](docs/architecture.md): module ownership and optional compatibility support.
-- [Roadmap](ROADMAP.md): completed scope and deferred decisions.
+- [Standalone examples](examples/standalone-client/README.md): drawing and prepared-resource workflows.
+- [Local development](docs/development.md): builds and verification commands.
+- [Platform support](docs/supported-platforms.md): native worker and environment requirements.
+- [Generation checks](docs/requirements/README.md): input contracts and independent evidence.
+- [Roadmap](ROADMAP.md): delivered scope and future capabilities.
 
 ## Verification and delivery
 
-The October 6 maintenance update corrects ToUnicode destination limits and
-resource type, and preserves carriage returns in decoded Info/XMP titles.
-Focused checks and a fresh extracted-source build are recorded in
-[verification status](docs/verification-status.md). Font-bearing PDFs have new
-bytes; the earlier checker results below apply to their retained baseline files.
+Current generator qualification passes 368 native Windows tests and 319 native Ubuntu tests, with none ignored. On each platform, the font corpus exercises 131 cases and produces 218 PDFs: 212 receive complete descriptor checks, while six ordinary compatibility outputs deliberately omit facts required for print. Their print requests return the expected fact-required errors. Profile tests exercise eight admitted profiles and nine expected refusals. Independent composition and output controls cover geometry, images, gradients, text, metadata and resources. See [verification status](docs/verification-status.md) for the measured scope.
 
-The retained baseline covers 150 affected Rust tests, six actual Windows confinement checks, three real preparation-worker failures, and a separate client with a 57-package default dependency graph. The regenerated 34-case corpus met all combined checker/profile expectations, including 14 positive print candidates. All 190 source pages passed geometry, ordered text and recorded PDFium/Poppler comparisons.
+The writer embeds the exact prepared font program and admitted ICC profile. Rights-required full-font embedding preserves the original font bytes. When font data cannot establish accent roles or a capital height, callers supply truthful facts bound to that source and face. Other specific registration, measurement and optional resource-language premises are stated in the generation contract.
 
-The new six-page ordinary/print gallery passed structural and exact local-resource inspection. Fifty authored appearance probes passed in both readers, and its exact print bytes passed callas analysis. Three pages containing smooth CMYK gradients exceeded the declared whole-page reader-comparison bounds. Those failed metrics remain recorded; CMYK screen previews need review in the intended reader. See [verification status](docs/verification-status.md) for exact scope and qualifications.
+The [generation contract](docs/requirements/generation-contract.json) binds the complete documented input domain to current code, independent measurements and actual native controls. The public contract/catalog audits pass. The source handoff has separate archive extraction, build and execution qualification on both supported targets; retain its adjacent isolation receipt.
 
-The writer checks output-intent metadata, titles, ICC editions, encoded string lengths and executed graphics-state/object limits. [Supported-output review](docs/requirements/supported-output-review.md) records applicability. The current output-rule catalog binds 37 checked rules, four exact positive outputs, 37 exercised negative controls and four platform/color/output receipts. Tested outputs do not establish unrestricted PDF/X-4 conformance.
+The three original CMYK screen comparisons retain their failed verdicts at unchanged bounds. Controlled component/color checks and those reader differences are explained in [color behavior](docs/color-behavior.md). These results do not establish unrestricted PDF/X-4 feature coverage, identical previews in every reader or physical printer acceptance.
 
-The source package includes pinned dependency/asset notices and sanitized evidence. Its adjacent isolated-build receipt establishes the actual unpacked build; packaging alone does not. Callas is a development verification tool outside the runtime and source archive.
+Current qualification uses free tools. Independent development inspectors stay outside the library runtime. The source package includes dependency and asset notices; its adjacent isolation receipt must confirm extraction, build and execution on both supported targets before release.
 
-PatterboxPDF's first-party source and original project material are available under your choice of [MIT](LICENSE-MIT) or [Apache 2.0](LICENSE-APACHE). Third-party dependencies, fonts and profiles retain their separately recorded terms in `third_party/cargo-notices/dependencies.json`. Cargo packages retain `publish = false`; this release distributes source through GitHub.
+First-party source and original material are available under your choice of [MIT](LICENSE-MIT) or [Apache 2.0](LICENSE-APACHE). Dependencies, fonts, profiles and character mapping data retain their recorded terms in `third_party/cargo-notices/dependencies.json`. Cargo packages retain `publish = false`; registry and binary distribution require separate release work.
 
-The controlled CMYK investigation verifies components and explains the retained reader differences. It required no gradient-encoding repair. See [color behavior](docs/color-behavior.md).
-
-Next: follow the standalone examples for the recorded Windows or Ubuntu environment to build the library and resource workers. See [release details](docs/release.md) for source verification and evidence limits.
+Next: build a [standalone example](examples/standalone-client/README.md) for your supported environment, then choose the output profile for your intended printing condition.

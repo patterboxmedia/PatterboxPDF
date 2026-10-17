@@ -9,6 +9,7 @@ publish = false
 [dependencies]
 color-boundary = { path = "../color-boundary" }
 font-boundary = { path = "../font-boundary" }
+icc-profile = { path = "../icc-profile" }
 raster-capacity = { path = "../raster-capacity" }
 document-core = { path = "../document-core", optional = true }
 layout-core = { path = "../layout-core", optional = true }

@@ -7,6 +7,7 @@ license.workspace = true
 publish = false
 
 [dependencies]
+icc-profile = { path = "../../crates/icc-profile" }
 raster-capacity = { path = "../../crates/raster-capacity" }
 lcms2 = { version = "=6.2.0", features = ["static"] }
 serde = { version = "=1.0.228", features = ["derive"] }

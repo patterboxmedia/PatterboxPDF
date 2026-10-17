@@ -494,6 +494,8 @@ pub enum FinishedPdfError {
     MissingResource(ResourceId),
     DuplicateResource(ResourceId),
     InvalidFont(ResourceId),
+    FontAscentFactsRequired(ResourceId),
+    FontCapHeightFactRequired(ResourceId),
     InvalidImage(ResourceId),
     ResourceLimit,
     InvalidOutputProfile(ProfileError),

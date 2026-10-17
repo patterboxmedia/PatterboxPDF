@@ -1,9 +1,6 @@
 # Supported PDF/X-4 output
 
-The finished-page API emits PDF 1.6, with ordinary output or a bounded selected-CMYK
-PDF/X-4 mode. The output-rule catalog and current receipts identify checked
-structures and exact bytes. Unrestricted conformance and acceptance by a
-particular printer require additional evidence.
+The finished-page API emits PDF 1.6 with ordinary output or CMYK PDF/X-4 output for the documented accepted domain. The [generation contract](generation-contract.json) names the successful routes, native invariants and specific resource-authoring premises. Independent source and exact-output review, native controls and measured comparisons support that domain. The separate output catalog identifies 37 targeted structural rules and their exact controls. Arbitrary permitted PDF features, universal resource-program execution and acceptance by a particular printer require separate evidence.
 
 | Area | Generation contract |
 | --- | --- |
@@ -17,7 +14,7 @@ particular printer require additional evidence.
 | Limits | Bounded names, content strings, CIDs, objects and executed graphics-state depth; nonstream lines at most 255 bytes |
 | Admission | Invalid geometry, missing resources, unmanaged RGB in print mode and invalid preparation cause failure |
 
-The font worker records metrics from the actual prepared program. TrueType subsets
+The font worker derives geometry and metrics from the actual retained program, including supported composite anchors, effective CFF matrices and curves. Missing non-inferable accent-role or capital-design facts require truthful source/face-bound author inputs for print; they cannot override conflicting computed metrics. Every registered font, including unused resources, follows the same print authority requirement. TrueType subsets
 refresh geometry/metric headers and required program tables. Full-font preparation
 preserves admitted original bytes. Independent checks inspect binary structures,
 decoded geometry and descriptor metrics. FreeType executes TrueType hint programs

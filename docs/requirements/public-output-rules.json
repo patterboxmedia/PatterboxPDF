@@ -1,64 +1,137 @@
 {
-  "schema": "patterboxpdf-output-rules/v1",
-  "scope": "Finite generated ordinary and selected-CMYK print output; exact-code evidence bindings and actual positive/negative controls. Native interpreter and reader comparisons retain their recorded conditions.",
+  "schema": "patterboxpdf-output-rules/v2",
+  "receipt_set": "accepted-inputs-20261016",
+  "scope": "Documented accepted generation inputs and actual independent exact-output controls; resource-authoring premises and recorded environment limits apply.",
   "evaluator": {
     "path": "scripts/verify-pdfx-supported-output.py",
-    "sha256": "7fd79a75ce6f54223fb178f8ba1ae0fc53cde9f5708d1953836499fa8582b406"
+    "sha256": "8fdb71961d443c90710e35043e833c4c91273b5db2a7d57d9009f75f3d75f3d7"
   },
   "helpers": [
     {
       "path": "scripts/pdf_font_program_rules.py",
-      "sha256": "5c51a2815fccf23393c11eb884fe78d02dcdaa7d785e5118fe202bdd562faf7f"
+      "sha256": "2d6a551d9ccb7e63818869096820389b06dbe9fa04a9a626fa42cea0b839f155"
     },
     {
-      "path": "scripts/pdf_truetype_hint_execution.py",
-      "sha256": "d135fa5885415a0f6b48ab8ee422e8d933ab91daf9346209a22d671bcf797f4d"
+      "path": "scripts/pdf_numeric_rules.py",
+      "sha256": "b8d5e2a728d755942ebdbf7cb0748ba08a160b3e25dd9dff8cc59b0f5d72ab7b"
     },
     {
       "path": "scripts/pdf_text_metadata_rules.py",
       "sha256": "57e315f52062fbc5bb2975e7a26ba227a3161a2c45095b3b376063a8abc81fae"
     },
     {
+      "path": "scripts/pdf_truetype_hint_execution.py",
+      "sha256": "0bf159f6676effec78f122045b3cfc1c14d84335b2b10942a32db574688c7750"
+    },
+    {
+      "path": "scripts/verify-composition-corpus.py",
+      "sha256": "ac10f90b327d454e0b73b393328457b44e997fd20130824b605f7e3d259e4fb7"
+    },
+    {
       "path": "scripts/verify-font-metrics.py",
-      "sha256": "97f3c4779764eee2bf12ffc1049e40b72ba121abca9d0520b82dee292ec0960d"
+      "sha256": "047ec693d5d325e42d75d51fa1330c3b9be107fd107db3acd1607d3ba3d7cfd2"
+    },
+    {
+      "path": "scripts/verify-icc-profile.py",
+      "sha256": "c093a751878df0ff8875c34aafbf5ed95c47401104bec8bdb445988d2b601f5e"
+    },
+    {
+      "path": "scripts/verify-pdfx-supported-output.py",
+      "sha256": "8fdb71961d443c90710e35043e833c4c91273b5db2a7d57d9009f75f3d75f3d7"
     }
   ],
   "code_bindings": [
     {
       "path": "Cargo.lock",
-      "sha256": "2524356728e4c7ced5377b295caa4d556a09cf23771525718b5fbab62f9ff66b"
+      "sha256": "2476947309b6fc26a07b1878319fdeaefb747146be8841feee229cae0769c0f8"
     },
     {
       "path": "Cargo.toml",
-      "sha256": "7e9254e1495a51ae7af7abdaf207d8b07842ebef75b80c767562d3e4b269ba20"
+      "sha256": "4db803b06d800b4b8d2b5c3615199b629f6f4619d9c33cf2d6542fd57154f85e"
     },
     {
       "path": "apps/color-worker/Cargo.toml",
-      "sha256": "8dbcec9d1114bb47802084fee4b2a09643b0c99184c8d94215b6af203de27831"
+      "sha256": "74178e13752d7467274033eb08b7c2c933221784710b1a779eedd9aa2c96a01b"
     },
     {
       "path": "apps/color-worker/src/main.rs",
-      "sha256": "1aa2737fc71e3e853aa1e88a2b8cf08718c1a7fb48285777c60dc1af0969a9ee"
+      "sha256": "3801675b954e5f502f23ad6b146c23b7b9c2c9a5c1812c8ae290e5680f36218e"
     },
     {
       "path": "apps/font-worker/Cargo.toml",
       "sha256": "248d40a166666189e326dd163e1c73567ab9265224fc76f393c642c7bccc916b"
     },
     {
+      "path": "apps/font-worker/src/cff_normalize.rs",
+      "sha256": "1ff1157746c2cd06a9e271dea0a598272e8dbfbee76e2ec7eeafae60d5cd5242"
+    },
+    {
+      "path": "apps/font-worker/src/cff_program.rs",
+      "sha256": "2529485f356b6f7eb9d5e6d1ab6ea4ee26a4aaebcf7d88aed5749b3517cb3ec5"
+    },
+    {
+      "path": "apps/font-worker/src/enclosure.rs",
+      "sha256": "deea883043c2cdbb1fa93b58a930b36acc559067010ca73d3e7ae30ad36f173b"
+    },
+    {
       "path": "apps/font-worker/src/main.rs",
-      "sha256": "79ad067df4d7b120145192f7221411de4439b13d29dfd3148548d4445d3b5994"
+      "sha256": "5ea39deb4792ee3f5c01ab8ac8ec7aba69439d45387cf5731915406372a9de16"
+    },
+    {
+      "path": "apps/font-worker/src/outline.rs",
+      "sha256": "7d99fef191514b34058751f14d84925e4310e67824ad9d269ecd76aa9ba3fcdf"
     },
     {
       "path": "apps/font-worker/src/pdf_metrics.rs",
-      "sha256": "5c8ff4c3f85d8ac1635a0dfcd7bc3e55ca7f30968a17a86823e2ab6a123b4180"
+      "sha256": "2d313f8a9cb1d4bcd9757de69ef20cbe241c411b1f6b9be42ff350af495ed186"
     },
     {
       "path": "apps/font-worker/src/subset_metrics.rs",
-      "sha256": "7f70bde028ab62b93661846d23ae918c37a3e1238d8ba6b741550a9819f8433e"
+      "sha256": "d67cd7fbc87dc9934d1dd595bdc4793d2ec9f3c43ebd88b81fad045e53aff1f5"
+    },
+    {
+      "path": "apps/font-worker/src/tests/accepted_inputs.rs",
+      "sha256": "d90ac8f51202d9b18610d546f9f9b6b46d683d1d0c9c2654307b8a256c9b4da1"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/generate.py",
+      "sha256": "f5e20e213ef734a72e492094d680bca9e0c9d41251dcfc1495e11c9fe652d45e"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/probe.py",
+      "sha256": "c3268d842be7b77a77839a9e7c3c48e4c952a4e179f9a603d6d0c8188c31ee26"
+    },
+    {
+      "path": "apps/font-worker/src/tests/components/provenance.json",
+      "sha256": "04e459b4813c9dbb7353faf2a5abb634962915ffb692648c0eacd8954a175e95"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/ascent-facts.json",
+      "sha256": "bc0df0c1444ec85667892d46c6c1e211adfecbaf64271d4583b9d49bb8e541bc"
+    },
+    {
+      "path": "apps/font-worker/src/tests/fixtures/provenance.json",
+      "sha256": "67a083291813e5a56bb582ee122a3f9606c5ee22229b0ebd228ae5a2548ab8f8"
+    },
+    {
+      "path": "apps/font-worker/src/tests/generate_controls.py",
+      "sha256": "a66238b369191f0a1cdf45ef405f3da6d9cdc45d5f949beb51ee511930318a9b"
+    },
+    {
+      "path": "apps/font-worker/src/tests/probe_controls.py",
+      "sha256": "7330ed9ba08041fa68382100b25bb1ef037fee6a2aaadf9e850e20e3f480d146"
+    },
+    {
+      "path": "apps/font-worker/src/truetype_program.rs",
+      "sha256": "3cde5d93dfd8ebd68637b0fd571d6d2991793cba773ef27f6b4bdb7e4ee2a86f"
+    },
+    {
+      "path": "apps/font-worker/tests/components.rs",
+      "sha256": "e1a043f6e492a31595f7ede6ead9a626d01587eb6f1f419a3aac594c63798685"
     },
     {
       "path": "apps/font-worker/tests/worker_process.rs",
-      "sha256": "a9e46ef87c441178018c243ccebcdffdc8558791e674db2e04abdf6506ff0abe"
+      "sha256": "067475ac9fd584a78b8f172669227410087ce17fba0aa65f3736670fbc878b38"
     },
     {
       "path": "apps/pdf-cli/Cargo.toml",
@@ -242,7 +315,7 @@
     },
     {
       "path": "crates/color-boundary/src/lib.rs",
-      "sha256": "c328e300c82c3f9ad0462c69691a7aebcff54549a13ccf54df6787fadcac8c2e"
+      "sha256": "41ea306755ce40f5b60d30ff340a21453483d082ba94e2bbc4451e1d570d9d00"
     },
     {
       "path": "crates/color-boundary/tests/linux_preparation.rs",
@@ -414,7 +487,7 @@
     },
     {
       "path": "crates/font-boundary/src/lib.rs",
-      "sha256": "86cc48379f3e95abc2cf303554502d225dcfdd39d67f6a4722308686fd97f089"
+      "sha256": "65d88cd75c7f5b9502b1dc539e05b086f8a4cac4dcf4f5ca93db91fd6ea1815e"
     },
     {
       "path": "crates/font-boundary/tests/linux_preparation.rs",
@@ -427,6 +500,18 @@
     {
       "path": "crates/font-boundary/tests/support/linux_boundary_probe.rs",
       "sha256": "8874e47cfc29eefa6f04c1b13f2bcbc28c9e2bd9cd17dbf731f71624b7cd9367"
+    },
+    {
+      "path": "crates/icc-profile/Cargo.toml",
+      "sha256": "bd49b205c0fbdeda804cdb09fc222d23896ac628f07b2337bb3add86877488e2"
+    },
+    {
+      "path": "crates/icc-profile/src/lib.rs",
+      "sha256": "8139c6b8119ff9f7b959508439de6d3f9714f2fa0f76a381036200a001e4b5a2"
+    },
+    {
+      "path": "crates/icc-profile/src/tests.rs",
+      "sha256": "479e7ee66d4442bce6322adb2cc8e9e67075a709c927fd238103de674e959608"
     },
     {
       "path": "crates/layout-core/Cargo.toml",
@@ -550,7 +635,7 @@
     },
     {
       "path": "crates/print-core/Cargo.toml",
-      "sha256": "865cd4ab931e26c5a9580d9457c78ba722543fae908abbc40d04ef1411198474"
+      "sha256": "b031bbc75ce166d37755d305f3282a1c888b456eb4f738b37f9f7a03b257fa61"
     },
     {
       "path": "crates/print-core/src/candidate.rs",
@@ -558,7 +643,7 @@
     },
     {
       "path": "crates/print-core/src/candidate_metadata.rs",
-      "sha256": "a82c21434c601b6033db6b4cffd40bf0af3859459456cd496f28bf753aa96762"
+      "sha256": "6e752b344733c3117278b69de47073161641b8909f39809ac547b8db2ee51669"
     },
     {
       "path": "crates/print-core/src/color.rs",
@@ -574,7 +659,7 @@
     },
     {
       "path": "crates/print-core/src/finished.rs",
-      "sha256": "3a9d2c197227c9353abe756f8d09fd0afca6ecc8cbfc04415f7da522dc51cd86"
+      "sha256": "d9bb9e9c616b8840999e6187873acd35cc185a449ab08b30d4537ce13d56ef68"
     },
     {
       "path": "crates/print-core/src/finished_gradient.rs",
@@ -582,7 +667,7 @@
     },
     {
       "path": "crates/print-core/src/finished_writer.rs",
-      "sha256": "2e20d098d6c7e33a66d68ceacfa7476fea0ee055acddc483d82ac1b6bc204de0"
+      "sha256": "340619cced66312eb6bba39279621fe0062d7ed923f92cb3845d14fc3b9c2494"
     },
     {
       "path": "crates/print-core/src/fixture.rs",
@@ -598,7 +683,7 @@
     },
     {
       "path": "crates/print-core/src/lib.rs",
-      "sha256": "50b843df4819ed8e710d0d4b3f4d51014ca945e188950be9567dee7e727c7fa4"
+      "sha256": "54d4ebe7e1b8d8ecd8bb2f3e8f17fa12ad632a508253802abfad3918da4f3fe9"
     },
     {
       "path": "crates/print-core/src/pdf_lines.rs",
@@ -614,11 +699,11 @@
     },
     {
       "path": "crates/print-core/src/profile.rs",
-      "sha256": "ff6f8c8764aa627212d29584efea83a3a79f0629aba11217e9135200036a3d5b"
+      "sha256": "e8a94031e7d61f8871580d9becb550d863751822477d10b88e32027e66aa11b2"
     },
     {
       "path": "crates/print-core/src/publication_font.rs",
-      "sha256": "662ccd4b2af93dbf5faabece557ed9acd59795929c1a19a422b7436399c5e4ac"
+      "sha256": "2dea0aaabf5a8d8bed0e14a00b84c73f8f39677cfa08c67c85b264ab57f6f76d"
     },
     {
       "path": "crates/print-core/src/publisher_adapter.rs",
@@ -630,7 +715,7 @@
     },
     {
       "path": "crates/print-core/src/resources.rs",
-      "sha256": "5f5bb135709ae6ab1c997409c91f9ce1adefec4dab0d32fbe4666edf7031f1e9"
+      "sha256": "036d06c4297e4978cc31bd24631948709aed5307abb31e6cff46e4f6396147d1"
     },
     {
       "path": "crates/print-core/src/scene.rs",
@@ -677,6 +762,10 @@
       "sha256": "5a79a86f828dc4f68aabe3b63322991596f4c9a0bf4346e394e2871a15f8e963"
     },
     {
+      "path": "crates/print-core/tests/finished_numeric.rs",
+      "sha256": "a87a183df8ba81917322e29d37462688ed06cfca2dd3f14808bdd2decd28ba1d"
+    },
+    {
       "path": "crates/print-core/tests/finished_pages.rs",
       "sha256": "c02b77b3b169a31cf3e09afb680051165a96196efed9224ed52813d82d3e59fe"
     },
@@ -710,7 +799,7 @@
     },
     {
       "path": "crates/print-core/tests/publication_fonts.rs",
-      "sha256": "75da77f158b7b77c6fd8720b76c3acc9a20748ef59d13fcd0bf84e0f613b4039"
+      "sha256": "9bd335e7781fe854ecb399d081ba19c0c5ac56b21e2c4d180f10719e02de47dc"
     },
     {
       "path": "crates/print-core/tests/representative_output.rs",
@@ -810,11 +899,19 @@
     },
     {
       "path": "examples/standalone-client/Cargo.lock",
-      "sha256": "8a9a7a4939591341391fdb72e8bdb09ae5c3960de77ce634f237ccc279ac721f"
+      "sha256": "daef953e1107144715d939f21454bfee2e723f3b9b8fd292c15ca9dafd45664f"
     },
     {
       "path": "examples/standalone-client/Cargo.toml",
-      "sha256": "2944a540c1fe8cf7822e3e61ba85f2264ad4d7b4c346cf5261fd4f97a7174edf"
+      "sha256": "a6e102ed1959081a4629179aa29190e75de41c1e49479f272ab796e6fd6396b3"
+    },
+    {
+      "path": "examples/standalone-client/examples/accepted-composition-input.rs",
+      "sha256": "2b3dc0c22226c96aea6f5f0797218f6215e35913d7ae09b19411d78a0fcf2961"
+    },
+    {
+      "path": "examples/standalone-client/examples/accepted-font-input.rs",
+      "sha256": "1aa7ab36e432536868d5c21602b4c33ea27281cb15cafe6cecba513af345cd41"
     },
     {
       "path": "examples/standalone-client/examples/cmyk-diagnostic.rs",
@@ -834,15 +931,19 @@
     },
     {
       "path": "scripts/build-source-package.py",
-      "sha256": "dd1093fae647ff4ecbffa0e8a7792af4f6796820974964d3e452f92151e3f903"
+      "sha256": "90853597f6775370ad0024317855d11ad4a3142b055e4ffaf84cab260a1fe1ff"
     },
     {
       "path": "scripts/collect-pdf-candidate-licenses.py",
-      "sha256": "c80ce6c68d1f9064ec88dd7c99f4bed60e5d2aca36ce9222115fac31294d770c"
+      "sha256": "8fc5078275a96edf012c9f279b1ff577febef8be320e153351c47316c5d0d221"
     },
     {
       "path": "scripts/pdf_font_program_rules.py",
-      "sha256": "5c51a2815fccf23393c11eb884fe78d02dcdaa7d785e5118fe202bdd562faf7f"
+      "sha256": "2d6a551d9ccb7e63818869096820389b06dbe9fa04a9a626fa42cea0b839f155"
+    },
+    {
+      "path": "scripts/pdf_numeric_rules.py",
+      "sha256": "b8d5e2a728d755942ebdbf7cb0748ba08a160b3e25dd9dff8cc59b0f5d72ab7b"
     },
     {
       "path": "scripts/pdf_text_metadata_rules.py",
@@ -850,47 +951,47 @@
     },
     {
       "path": "scripts/pdf_truetype_hint_execution.py",
-      "sha256": "d135fa5885415a0f6b48ab8ee422e8d933ab91daf9346209a22d671bcf797f4d"
+      "sha256": "0bf159f6676effec78f122045b3cfc1c14d84335b2b10942a32db574688c7750"
     },
     {
       "path": "scripts/stage-workers.py",
       "sha256": "42519e29b6eb8a0049665b57c2a55e9d731306d9b0ea1a01e58d3f40bf7a479b"
     },
     {
+      "path": "scripts/verify-accepted-inputs.py",
+      "sha256": "c641d2da28e92607550e445915c0ddbfd3f2f10e4242bbea6890a1fb572c9a76"
+    },
+    {
       "path": "scripts/verify-cmyk-gradients.py",
       "sha256": "b12bda89f15829477265d27739c01aa78e227d69728681ef19865e171c588e27"
     },
     {
-      "path": "scripts/verify-feature-gallery-appearance.py",
-      "sha256": "263f172b69c8f56d0ff6e4d9678f6c84e889e82ee0a0973c497b53fe134c29eb"
-    },
-    {
-      "path": "scripts/verify-feature-gallery.py",
-      "sha256": "30d193c036250ca249e4f7cf4c4a4e4a9de8e09410b8a8db9cb8b1565d790a77"
+      "path": "scripts/verify-composition-corpus.py",
+      "sha256": "ac10f90b327d454e0b73b393328457b44e997fd20130824b605f7e3d259e4fb7"
     },
     {
       "path": "scripts/verify-font-metrics.py",
-      "sha256": "97f3c4779764eee2bf12ffc1049e40b72ba121abca9d0520b82dee292ec0960d"
+      "sha256": "047ec693d5d325e42d75d51fa1330c3b9be107fd107db3acd1607d3ba3d7cfd2"
+    },
+    {
+      "path": "scripts/verify-icc-profile.py",
+      "sha256": "c093a751878df0ff8875c34aafbf5ed95c47401104bec8bdb445988d2b601f5e"
     },
     {
       "path": "scripts/verify-linux-runtime.py",
-      "sha256": "507febd8d1993c82eca8f5105dec5600bfd43170c876562c0e65d5c29532c23c"
+      "sha256": "de94a9f0770af1ec2aafb1aee60e043d27145308391c725eed300e78bfc871d5"
     },
     {
       "path": "scripts/verify-output-rules.py",
-      "sha256": "85b5a54b57dbc46cd9d0b324f8726deea9742e9deb6768905974fdd53e770cb4"
+      "sha256": "7ce1400993a9fdd1ff10291171b4cd8646bc5e6ed97226c20e35ba27a049b23d"
     },
     {
       "path": "scripts/verify-pdfx-supported-output.py",
-      "sha256": "7fd79a75ce6f54223fb178f8ba1ae0fc53cde9f5708d1953836499fa8582b406"
+      "sha256": "8fdb71961d443c90710e35043e833c4c91273b5db2a7d57d9009f75f3d75f3d7"
     },
     {
       "path": "scripts/verify-public-api.py",
       "sha256": "12598fe7ac129a629911426632aa2cfc81b236fb4617c74814311449229b18da"
-    },
-    {
-      "path": "scripts/verify-requirements.py",
-      "sha256": "474f4ab03f9e6b5de42412e6701d27386a8b6a51fd023fe9442b3b1e97e879b5"
     }
   ],
   "rules": [
@@ -902,10 +1003,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-base-format"
@@ -919,10 +1020,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-numeric-limits"
@@ -937,10 +1038,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-nonstream-line-length"
@@ -954,10 +1055,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-name-limits"
@@ -971,10 +1072,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-file-identity"
@@ -988,10 +1089,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-no-encryption"
@@ -1005,10 +1106,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-embedded-resources"
@@ -1022,10 +1123,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-supported-streams"
@@ -1039,10 +1140,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-no-actions"
@@ -1056,10 +1157,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-no-annotations"
@@ -1073,10 +1174,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-no-optional-content"
@@ -1090,10 +1191,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-no-interactive-forms"
@@ -1107,10 +1208,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-no-postscript"
@@ -1124,10 +1225,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-no-halftones"
@@ -1141,10 +1242,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-no-alternate-images"
@@ -1158,10 +1259,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-page-boxes"
@@ -1176,10 +1277,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-output-intent"
@@ -1194,10 +1295,10 @@
         "crates/color-boundary/src/lib.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-profile-integrity"
@@ -1211,10 +1312,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-device-color"
@@ -1228,10 +1329,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-transparency"
@@ -1245,10 +1346,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-graphics-state"
@@ -1262,10 +1363,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-graphics-state-depth"
@@ -1279,10 +1380,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-known-operators"
@@ -1296,10 +1397,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-resource-references"
@@ -1313,10 +1414,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-content-string-limit"
@@ -1331,10 +1432,10 @@
         "crates/print-core/src/resources.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-font-programs"
@@ -1349,10 +1450,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-font-metrics"
@@ -1367,10 +1468,10 @@
         "apps/font-worker/src/subset_metrics.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-font-program-layout"
@@ -1385,18 +1486,22 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-font-descriptors"
       ],
       "additional_checks": [
-        "ordinary-metrics",
-        "print-v2-metrics",
-        "print-v4-metrics"
+        "font-1-verify-font-metrics-relationships",
+        "font-2-verify-font-metrics-relationships",
+        "adapter-verify-font-metrics-relationships",
+        "adapter-windows-verify-font-metrics-relationships",
+        "semantic-verify-font-metrics-relationships",
+        "witness-verify-font-metrics-relationships",
+        "adapter-negative-verify-font-metrics-relationships"
       ]
     },
     {
@@ -1408,10 +1513,10 @@
         "crates/print-core/src/resources.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-font-hint-execution"
@@ -1426,10 +1531,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-font-glyphs"
@@ -1444,10 +1549,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-image-data"
@@ -1462,10 +1567,10 @@
         "crates/print-core/src/color.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-shading-functions"
@@ -1479,10 +1584,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-metadata-packet"
@@ -1496,10 +1601,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-metadata-values"
@@ -1513,10 +1618,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-metadata-mapping"
@@ -1530,10 +1635,10 @@
         "crates/print-core/src/finished_writer.rs"
       ],
       "documents": [
-        "ordinary",
-        "print-v2",
-        "print-v4",
-        "native-gradient-diagnostic"
+        "ordinary-composition",
+        "pdfx4-composition",
+        "ordinary-truetype",
+        "pdfx4-cff"
       ],
       "negative_controls": [
         "negative-metadata-identity"
@@ -1543,23 +1648,23 @@
   "receipts": [
     {
       "kind": "supported-output",
-      "path": "docs/verification/current/three-area-20261016/supported-output.json",
-      "sha256": "99cdcbf0ac2724d56f984466cd7d7673bae4419aa9d9d31b839f9b988c29684f"
+      "path": "docs/verification/current/accepted-inputs-20261016/supported-inputs.json",
+      "sha256": "bd1b95b9e10c0b1d7df4fb74347a7631fc65c766e8acfc1300a0b53d43efb934"
     },
     {
       "kind": "color",
-      "path": "docs/verification/current/three-area-20261016/color.json",
+      "path": "docs/verification/current/accepted-inputs-20261016/color.json",
       "sha256": "9130c052af53b9161020945470bfeb3a43a2b1fdbc0620c13461c6c0cb71b2ef"
     },
     {
       "kind": "linux",
-      "path": "docs/verification/current/three-area-20261016/linux.json",
-      "sha256": "191c6dd39d5c06b07759dc97176d741244135c82675d6f3b0859425767e5d45f"
+      "path": "docs/verification/current/accepted-inputs-20261016/linux.json",
+      "sha256": "df512dd716aa62bed291e19346d6cc536a8f2800701a09a78ea320605ef89efd"
     },
     {
       "kind": "windows",
-      "path": "docs/verification/current/three-area-20261016/windows.json",
-      "sha256": "a49bfd0f5e22769c01c350340b053fbbf9cdc7f6dbbd84cfd4f703a5ba9fd528"
+      "path": "docs/verification/current/accepted-inputs-20261016/windows.json",
+      "sha256": "6fbaebf7253f3ff8eea61d2a6374229b8f0d93aa0810770f14baa30c43a0c9ac"
     }
   ]
 }

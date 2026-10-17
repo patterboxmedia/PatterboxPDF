@@ -14,6 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 EVALUATOR = 'scripts/verify-pdfx-supported-output.py'
 RECEIPTS = {kind: 'docs/verification/current/three-area-20261016/'+kind+'.json'
             for kind in ('supported-output', 'color', 'linux', 'windows')}
+RECEIPT_SETS = {'accepted-inputs-20261016': {
+    kind: 'docs/verification/current/accepted-inputs-20261016/'+name+'.json'
+    for kind, name in (('supported-output', 'supported-inputs'), ('color', 'color'),
+                       ('linux', 'linux'), ('windows', 'windows'))}}
 SHA = re.compile(r'[0-9a-f]{64}')
 
 
@@ -92,10 +96,15 @@ def audit_font_observations(documents, rules):
             kinds.add(kind)
             if kind == 'truetype':
                 hint = font.get('hint_execution') or {}
-                require(hint.get('glyph_loads_attempted', 0) > 0
-                        and hint.get('glyph_loads_attempted') == hint.get('glyph_loads_succeeded')
+                executed=(hint.get('glyph_loads_attempted', 0) > 0
+                          and hint.get('glyph_loads_attempted') == hint.get('glyph_loads_succeeded'))
+                programs=hint.get('programs') or {}
+                absent=(hint.get('hint_programs_absent') is True and hint.get('glyph_count',0)>0
+                        and all(programs.get(key) == 0 for key in
+                                ('fpgm_bytes','prep_bytes','glyph_instruction_bytes','glyphs_with_instructions')))
+                require((executed or absent)
                         and hint.get('input_sha256') == font.get('program_sha256') == hint.get('input_sha256_after'),
-                        'native TrueType instruction observations are incomplete')
+                        'TrueType instruction execution or exact absence observations are incomplete')
     require(kinds == {'truetype', 'cff'}, 'both supported font program families need current positive evidence')
 
 
@@ -145,9 +154,16 @@ def audit(root, catalog_path='docs/requirements/public-output-rules.json'):
     root = Path(root).resolve(strict=True)
     catalog_data = file_bytes(root, catalog_path)
     catalog = json.loads(catalog_data)
-    require(set(catalog) == {'schema', 'scope', 'evaluator', 'helpers', 'code_bindings', 'rules', 'receipts'}
-            and catalog['schema'] == 'patterboxpdf-output-rules/v1' and bool(catalog['scope'].strip()),
-            'unsupported neutral catalog shape')
+    keys = {'schema', 'scope', 'evaluator', 'helpers', 'code_bindings', 'rules', 'receipts'}
+    if catalog.get('schema') == 'patterboxpdf-output-rules/v2':
+        require(set(catalog) == keys | {'receipt_set'} and catalog['receipt_set'] in RECEIPT_SETS,
+                'unsupported neutral catalog receipt set')
+        receipt_paths = RECEIPT_SETS[catalog['receipt_set']]
+    else:
+        require(set(catalog) == keys and catalog.get('schema') == 'patterboxpdf-output-rules/v1',
+                'unsupported neutral catalog shape')
+        receipt_paths = RECEIPTS
+    require(isinstance(catalog['scope'], str) and bool(catalog['scope'].strip()), 'empty neutral catalog scope')
     require(catalog['evaluator']['path'] == EVALUATOR, 'unexpected output evaluator')
     rules, used_helpers = evaluator_contract(binding(root, catalog['evaluator']))
     code = unique(catalog['code_bindings'], 'path', 'code bindings')
@@ -166,10 +182,10 @@ def audit(root, catalog_path='docs/requirements/public-output-rules.json'):
                 'helper code binding disagrees')
         binding(root, row)
     receipts = unique(catalog['receipts'], 'kind', 'public receipts')
-    require(set(receipts) == set(RECEIPTS), 'the four public receipts are required')
+    require(set(receipts) == set(receipt_paths), 'the four public receipts are required')
     evidence = {}
     for kind, row in receipts.items():
-        require(set(row) == {'kind', 'path', 'sha256'} and row['path'] == RECEIPTS[kind], 'unexpected public receipt path')
+        require(set(row) == {'kind', 'path', 'sha256'} and row['path'] == receipt_paths[kind], 'unexpected public receipt path')
         evidence[kind] = json.loads(binding(root, {'path': row['path'], 'sha256': row['sha256']}))
     supported = evidence['supported-output']
     require(supported.get('schema') == 'patterboxpdf-supported-output/v1' and supported.get('status') == 'passed',
@@ -212,6 +228,13 @@ def audit(root, catalog_path='docs/requirements/public-output-rules.json'):
     require(inventory.get('schema') == 'pdf-library-requirements/v1' and inventory.get('normative_requirements') == []
             and assurance.get('status') == 'complete'
             and assurance.get('catalog') == {'path': catalog_path, 'sha256': digest(catalog_data)}, 'public coverage assurance is stale or incomplete')
+    if catalog['schema'] == 'patterboxpdf-output-rules/v2':
+        generation = assurance.get('generation_contract', {})
+        require(generation.get('path') == 'docs/requirements/generation-contract.json',
+                'generation coverage assurance is missing')
+        contract = json.loads(binding(root, generation))
+        require(contract.get('schema') == 'patterboxpdf-generation-contract/v1' and contract.get('status') == 'complete',
+                'generation contract is pending or unsupported')
     audit_color(evidence['color'], hashes)
     audit_runtime(evidence['linux'], 'linux')
     audit_runtime(evidence['windows'], 'windows')

@@ -22,7 +22,7 @@ const ICC_TAG_RECORD_BYTES: usize = 12;
 const ENGINE_IDENTITY: &str = "LittleCMS/lcms2-rs-6.2.0/RGB8-CMYK8";
 const RULES_IDENTITY: &str = "publisher-v2/color-conversion/v1/relative-colorimetric/no-proofing";
 const INSPECTION_RULES: &str =
-    "publisher-v2/output-intent/v1/CMYK-printer/bidirectional-XYZ-relative";
+    "patterboxpdf/output-intent/v2/exact-edition-types/all-intents-bidirectional";
 
 #[derive(Debug, Deserialize)]
 #[serde(untagged)]
@@ -175,28 +175,7 @@ fn inspect_profile(request: &InspectionRequest) -> Result<InspectionReport, Work
             "ICC byte length changed".into(),
         ));
     }
-    validate_icc_container(&bytes, "output profile")?;
-    if &bytes[12..16] != b"prtr" || &bytes[16..20] != b"CMYK" {
-        return Err(WorkerError::UnsupportedColorSpace("output profile"));
-    }
-    if &bytes[20..24] != b"Lab " && &bytes[20..24] != b"XYZ " {
-        return Err(WorkerError::InvalidIcc(
-            "output profile",
-            "unsupported profile connection space".into(),
-        ));
-    }
-    // Container bounds were checked above; only records in that bounded table
-    // can satisfy the two required printer-transform tags.
-    let count = u32::from_be_bytes(bytes[128..132].try_into().expect("checked header")) as usize;
-    let (tags, _) =
-        bytes[132..132 + count * ICC_TAG_RECORD_BYTES].as_chunks::<ICC_TAG_RECORD_BYTES>();
-    if !tags.iter().any(|tag| &tag[..4] == b"A2B0") || !tags.iter().any(|tag| &tag[..4] == b"B2A0")
-    {
-        return Err(WorkerError::InvalidIcc(
-            "output profile",
-            "missing required A2B0/B2A0 transforms".into(),
-        ));
-    }
+    validate_output_profile(&bytes)?;
     let profile = Profile::new_icc(&bytes).map_err(|_| {
         WorkerError::InvalidIcc("output profile", "LittleCMS rejected the profile".into())
     })?;
@@ -205,30 +184,7 @@ fn inspect_profile(request: &InspectionRequest) -> Result<InspectionReport, Work
     {
         return Err(WorkerError::UnsupportedColorSpace("output profile"));
     }
-    let pcs_profile = Profile::new_xyz();
-    let device_to_pcs = Transform::<[u8; 4], [u16; 3]>::new(
-        &profile,
-        PixelFormat::CMYK_8,
-        &pcs_profile,
-        PixelFormat::XYZ_16,
-        Intent::RelativeColorimetric,
-    )
-    .map_err(|_| {
-        WorkerError::InvalidIcc("output profile", "device-to-PCS transform rejected".into())
-    })?;
-    let mut pcs_sample = [[0_u16; 3]];
-    device_to_pcs.transform_pixels(&[[0_u8; 4]], &mut pcs_sample);
-    let pcs_to_device = Transform::<[u16; 3], [u8; 4]>::new(
-        &pcs_profile,
-        PixelFormat::XYZ_16,
-        &profile,
-        PixelFormat::CMYK_8,
-        Intent::RelativeColorimetric,
-    )
-    .map_err(|_| {
-        WorkerError::InvalidIcc("output profile", "PCS-to-device transform rejected".into())
-    })?;
-    pcs_to_device.transform_pixels(&pcs_sample, &mut [[0_u8; 4]]);
+    probe_output_profile(&profile)?;
     Ok(InspectionReport {
         protocol_version: PROTOCOL_VERSION,
         operation: "inspect-output-profile",
@@ -237,6 +193,41 @@ fn inspect_profile(request: &InspectionRequest) -> Result<InspectionReport, Work
         engine_identity: ENGINE_IDENTITY,
         rules_identity: INSPECTION_RULES,
     })
+}
+
+fn probe_output_profile(profile: &Profile) -> Result<(), WorkerError> {
+    let pcs_profile = Profile::new_xyz();
+    for intent in [
+        Intent::Perceptual,
+        Intent::RelativeColorimetric,
+        Intent::Saturation,
+        Intent::AbsoluteColorimetric,
+    ] {
+        let device_to_pcs = Transform::<[u8; 4], [u16; 3]>::new(
+            profile,
+            PixelFormat::CMYK_8,
+            &pcs_profile,
+            PixelFormat::XYZ_16,
+            intent,
+        )
+        .map_err(|_| {
+            WorkerError::InvalidIcc("output profile", "device-to-PCS transform rejected".into())
+        })?;
+        let mut pcs_sample = [[0_u16; 3]];
+        device_to_pcs.transform_pixels(&[[0_u8; 4]], &mut pcs_sample);
+        let pcs_to_device = Transform::<[u16; 3], [u8; 4]>::new(
+            &pcs_profile,
+            PixelFormat::XYZ_16,
+            profile,
+            PixelFormat::CMYK_8,
+            intent,
+        )
+        .map_err(|_| {
+            WorkerError::InvalidIcc("output profile", "PCS-to-device transform rejected".into())
+        })?;
+        pcs_to_device.transform_pixels(&pcs_sample, &mut [[0_u8; 4]]);
+    }
+    Ok(())
 }
 
 fn process_request(request: &WorkerRequest) -> Result<WorkerReport, WorkerError> {
@@ -282,7 +273,7 @@ fn process_request(request: &WorkerRequest) -> Result<WorkerReport, WorkerError>
         expected_output_hash,
         "output profile",
     )?;
-    validate_icc_container(&output_profile_bytes, "output profile")?;
+    validate_output_profile(&output_profile_bytes)?;
 
     let source_profile = Profile::new_icc(&source_profile_bytes).map_err(|_| {
         WorkerError::InvalidIcc("source profile", "LittleCMS rejected the profile".into())
@@ -299,6 +290,8 @@ fn process_request(request: &WorkerRequest) -> Result<WorkerReport, WorkerError>
     {
         return Err(WorkerError::UnsupportedColorSpace("output profile"));
     }
+
+    probe_output_profile(&output_profile)?;
 
     let intent = match request.rendering_intent {
         RenderingIntent::RelativeColorimetric => Intent::RelativeColorimetric,
@@ -338,6 +331,15 @@ fn process_request(request: &WorkerRequest) -> Result<WorkerReport, WorkerError>
         engine_identity_sha256: hex(sha256(ENGINE_IDENTITY.as_bytes())),
         rules_identity: RULES_IDENTITY,
         rules_identity_sha256: hex(sha256(RULES_IDENTITY.as_bytes())),
+    })
+}
+
+fn validate_output_profile(bytes: &[u8]) -> Result<(), WorkerError> {
+    icc_profile::inspect_output(bytes).map_err(|error| {
+        WorkerError::InvalidIcc(
+            "output profile",
+            format!("exact ICC byte validation: {error:?}"),
+        )
     })
 }
 
@@ -833,5 +835,129 @@ mod tests {
             super::inspect_profile(&request),
             Err(WorkerError::InvalidIcc(_, _))
         ));
+    }
+
+    #[test]
+    fn inspection_rejects_tolerated_raw_header_errors_before_attestation() {
+        let fixture = Fixture::new();
+        for (offset, value) in [(127, 1), (27, 13)] {
+            let mut bytes = CMYK_PROFILE.to_vec();
+            bytes[offset] = value;
+            assert!(lcms2::Profile::new_icc(&bytes).is_ok());
+            fs::write(fixture.directory.join("output.icc"), &bytes).unwrap();
+            let mut request = inspection_request(&fixture);
+            request.expected_output_profile_sha256 = hex(sha256(&bytes));
+            assert!(matches!(
+                super::inspect_profile(&request),
+                Err(WorkerError::InvalidIcc(_, _))
+            ));
+        }
+    }
+
+    fn extended_mluc_record(bytes: &[u8]) -> Vec<u8> {
+        let mut extended = bytes.to_vec();
+        let offset = u32::from_be_bytes(bytes[136..140].try_into().unwrap()) as usize;
+        assert_eq!(&bytes[offset..offset + 4], b"mluc");
+        assert_eq!(&bytes[offset + 8..offset + 12], &1_u32.to_be_bytes());
+        let insert = offset + 28;
+        extended.splice(insert..insert, *b"extn");
+        extended[offset + 12..offset + 16].copy_from_slice(&16_u32.to_be_bytes());
+        let text_offset = u32::from_be_bytes(bytes[offset + 24..offset + 28].try_into().unwrap());
+        extended[offset + 24..offset + 28].copy_from_slice(&(text_offset + 4).to_be_bytes());
+        let count = u32::from_be_bytes(bytes[128..132].try_into().unwrap()) as usize;
+        for index in 0..count {
+            let at = 132 + 12 * index;
+            let start = u32::from_be_bytes(bytes[at + 4..at + 8].try_into().unwrap());
+            let size = u32::from_be_bytes(bytes[at + 8..at + 12].try_into().unwrap());
+            if start as usize == offset {
+                extended[at + 8..at + 12].copy_from_slice(&(size + 4).to_be_bytes());
+            } else if start as usize >= insert {
+                extended[at + 4..at + 8].copy_from_slice(&(start + 4).to_be_bytes());
+            }
+        }
+        let length = u32::try_from(extended.len()).unwrap();
+        extended[..4].copy_from_slice(&length.to_be_bytes());
+        extended[84..100].fill(0);
+        extended
+    }
+
+    #[test]
+    fn genuine_serialized_editions_pass_exact_checks_and_every_intent_probe() {
+        use lcms2::{ColorSpaceSignature, Profile, ProfileClassSignature, TagSignature};
+        let fixture = Fixture::new();
+        let source = Profile::new_icc(CMYK_PROFILE).unwrap();
+        for (name, edition) in [("v22", 2.2), ("v40", 4.0), ("v41", 4.1), ("v42", 4.2)] {
+            // Construct and serialize through typed native tags. Version changes
+            // determine the serialized tag representations, never a byte patch.
+            let mut profile = Profile::new_placeholder();
+            profile.set_version(edition);
+            profile.set_device_class(ProfileClassSignature::OutputClass);
+            profile.set_color_space(ColorSpaceSignature::CmykData);
+            profile.set_pcs(ColorSpaceSignature::LabData);
+            for tag in [
+                TagSignature::ProfileDescriptionTag,
+                TagSignature::CopyrightTag,
+                TagSignature::MediaWhitePointTag,
+                TagSignature::GamutTag,
+                TagSignature::AToB0Tag,
+                TagSignature::AToB1Tag,
+                TagSignature::AToB2Tag,
+                TagSignature::BToA0Tag,
+                TagSignature::BToA1Tag,
+                TagSignature::BToA2Tag,
+            ] {
+                assert!(profile.write_tag(tag, source.read_tag(tag)));
+            }
+            let serialized = profile.icc().unwrap();
+            let bytes = if name == "v22" && super::validate_output_profile(&serialized).is_err() {
+                // This engine's legacy description serializer includes trailing
+                // padding in the tag size. Keep the original exact valid v2
+                // control rather than declaring that reserialization valid.
+                if let Some(directory) = std::env::var_os("PDF_LIBRARY_ICC_ARTIFACTS") {
+                    fs::write(
+                        std::path::Path::new(&directory)
+                            .join("native-v22-invalid-description-padding.icc"),
+                        &serialized,
+                    )
+                    .unwrap();
+                }
+                CMYK_PROFILE.to_vec()
+            } else {
+                serialized
+            };
+            if let Some(directory) = std::env::var_os("PDF_LIBRARY_ICC_ARTIFACTS") {
+                fs::write(
+                    std::path::Path::new(&directory).join(format!("native-{name}.icc")),
+                    &bytes,
+                )
+                .unwrap();
+            }
+            super::validate_output_profile(&bytes).unwrap();
+            fs::write(fixture.directory.join("output.icc"), &bytes).unwrap();
+            let mut request = inspection_request(&fixture);
+            request.expected_output_profile_sha256 = hex(sha256(&bytes));
+            request.expected_byte_length = bytes.len();
+            let report = super::inspect_profile(&request).unwrap();
+            assert_eq!(report.output_profile_sha256, hex(sha256(&bytes)));
+            assert_eq!(
+                fs::read(fixture.directory.join("output.icc")).unwrap(),
+                bytes
+            );
+            if name == "v42" {
+                let extended = extended_mluc_record(&bytes);
+                super::validate_output_profile(&extended).unwrap();
+                fs::write(fixture.directory.join("output.icc"), &extended).unwrap();
+                request.expected_byte_length = extended.len();
+                request.expected_output_profile_sha256 = hex(sha256(&extended));
+                assert!(super::inspect_profile(&request).is_ok());
+                if let Some(directory) = std::env::var_os("PDF_LIBRARY_ICC_ARTIFACTS") {
+                    fs::write(
+                        std::path::Path::new(&directory).join("native-v42-mluc-stride16.icc"),
+                        &extended,
+                    )
+                    .unwrap();
+                }
+            }
+        }
     }
 }

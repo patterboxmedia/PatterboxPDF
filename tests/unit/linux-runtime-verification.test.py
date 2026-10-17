@@ -23,6 +23,9 @@ class RuntimeVerificationTests(unittest.TestCase):
                 runtime.audit_test_result(listing, result, ('files', 'network'))
         with self.assertRaises(ValueError):
             runtime.audit_test_result('', 'test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out;', ())
+        for required in ((), ('files', 'files'), ('missing',)):
+            with self.subTest(required=required), self.assertRaises(ValueError):
+                runtime.audit_test_result(listing, valid, required)
 
     def test_unavailable_platform_or_landlock_is_a_failure(self):
         with patch.object(runtime.sys, 'platform', 'win32'), self.assertRaises(ValueError):
@@ -63,6 +66,71 @@ class RuntimeVerificationTests(unittest.TestCase):
                        'profile': {'test': True}, 'target': {'name': 'linux_isolation', 'kind': ['test']}}
             with self.assertRaises(ValueError):
                 runtime.select_artifacts(json.dumps(message), {'pkg': 'publisher-linux-worker-job'})
+
+    def test_worker_binary_and_resource_suites_cannot_disappear_from_build_evidence(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary)/'compiled-test'
+            path.write_bytes(b'compiled fixture')
+            packages = {suite[0]: suite[0] for suite in runtime.SUITES}
+            messages = [{'reason': 'compiler-artifact', 'package_id': package, 'executable': str(path),
+                         'profile': {'test': True}, 'target': {'name': name, 'kind': [kind]}}
+                        for package, name, kind, _ in runtime.SUITES]
+            self.assertEqual(len(runtime.select_artifacts('\n'.join(map(json.dumps, messages)), packages)), len(runtime.SUITES))
+            framed = '\n\n'+'\n\n'.join(map(json.dumps, messages))+'\n\n'
+            self.assertEqual(len(runtime.select_artifacts(framed, packages)), len(runtime.SUITES))
+            with self.assertRaises(json.JSONDecodeError):
+                runtime.select_artifacts(framed+'not JSON\n', packages)
+            for omitted in ('icc-profile', 'publisher-font-worker', 'publisher-color-worker', 'print-core'):
+                partial = [row for row in messages if row['package_id'] != omitted]
+                with self.subTest(omitted=omitted), self.assertRaises(ValueError):
+                    runtime.select_artifacts('\n'.join(map(json.dumps, partial)), packages)
+            wrong_kind = [dict(row, target={**row['target'], 'kind': ['test']})
+                          if row['package_id'] == 'publisher-font-worker' else row for row in messages]
+            with self.assertRaises(ValueError):
+                runtime.select_artifacts('\n'.join(map(json.dumps, wrong_kind)), packages)
+
+    def test_resource_programs_and_reproduction_sources_are_bound_by_snapshot(self):
+        self.assertIn('apps/font-worker/src/tests/components/generate.py', runtime.SOURCE_SUPPORT_FILES)
+        self.assertIn('apps/font-worker/src/tests/components/probe.py', runtime.SOURCE_SUPPORT_FILES)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            names = {'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml',
+                     'crates/icc-profile/src/lib.rs', 'crates/icc-profile/src/tests.rs',
+                     'apps/font-worker/src/tests/fixtures/provenance.json',
+                     'apps/font-worker/src/tests/fixtures/LICENSE-OFL',
+                     'apps/font-worker/src/tests/fixtures/control.otf',
+                     'crates/layout-core/tests/fixtures/DejaVuSans.ttf',
+                     'crates/layout-core/tests/fixtures/NotoSansCJKsc-Regular.otf',
+                     'crates/layout-core/tests/fixtures/NotoEmoji-Regular.ttf',
+                     'scripts/verify-font-metrics.py',
+                     'crates/print-core/tests/fixtures/SWOP2006coated_300_mth.icc',
+                     *runtime.SOURCE_SUPPORT_FILES}
+            for name in names:
+                path = root/name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b'original reproduction input')
+            with patch.object(runtime, 'ROOT', root):
+                before = runtime.source_snapshot()
+                self.assertEqual({row['path'] for row in before}, names)
+                for name in ('apps/font-worker/src/tests/fixtures/provenance.json',
+                             'apps/font-worker/src/tests/fixtures/control.otf',
+                             'apps/font-worker/src/tests/generate_controls.py',
+                             'crates/icc-profile/src/lib.rs',
+                             'scripts/verify-font-metrics.py'):
+                    path = root/name
+                    path.write_bytes(b'changed actual reproduction input')
+                    self.assertNotEqual(runtime.source_snapshot(), before, name)
+                    path.write_bytes(b'original reproduction input')
+                self.assertEqual(runtime.source_snapshot(), before)
+
+    def test_component_suite_requires_the_actual_geometry_and_context_cases(self):
+        suites = {tuple(row[:3]): row[3] for row in runtime.SUITES}
+        cases = suites.get(('publisher-font-worker', 'components', 'test'), ())
+        self.assertTrue(cases)
+        self.assertIn('child_horizontal_phantoms_are_valid_attachment_anchors', cases)
+        self.assertIn('use_my_metrics_selects_component_advance_and_origin', cases)
+        self.assertIn('unused_source_context_is_deferred_but_all_full_retained_glyphs_are_checked', cases)
+        self.assertIn('unsupported_vertical_table_version_is_only_needed_by_an_actual_anchor', cases)
 
     def test_missing_runtime_library_is_a_failure(self):
         with patch.object(runtime, 'execute', return_value='libexample.so => not found\n'), self.assertRaises(ValueError):

@@ -66,9 +66,11 @@ class OutputChecks(unittest.TestCase):
             with self.subTest(position=position):
                 self.assertTrue(supported.inspect_profile_bytes(bytes(changed)))
 
-    def test_profile_header_reserved_domains_and_private_matrix_extent(self):
+    def test_profile_header_domains_and_opaque_private_payload_extent(self):
         original = (ROOT/'crates/print-core/tests/fixtures/SWOP2006coated_300_mth.icc').read_bytes()
         vendor = bytearray(original); vendor[44:48] = (1<<31).to_bytes(4,'big'); vendor[56:64] = (1<<63).to_bytes(8,'big')
+        self.assertEqual(supported.inspect_profile_bytes(bytes(vendor)), [])
+        vendor[48:56] = b'ACMEDEVC'
         self.assertEqual(supported.inspect_profile_bytes(bytes(vendor)), [])
         for offset,size,value in ((44,4,4),(56,8,4),(64,4,4)):
             changed = bytearray(original); changed[offset:offset+size] = value.to_bytes(size,'big')
@@ -76,6 +78,8 @@ class OutputChecks(unittest.TestCase):
         changed = bytearray(original)
         record = next(n for n in range(132,132+12*int.from_bytes(original[128:132],'big'),12) if original[n:n+4] == b'arts')
         changed[record+8:record+12] = (40).to_bytes(4,'big')
+        self.assertEqual(supported.inspect_profile_bytes(bytes(changed)), [])
+        changed[record+8:record+12] = (39).to_bytes(4,'big')
         self.assertTrue(supported.inspect_profile_bytes(bytes(changed)))
 
     def fixture(self, mutation=None):
@@ -120,11 +124,18 @@ xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:xmpMM="http://ns.adobe.com/xap/1.
             path = Path(directory) / 'control.pdf'
             path.write_bytes(data)
             report = supported.inspect_pdf(path, mode=mode)
+            self.last_report = report
             self.assertEqual(path.read_bytes(), data)
             return {row['rule'] for row in report['findings']}
 
     def test_positive_independent_fixture(self):
         self.assertEqual(self.findings(self.fixture()), set())
+        observed = self.last_report['observations']
+        self.assertEqual(observed['page_boxes'][0]['boxes']['/TrimBox'], [0, 0, 72, 72])
+        xref = observed['serialized_xref']
+        self.assertEqual(xref['count'], len(xref['entries']))
+        self.assertEqual(xref['count'], xref['trailer_size'])
+        self.assertEqual(xref['entries'][0], {'object': 0, 'offset': 0, 'generation': 65535})
 
     def test_ordinary_empty_title_preserves_the_public_metadata_contract(self):
         def empty_title(w, p, i, c, x):
@@ -180,6 +191,57 @@ xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:xmpMM="http://ns.adobe.com/xap/1.
             with self.subTest(label=label, decoded_bytes=len(raw)):
                 findings = self.findings(self.fixture(marked_content(raw)))
                 self.assertEqual(findings, set() if accepted else {'content-string-limit'})
+                strings = self.last_report['observations']['content_strings']
+                self.assertEqual(len(strings), 1)
+                self.assertEqual(strings[0]['operator'], 'BDC')
+                self.assertEqual(strings[0]['bytes'], len(raw))
+                self.assertEqual(strings[0]['sha256'], supported.sha(raw))
+
+    def test_numeric_underflow_is_checked_in_its_required_relationship(self):
+        tiny = FloatObject(2**-149)
+        def radial(coords):
+            def change(w, p, i, c, x):
+                shading = DictionaryObject({NameObject('/ShadingType'): NumberObject(3),
+                    NameObject('/ColorSpace'): NameObject('/DeviceGray'),
+                    NameObject('/Coords'): ArrayObject(coords),
+                    NameObject('/Function'): DictionaryObject({NameObject('/FunctionType'): NumberObject(2),
+                        NameObject('/Domain'): ArrayObject(map(NumberObject, [0, 1])),
+                        NameObject('/C0'): ArrayObject([NumberObject(0)]),
+                        NameObject('/C1'): ArrayObject([NumberObject(1)]), NameObject('/N'): NumberObject(1)})})
+                p[NameObject('/Resources')][NameObject('/Shading')] = DictionaryObject({NameObject('/Shade'): w._add_object(shading)})
+                stream = DecodedStreamObject(); stream.set_data(b'/Shade sh')
+                p[NameObject('/Contents')] = w._add_object(stream)
+            return change
+        good = [tiny, NumberObject(0), tiny, NumberObject(40), NumberObject(20), NumberObject(30)]
+        self.assertEqual(self.findings(self.fixture(radial(good))), set())
+        collapsed = [NumberObject(0), NumberObject(0), NumberObject(0), tiny, NumberObject(0), tiny]
+        self.assertIn('shading-functions', self.findings(self.fixture(radial(collapsed))))
+        malformed = good.copy(); malformed[0] = NameObject('/NotANumber')
+        self.assertIn('shading-functions', self.findings(self.fixture(radial(malformed))))
+
+    def test_supported_matrix_policy_uses_exact_encoded_decimals(self):
+        def matrix(operands):
+            def change(w, p, i, c, x):
+                stream = DecodedStreamObject()
+                stream.set_data(operands + b' cm 0 0 m 1 1 l S')
+                p[NameObject('/Contents')] = w._add_object(stream)
+            return change
+        self.assertIn('known-operators', self.findings(self.fixture(matrix(b'0.1 0.3 0.3 0.9 0 0'))))
+        self.assertEqual(self.findings(self.fixture(matrix(
+            b'0.100000001490116119384765625 0.300000011920928955078125 '
+            b'0.300000011920928955078125 0.89999997615814208984375 0 0'))), set())
+        tiny = b'0.' + b'0'*44 + b'1'
+        encoded = tiny + b' 0 0 ' + tiny + b' 0 0 cm'
+        report = supported.font_evaluator('pdf_numeric_rules').inspect_content_matrices(encoded)
+        self.assertTrue(report['passed'])
+        self.assertNotEqual(report['matrices'][0]['determinant'], '0')
+        self.assertEqual(report['matrices'][0]['permitted_underflow_determinant'], '0')
+        self.assertEqual(self.findings(self.fixture(matrix(tiny + b' 0 0 ' + tiny + b' 0 0'))), set())
+        def quoted_matrix(w, p, i, c, x):
+            stream = DecodedStreamObject()
+            stream.set_data(b'/Span << /ActualText (> 0 0 0 0 0 0 cm (nested) \\) end) >> BDC EMC')
+            p[NameObject('/Contents')] = w._add_object(stream)
+        self.assertEqual(self.findings(self.fixture(quoted_matrix)), set())
 
     def test_nested_form_is_inspected(self):
         def nested(w, p, i, c, x):
@@ -237,7 +299,7 @@ xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:xmpMM="http://ns.adobe.com/xap/1.
         glyphs = {}
         for name in ['.notdef','space','A']:
             pen = TTGlyphPen(None)
-            if name == 'A':
+            if name == 'A' and fault != 'empty-capital':
                 pen.moveTo((0,0)); pen.lineTo((300,700)); pen.lineTo((600,0)); pen.closePath()
             glyphs[name] = pen.glyph()
         builder.setupGlyf(glyphs)
@@ -261,6 +323,10 @@ xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:xmpMM="http://ns.adobe.com/xap/1.
             NameObject('/FontBBox'):ArrayObject(map(FloatObject, [0,0,600*1000/(2048 if fractional else 1000),700*1000/(2048 if fractional else 1000)])),
             NameObject('/Ascent'):NumberObject(800), NameObject('/Descent'):NumberObject(-200),
             NameObject('/CapHeight'):NumberObject(700), NameObject('/StemV'):NumberObject(0)})
+        if fault == 'empty-capital':
+            descriptor[NameObject('/FontBBox')] = ArrayObject([NumberObject(0)]*4)
+            descriptor[NameObject('/Ascent')] = descriptor[NameObject('/Descent')] = NumberObject(0)
+            descriptor[NameObject('/CapHeight')] = NumberObject(0)
         if fault == 'font-programs':
             descriptor.pop('/FontFile2')
         if fault == 'font-descriptors':
@@ -304,9 +370,58 @@ end
             with self.subTest(rule=rule):
                 self.assertIn(rule, self.findings(self.fixture(lambda w,p,i,c,x:self.add_font(w,p,rule))))
 
+    def test_empty_latin_capital_allows_a_numeric_zero_height(self):
+        data = self.fixture(lambda w,p,i,c,x:self.add_font(w,p,'empty-capital'))
+        self.assertEqual(self.findings(data),set())
+        writer = PdfWriter(); writer.clone_document_from_reader(PdfReader(io.BytesIO(data)))
+        font = writer.pages[0]['/Resources']['/Font']['/F0']['/DescendantFonts'][0]['/FontDescriptor']
+        del font['/CapHeight']
+        missing = io.BytesIO(); writer.write(missing)
+        self.assertIn('font-descriptors',self.findings(missing.getvalue()))
+        self.assertNotIn('font-descriptors',self.findings(missing.getvalue(),mode='ordinary'))
+        font[NameObject('/CapHeight')] = TextStringObject('0')
+        output = io.BytesIO(); writer.write(output)
+        self.assertIn('font-descriptors',self.findings(output.getvalue()))
+
     def test_precise_advances_and_descriptor_bounds(self):
         self.assertEqual(self.findings(self.fixture(lambda w,p,i,c,x:self.add_font(w,p,'font-precision'))), set())
         self.assertIn('font-descriptors', self.findings(self.fixture(lambda w,p,i,c,x:self.add_font(w,p,'font-descriptors'))))
+
+    def test_cff_effective_affine_bounds_and_outward_enclosure(self):
+        from fontTools.ttLib import TTFont
+        def change(control, box, wrong_width=False):
+            def mutate(writer,page,intent,profile,xmp):
+                self.add_font(writer,page)
+                source = ROOT/'apps/font-worker/src/tests/fixtures'/(control+'.otf')
+                with TTFont(source, recalcBBoxes=False, recalcTimestamp=False) as font:
+                    raw = font.getTableData('CFF ')
+                composite = page['/Resources']['/Font']['/F0'].get_object()
+                child = composite['/DescendantFonts'][0].get_object()
+                descriptor = child['/FontDescriptor'].get_object()
+                del descriptor['/FontFile2']; del child['/CIDToGIDMap']
+                stream = DecodedStreamObject(); stream.set_data(raw)
+                stream[NameObject('/Subtype')] = NameObject('/CIDFontType0C')
+                descriptor[NameObject('/FontFile3')] = writer._add_object(stream)
+                descriptor[NameObject('/FontBBox')] = ArrayObject(map(FloatObject,box))
+                child[NameObject('/Subtype')] = NameObject('/CIDFontType0')
+                composite[NameObject('/BaseFont')] = NameObject('/IndependentFixture-Identity-H')
+                child[NameObject('/W')] = ArrayObject([NumberObject(0),ArrayObject([NumberObject(1000)]),
+                    NumberObject(41),ArrayObject([NumberObject(729 if wrong_width else 728)])])
+                descriptor['/CIDSet'].set_data(bytes.fromhex('800000000040'))
+                composite['/ToUnicode'].set_data(composite['/ToUnicode'].get_data().replace(b'<0002> <0041>',b'<0029> <0048>'))
+                page['/Contents'].set_data(b'BT /F0 12 Tf <0029> Tj ET')
+            return mutate
+        controls = [('accumulated-fraction',(100,-120,1001,880)),
+                    ('top',(104,-80,1204,1080)),
+                    ('explicit-translated',(120,-140,920,1110))]
+        for control,box in controls:
+            with self.subTest(control=control):
+                self.assertEqual(self.findings(self.fixture(change(control,box))), set())
+                undersized = list(box); undersized[2] -= 1
+                self.assertIn('font-descriptors',self.findings(self.fixture(change(control,undersized))))
+                expanded = list(box); expanded[2] += 2
+                self.assertIn('font-descriptors',self.findings(self.fixture(change(control,expanded))))
+                self.assertIn('font-metrics',self.findings(self.fixture(change(control,box,True))))
 
     def test_font_dictionary_roles_identity_cidset_and_width_grammar(self):
         def mutation(fault):

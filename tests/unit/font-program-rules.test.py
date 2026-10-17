@@ -108,6 +108,46 @@ def edit_ttf(data, edit):
     return result.getvalue()
 
 
+def name_v1(data, tag=None, language_index=0):
+    """Rebuild only the naming table; SFNT compiler updates every checksum."""
+    from fontTools.ttLib.tables.DefaultTable import DefaultTable
+    font=TTFont(io.BytesIO(data))
+    raw=font.getTableData('name')
+    _,count,base=struct.unpack_from('>3H',raw)
+    records=[list(struct.unpack_from('>6H',raw,6+12*i)) for i in range(count)]
+    tags=[] if tag is None else [tag.encode('utf-16-be') if isinstance(tag,str) else tag]
+    if tags:
+        for row in records:
+            if row[0]==3: row[2]=0x8000+language_index
+    records.sort(key=lambda row:row[:4])
+    storage=raw[base:]; language_records=[]
+    for value in tags:
+        language_records.append(struct.pack('>2H',len(value),len(storage)))
+        storage+=value
+    header=struct.pack('>3H',1,count,6+12*count+2+4*len(tags))
+    table=DefaultTable('name')
+    table.data=header+b''.join(struct.pack('>6H',*row) for row in records)+struct.pack('>H',len(tags))+b''.join(language_records)+storage
+    font['name']=table
+    output=io.BytesIO(); font.save(output,reorderTables=False)
+    return output.getvalue()
+
+
+def extra_name_record(data, platform, encoding, language, name, value, version=None):
+    from fontTools.ttLib.tables.DefaultTable import DefaultTable
+    font=TTFont(io.BytesIO(data)); raw=font.getTableData('name')
+    current,count,base=struct.unpack_from('>3H',raw)
+    records=[struct.unpack_from('>6H',raw,6+12*i) for i in range(count)]
+    storage=raw[base:]
+    records.append((platform,encoding,language,name,len(value),len(storage)))
+    table=DefaultTable('name')
+    table.data=(struct.pack('>3H',current if version is None else version,count+1,base+12)
+                +b''.join(struct.pack('>6H',*row) for row in sorted(records))
+                +raw[6+12*count:base]+storage+value)
+    font['name']=table
+    output=io.BytesIO(); font.save(output,reorderTables=False)
+    return output.getvalue()
+
+
 def directory(data):
     return {tag.decode('latin1'): (12 + i * 16, offset, length)
             for i in range(struct.unpack_from('>H', data, 4)[0])
@@ -134,6 +174,54 @@ def field(data, tag, at, fmt, value):
 class FontProgramRules(unittest.TestCase):
     def findings(self, data, kind='cff'):
         return {x['rule'] for x in rules.inspect_font_program(data, kind)['findings']}
+
+    def test_long_loca_uses_byte_offsets_without_short_form_alignment(self):
+        font = TTFont(io.BytesIO(truetype()))
+        font['glyf'].padding = 0
+        encoded = io.BytesIO()
+        font.save(encoded)
+        raw = encoded.getvalue()
+        decoded = TTFont(io.BytesIO(raw))
+        self.assertEqual(decoded['head'].indexToLocFormat, 1)
+        self.assertTrue(any(offset % 2 for offset in decoded['loca'].locations))
+        self.assertEqual(self.findings(raw, 'truetype'), set())
+
+    def test_original_component_programs_include_horizontal_phantom_anchors(self):
+        controls = ROOT/'apps/font-worker/src/tests/components'
+        for name in ('scaled-offset-clear','scaled-offset-round','point-match-clear','point-match-round',
+                     'child-pp1','child-pp2','metrics-unmarked','metrics-marked'):
+            with self.subTest(name=name):
+                self.assertEqual(self.findings((controls/(name+'.ttf')).read_bytes(),'truetype'),set())
+
+    def test_supported_vertical_metric_pair_validates_declared_structure(self):
+        data=(ROOT/'apps/font-worker/src/tests/components/vertical-pair-malformed.ttf').read_bytes()
+        self.assertIn('truetype-vertical-metrics',self.findings(data,'truetype'))
+
+    def test_extended_component_neighbors_keep_supported_full_programs(self):
+        import json
+        controls=ROOT/'apps/font-worker/src/tests/components'
+        rows=json.loads((controls/'provenance.json').read_bytes())['controls']
+        for name,row in rows.items():
+            if row.get('expected_outcome','prepared')=='prepared' and row['expected_preparation_kind']=='full':
+                with self.subTest(name=name):
+                    self.assertEqual(self.findings((controls/name).read_bytes(),'truetype'),set())
+
+    def test_unhinted_truetype_zone_count_neighbors(self):
+        # This original control has no instructions and does not use zone0.
+        # Range checking does not prove conditional twilight use in other VMs.
+        original = truetype()
+        for count in (1, 2):
+            self.assertEqual(self.findings(field(original, 'maxp', 14, '>H', count), 'truetype'), set())
+        for count in (0, 3):
+            self.assertIn('truetype-maxp', self.findings(field(original, 'maxp', 14, '>H', count), 'truetype'))
+
+    def test_bbox_representation_expansion_is_conditional_and_outward(self):
+        inspect=rules.inspect_font_bbox_enclosure
+        self.assertTrue(inspect([99,-121,901,881],[100,-120,900,880],['nonbinary affine'])['passed'])
+        self.assertFalse(inspect([99,-120,900,880],[100,-120,900,880],[])['passed'])
+        self.assertFalse(inspect([98,-120,900,880],[100,-120,900,880],['nonbinary affine'])['passed'])
+        self.assertFalse(inspect([100,-120,900,880],[100,-120,900.01,880],['nonbinary affine'])['passed'])
+        self.assertFalse(inspect([99,-120,901,880],[100.25,-120,900.25,880],['nonbinary affine'])['passed'])
 
     def test_original_cid_cff(self):
         self.assertEqual(self.findings(cff()), set())
@@ -336,6 +424,46 @@ class FontProgramRules(unittest.TestCase):
                     break
         self.assertIn('truetype-name', self.findings(binary_edit(data, bad_unicode), 'truetype'))
 
+    def test_name_version_one_language_records_and_syntax(self):
+        data=truetype()
+        for tag in (None,'en-US','zh-cmn-Hans-CN','sl-rozaj-biske-1994',
+                    'en-a-foo-b-bar-x-baz','i-klingon','x-private'):
+            with self.subTest(valid=tag):
+                self.assertEqual(self.findings(name_v1(data,tag),'truetype'),set())
+        for tag in ('en_US','-en','en-','en-a','en-a-foo-a-bar',
+                    'de-1901-1901','en-å',b'\xd8\x00'):
+            with self.subTest(invalid=repr(tag)):
+                self.assertIn('truetype-name',self.findings(name_v1(data,tag),'truetype'))
+        self.assertIn('truetype-name',self.findings(name_v1(data,'en-US',1),'truetype'))
+
+    def test_name_encoding_context_and_mac_postscript_cid_sentinel(self):
+        data=truetype()
+        for base in (data,name_v1(data)):
+            with self.subTest(version=struct.unpack_from('>H',TTFont(io.BytesIO(base)).getTableData('name'))[0]):
+                sentinel=extra_name_record(base,1,0,0xffff,20,b'Identity')
+                self.assertEqual(self.findings(sentinel,'truetype'),set())
+        legacy=extra_name_record(data,1,0,0x8000,1,b'Legacy language context')
+        self.assertEqual(self.findings(legacy,'truetype'),set())
+        opaque=extra_name_record(data,240,7,0,6,b'\xff\x00')
+        report=rules.inspect_font_program(opaque,'truetype')
+        self.assertEqual(report['findings'],[])
+        self.assertIn({'platform':240,'encoding':7,'language':0,'name_id':6,
+                       'interpretation':'not interpreted'},report['observations']['name_uninterpreted_records'])
+        known_bad=extra_name_record(data,0,4,0,1,b'\xd8\x00')
+        self.assertIn('truetype-name',self.findings(known_bad,'truetype'))
+
+    def test_windows_naming_encodings_differ_from_cmap_codec_mappings(self):
+        data=truetype()
+        for encoding in (0,1,2,6,10,99):
+            with self.subTest(encoding=encoding):
+                self.assertEqual(self.findings(extra_name_record(data,3,encoding,0x409,1,b'\x00A'),'truetype'),set())
+                self.assertIn('truetype-name',self.findings(extra_name_record(data,3,encoding,0x409,1,b'\xd8\x00'),'truetype'))
+        # This is an expressly documented alternative to CP950 for this field.
+        alternative=extra_name_record(data,3,4,0x409,2,'Regular'.encode('utf-16-be'))
+        self.assertEqual(self.findings(alternative,'truetype'),set())
+        opaque_legacy=extra_name_record(data,3,3,0x409,1,b'\xff')
+        self.assertEqual(self.findings(opaque_legacy,'truetype'),set())
+
     def test_post_header_glyph_counts_and_fixed_pitch(self):
         data = truetype()
         for at, fmt, value in ((0, '>I', 0x12340000), (32, '>H', 65535), (34, '>H', 65535), (12, '>I', 7)):
@@ -353,9 +481,11 @@ class FontProgramRules(unittest.TestCase):
     def test_zero_count_roll_and_conditional_flex_matrix_analysis(self):
         self.assertEqual(self.findings(cff(t2(0, 7, b'\x0c\x1e\x0e'))), set())
         flex = t2(0, 0, b'\x15', *([1] * 7), b'\x0c\x22\x0e')
-        self.assertIn('type2-flex-unresolved', self.findings(cff(flex)))
+        self.assertEqual(self.findings(cff(flex)), set())
         matrix = b''.join(number(x) for x in (2, 0, 0, 2, 0, 0)) + b'\x0c\x07'
-        self.assertIn('cff-font-matrix-unresolved', self.findings(cff(fd_extra=matrix)))
+        self.assertEqual(self.findings(cff(fd_extra=matrix)), set())
+        report = rules.inspect_font_program(cff(fd_extra=matrix), 'cff')
+        self.assertEqual(report['observations']['geometry'][1]['filled_bounds'], [0, 0, 100, 140])
 
     def test_valid_boundaries_and_declared_absence_observations(self):
         data = truetype()
