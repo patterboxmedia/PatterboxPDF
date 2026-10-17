@@ -160,16 +160,20 @@ def render_preview(pdf, *, print_profile, display_profile, renderer, output,
             try:
                 with Image.open(png) as image:
                     image.load()
-                    _require(image.format == 'PNG' and image.mode == 'RGB',
-                             f'renderer page {number} must be an opaque RGB PNG')
+                    # RGB PNGs can contain tRNS transparency or later animation frames.
+                    _require(image.format == 'PNG' and image.mode == 'RGB'
+                             and image.n_frames == 1 and 'transparency' not in image.info,
+                             f'renderer page {number} must be an opaque RGB single-frame PNG')
                     before = image.tobytes()
                     dimensions = list(image.size)
                     image.save(png, format='PNG', icc_profile=display_bytes)
                 with Image.open(png) as tagged:
                     tagged.load()
-                    _require(tagged.mode == 'RGB' and tagged.tobytes() == before
+                    _require(tagged.mode == 'RGB' and tagged.n_frames == 1
+                             and 'transparency' not in tagged.info
+                             and tagged.tobytes() == before
                              and tagged.info.get('icc_profile') == display_bytes,
-                             f'ICC tagging changed pixels or profile on page {number}')
+                             f'ICC tagging changed pixels, opacity, frame count or profile on page {number}')
             except ProofingError:
                 raise
             except Exception as error:

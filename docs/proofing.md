@@ -176,6 +176,8 @@ settings. Document color spaces and blending can affect the resulting pixels.
 
 ## Handle failures and qualification
 
+Animated PNGs and transparency metadata are rejected before and after profile tagging.
+
 Missing dependencies, invalid profiles, encrypted or unreadable PDFs, invalid
 page selections, conflicting print conditions and an existing destination cause
 an actionable error. Renderer failure, profile diagnostics, missing or invalid
@@ -192,13 +194,17 @@ The recorded Windows and Ubuntu preview runs each pass 78 gradient/opacity,
 to four 8-bit values per channel. Ten repeated pages per environment preserve decoded pixels
 and exact ICC bytes. Another 156 checks compare every diagnostic gradient and flat sample with
 independent color and opacity expectations. The largest observed channel error is one. See the
-[Windows receipt](verification/current/proofing-20261017-r2/windows.json) and
-[Ubuntu receipt](verification/current/proofing-20261017-r2/ubuntu.json).
+[Windows receipt](verification/current/proofing-20261017-r3/windows.json) and
+[Ubuntu receipt](verification/current/proofing-20261017-r3/ubuntu.json).
 Earlier [Windows](verification/current/proofing-20261017/windows.json),
 [Ubuntu](verification/current/proofing-20261017/ubuntu.json) and
 [source-input](verification/current/proofing-20261017/source-package.json)
 records retain their original tool identities. The current records add
 independent color and opacity expectations and reject failed or stale evidence.
+The earlier [R2 Windows](verification/current/proofing-20261017-r2/windows.json),
+[R2 Ubuntu](verification/current/proofing-20261017-r2/ubuntu.json) and
+[R2 source-input](verification/current/proofing-20261017-r2/source-package.json)
+records retain their source identities from before the transparency fix.
 Fresh source delivery requires the adjacent exact-archive isolation receipt.
 The three original failed reader comparisons and their limits remain recorded in
 [color behavior](color-behavior.md). New controlled previews have their own

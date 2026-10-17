@@ -51,6 +51,7 @@ PUBLIC_RECEIPTS = (
     "accepted-inputs-20261016/linux.json", "accepted-inputs-20261016/windows.json",
     "proofing-20261017/windows.json", "proofing-20261017/ubuntu.json", "proofing-20261017/source-package.json",
     "proofing-20261017-r2/windows.json", "proofing-20261017-r2/ubuntu.json", "proofing-20261017-r2/source-package.json",
+    "proofing-20261017-r3/windows.json", "proofing-20261017-r3/ubuntu.json", "proofing-20261017-r3/source-package.json",
 )
 SUPPORTED_TARGETS = ("x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu")
 FORBIDDEN_PARTS = {".git", ".codex", ".agents", ".tools", "target", "artifacts", "node_modules", "__pycache__"}
@@ -410,10 +411,11 @@ def audit_proofing_evidence(files):
     """Reject stale or failed current proofing evidence, even with a fresh ZIP inventory.
 
     R1 receipts and the original failed reader comparisons remain historical.
-    R2 qualifies the delivered companion and measurements; exact archive build
+    R1/R2 remain historical; R3 qualifies the delivered companion and measurements.
+    Exact archive build
     isolation still needs its separate adjacent receipt (no self-hash claim).
     """
-    prefix = 'docs/verification/current/proofing-20261017-r2/'
+    prefix = 'docs/verification/current/proofing-20261017-r3/'
     programs = ('scripts/pdf_proofing.py', 'scripts/proof-pdf.py', 'scripts/verify-pdf-proofing.py')
     source_paths = (*programs, 'scripts/build-source-package.py', 'tests/unit/pdf-proofing.test.py',
                     'tests/unit/pdf-proofing-verification.test.py', 'tests/unit/source-package.test.py')

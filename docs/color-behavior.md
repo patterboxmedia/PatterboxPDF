@@ -6,7 +6,7 @@ use different conversion tables, profile settings and sampling precision, produc
 different previews of the same correct component values.
 
 The retained feature gallery exceeds its original default PDFium/Poppler comparison
-bounds on ordinary page 2 and print pages 1â€“2. Those are still failed default
+bounds on ordinary page 2 and print pages 1-2. Those are still failed default
 comparisons. The separate color investigation establishes their cause and verifies
 the component output; it does not change the failed results or their limits.
 
@@ -16,7 +16,7 @@ the component output; it does not change the failed results or their limits.
 | Print | 1 | 1.615 | 24 | 12.557% |
 | Print | 2 | 1.244 | 23 | 8.823% |
 
-The original limits remain mean â‰¤5, percentile â‰¤20 and pixels above 10 â‰¤8%.
+The original limits remain mean <=5, percentile <=20 and pixels above 10 <=8%.
 The fifty authored appearance probes pass separately. Reader agreement is not a
 substitute for verifying CMYK components, profiles or intended printing conditions.
 

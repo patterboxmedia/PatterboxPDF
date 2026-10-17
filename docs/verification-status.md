@@ -66,10 +66,10 @@ including groups whose source PDF declares a CMYK blending space. The reference
 checks that RGB appearance. CMYK group-colorimetry and press simulation need
 separate qualification.
 
-[Windows](verification/current/proofing-20261017-r2/windows.json) and
-[Ubuntu](verification/current/proofing-20261017-r2/ubuntu.json) receipts bind actual
+[Windows](verification/current/proofing-20261017-r3/windows.json) and
+[Ubuntu](verification/current/proofing-20261017-r3/ubuntu.json) receipts bind actual
 inputs, tools, output pixels and conditions. The
-[source-input record](verification/current/proofing-20261017-r2/source-package.json)
+[source-input record](verification/current/proofing-20261017-r3/source-package.json)
 binds the additive companion and unchanged native generation inputs. The exact
 source archive additionally requires its adjacent isolation receipt. The original
 three default-reader failures retain their verdicts and limits.

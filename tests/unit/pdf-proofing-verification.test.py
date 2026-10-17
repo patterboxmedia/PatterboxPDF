@@ -9,7 +9,7 @@ import tempfile
 import unittest
 
 import PIL
-from PIL import Image, ImageCms
+from PIL import Image, ImageCms, ImageOps
 import pypdf
 from pypdf import PdfWriter
 from pypdf.generic import DictionaryObject, NameObject
@@ -116,6 +116,51 @@ class PreviewAuditTests(unittest.TestCase):
         image.save(self.png, icc_profile=b'fabricated ICC bytes')
         self.manifest['outputs'][0].update(ident(self.png))
         with self.assertRaisesRegex(ValueError, 'ICC'): self.audit()
+
+    def test_rejects_rgb_transparency_even_when_all_claimed_hashes_match(self):
+        with Image.open(self.png) as original:
+            image = original.copy()
+        image.save(self.png, icc_profile=self.display_profile.read_bytes(),
+                   transparency=(31, 89, 147))
+        self.manifest['outputs'][0].update(ident(self.png))
+        with Image.open(self.png) as transparent:
+            self.assertEqual(transparent.mode, 'RGB')
+            self.assertEqual(transparent.tobytes(), image.tobytes())
+            self.assertEqual(transparent.convert('RGBA').getpixel((0, 0))[3], 0)
+        with self.assertRaisesRegex(ValueError, 'opaque RGB'): self.audit()
+
+    def test_rejects_animation_even_when_first_frame_and_all_claimed_hashes_match(self):
+        with Image.open(self.png) as original:
+            image = original.copy()
+        image.save(self.png, icc_profile=self.display_profile.read_bytes(), save_all=True,
+                   append_images=[Image.new('RGB', image.size, 'white')], duration=100, loop=0)
+        self.manifest['outputs'][0].update(ident(self.png))
+        with Image.open(self.png) as animated:
+            self.assertEqual(animated.mode, 'RGB')
+            self.assertEqual(animated.n_frames, 2)
+            self.assertEqual(animated.tobytes(), image.tobytes())
+            animated.seek(1)
+            self.assertNotEqual(animated.tobytes(), image.tobytes())
+        with self.assertRaisesRegex(ValueError, 'single-frame'): self.audit()
+
+    def test_rejects_orientation_metadata_even_when_raw_pixels_and_hashes_match(self):
+        with Image.open(self.png) as original:
+            image = original.copy()
+        for orientation in range(1, 9):
+            with self.subTest(orientation=orientation):
+                exif = Image.Exif()
+                exif[274] = orientation
+                image.save(self.png, icc_profile=self.display_profile.read_bytes(), exif=exif)
+                self.manifest['outputs'][0].update(ident(self.png))
+                with Image.open(self.png) as oriented:
+                    self.assertEqual(oriented.tobytes(), image.tobytes())
+                    displayed = ImageOps.exif_transpose(oriented)
+                    if orientation != 1:
+                        self.assertNotEqual(displayed.tobytes(), image.tobytes())
+                if orientation == 1:
+                    self.audit()
+                else:
+                    with self.assertRaisesRegex(ValueError, 'orientation'): self.audit()
 
     def test_rejects_wrong_dimensions_and_fabricated_geometry(self):
         for field, value in [('pixel_dimensions', [1, 1]), ('media_box_points', [0, 0, 72, 36]),

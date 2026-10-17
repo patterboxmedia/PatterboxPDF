@@ -132,7 +132,13 @@ def audit_preview(bundle, *, pdf, print_profile, display_profile, renderer,
                 f'page {number} PNG identity mismatch')
         with Image.open(png) as image:
             image.load()
-            require(image.format == 'PNG' and image.mode == 'RGB', f'page {number} must be opaque RGB PNG')
+            # RGB mode alone excludes neither tRNS transparency nor later APNG frames.
+            require(image.format == 'PNG' and image.mode == 'RGB'
+                    and image.n_frames == 1 and 'transparency' not in image.info,
+                    f'page {number} must be opaque RGB single-frame PNG')
+            # Viewers may rotate or mirror through eXIf without changing raw RGB bytes.
+            require(image.getexif().get(274, 1) == 1,
+                    f'page {number} must not change orientation through EXIF metadata')
             require(image.info.get('icc_profile') == display_profile.read_bytes(),
                     f'page {number} ICC bytes differ from selected display profile')
             require(list(image.size) == dimensions == record.get('pixel_dimensions'),

@@ -125,7 +125,7 @@ def synthetic_proofing_evidence(root):
     these synthetic files. No test fixture is written into the real source tree.
     """
     original = Path(__file__).resolve().parents[2]
-    destination = root/'docs/verification/current/proofing-20261017-r2'
+    destination = root/'docs/verification/current/proofing-20261017-r3'
     destination.mkdir(parents=True, exist_ok=True)
     native_sources = ('scripts/pdf_proofing.py', 'scripts/proof-pdf.py', 'scripts/verify-pdf-proofing.py')
     source_paths = (*native_sources, 'scripts/build-source-package.py', 'tests/unit/pdf-proofing.test.py',
@@ -170,7 +170,7 @@ def synthetic_proofing_evidence(root):
               'scope': 'Synthetic package-test fixture; no native execution claim.',
               'source_bindings': bindings(source_paths),
               'preview_qualifications': bindings([
-                  'docs/verification/current/proofing-20261017-r2/'+name for name in ('windows.json', 'ubuntu.json')]),
+                  'docs/verification/current/proofing-20261017-r3/'+name for name in ('windows.json', 'ubuntu.json')]),
               'native_generation': {'all_inputs_unchanged': True, 'inputs': [
                   {'path': name, 'sha256': package.sha((root/name).read_bytes()), 'bytes': (root/name).stat().st_size}
                   for name in sorted(package.public_paths(root))
@@ -358,9 +358,9 @@ class SourcePackageTests(unittest.TestCase):
             'docs/verification/current/proofing-20261017/windows.json',
             'docs/verification/current/proofing-20261017/ubuntu.json',
             'docs/verification/current/proofing-20261017/source-package.json',
-            'docs/verification/current/proofing-20261017-r2/windows.json',
-            'docs/verification/current/proofing-20261017-r2/ubuntu.json',
-            'docs/verification/current/proofing-20261017-r2/source-package.json',
+            'docs/verification/current/proofing-20261017-r3/windows.json',
+            'docs/verification/current/proofing-20261017-r3/ubuntu.json',
+            'docs/verification/current/proofing-20261017-r3/source-package.json',
         )
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -395,7 +395,7 @@ class SourcePackageTests(unittest.TestCase):
             manifest = package.verify_archive(archive)
             with zipfile.ZipFile(archive) as zipped:
                 files = {name: zipped.read(name) for name in zipped.namelist() if name != 'source-manifest.json'}
-            native = 'docs/verification/current/proofing-20261017-r2/windows.json'
+            native = 'docs/verification/current/proofing-20261017-r3/windows.json'
             failed = json.loads(files[native])
             failed['passed'] = False
             cases = [('failed native receipt', native, json.dumps(failed).encode()),
@@ -423,7 +423,7 @@ class SourcePackageTests(unittest.TestCase):
             _, files = package.collect(root)
             receipt = package.build(root, Path(temporary)/'package')
             manifest = package.verify_archive(Path(temporary)/'package'/receipt['archive'])
-            prefix = 'docs/verification/current/proofing-20261017-r2/'
+            prefix = 'docs/verification/current/proofing-20261017-r3/'
             native_path, source_path = prefix+'windows.json', prefix+'source-package.json'
             native = json.loads(files[native_path])
             cases = []

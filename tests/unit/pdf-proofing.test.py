@@ -76,7 +76,11 @@ class FakeRenderer:
                 target.write_bytes(b'not a PNG')
             else:
                 image = Image.new('RGBA' if self.behavior == 'alpha' else 'RGB', (144, 72), (17, 83, 149))
-                image.save(target, format='PNG')
+                options = {'transparency': (17, 83, 149)} if self.behavior == 'transparency-key' else {}
+                if self.behavior == 'animation':
+                    options.update(save_all=True, append_images=[Image.new('RGB', image.size, 'white')],
+                                   duration=100, loop=0)
+                image.save(target, format='PNG', **options)
         diagnostic = 'Could not open display profile' if self.behavior == 'profile-warning' else ''
         return subprocess.CompletedProcess(arguments, 0, '', diagnostic)
 
@@ -223,12 +227,43 @@ class ProofingTests(unittest.TestCase):
     def test_renderer_failure_missing_invalid_alpha_and_profile_diagnostics(self):
         for behavior, message in [('exit', 'exit 7'), ('missing', 'did not produce PNG'),
                                   ('invalid', 'invalid PNG'), ('alpha', 'opaque RGB'),
+                                  ('transparency-key', 'opaque RGB'),
+                                  ('animation', 'single-frame'),
                                   ('profile-warning', 'profile/rendering'), ('no-cms', 'CMS options')]:
             output = self.work/behavior
             with self.subTest(behavior=behavior), patch.object(proof.subprocess, 'run', side_effect=FakeRenderer(behavior)):
                 with self.assertRaisesRegex(proof.ProofingError, message):
                     self.render(output=output)
             self.assertFalse((output/'manifest.json').exists())
+
+    def test_transparency_introduced_during_tagging_cannot_report_completion(self):
+        save = Image.Image.save
+
+        def introduce_transparency(image, path, *args, **kwargs):
+            if 'icc_profile' in kwargs:
+                kwargs['transparency'] = (17, 83, 149)
+            return save(image, path, *args, **kwargs)
+
+        with patch.object(proof.subprocess, 'run', side_effect=FakeRenderer()), \
+                patch.object(Image.Image, 'save', introduce_transparency):
+            with self.assertRaisesRegex(proof.ProofingError, 'opacity'):
+                self.render()
+        self.assertFalse((self.output/'manifest.json').exists())
+
+    def test_animation_introduced_during_tagging_cannot_report_completion(self):
+        save = Image.Image.save
+
+        def introduce_animation(image, path, *args, **kwargs):
+            if 'icc_profile' in kwargs:
+                kwargs.update(save_all=True, append_images=[Image.new('RGB', image.size, 'white')],
+                              duration=100, loop=0)
+            return save(image, path, *args, **kwargs)
+
+        with patch.object(proof.subprocess, 'run', side_effect=FakeRenderer()), \
+                patch.object(Image.Image, 'save', introduce_animation):
+            with self.assertRaisesRegex(proof.ProofingError, 'frame count'):
+                self.render()
+        self.assertFalse((self.output/'manifest.json').exists())
 
     def test_missing_dependency_file_or_executable(self):
         with patch.object(proof, 'DEPENDENCY_ERROR', 'No module named PIL'):

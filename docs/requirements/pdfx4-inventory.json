@@ -2149,11 +2149,11 @@
     "status": "complete",
     "catalog": {
       "path": "docs/requirements/public-output-rules.json",
-      "sha256": "0b5ba9488fc34c3c5c790d7b97c8877e709a0db8a69a07e429ea489eb104c1f4"
+      "sha256": "81f8306144714cb80518ef1782579f2325f3ece5e4f993045b630b442bfcc417"
     },
     "generation_contract": {
       "path": "docs/requirements/generation-contract.json",
-      "sha256": "759b1de5e1f315a0e9a0d530311cf6bc916359c024341e88f1241bf9fe27c332"
+      "sha256": "d069f765882a4e50ca761c08aa609c9a71268d177529e512995382add1fd7f6f"
     }
   }
 }
