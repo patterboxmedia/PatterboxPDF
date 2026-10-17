@@ -284,6 +284,51 @@ def diagnostic_controls(bundle, pdf):
     return records
 
 
+def diagnostic_absolute_controls(bundle, pdf, cms, print_profile, display_profile):
+    """Measure each diagnostic region against authored color and opacity facts.
+
+    pdftoppm's opaque PNG route uses a Splash RGB8 surface. In the recorded
+    native builds, ordinary transparency groups retain that surface mode;
+    their /CS does not select CMYK compositing (soft-mask groups are separate).
+    Thus first convert the authored CMYK foreground with independent LittleCMS,
+    then source-over the Gray .8 backdrop in encoded RGB. Each isolated group
+    contains one foreground at the sampled point, so its .5 opacity multiplies
+    paint alpha once. The ideal arithmetic reference allows only the existing
+    four-value limit for 8-bit raster/alpha rounding. It uses no preview pixels.
+    This is a reference for the pinned native RGB route, not press simulation.
+    """
+    reader = PdfReader(pdf, strict=True)
+    require(len(reader.pages) == 2, 'diagnostic must contain two pages')
+    authored = []
+    for case, label in enumerate(CASES):
+        for j, t in enumerate(SAMPLES):
+            if case == 2 and t == .5:
+                continue  # Same hard-transition boundary excluded from paired checks.
+            fraction = (0. if t < .5 else 1.) if case == 2 else t
+            components = [fraction, 1-fraction, fraction, .25*fraction]
+            alpha = .5 if case == 3 else t if case in (4, 5, 7) else 1.
+            group = .5 if case >= 6 else 1.
+            authored.append((case, label, j, t, components, alpha, group))
+    foregrounds = cms.reference(print_profile, display_profile, [row[4] for row in authored])
+    background = [204, 204, 204]  # Authored opaque DeviceGray .8 in Splash RGB8.
+    records = []
+    for number in (1, 2):
+        space = '/DeviceCMYK' if number == 1 else '/DeviceRGB'
+        require(reader.pages[number-1]['/Group']['/CS'] == space, 'diagnostic page blending space changed')
+        image = open_rgb(bundle/f'page-{number}.png')
+        for (case, label, j, t, components, alpha, group), foreground in zip(authored, foregrounds):
+            effective = alpha*group
+            expected = [round(effective*c+(1-effective)*b) for c, b in zip(foreground, background)]
+            for region, x in [('gradient', 32+256*t), ('flat', 352+j*52+24)]:
+                measured = compare_rgb(sample(image, x, 864-case*112+24, 960), expected,
+                    f'absolute diagnostic {number}/{label}/{t}/{region}')
+                records.append({'page': number, 'page_blending_space': space, 'case': label,
+                    't': t, 'region': region, 'foreground_components': components,
+                    'foreground_rgb': foreground, 'background_rgb': background,
+                    'paint_alpha': alpha, 'group_opacity': group, 'effective_alpha': effective, **measured})
+    return records
+
+
 def historical_control(path):
     require(identity(path)['sha256'] == HASHES['historical_color'], 'historical color receipt bytes changed')
     old = json.loads(path.read_text(encoding='utf-8'))['baseline']
@@ -327,6 +372,8 @@ def qualify(args):
     require(previews['ordinary']['pages'] == [1, 2, 3] and previews['print']['pages'] == [1, 2, 3],
             'retained galleries must each have all three pages')
     diagnostics = diagnostic_controls(diagnostic, args.diagnostic)
+    diagnostic_appearance = diagnostic_absolute_controls(diagnostic, args.diagnostic, cms,
+                                                         args.print_profile, args.display_profile)
     colors = [[t, 1-t, t, t*.25] for t in SAMPLES]
     colors += [[1., 0., 0., 0.], [0., 1., 0., 0.], [0., 0., 1., 0.],
                [0., 0., 0., .5], [.2, .4, .6, .1]]
@@ -420,8 +467,11 @@ def qualify(args):
         'verifier': identity(Path(__file__)), 'companion': identity(Path(pdf_proofing.__file__)),
         'renderer': {**identity(args.renderer), 'version': version},
         'littlecms': {**identity(args.lcms), 'encoded_version': int(cms.dll.cmsGetEncodedCMMversion())},
-        'reference_conditions': {'intent': 1, 'flags': FLAGS, 'encoding': 'round-u8', 'maximum_channel_error': LIMIT},
+        'reference_conditions': {'intent': 1, 'flags': FLAGS, 'encoding': 'round-u8', 'maximum_channel_error': LIMIT,
+            'diagnostic_compositing': 'encoded-RGB source-over on opaque Splash RGB8; paint alpha times isolated group opacity once',
+            'diagnostic_background_rgb': [204, 204, 204]},
         'previews': previews, 'diagnostic_gradient_flat_controls': diagnostics,
+        'independent_diagnostic_appearance_controls': diagnostic_appearance,
         'independent_littlecms_flat_controls': flat_controls, 'retained_gallery_gradient_flat_controls': gallery_controls,
         'alternate_display': {'profile': identity(alternate), 'samples': display_controls},
         'explicit_default_cmyk_contrast': {'unmanaged_png': identity(unmanaged_prefix.with_suffix('.png')), 'samples': default_controls},
@@ -448,6 +498,7 @@ def main():
     print(json.dumps({'passed': result['passed'], 'output': str(args.output),
                       'preview_runs': len(result['previews']),
                       'diagnostic_samples': len(result['diagnostic_gradient_flat_controls']),
+                      'absolute_diagnostic_samples': len(result['independent_diagnostic_appearance_controls']),
                       'littlecms_samples': len(result['independent_littlecms_flat_controls']),
                       'gallery_samples': len(result['retained_gallery_gradient_flat_controls'])}))
 

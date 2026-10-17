@@ -43,8 +43,8 @@
     },
     {
       "path": "ROADMAP.md",
-      "bytes": 5284,
-      "sha256": "a6d83980828ca3f290c5d9f5d90a1436dde013ed326196d99e419e3216250fa1"
+      "bytes": 5444,
+      "sha256": "5df6ae5b80fe41efb85da78c75533b2491844dd321556766b421a7a5c58de09d"
     },
     {
       "path": "apps/color-worker/Cargo.toml",
@@ -1673,8 +1673,8 @@
     },
     {
       "path": "docs/color-behavior.md",
-      "bytes": 9219,
-      "sha256": "e631ee25503f96191e7ea47aee31249b0b9b59ce92efa82fcd9ac928f7aa21d2"
+      "bytes": 9484,
+      "sha256": "bb5de30fc7f182a6cbdbc8818b87781991836c5824e40c1d0dc5a1a28828af1d"
     },
     {
       "path": "docs/development.md",
@@ -1683,13 +1683,13 @@
     },
     {
       "path": "docs/proofing.md",
-      "bytes": 9952,
-      "sha256": "d581d7a3ca8c5d40e8fdb813251bf3ef5f470600cb5dc492aa5784e4a6f60c2a"
+      "bytes": 10660,
+      "sha256": "1875b53c19d95bfdd37224a3347c2c73d628c300d76dd72b203cbd202e1a5487"
     },
     {
       "path": "docs/release.md",
-      "bytes": 6173,
-      "sha256": "14d4c3afb91da1f339ac37beae0bb5b2e9a863ea66b49d273ebb30651f7a3ec1"
+      "bytes": 6911,
+      "sha256": "4acde98a7e7e086f61950387bad52559dc29879474d99f6e1727d23aabf07552"
     },
     {
       "path": "docs/requirements/README.md",
@@ -1699,17 +1699,17 @@
     {
       "path": "docs/requirements/generation-contract.json",
       "bytes": 447502,
-      "sha256": "e4c77321e6280d615011ae7cbd1fd0f4bf13d8a77c75c33a662889ef8fbcd921"
+      "sha256": "759b1de5e1f315a0e9a0d530311cf6bc916359c024341e88f1241bf9fe27c332"
     },
     {
       "path": "docs/requirements/pdfx4-inventory.json",
       "bytes": 94539,
-      "sha256": "0a20ad61576463dddb68482beb56c9ce0648b4e3129fa65fd7bbd25c92a41043"
+      "sha256": "5afaf813bf86247b00459bf0a100b0293193b568b2ab03204c246876fd39d94b"
     },
     {
       "path": "docs/requirements/public-output-rules.json",
       "bytes": 57668,
-      "sha256": "2272c58aebb92d3148ccccc53967d9279b2f1caa57613f895e185a020e6c482e"
+      "sha256": "0b5ba9488fc34c3c5c790d7b97c8877e709a0db8a69a07e429ea489eb104c1f4"
     },
     {
       "path": "docs/requirements/public-technical-sources.md",
@@ -1723,13 +1723,13 @@
     },
     {
       "path": "docs/supported-platforms.md",
-      "bytes": 4462,
-      "sha256": "0481dfb7700d22e478b4212f5b333d3502941b7095176e67c8a23317cafe4730"
+      "bytes": 4723,
+      "sha256": "848cdf1c2b2b136c18a2e4851c73e0d40096c2a889a243bded863a3c8aa57c9e"
     },
     {
       "path": "docs/verification-status.md",
-      "bytes": 7664,
-      "sha256": "239a48c5b716f78855cfc20ab29f747ff9a2f7c378bb36ad42f4e217a44e319c"
+      "bytes": 8402,
+      "sha256": "42428933d91c0a9e3e49ce71737dd7677595ecebd226776c86ba3bb9a34b9821"
     },
     {
       "path": "docs/verification/current/accepted-inputs-20261016/color.json",
@@ -1860,6 +1860,21 @@
       "path": "docs/verification/current/font-map-metadata-20261006/repair.json",
       "bytes": 15067,
       "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
+    },
+    {
+      "path": "docs/verification/current/proofing-20261017-r2/source-package.json",
+      "bytes": 66640,
+      "sha256": "c57c86be5d7230e5db420c45e05612643de4c29e410750051ddc8e4044812e16"
+    },
+    {
+      "path": "docs/verification/current/proofing-20261017-r2/ubuntu.json",
+      "bytes": 187094,
+      "sha256": "6a2083d815308656ab44c8f98f05699e7514d91fb0f20d5c99213437f81143a0"
+    },
+    {
+      "path": "docs/verification/current/proofing-20261017-r2/windows.json",
+      "bytes": 176059,
+      "sha256": "92403856865f9b4402c36dd8605e4c416c20d01666f5905a6ff40d81b8dea50b"
     },
     {
       "path": "docs/verification/current/proofing-20261017/source-package.json",
@@ -1998,8 +2013,8 @@
     },
     {
       "path": "scripts/build-source-package.py",
-      "bytes": 28465,
-      "sha256": "b253ed380c96cb49f0a7409859d5214823c516068d9ede20fd21d8b315aeea0c"
+      "bytes": 43290,
+      "sha256": "cddff1a00cb49b1a04bdaf7dc4d5fd68e31e0abab7c2fbd4df53bc64cf33c56f"
     },
     {
       "path": "scripts/cargo-xwin-wsl.cmd",
@@ -2093,8 +2108,8 @@
     },
     {
       "path": "scripts/verify-pdf-proofing.py",
-      "bytes": 26279,
-      "sha256": "28be101656d06a7b565ad23c896e61d746ca099c8eda912ce8b35d54cbee9bcc"
+      "bytes": 29703,
+      "sha256": "1d1ea53b49dee0c1b4f1af7376132f52deab6c89db9cfce5249519ae98d49cbe"
     },
     {
       "path": "scripts/verify-pdfx-supported-output.py",
@@ -2153,8 +2168,8 @@
     },
     {
       "path": "tests/unit/pdf-proofing-verification.test.py",
-      "bytes": 7718,
-      "sha256": "781c9e3e07c01251c5bb0afa655930ef50efa82d781a4c42d247871b1347cd1f"
+      "bytes": 13203,
+      "sha256": "c668ba3dcb26315ef57f36df0853fba85facdd478dc6dd2414960977c2318419"
     },
     {
       "path": "tests/unit/pdf-proofing.test.py",
@@ -2173,8 +2188,8 @@
     },
     {
       "path": "tests/unit/source-package.test.py",
-      "bytes": 31968,
-      "sha256": "5088d7caf09f004373cd08e070d5d28e609e7eb7d3a9b79e9fdca269705bd640"
+      "bytes": 43106,
+      "sha256": "771a583ee54b6d5d490f821c8e4594ff30c2453900d46a2ff24d33234a4d3901"
     },
     {
       "path": "tests/unit/text-metadata-rules.test.py",

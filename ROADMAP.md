@@ -40,7 +40,9 @@ OutputIntent record the caller's explicit DefaultCMYK condition.
 Native Windows and Ubuntu preview qualification passes with explicit profiles,
 independent color measurements and repeatability controls. Source delivery also
 requires the adjacent exact-archive isolation receipt. See the
-[proofing guide](docs/proofing.md) for use, completion manifests and limitations.
+[proofing guide](docs/proofing.md) for use, completion manifests and limitations. The qualification includes 156 independent
+color/opacity expectations for the native RGB preview route. CMYK group-colorimetry
+requires separate qualification.
 The three historical failed reader comparisons retain their original verdicts
 and bounds. Physical printer acceptance remains a downstream check.
 

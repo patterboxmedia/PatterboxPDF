@@ -50,6 +50,7 @@ PUBLIC_RECEIPTS = (
     "accepted-inputs-20261016/supported-inputs.json", "accepted-inputs-20261016/color.json",
     "accepted-inputs-20261016/linux.json", "accepted-inputs-20261016/windows.json",
     "proofing-20261017/windows.json", "proofing-20261017/ubuntu.json", "proofing-20261017/source-package.json",
+    "proofing-20261017-r2/windows.json", "proofing-20261017-r2/ubuntu.json", "proofing-20261017-r2/source-package.json",
 )
 SUPPORTED_TARGETS = ("x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu")
 FORBIDDEN_PARTS = {".git", ".codex", ".agents", ".tools", "target", "artifacts", "node_modules", "__pycache__"}
@@ -401,7 +402,198 @@ def collect(root):
     audit_policy({'schema': 'patterboxpdf-source-package/v2', **POLICIES['patterboxpdf-source-package/v2']}, files)
     audit_payload_paths(files)
     audit_notices(files)
+    audit_proofing_evidence(files)
     return tomllib.loads(files['Cargo.toml'].decode()), files
+
+
+def audit_proofing_evidence(files):
+    """Reject stale or failed current proofing evidence, even with a fresh ZIP inventory.
+
+    R1 receipts and the original failed reader comparisons remain historical.
+    R2 qualifies the delivered companion and measurements; exact archive build
+    isolation still needs its separate adjacent receipt (no self-hash claim).
+    """
+    prefix = 'docs/verification/current/proofing-20261017-r2/'
+    programs = ('scripts/pdf_proofing.py', 'scripts/proof-pdf.py', 'scripts/verify-pdf-proofing.py')
+    source_paths = (*programs, 'scripts/build-source-package.py', 'tests/unit/pdf-proofing.test.py',
+                    'tests/unit/pdf-proofing-verification.test.py', 'tests/unit/source-package.test.py')
+    native_paths = (prefix+'windows.json', prefix+'ubuntu.json')
+
+    def require(condition, message):
+        if not condition:
+            raise ValueError('proofing evidence: '+message)
+
+    def bindings(rows, paths, label, sizes=False):
+        require(isinstance(rows, list) and len(rows) == len(paths)
+                and {row['path'] for row in rows} == set(paths), label+' coverage disagreement')
+        for row in rows:
+            name = row['path']
+            require(name in files and row['sha256'] == sha(files[name]), label+' stale identity: '+name)
+            if sizes:
+                require(type(row['bytes']) is int and row['bytes'] == len(files[name]), label+' size disagreement: '+name)
+
+    def identity(row):
+        require(isinstance(row, dict) and isinstance(row.get('file'), str) and row['file']
+                and re.fullmatch(r'[0-9a-f]{64}', row.get('sha256', '')), 'missing recorded byte identity')
+        return row['sha256']
+
+    def rgb(value):
+        require(isinstance(value, list) and len(value) == 3
+                and all(type(c) is int and 0 <= c <= 255 for c in value), 'invalid RGB measurement')
+        return value
+
+    def measured(rows, expected, keys, label):
+        require(isinstance(rows, list) and len(rows) == len(expected)
+                and {tuple(row[k] for k in keys) for row in rows} == expected, label+' sample coverage disagreement')
+        errors = []
+        for row in rows:
+            error = max(abs(a-b) for a, b in zip(rgb(row['actual_rgb']), rgb(row['reference_rgb'])))
+            require(type(row['maximum_error']) is int and row['maximum_error'] == error <= 4,
+                    label+' recorded channel error exceeds fixed bound or disagrees')
+            errors.append(error)
+        return max(errors)
+
+    try:
+        source = json.loads(files[prefix+'source-package.json'])
+        require(source['schema'] == 'patterboxpdf-proofing-source-qualification/v1'
+                and source['status'] == 'source-inputs-qualified', 'source qualification status disagreement')
+        bindings(source['source_bindings'], source_paths, 'source bindings')
+        bindings(source['preview_qualifications'], native_paths, 'native qualifications')
+        generation = source['native_generation']
+        inputs = {name for name in files if name.startswith(('apps/', 'crates/', 'examples/standalone-client/'))
+                  or name in ('Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml')}
+        require(generation['all_inputs_unchanged'] is True, 'native generation inputs changed')
+        bindings(generation['inputs'], inputs, 'native generation inputs', sizes=True)
+        isolation = source['source_archive_isolation']
+        require(isolation['required'] is True and isolation['asserted_by_this_record'] is False,
+                'exact archive isolation boundary disagreement')
+        history = source['historical_color']
+        historical_path = 'docs/verification/current/accepted-inputs-20261016/color.json'
+        require(history['receipt'] == historical_path and history['sha256'] == sha(files[historical_path])
+                and history['original_three_default_comparison_failures_preserved'] is True,
+                'historical color identity disagreement')
+        times = (.125, .25, .5, .75, .875)
+        cases = ('axial', 'radial', 'hard-stop', 'constant-alpha', 'varying-alpha',
+                 'radial-varying-alpha', 'group-opacity', 'varying-alpha-group-opacity')
+        diagnostic_keys = {(page, space, case, t)
+                           for page, space in ((1, '/DeviceCMYK'), (2, '/DeviceRGB'))
+                           for case in cases for t in times if case != 'hard-stop' or t != .5}
+        pinned = {'diagnostic': '1124ab1ab80aa179cc1c1b222c46a37afa542ccd41a6180c9a22b11852c8d342',
+                  'ordinary': 'ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8',
+                  'print': '5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab'}
+        pages = {'diagnostic': [1, 2], 'ordinary': [1, 2, 3], 'print': [1, 2, 3], 'flat-controls': [1, 2]}
+        pages.update({name+'-repeat': selected for name, selected in list(pages.items())})
+        pages['alternate-display'] = [1]
+        display = sha(files['crates/print-core/tests/fixtures/generated-srgb.icc'])
+        for path, target in zip(native_paths, SUPPORTED_TARGETS):
+            native = json.loads(files[path])
+            require(native['schema'] == 'patterboxpdf-controlled-proofing-verification/v1'
+                    and native['passed'] is True and native['target'] == target, 'native qualification did not pass: '+path)
+            bindings(native['source_bindings'], programs, 'native source bindings')
+            for key, name in (('companion', programs[0]), ('verifier', programs[2])):
+                require(identity(native[key]) == sha(files[name]), 'stale native '+key)
+            identity(native['renderer'])
+            require(native['renderer']['version'] and identity(native['littlecms'])
+                    and type(native['littlecms']['encoded_version']) is int, 'missing renderer/CMM identity')
+            require(native['reference_conditions'] == {'intent': 1, 'flags': 8448, 'encoding': 'round-u8',
+                    'maximum_channel_error': 4, 'diagnostic_background_rgb': [204, 204, 204],
+                    'diagnostic_compositing': 'encoded-RGB source-over on opaque Splash RGB8; paint alpha times isolated group opacity once'},
+                    'fixed reference conditions changed')
+            previews = native['previews']
+            require(set(previews) == set(pages), 'preview coverage disagreement')
+            print_profile = identity(previews['diagnostic']['print_profile'])
+            alternate = identity(native['alternate_display']['profile'])
+            for name, selected in pages.items():
+                preview = previews[name]
+                identity(preview['manifest'])
+                pdf = identity(preview['source_pdf'])
+                base = name.removesuffix('-repeat')
+                if base in pinned:
+                    require(pdf == pinned[base], 'pinned preview PDF changed')
+                require(identity(preview['print_profile']) == print_profile
+                        and identity(preview['display_profile']) == (alternate if name == 'alternate-display' else display),
+                        'preview profile identity disagreement')
+                require(preview['pages'] == selected and [row['page'] for row in preview['outputs']] == selected,
+                        'preview page coverage disagreement')
+                runtime = preview['runtime']
+                require(runtime['platform'].startswith('Windows' if target == SUPPORTED_TARGETS[0] else 'Linux')
+                        and runtime['machine'] and runtime['python'] and runtime['pillow'] and runtime['pypdf']
+                        and runtime['pillow_littlecms'] and identity(runtime['executable']), 'missing native runtime identity')
+                condition = preview['print_condition']
+                require(condition['kind'] == ('embedded-output-intent-match' if base == 'print' else 'selected-default-cmyk'),
+                        'preview print condition disagreement')
+                if base == 'print':
+                    require(condition['embedded_profiles'] and all(row['sha256'] == print_profile
+                            for row in condition['embedded_profiles']), 'embedded print profile disagreement')
+                for row in preview['outputs']:
+                    identity(row)
+                    require(re.fullmatch(r'[0-9a-f]{64}', row['pixel_sha256'])
+                            and row['icc_sha256'] == preview['display_profile']['sha256']
+                            and len(row['pixel_dimensions']) == 2
+                            and all(type(n) is int and n > 0 for n in row['pixel_dimensions']), 'invalid preview output record')
+            summary = native['summary']
+            require(summary['preview_runs'] == 9 and summary['pages_checked'] == 21, 'preview summary coverage disagreement')
+            groups = [('diagnostic_gradient_flat_controls', diagnostic_keys,
+                       ('page', 'page_blending_space', 'case', 't'), 'diagnostic'),
+                      ('independent_diagnostic_appearance_controls',
+                       {(*key, region) for key in diagnostic_keys for region in ('gradient', 'flat')},
+                       ('page', 'page_blending_space', 'case', 't', 'region'), 'independent_diagnostic'),
+                      ('independent_littlecms_flat_controls', {(n, cs) for n in range(10)
+                           for cs in ('default-cmyk', 'icc-based-cmyk')}, ('sample', 'color_space'), 'direct_littlecms'),
+                      ('retained_gallery_gradient_flat_controls', {(mode, page, kind, t)
+                           for mode, page in (('ordinary', 2), ('print', 1), ('print', 2))
+                           for kind in ('axial', 'radial') for t in times}, ('mode', 'page', 'geometry', 't'), 'gallery')]
+            for field, expected, keys, label in groups:
+                error = measured(native[field], expected, keys, label)
+                require(summary[label+'_samples'] == len(expected) and summary[label+'_maximum_error'] == error,
+                        label+' summary disagrees with measured records')
+            for row in native['independent_diagnostic_appearance_controls']:
+                case, t = row['case'], row['t']
+                fraction = (0. if t < .5 else 1.) if case == 'hard-stop' else t
+                alpha = .5 if case == 'constant-alpha' else t if case in (
+                    'varying-alpha', 'radial-varying-alpha', 'varying-alpha-group-opacity') else 1.
+                group = .5 if case in ('group-opacity', 'varying-alpha-group-opacity') else 1.
+                expected = [round(alpha*group*c+(1-alpha*group)*204) for c in rgb(row['foreground_rgb'])]
+                require(row['foreground_components'] == [fraction, 1-fraction, fraction, .25*fraction]
+                        and row['background_rgb'] == [204, 204, 204] and row['paint_alpha'] == alpha
+                        and row['group_opacity'] == group and row['effective_alpha'] == alpha*group
+                        and row['reference_rgb'] == expected, 'independent diagnostic reference disagreement')
+            alternate_samples = native['alternate_display']['samples']
+            measured(alternate_samples, {(n,) for n in range(10)}, ('sample',), 'alternate display')
+            require(alternate != display and summary['alternate_display_samples'] == 10, 'alternate display identity disagreement')
+            for row in alternate_samples:
+                observed = max(abs(a-b) for a, b in zip(rgb(row['original_rgb']), rgb(row['actual_rgb'])))
+                require(row['observed_profile_difference'] == observed, 'alternate display contrast disagreement')
+            require(any(row['predicted_profile_difference'] > 8 and row['observed_profile_difference'] > 4
+                        for row in alternate_samples), 'display profile sensitivity failed')
+            contrast = native['explicit_default_cmyk_contrast']['samples']
+            require(len(contrast) == 10 and {row['sample'] for row in contrast} == set(range(10)),
+                    'DefaultCMYK contrast coverage disagreement')
+            for row in contrast:
+                difference = max(abs(a-b) for a, b in zip(rgb(row['managed_rgb']), rgb(row['without_default_cmyk_rgb'])))
+                require(row['maximum_contrast'] == difference, 'DefaultCMYK contrast disagreement')
+            require(any(row['maximum_contrast'] > 4 for row in contrast), 'DefaultCMYK profile sensitivity failed')
+            wrong = native['wrong_print_output_intent']
+            require(identity(wrong['profile']) != print_profile and wrong['success_manifest_exists'] is False
+                    and 'does not match the embedded OutputIntent' in wrong['refusal'], 'wrong-profile refusal failed')
+            repeats = native['repeatability']
+            expected_repeats = {(name, page) for name in ('diagnostic', 'ordinary', 'print', 'flat-controls') for page in pages[name]}
+            require(len(repeats) == 10 and {(row['preview'], row['page']) for row in repeats} == expected_repeats
+                    and summary['repeat_pages'] == 10, 'repeatability coverage disagreement')
+            for row in repeats:
+                first = next(output for output in previews[row['preview']]['outputs'] if output['page'] == row['page'])
+                second = next(output for output in previews[row['preview']+'-repeat']['outputs'] if output['page'] == row['page'])
+                require(row['decoded_pixels_equal'] is True and row['exact_icc_equal'] is True
+                        and row['pixel_sha256'] == first['pixel_sha256'] == second['pixel_sha256']
+                        and row['icc_sha256'] == first['icc_sha256'] == second['icc_sha256']
+                        and row['encoded_sha256_first'] == first['sha256']
+                        and row['encoded_sha256_repeat'] == second['sha256'], 'repeatability record disagreement')
+            retained = native['historical_reader_comparison']
+            require(identity(retained['receipt']) == history['sha256'] and retained['default_comparison_passed'] is False
+                    and retained['fixed_bounds'] == {'mean_channel_difference_max': 5, 'p95_max_channel_difference_max': 20,
+                                                     'pixels_above_10_percent_max': 8}, 'historical comparison changed')
+    except (KeyError, TypeError, AttributeError, json.JSONDecodeError) as error:
+        raise ValueError('proofing evidence: missing or malformed current qualification record') from error
 
 
 def verify_archive(archive):
@@ -428,6 +620,8 @@ def verify_archive(archive):
             audit_public_inventory(json.loads(files['docs/requirements/pdfx4-inventory.json']))
             audit_payload_paths(files)
         audit_notices(files, require_union=manifest['schema'] == 'patterboxpdf-source-package/v2')
+        if manifest['schema'] == 'patterboxpdf-source-package/v2':
+            audit_proofing_evidence(files)
         return manifest
 
 

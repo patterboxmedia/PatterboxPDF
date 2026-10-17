@@ -42,3 +42,8 @@ Each PNG carries the exact selected RGB display ICC profile. Viewing it correctl
 requires software that honors that profile and an appropriate display condition.
 The workflow provides no calibrated-monitor certification or physical printer
 acceptance. Its complete manifest records the actual platform and tool identities.
+
+The qualified Poppler PNG path composites ordinary transparency groups in RGB,
+including groups whose source PDF declares a CMYK blending space. The reference
+checks that RGB appearance. CMYK group-colorimetry and press simulation need
+separate qualification.

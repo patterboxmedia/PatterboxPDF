@@ -1,0 +1,9687 @@
+{
+  "schema": "patterboxpdf-controlled-proofing-verification/v1",
+  "passed": true,
+  "verifier": {
+    "file": "verify-pdf-proofing.py",
+    "sha256": "1d1ea53b49dee0c1b4f1af7376132f52deab6c89db9cfce5249519ae98d49cbe"
+  },
+  "companion": {
+    "file": "pdf_proofing.py",
+    "sha256": "44bf81d1a4de191aa1d280a6e7a08f0ae5e09b1bb0cdace4ccf7f80f6ecb5fb4"
+  },
+  "renderer": {
+    "file": "pdftoppm",
+    "sha256": "ab7c91f0f144335ad7696f4f23aefbd564ef67c099290bd8f813cdbb47cd1e9e",
+    "version": "pdftoppm version 24.02.0\nCopyright 2005-2024 The Poppler Developers - http://poppler.freedesktop.org\nCopyright 1996-2011, 2022 Glyph & Cog, LLC"
+  },
+  "littlecms": {
+    "file": "liblcms2.so.2.0.14",
+    "sha256": "65d948920458341176f78e3797320ffb7c052ab5bd75036c3db75dd88839b007",
+    "encoded_version": 2140
+  },
+  "reference_conditions": {
+    "intent": 1,
+    "flags": 8448,
+    "encoding": "round-u8",
+    "maximum_channel_error": 4,
+    "diagnostic_compositing": "encoded-RGB source-over on opaque Splash RGB8; paint alpha times isolated group opacity once",
+    "diagnostic_background_rgb": [
+      204,
+      204,
+      204
+    ]
+  },
+  "previews": {
+    "diagnostic": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "aa68b8b8ee59e1734b535930f55be7e1149ed2d42c8a89724f1388745ff12e7b"
+      },
+      "pages": [
+        1,
+        2
+      ],
+      "source_pdf": {
+        "file": "diagnostic.pdf",
+        "sha256": "1124ab1ab80aa179cc1c1b222c46a37afa542ccd41a6180c9a22b11852c8d342"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "generated-srgb.icc",
+        "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "2f4ae79f53b43e383cafd7f8f74b7d0238400d786418c2e007d75300da6df82b",
+          "pixel_sha256": "047907a1eebe588e09d1b7ef5a27c099c2c34859eb25a01abe01d03e190c83c6",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1280,
+            1920
+          ]
+        },
+        {
+          "page": 2,
+          "file": "page-2.png",
+          "sha256": "2f4ae79f53b43e383cafd7f8f74b7d0238400d786418c2e007d75300da6df82b",
+          "pixel_sha256": "047907a1eebe588e09d1b7ef5a27c099c2c34859eb25a01abe01d03e190c83c6",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1280,
+            1920
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "selected-default-cmyk",
+        "embedded_profiles": []
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    },
+    "ordinary": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "b24fac1b266a2cf03cccc20ad3c4f762f01831c60eadfb8a32fe62003d8075f3"
+      },
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "source_pdf": {
+        "file": "ordinary.pdf",
+        "sha256": "ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "generated-srgb.icc",
+        "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "e3c0b4f10427c3347720d9264743e4f322ce5c06d74721b55a122f27b21c9dc8",
+          "pixel_sha256": "82a1554c3380002ba9bb0482a0513bedf163f27a09cc38c2b3e53cd166b70a8e",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        },
+        {
+          "page": 2,
+          "file": "page-2.png",
+          "sha256": "07b300ffcaa0cd05611a94b78beaa378d454555c773bb6ac82627970e51f742e",
+          "pixel_sha256": "7b3c0f0b678f6eaac5d9aeb24107e8b2389edbd48f6912c4d831ed7742901995",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        },
+        {
+          "page": 3,
+          "file": "page-3.png",
+          "sha256": "81a1537dd5ac62a4d3ddecb0ff2c95e253a35df72e961e8fda1028f602c1c7b7",
+          "pixel_sha256": "4d2dfef08f9f10be5b85b5f0dab4e9235566f7b5eec3c7c238cd362880688fb2",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "selected-default-cmyk",
+        "embedded_profiles": []
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    },
+    "print": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "068f4b4fdcf5fda180756d63260c9d14bb4e4ddc7eb4c19a2f3064e085d5f2ae"
+      },
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "source_pdf": {
+        "file": "candidate.pdf",
+        "sha256": "5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "generated-srgb.icc",
+        "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "b64d1698873ab8bd4d6d601fea517ce6f39d91924963788cc39ffd742f91f252",
+          "pixel_sha256": "1a8148c8439053d39aa80385adb24f1848cf3f026c6e691fcc733398eebb6541",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        },
+        {
+          "page": 2,
+          "file": "page-2.png",
+          "sha256": "07b300ffcaa0cd05611a94b78beaa378d454555c773bb6ac82627970e51f742e",
+          "pixel_sha256": "7b3c0f0b678f6eaac5d9aeb24107e8b2389edbd48f6912c4d831ed7742901995",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        },
+        {
+          "page": 3,
+          "file": "page-3.png",
+          "sha256": "9bc3acf302db411cb71dbfa3d3966c8169b6a22af9b1140250798e99261c7926",
+          "pixel_sha256": "25d2e3b5eb31f56a20c1fb56b5531fb42ddaf2e4157613dbd59d9638d867ede5",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "embedded-output-intent-match",
+        "embedded_profiles": [
+          {
+            "location": "catalog",
+            "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+          }
+        ]
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    },
+    "flat-controls": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "f88703d6417ee3f9d5a9ba2a4d6573791e410a2c160925a8666d41c581d6401e"
+      },
+      "pages": [
+        1,
+        2
+      ],
+      "source_pdf": {
+        "file": "independent-flat-controls.pdf",
+        "sha256": "50745be72ada83d1e165397a63a370b0e11c8000bb1ee669513aa30fa16f0d5f"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "generated-srgb.icc",
+        "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "2054b7c4d8733bf326b6375afe9e8acf68696df097f43cc03a12adb32e433762",
+          "pixel_sha256": "2747f05544bb28fb6ce0976f6eeceb32d27d27dcbee1b11c583e08a928a69f50",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1280,
+            320
+          ]
+        },
+        {
+          "page": 2,
+          "file": "page-2.png",
+          "sha256": "ff57d05c0e839ddb5c5dc93d428ec648796bc5b841698c156f69f17a77c466eb",
+          "pixel_sha256": "d7b4c69d4aa223b35de960d47651cbc95ba4ed1c0f6f0d5797ed5b25e4f3f31f",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1280,
+            320
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "selected-default-cmyk",
+        "embedded_profiles": []
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    },
+    "alternate-display": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "7bf70d58f1b8f6dba450302392d5d70a18bd3e744f6f39525f9ade633c6fc551"
+      },
+      "pages": [
+        1
+      ],
+      "source_pdf": {
+        "file": "independent-flat-controls.pdf",
+        "sha256": "50745be72ada83d1e165397a63a370b0e11c8000bb1ee669513aa30fa16f0d5f"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "display-gamma18.icc",
+        "sha256": "b0e8110cdb3d92936e8a42aac7a41dffc37ed2e8ec5e140bfd48f61f2ba0da01"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "3fee4f9ecfa3aa21377eb1eee6eaf93b5a7a1f0126d76b9e839ae37df18b6193",
+          "pixel_sha256": "4893e4bda685628706992ee60a001b7bb927b1dd376e3d4bcbb92963c4b9040a",
+          "icc_sha256": "b0e8110cdb3d92936e8a42aac7a41dffc37ed2e8ec5e140bfd48f61f2ba0da01",
+          "pixel_dimensions": [
+            1280,
+            320
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "selected-default-cmyk",
+        "embedded_profiles": []
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    },
+    "diagnostic-repeat": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "c86f11c54060faa61e2d052ec82034c0b9d3cef9ef70198d3a407e80958843e1"
+      },
+      "pages": [
+        1,
+        2
+      ],
+      "source_pdf": {
+        "file": "diagnostic.pdf",
+        "sha256": "1124ab1ab80aa179cc1c1b222c46a37afa542ccd41a6180c9a22b11852c8d342"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "generated-srgb.icc",
+        "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "2f4ae79f53b43e383cafd7f8f74b7d0238400d786418c2e007d75300da6df82b",
+          "pixel_sha256": "047907a1eebe588e09d1b7ef5a27c099c2c34859eb25a01abe01d03e190c83c6",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1280,
+            1920
+          ]
+        },
+        {
+          "page": 2,
+          "file": "page-2.png",
+          "sha256": "2f4ae79f53b43e383cafd7f8f74b7d0238400d786418c2e007d75300da6df82b",
+          "pixel_sha256": "047907a1eebe588e09d1b7ef5a27c099c2c34859eb25a01abe01d03e190c83c6",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1280,
+            1920
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "selected-default-cmyk",
+        "embedded_profiles": []
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    },
+    "ordinary-repeat": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "9d3da6ea0da0efedcc299977c16e372ed4b0227fbbd7539ac0a07ecaa741931e"
+      },
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "source_pdf": {
+        "file": "ordinary.pdf",
+        "sha256": "ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "generated-srgb.icc",
+        "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "e3c0b4f10427c3347720d9264743e4f322ce5c06d74721b55a122f27b21c9dc8",
+          "pixel_sha256": "82a1554c3380002ba9bb0482a0513bedf163f27a09cc38c2b3e53cd166b70a8e",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        },
+        {
+          "page": 2,
+          "file": "page-2.png",
+          "sha256": "07b300ffcaa0cd05611a94b78beaa378d454555c773bb6ac82627970e51f742e",
+          "pixel_sha256": "7b3c0f0b678f6eaac5d9aeb24107e8b2389edbd48f6912c4d831ed7742901995",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        },
+        {
+          "page": 3,
+          "file": "page-3.png",
+          "sha256": "81a1537dd5ac62a4d3ddecb0ff2c95e253a35df72e961e8fda1028f602c1c7b7",
+          "pixel_sha256": "4d2dfef08f9f10be5b85b5f0dab4e9235566f7b5eec3c7c238cd362880688fb2",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "selected-default-cmyk",
+        "embedded_profiles": []
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    },
+    "print-repeat": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "0157f87d16aa6059d249c7ac49aa92fe24c327d696253d238e15e8dd70d523da"
+      },
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "source_pdf": {
+        "file": "candidate.pdf",
+        "sha256": "5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "generated-srgb.icc",
+        "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "b64d1698873ab8bd4d6d601fea517ce6f39d91924963788cc39ffd742f91f252",
+          "pixel_sha256": "1a8148c8439053d39aa80385adb24f1848cf3f026c6e691fcc733398eebb6541",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        },
+        {
+          "page": 2,
+          "file": "page-2.png",
+          "sha256": "07b300ffcaa0cd05611a94b78beaa378d454555c773bb6ac82627970e51f742e",
+          "pixel_sha256": "7b3c0f0b678f6eaac5d9aeb24107e8b2389edbd48f6912c4d831ed7742901995",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        },
+        {
+          "page": 3,
+          "file": "page-3.png",
+          "sha256": "9bc3acf302db411cb71dbfa3d3966c8169b6a22af9b1140250798e99261c7926",
+          "pixel_sha256": "25d2e3b5eb31f56a20c1fb56b5531fb42ddaf2e4157613dbd59d9638d867ede5",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1220,
+            1300
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "embedded-output-intent-match",
+        "embedded_profiles": [
+          {
+            "location": "catalog",
+            "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+          }
+        ]
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    },
+    "flat-controls-repeat": {
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "bbb28b81ede1c7dab1ddd76ddc7b57c5a15136bedb2bf946212f7e52097f2492"
+      },
+      "pages": [
+        1,
+        2
+      ],
+      "source_pdf": {
+        "file": "independent-flat-controls.pdf",
+        "sha256": "50745be72ada83d1e165397a63a370b0e11c8000bb1ee669513aa30fa16f0d5f"
+      },
+      "print_profile": {
+        "file": "SWOP2006coated_300_mth.icc",
+        "sha256": "e30370d47804f281071c9786970714b1dbf4e62b4aac03096d3c257304f962b1"
+      },
+      "display_profile": {
+        "file": "generated-srgb.icc",
+        "sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356"
+      },
+      "outputs": [
+        {
+          "page": 1,
+          "file": "page-1.png",
+          "sha256": "2054b7c4d8733bf326b6375afe9e8acf68696df097f43cc03a12adb32e433762",
+          "pixel_sha256": "2747f05544bb28fb6ce0976f6eeceb32d27d27dcbee1b11c583e08a928a69f50",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1280,
+            320
+          ]
+        },
+        {
+          "page": 2,
+          "file": "page-2.png",
+          "sha256": "ff57d05c0e839ddb5c5dc93d428ec648796bc5b841698c156f69f17a77c466eb",
+          "pixel_sha256": "d7b4c69d4aa223b35de960d47651cbc95ba4ed1c0f6f0d5797ed5b25e4f3f31f",
+          "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+          "pixel_dimensions": [
+            1280,
+            320
+          ]
+        }
+      ],
+      "print_condition": {
+        "kind": "selected-default-cmyk",
+        "embedded_profiles": []
+      },
+      "runtime": {
+        "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+        "executable": {
+          "file": "python3",
+          "sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118"
+        },
+        "pillow": "12.3.0",
+        "pypdf": "6.10.0",
+        "pillow_littlecms": "2.19",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64"
+      }
+    }
+  },
+  "diagnostic_gradient_flat_controls": [
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.125,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.25,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.5,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.75,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.875,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.125,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.25,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.5,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.75,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.875,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.125,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.25,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.75,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.875,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.125,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        133,
+        166
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.25,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        193,
+        146,
+        165
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        167,
+        160,
+        158
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.75,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        134,
+        166,
+        147
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.875,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        101,
+        167,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        204,
+        186,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        198,
+        175,
+        184
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        167,
+        160,
+        158
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        25,
+        141,
+        93
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        204,
+        186,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        198,
+        175,
+        184
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        167,
+        160,
+        158
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        25,
+        141,
+        93
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.125,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        133,
+        166
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.25,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        193,
+        146,
+        165
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        167,
+        160,
+        158
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.75,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        134,
+        166,
+        147
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.875,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        101,
+        167,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "actual_rgb": [
+        204,
+        195,
+        199
+      ],
+      "reference_rgb": [
+        204,
+        195,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "actual_rgb": [
+        201,
+        189,
+        194
+      ],
+      "reference_rgb": [
+        201,
+        189,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "actual_rgb": [
+        185,
+        182,
+        181
+      ],
+      "reference_rgb": [
+        185,
+        182,
+        181
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "actual_rgb": [
+        152,
+        176,
+        161
+      ],
+      "reference_rgb": [
+        152,
+        176,
+        161
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "actual_rgb": [
+        114,
+        172,
+        148
+      ],
+      "reference_rgb": [
+        114,
+        172,
+        148
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.125,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.25,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.5,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.75,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.875,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.125,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.25,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.5,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.75,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.875,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.125,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.25,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.75,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.875,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.125,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        133,
+        166
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.25,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        193,
+        146,
+        165
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        167,
+        160,
+        158
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.75,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        134,
+        166,
+        147
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.875,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        101,
+        167,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        204,
+        186,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        198,
+        175,
+        184
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        167,
+        160,
+        158
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        25,
+        141,
+        93
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        204,
+        186,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        198,
+        175,
+        184
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        167,
+        160,
+        158
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        25,
+        141,
+        93
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.125,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        133,
+        166
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.25,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        193,
+        146,
+        165
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        167,
+        160,
+        158
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.75,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        134,
+        166,
+        147
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.875,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        101,
+        167,
+        140
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "actual_rgb": [
+        204,
+        195,
+        199
+      ],
+      "reference_rgb": [
+        204,
+        195,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "actual_rgb": [
+        201,
+        189,
+        194
+      ],
+      "reference_rgb": [
+        201,
+        189,
+        194
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "actual_rgb": [
+        185,
+        182,
+        181
+      ],
+      "reference_rgb": [
+        185,
+        182,
+        181
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "actual_rgb": [
+        152,
+        176,
+        161
+      ],
+      "reference_rgb": [
+        152,
+        176,
+        161
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "actual_rgb": [
+        114,
+        172,
+        148
+      ],
+      "reference_rgb": [
+        114,
+        172,
+        148
+      ],
+      "maximum_error": 0
+    }
+  ],
+  "independent_diagnostic_appearance_controls": [
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "axial",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "foreground_rgb": [
+        233,
+        0,
+        132
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "foreground_rgb": [
+        233,
+        0,
+        132
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "foreground_rgb": [
+        233,
+        0,
+        132
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "foreground_rgb": [
+        233,
+        0,
+        132
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        1.0,
+        0.0,
+        1.0,
+        0.25
+      ],
+      "foreground_rgb": [
+        0,
+        130,
+        66
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        1.0,
+        0.0,
+        1.0,
+        0.25
+      ],
+      "foreground_rgb": [
+        0,
+        130,
+        66
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        1.0,
+        0.0,
+        1.0,
+        0.25
+      ],
+      "foreground_rgb": [
+        0,
+        130,
+        66
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "hard-stop",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        1.0,
+        0.0,
+        1.0,
+        0.25
+      ],
+      "foreground_rgb": [
+        0,
+        130,
+        66
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        134,
+        167
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        134,
+        167
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        194,
+        146,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        194,
+        146,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        135,
+        167,
+        148
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        135,
+        167,
+        148
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        102,
+        168,
+        141
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "constant-alpha",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        102,
+        168,
+        141
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        205,
+        186,
+        195
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        205,
+        186,
+        195
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        199,
+        175,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        199,
+        175,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        26,
+        141,
+        94
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        26,
+        141,
+        94
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        205,
+        186,
+        195
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        205,
+        186,
+        195
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        199,
+        175,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        199,
+        175,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        26,
+        141,
+        94
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        26,
+        141,
+        94
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        134,
+        167
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        134,
+        167
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        194,
+        146,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        194,
+        146,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        135,
+        167,
+        148
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        135,
+        167,
+        148
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        102,
+        168,
+        141
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "group-opacity",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        102,
+        168,
+        141
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.0625,
+      "actual_rgb": [
+        204,
+        195,
+        199
+      ],
+      "reference_rgb": [
+        204,
+        195,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.0625,
+      "actual_rgb": [
+        204,
+        195,
+        199
+      ],
+      "reference_rgb": [
+        204,
+        195,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        201,
+        189,
+        194
+      ],
+      "reference_rgb": [
+        202,
+        190,
+        194
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        201,
+        189,
+        194
+      ],
+      "reference_rgb": [
+        202,
+        190,
+        194
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        185,
+        182,
+        181
+      ],
+      "reference_rgb": [
+        186,
+        182,
+        181
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        185,
+        182,
+        181
+      ],
+      "reference_rgb": [
+        186,
+        182,
+        181
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.375,
+      "actual_rgb": [
+        152,
+        176,
+        161
+      ],
+      "reference_rgb": [
+        152,
+        176,
+        162
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.375,
+      "actual_rgb": [
+        152,
+        176,
+        161
+      ],
+      "reference_rgb": [
+        152,
+        176,
+        162
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.4375,
+      "actual_rgb": [
+        114,
+        172,
+        148
+      ],
+      "reference_rgb": [
+        115,
+        172,
+        149
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 1,
+      "page_blending_space": "/DeviceCMYK",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.4375,
+      "actual_rgb": [
+        114,
+        172,
+        148
+      ],
+      "reference_rgb": [
+        115,
+        172,
+        149
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "axial",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "foreground_rgb": [
+        233,
+        0,
+        132
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "foreground_rgb": [
+        233,
+        0,
+        132
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "foreground_rgb": [
+        233,
+        0,
+        132
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "foreground_rgb": [
+        233,
+        0,
+        132
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        1.0,
+        0.0,
+        1.0,
+        0.25
+      ],
+      "foreground_rgb": [
+        0,
+        130,
+        66
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        1.0,
+        0.0,
+        1.0,
+        0.25
+      ],
+      "foreground_rgb": [
+        0,
+        130,
+        66
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        1.0,
+        0.0,
+        1.0,
+        0.25
+      ],
+      "foreground_rgb": [
+        0,
+        130,
+        66
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "hard-stop",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        1.0,
+        0.0,
+        1.0,
+        0.25
+      ],
+      "foreground_rgb": [
+        0,
+        130,
+        66
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 1.0,
+      "effective_alpha": 1.0,
+      "actual_rgb": [
+        0,
+        130,
+        66
+      ],
+      "reference_rgb": [
+        0,
+        130,
+        66
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        134,
+        167
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        134,
+        167
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        194,
+        146,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        194,
+        146,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        135,
+        167,
+        148
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        135,
+        167,
+        148
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        102,
+        168,
+        141
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "constant-alpha",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        102,
+        168,
+        141
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        205,
+        186,
+        195
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        205,
+        186,
+        195
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        199,
+        175,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        199,
+        175,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        26,
+        141,
+        94
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        26,
+        141,
+        94
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        205,
+        186,
+        195
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        204,
+        186,
+        194
+      ],
+      "reference_rgb": [
+        205,
+        186,
+        195
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        199,
+        175,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        198,
+        175,
+        184
+      ],
+      "reference_rgb": [
+        199,
+        175,
+        185
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.75,
+      "actual_rgb": [
+        100,
+        148,
+        119
+      ],
+      "reference_rgb": [
+        100,
+        148,
+        119
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        26,
+        141,
+        94
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "radial-varying-alpha",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 1.0,
+      "effective_alpha": 0.875,
+      "actual_rgb": [
+        25,
+        141,
+        93
+      ],
+      "reference_rgb": [
+        26,
+        141,
+        94
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        134,
+        167
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        206,
+        133,
+        166
+      ],
+      "reference_rgb": [
+        206,
+        134,
+        167
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        194,
+        146,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        193,
+        146,
+        165
+      ],
+      "reference_rgb": [
+        194,
+        146,
+        166
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        167,
+        160,
+        158
+      ],
+      "reference_rgb": [
+        168,
+        160,
+        158
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        135,
+        167,
+        148
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        134,
+        166,
+        147
+      ],
+      "reference_rgb": [
+        135,
+        167,
+        148
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        102,
+        168,
+        141
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "group-opacity",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 1.0,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.5,
+      "actual_rgb": [
+        101,
+        167,
+        140
+      ],
+      "reference_rgb": [
+        102,
+        168,
+        141
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "region": "gradient",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.0625,
+      "actual_rgb": [
+        204,
+        195,
+        199
+      ],
+      "reference_rgb": [
+        204,
+        195,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.125,
+      "region": "flat",
+      "foreground_components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "foreground_rgb": [
+        209,
+        63,
+        130
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.125,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.0625,
+      "actual_rgb": [
+        204,
+        195,
+        199
+      ],
+      "reference_rgb": [
+        204,
+        195,
+        199
+      ],
+      "maximum_error": 0
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "region": "gradient",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        201,
+        189,
+        194
+      ],
+      "reference_rgb": [
+        202,
+        190,
+        194
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.25,
+      "region": "flat",
+      "foreground_components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "foreground_rgb": [
+        184,
+        89,
+        127
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.25,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.125,
+      "actual_rgb": [
+        201,
+        189,
+        194
+      ],
+      "reference_rgb": [
+        202,
+        190,
+        194
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "region": "gradient",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        185,
+        182,
+        181
+      ],
+      "reference_rgb": [
+        186,
+        182,
+        181
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.5,
+      "region": "flat",
+      "foreground_components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "foreground_rgb": [
+        132,
+        117,
+        113
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.5,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.25,
+      "actual_rgb": [
+        185,
+        182,
+        181
+      ],
+      "reference_rgb": [
+        186,
+        182,
+        181
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "region": "gradient",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.375,
+      "actual_rgb": [
+        152,
+        176,
+        161
+      ],
+      "reference_rgb": [
+        152,
+        176,
+        162
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.75,
+      "region": "flat",
+      "foreground_components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "foreground_rgb": [
+        66,
+        130,
+        91
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.75,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.375,
+      "actual_rgb": [
+        152,
+        176,
+        161
+      ],
+      "reference_rgb": [
+        152,
+        176,
+        162
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "region": "gradient",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.4375,
+      "actual_rgb": [
+        114,
+        172,
+        148
+      ],
+      "reference_rgb": [
+        115,
+        172,
+        149
+      ],
+      "maximum_error": 1
+    },
+    {
+      "page": 2,
+      "page_blending_space": "/DeviceRGB",
+      "case": "varying-alpha-group-opacity",
+      "t": 0.875,
+      "region": "flat",
+      "foreground_components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "foreground_rgb": [
+        0,
+        132,
+        78
+      ],
+      "background_rgb": [
+        204,
+        204,
+        204
+      ],
+      "paint_alpha": 0.875,
+      "group_opacity": 0.5,
+      "effective_alpha": 0.4375,
+      "actual_rgb": [
+        114,
+        172,
+        148
+      ],
+      "reference_rgb": [
+        115,
+        172,
+        149
+      ],
+      "maximum_error": 1
+    }
+  ],
+  "independent_littlecms_flat_controls": [
+    {
+      "sample": 0,
+      "color_space": "default-cmyk",
+      "components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 0,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.125,
+        0.875,
+        0.125,
+        0.03125
+      ],
+      "actual_rgb": [
+        209,
+        63,
+        130
+      ],
+      "reference_rgb": [
+        209,
+        63,
+        130
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 1,
+      "color_space": "default-cmyk",
+      "components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 1,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.25,
+        0.75,
+        0.25,
+        0.0625
+      ],
+      "actual_rgb": [
+        184,
+        89,
+        127
+      ],
+      "reference_rgb": [
+        184,
+        89,
+        127
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 2,
+      "color_space": "default-cmyk",
+      "components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 2,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.5,
+        0.5,
+        0.5,
+        0.125
+      ],
+      "actual_rgb": [
+        132,
+        117,
+        113
+      ],
+      "reference_rgb": [
+        132,
+        117,
+        113
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 3,
+      "color_space": "default-cmyk",
+      "components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 3,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.75,
+        0.25,
+        0.75,
+        0.1875
+      ],
+      "actual_rgb": [
+        66,
+        130,
+        91
+      ],
+      "reference_rgb": [
+        66,
+        130,
+        91
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 4,
+      "color_space": "default-cmyk",
+      "components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 4,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.875,
+        0.125,
+        0.875,
+        0.21875
+      ],
+      "actual_rgb": [
+        0,
+        132,
+        78
+      ],
+      "reference_rgb": [
+        0,
+        132,
+        78
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 5,
+      "color_space": "default-cmyk",
+      "components": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_rgb": [
+        0,
+        170,
+        234
+      ],
+      "reference_rgb": [
+        0,
+        170,
+        234
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 5,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_rgb": [
+        0,
+        170,
+        234
+      ],
+      "reference_rgb": [
+        0,
+        170,
+        234
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 6,
+      "color_space": "default-cmyk",
+      "components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 6,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "actual_rgb": [
+        233,
+        0,
+        132
+      ],
+      "reference_rgb": [
+        233,
+        0,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 7,
+      "color_space": "default-cmyk",
+      "components": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "actual_rgb": [
+        255,
+        242,
+        0
+      ],
+      "reference_rgb": [
+        255,
+        242,
+        0
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 7,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "actual_rgb": [
+        255,
+        242,
+        0
+      ],
+      "reference_rgb": [
+        255,
+        242,
+        0
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 8,
+      "color_space": "default-cmyk",
+      "components": [
+        0.0,
+        0.0,
+        0.0,
+        0.5
+      ],
+      "actual_rgb": [
+        148,
+        151,
+        155
+      ],
+      "reference_rgb": [
+        148,
+        151,
+        155
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 8,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.0,
+        0.0,
+        0.0,
+        0.5
+      ],
+      "actual_rgb": [
+        148,
+        151,
+        155
+      ],
+      "reference_rgb": [
+        148,
+        151,
+        155
+      ],
+      "maximum_error": 0
+    },
+    {
+      "sample": 9,
+      "color_space": "default-cmyk",
+      "components": [
+        0.2,
+        0.4,
+        0.6,
+        0.1
+      ],
+      "actual_rgb": [
+        193,
+        147,
+        105
+      ],
+      "reference_rgb": [
+        192,
+        147,
+        105
+      ],
+      "maximum_error": 1
+    },
+    {
+      "sample": 9,
+      "color_space": "icc-based-cmyk",
+      "components": [
+        0.2,
+        0.4,
+        0.6,
+        0.1
+      ],
+      "actual_rgb": [
+        193,
+        147,
+        105
+      ],
+      "reference_rgb": [
+        192,
+        147,
+        105
+      ],
+      "maximum_error": 1
+    }
+  ],
+  "retained_gallery_gradient_flat_controls": [
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.125,
+      "actual_rgb": [
+        97,
+        146,
+        202
+      ],
+      "reference_rgb": [
+        97,
+        146,
+        202
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.25,
+      "actual_rgb": [
+        186,
+        98,
+        163
+      ],
+      "reference_rgb": [
+        186,
+        98,
+        163
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.5,
+      "actual_rgb": [
+        239,
+        91,
+        132
+      ],
+      "reference_rgb": [
+        239,
+        91,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.75,
+      "actual_rgb": [
+        251,
+        173,
+        108
+      ],
+      "reference_rgb": [
+        251,
+        173,
+        108
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.875,
+      "actual_rgb": [
+        255,
+        208,
+        73
+      ],
+      "reference_rgb": [
+        255,
+        208,
+        73
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.125,
+      "actual_rgb": [
+        255,
+        193,
+        92
+      ],
+      "reference_rgb": [
+        255,
+        193,
+        92
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.25,
+      "actual_rgb": [
+        245,
+        138,
+        125
+      ],
+      "reference_rgb": [
+        245,
+        138,
+        125
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.5,
+      "actual_rgb": [
+        219,
+        51,
+        141
+      ],
+      "reference_rgb": [
+        219,
+        51,
+        141
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.75,
+      "actual_rgb": [
+        128,
+        135,
+        192
+      ],
+      "reference_rgb": [
+        128,
+        135,
+        192
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "ordinary",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.875,
+      "actual_rgb": [
+        6,
+        157,
+        215
+      ],
+      "reference_rgb": [
+        6,
+        157,
+        215
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "axial",
+      "t": 0.125,
+      "actual_rgb": [
+        97,
+        146,
+        202
+      ],
+      "reference_rgb": [
+        97,
+        146,
+        202
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "axial",
+      "t": 0.25,
+      "actual_rgb": [
+        186,
+        98,
+        163
+      ],
+      "reference_rgb": [
+        186,
+        98,
+        163
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "axial",
+      "t": 0.5,
+      "actual_rgb": [
+        239,
+        91,
+        132
+      ],
+      "reference_rgb": [
+        239,
+        91,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "axial",
+      "t": 0.75,
+      "actual_rgb": [
+        251,
+        173,
+        108
+      ],
+      "reference_rgb": [
+        251,
+        173,
+        108
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "axial",
+      "t": 0.875,
+      "actual_rgb": [
+        255,
+        208,
+        73
+      ],
+      "reference_rgb": [
+        255,
+        208,
+        73
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "radial",
+      "t": 0.125,
+      "actual_rgb": [
+        255,
+        193,
+        92
+      ],
+      "reference_rgb": [
+        255,
+        193,
+        92
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "radial",
+      "t": 0.25,
+      "actual_rgb": [
+        245,
+        138,
+        125
+      ],
+      "reference_rgb": [
+        245,
+        138,
+        125
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "radial",
+      "t": 0.5,
+      "actual_rgb": [
+        219,
+        51,
+        141
+      ],
+      "reference_rgb": [
+        219,
+        51,
+        141
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "radial",
+      "t": 0.75,
+      "actual_rgb": [
+        128,
+        135,
+        192
+      ],
+      "reference_rgb": [
+        128,
+        135,
+        192
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 1,
+      "geometry": "radial",
+      "t": 0.875,
+      "actual_rgb": [
+        6,
+        157,
+        215
+      ],
+      "reference_rgb": [
+        6,
+        157,
+        215
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.125,
+      "actual_rgb": [
+        97,
+        146,
+        202
+      ],
+      "reference_rgb": [
+        97,
+        146,
+        202
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.25,
+      "actual_rgb": [
+        186,
+        98,
+        163
+      ],
+      "reference_rgb": [
+        186,
+        98,
+        163
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.5,
+      "actual_rgb": [
+        239,
+        91,
+        132
+      ],
+      "reference_rgb": [
+        239,
+        91,
+        132
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.75,
+      "actual_rgb": [
+        251,
+        173,
+        108
+      ],
+      "reference_rgb": [
+        251,
+        173,
+        108
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "axial",
+      "t": 0.875,
+      "actual_rgb": [
+        255,
+        208,
+        73
+      ],
+      "reference_rgb": [
+        255,
+        208,
+        73
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.125,
+      "actual_rgb": [
+        255,
+        193,
+        92
+      ],
+      "reference_rgb": [
+        255,
+        193,
+        92
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.25,
+      "actual_rgb": [
+        245,
+        138,
+        125
+      ],
+      "reference_rgb": [
+        245,
+        138,
+        125
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.5,
+      "actual_rgb": [
+        219,
+        51,
+        141
+      ],
+      "reference_rgb": [
+        219,
+        51,
+        141
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.75,
+      "actual_rgb": [
+        128,
+        135,
+        192
+      ],
+      "reference_rgb": [
+        128,
+        135,
+        192
+      ],
+      "maximum_error": 0
+    },
+    {
+      "mode": "print",
+      "page": 2,
+      "geometry": "radial",
+      "t": 0.875,
+      "actual_rgb": [
+        6,
+        157,
+        215
+      ],
+      "reference_rgb": [
+        6,
+        157,
+        215
+      ],
+      "maximum_error": 0
+    }
+  ],
+  "alternate_display": {
+    "profile": {
+      "file": "display-gamma18.icc",
+      "sha256": "b0e8110cdb3d92936e8a42aac7a41dffc37ed2e8ec5e140bfd48f61f2ba0da01"
+    },
+    "samples": [
+      {
+        "sample": 0,
+        "original_rgb": [
+          209,
+          63,
+          130
+        ],
+        "predicted_profile_difference": 19,
+        "observed_profile_difference": 19,
+        "actual_rgb": [
+          198,
+          48,
+          111
+        ],
+        "reference_rgb": [
+          198,
+          48,
+          111
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 1,
+        "original_rgb": [
+          184,
+          89,
+          127
+        ],
+        "predicted_profile_difference": 19,
+        "observed_profile_difference": 19,
+        "actual_rgb": [
+          170,
+          71,
+          108
+        ],
+        "reference_rgb": [
+          170,
+          71,
+          108
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 2,
+        "original_rgb": [
+          132,
+          117,
+          113
+        ],
+        "predicted_profile_difference": 19,
+        "observed_profile_difference": 19,
+        "actual_rgb": [
+          113,
+          98,
+          94
+        ],
+        "reference_rgb": [
+          113,
+          98,
+          94
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 3,
+        "original_rgb": [
+          66,
+          130,
+          91
+        ],
+        "predicted_profile_difference": 19,
+        "observed_profile_difference": 19,
+        "actual_rgb": [
+          51,
+          111,
+          73
+        ],
+        "reference_rgb": [
+          51,
+          111,
+          73
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 4,
+        "original_rgb": [
+          0,
+          132,
+          78
+        ],
+        "predicted_profile_difference": 20,
+        "observed_profile_difference": 20,
+        "actual_rgb": [
+          0,
+          112,
+          61
+        ],
+        "reference_rgb": [
+          0,
+          112,
+          61
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 5,
+        "original_rgb": [
+          0,
+          170,
+          234
+        ],
+        "predicted_profile_difference": 17,
+        "observed_profile_difference": 17,
+        "actual_rgb": [
+          0,
+          153,
+          229
+        ],
+        "reference_rgb": [
+          0,
+          153,
+          229
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 6,
+        "original_rgb": [
+          233,
+          0,
+          132
+        ],
+        "predicted_profile_difference": 19,
+        "observed_profile_difference": 19,
+        "actual_rgb": [
+          228,
+          0,
+          113
+        ],
+        "reference_rgb": [
+          228,
+          0,
+          113
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 7,
+        "original_rgb": [
+          255,
+          242,
+          0
+        ],
+        "predicted_profile_difference": 4,
+        "observed_profile_difference": 4,
+        "actual_rgb": [
+          255,
+          238,
+          0
+        ],
+        "reference_rgb": [
+          255,
+          238,
+          0
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 8,
+        "original_rgb": [
+          148,
+          151,
+          155
+        ],
+        "predicted_profile_difference": 18,
+        "observed_profile_difference": 18,
+        "actual_rgb": [
+          130,
+          133,
+          138
+        ],
+        "reference_rgb": [
+          130,
+          133,
+          138
+        ],
+        "maximum_error": 0
+      },
+      {
+        "sample": 9,
+        "original_rgb": [
+          193,
+          147,
+          105
+        ],
+        "predicted_profile_difference": 19,
+        "observed_profile_difference": 19,
+        "actual_rgb": [
+          180,
+          129,
+          86
+        ],
+        "reference_rgb": [
+          179,
+          128,
+          86
+        ],
+        "maximum_error": 1
+      }
+    ]
+  },
+  "explicit_default_cmyk_contrast": {
+    "unmanaged_png": {
+      "file": "without-default-cmyk.png",
+      "sha256": "ffe53f4567cc93ec5b4f75c5386455a6314114b8d5ee2006bbb9df9814be2886"
+    },
+    "samples": [
+      {
+        "sample": 0,
+        "managed_rgb": [
+          209,
+          63,
+          130
+        ],
+        "without_default_cmyk_rgb": [
+          208,
+          37,
+          136
+        ],
+        "littlecms_rgb": [
+          209,
+          63,
+          130
+        ],
+        "maximum_contrast": 26
+      },
+      {
+        "sample": 1,
+        "managed_rgb": [
+          184,
+          89,
+          127
+        ],
+        "without_default_cmyk_rgb": [
+          179,
+          67,
+          128
+        ],
+        "littlecms_rgb": [
+          184,
+          89,
+          127
+        ],
+        "maximum_contrast": 22
+      },
+      {
+        "sample": 2,
+        "managed_rgb": [
+          132,
+          117,
+          113
+        ],
+        "without_default_cmyk_rgb": [
+          121,
+          107,
+          105
+        ],
+        "littlecms_rgb": [
+          132,
+          117,
+          113
+        ],
+        "maximum_contrast": 11
+      },
+      {
+        "sample": 3,
+        "managed_rgb": [
+          66,
+          130,
+          91
+        ],
+        "without_default_cmyk_rgb": [
+          60,
+          126,
+          81
+        ],
+        "littlecms_rgb": [
+          66,
+          130,
+          91
+        ],
+        "maximum_contrast": 10
+      },
+      {
+        "sample": 4,
+        "managed_rgb": [
+          0,
+          132,
+          78
+        ],
+        "without_default_cmyk_rgb": [
+          30,
+          129,
+          70
+        ],
+        "littlecms_rgb": [
+          0,
+          132,
+          78
+        ],
+        "maximum_contrast": 30
+      },
+      {
+        "sample": 5,
+        "managed_rgb": [
+          0,
+          170,
+          234
+        ],
+        "without_default_cmyk_rgb": [
+          0,
+          173,
+          239
+        ],
+        "littlecms_rgb": [
+          0,
+          170,
+          234
+        ],
+        "maximum_contrast": 5
+      },
+      {
+        "sample": 6,
+        "managed_rgb": [
+          233,
+          0,
+          132
+        ],
+        "without_default_cmyk_rgb": [
+          236,
+          0,
+          140
+        ],
+        "littlecms_rgb": [
+          233,
+          0,
+          132
+        ],
+        "maximum_contrast": 8
+      },
+      {
+        "sample": 7,
+        "managed_rgb": [
+          255,
+          242,
+          0
+        ],
+        "without_default_cmyk_rgb": [
+          255,
+          242,
+          0
+        ],
+        "littlecms_rgb": [
+          255,
+          242,
+          0
+        ],
+        "maximum_contrast": 0
+      },
+      {
+        "sample": 8,
+        "managed_rgb": [
+          148,
+          151,
+          155
+        ],
+        "without_default_cmyk_rgb": [
+          145,
+          143,
+          143
+        ],
+        "littlecms_rgb": [
+          148,
+          151,
+          155
+        ],
+        "maximum_contrast": 12
+      },
+      {
+        "sample": 9,
+        "managed_rgb": [
+          193,
+          147,
+          105
+        ],
+        "without_default_cmyk_rgb": [
+          185,
+          135,
+          89
+        ],
+        "littlecms_rgb": [
+          192,
+          147,
+          105
+        ],
+        "maximum_contrast": 16
+      }
+    ]
+  },
+  "wrong_print_output_intent": {
+    "profile": {
+      "file": "different-valid-print.icc",
+      "sha256": "d4dcf14a330eaf444a9b68259bc0a2d7edb573ce999fbf7b50961e04a2b9cb24"
+    },
+    "refusal": "selected print profile does not match the embedded OutputIntent profile",
+    "success_manifest_exists": false
+  },
+  "repeatability": [
+    {
+      "preview": "diagnostic",
+      "page": 1,
+      "pixel_sha256": "047907a1eebe588e09d1b7ef5a27c099c2c34859eb25a01abe01d03e190c83c6",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "2f4ae79f53b43e383cafd7f8f74b7d0238400d786418c2e007d75300da6df82b",
+      "encoded_sha256_repeat": "2f4ae79f53b43e383cafd7f8f74b7d0238400d786418c2e007d75300da6df82b"
+    },
+    {
+      "preview": "diagnostic",
+      "page": 2,
+      "pixel_sha256": "047907a1eebe588e09d1b7ef5a27c099c2c34859eb25a01abe01d03e190c83c6",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "2f4ae79f53b43e383cafd7f8f74b7d0238400d786418c2e007d75300da6df82b",
+      "encoded_sha256_repeat": "2f4ae79f53b43e383cafd7f8f74b7d0238400d786418c2e007d75300da6df82b"
+    },
+    {
+      "preview": "ordinary",
+      "page": 1,
+      "pixel_sha256": "82a1554c3380002ba9bb0482a0513bedf163f27a09cc38c2b3e53cd166b70a8e",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "e3c0b4f10427c3347720d9264743e4f322ce5c06d74721b55a122f27b21c9dc8",
+      "encoded_sha256_repeat": "e3c0b4f10427c3347720d9264743e4f322ce5c06d74721b55a122f27b21c9dc8"
+    },
+    {
+      "preview": "ordinary",
+      "page": 2,
+      "pixel_sha256": "7b3c0f0b678f6eaac5d9aeb24107e8b2389edbd48f6912c4d831ed7742901995",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "07b300ffcaa0cd05611a94b78beaa378d454555c773bb6ac82627970e51f742e",
+      "encoded_sha256_repeat": "07b300ffcaa0cd05611a94b78beaa378d454555c773bb6ac82627970e51f742e"
+    },
+    {
+      "preview": "ordinary",
+      "page": 3,
+      "pixel_sha256": "4d2dfef08f9f10be5b85b5f0dab4e9235566f7b5eec3c7c238cd362880688fb2",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "81a1537dd5ac62a4d3ddecb0ff2c95e253a35df72e961e8fda1028f602c1c7b7",
+      "encoded_sha256_repeat": "81a1537dd5ac62a4d3ddecb0ff2c95e253a35df72e961e8fda1028f602c1c7b7"
+    },
+    {
+      "preview": "print",
+      "page": 1,
+      "pixel_sha256": "1a8148c8439053d39aa80385adb24f1848cf3f026c6e691fcc733398eebb6541",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "b64d1698873ab8bd4d6d601fea517ce6f39d91924963788cc39ffd742f91f252",
+      "encoded_sha256_repeat": "b64d1698873ab8bd4d6d601fea517ce6f39d91924963788cc39ffd742f91f252"
+    },
+    {
+      "preview": "print",
+      "page": 2,
+      "pixel_sha256": "7b3c0f0b678f6eaac5d9aeb24107e8b2389edbd48f6912c4d831ed7742901995",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "07b300ffcaa0cd05611a94b78beaa378d454555c773bb6ac82627970e51f742e",
+      "encoded_sha256_repeat": "07b300ffcaa0cd05611a94b78beaa378d454555c773bb6ac82627970e51f742e"
+    },
+    {
+      "preview": "print",
+      "page": 3,
+      "pixel_sha256": "25d2e3b5eb31f56a20c1fb56b5531fb42ddaf2e4157613dbd59d9638d867ede5",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "9bc3acf302db411cb71dbfa3d3966c8169b6a22af9b1140250798e99261c7926",
+      "encoded_sha256_repeat": "9bc3acf302db411cb71dbfa3d3966c8169b6a22af9b1140250798e99261c7926"
+    },
+    {
+      "preview": "flat-controls",
+      "page": 1,
+      "pixel_sha256": "2747f05544bb28fb6ce0976f6eeceb32d27d27dcbee1b11c583e08a928a69f50",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "2054b7c4d8733bf326b6375afe9e8acf68696df097f43cc03a12adb32e433762",
+      "encoded_sha256_repeat": "2054b7c4d8733bf326b6375afe9e8acf68696df097f43cc03a12adb32e433762"
+    },
+    {
+      "preview": "flat-controls",
+      "page": 2,
+      "pixel_sha256": "d7b4c69d4aa223b35de960d47651cbc95ba4ed1c0f6f0d5797ed5b25e4f3f31f",
+      "icc_sha256": "217fe48ec958c667f8eef725aa27198f465df95d7662593b90d0a1cc30114356",
+      "decoded_pixels_equal": true,
+      "exact_icc_equal": true,
+      "encoded_sha256_first": "ff57d05c0e839ddb5c5dc93d428ec648796bc5b841698c156f69f17a77c466eb",
+      "encoded_sha256_repeat": "ff57d05c0e839ddb5c5dc93d428ec648796bc5b841698c156f69f17a77c466eb"
+    }
+  ],
+  "historical_reader_comparison": {
+    "receipt": {
+      "file": "color.json",
+      "sha256": "9130c052af53b9161020945470bfeb3a43a2b1fdbc0620c13461c6c0cb71b2ef"
+    },
+    "default_comparison_passed": false,
+    "fixed_bounds": {
+      "mean_channel_difference_max": 5,
+      "p95_max_channel_difference_max": 20,
+      "pixels_above_10_percent_max": 8
+    },
+    "failed_pages": [
+      {
+        "mode": "ordinary",
+        "page": 2
+      },
+      {
+        "mode": "pdfx4",
+        "page": 1
+      },
+      {
+        "mode": "pdfx4",
+        "page": 2
+      }
+    ],
+    "default_metrics": [
+      {
+        "mode": "ordinary",
+        "sha256": "ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8",
+        "pages": [
+          {
+            "page": 1,
+            "metrics": {
+              "mean_channel_difference": 0.4550372005044136,
+              "p95_max_channel_difference": 2.0,
+              "pixels_above_10_percent": 0.18745271122320303
+            },
+            "passed": true
+          },
+          {
+            "page": 2,
+            "metrics": {
+              "mean_channel_difference": 1.243686633039092,
+              "p95_max_channel_difference": 23.0,
+              "pixels_above_10_percent": 8.823076923076924
+            },
+            "passed": false
+          },
+          {
+            "page": 3,
+            "metrics": {
+              "mean_channel_difference": 0.048092475830180746,
+              "p95_max_channel_difference": 0.0,
+              "pixels_above_10_percent": 0.17856242118537202
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "mode": "pdfx4",
+        "sha256": "5b6a94bf69381718c1eff572305a13ce71b78f608657ab34246d96750206ecab",
+        "pages": [
+          {
+            "page": 1,
+            "metrics": {
+              "mean_channel_difference": 1.6153205128205128,
+              "p95_max_channel_difference": 24.0,
+              "pixels_above_10_percent": 12.556872635561161
+            },
+            "passed": false
+          },
+          {
+            "page": 2,
+            "metrics": {
+              "mean_channel_difference": 1.243686633039092,
+              "p95_max_channel_difference": 23.0,
+              "pixels_above_10_percent": 8.823076923076924
+            },
+            "passed": false
+          },
+          {
+            "page": 3,
+            "metrics": {
+              "mean_channel_difference": 0.24538251366120217,
+              "p95_max_channel_difference": 2.0,
+              "pixels_above_10_percent": 0.1823455233291299
+            },
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "preservation": "exact original receipt bytes retained; default comparison was not rerun"
+  },
+  "scope": "Exact pinned diagnostic and galleries under the recorded native CMS conditions; no unrestricted conformance or printer claim.",
+  "target": "x86_64-unknown-linux-gnu",
+  "source_bindings": [
+    {
+      "path": "scripts/pdf_proofing.py",
+      "sha256": "44bf81d1a4de191aa1d280a6e7a08f0ae5e09b1bb0cdace4ccf7f80f6ecb5fb4"
+    },
+    {
+      "path": "scripts/proof-pdf.py",
+      "sha256": "dfeb5f767b8bff61281ab57ca996983bd38694ab84e4538fc429075a004ea377"
+    },
+    {
+      "path": "scripts/verify-pdf-proofing.py",
+      "sha256": "1d1ea53b49dee0c1b4f1af7376132f52deab6c89db9cfce5249519ae98d49cbe"
+    }
+  ],
+  "qualification_summary": {
+    "diagnostic_gradient_flat_controls": {
+      "sample_count": 78,
+      "maximum_observed_channel_error": 0
+    },
+    "independent_diagnostic_appearance_controls": {
+      "sample_count": 156,
+      "maximum_observed_channel_error": 1
+    },
+    "independent_littlecms_flat_controls": {
+      "sample_count": 20,
+      "maximum_observed_channel_error": 1
+    },
+    "retained_gallery_gradient_flat_controls": {
+      "sample_count": 30,
+      "maximum_observed_channel_error": 0
+    }
+  },
+  "summary": {
+    "preview_runs": 9,
+    "pages_checked": 21,
+    "diagnostic_samples": 78,
+    "independent_diagnostic_samples": 156,
+    "direct_littlecms_samples": 20,
+    "gallery_samples": 30,
+    "diagnostic_maximum_error": 0,
+    "independent_diagnostic_maximum_error": 1,
+    "direct_littlecms_maximum_error": 1,
+    "gallery_maximum_error": 0,
+    "repeat_pages": 10,
+    "alternate_display_samples": 10
+  },
+  "focused_tests": [
+    {
+      "test": {
+        "file": "pdf-proofing.test.py",
+        "sha256": "f821412e3a2640b5ecc01a24771e632524f07acb991e846179a98dba2f8408b6",
+        "bytes": 14803
+      },
+      "native_ubuntu_passed": 14,
+      "failed": 0
+    },
+    {
+      "test": {
+        "file": "pdf-proofing-verification.test.py",
+        "sha256": "c668ba3dcb26315ef57f36df0853fba85facdd478dc6dd2414960977c2318419",
+        "bytes": 13203
+      },
+      "native_ubuntu_passed": 11,
+      "failed": 0
+    }
+  ],
+  "documented_examples": {
+    "cli_and_module_executed": true,
+    "pages": [
+      1,
+      2
+    ],
+    "dpi": 144,
+    "source_pdf": {
+      "file": "ordinary.pdf",
+      "sha256": "ac8a687a3f91cde2cf768d0099ff37e1a8ce722448a6b4062c51ef2aada10fb8"
+    },
+    "decoded_checks": [
+      {
+        "page": 1,
+        "dimensions": [
+          1220,
+          1300
+        ],
+        "mode": "RGB",
+        "pixels_equal": true,
+        "tags_equal_exact_display_profile": true,
+        "pixel_sha256": "82a1554c3380002ba9bb0482a0513bedf163f27a09cc38c2b3e53cd166b70a8e"
+      },
+      {
+        "page": 2,
+        "dimensions": [
+          1220,
+          1300
+        ],
+        "mode": "RGB",
+        "pixels_equal": true,
+        "tags_equal_exact_display_profile": true,
+        "pixel_sha256": "7b3c0f0b678f6eaac5d9aeb24107e8b2389edbd48f6912c4d831ed7742901995"
+      }
+    ],
+    "source_reused_without_regeneration": true,
+    "venv_creation_or_dependency_install": false
+  },
+  "qualification_environment": {
+    "os_release": "Ubuntu 24.04.3 LTS",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "native_execution": "Linux ELF x86_64 under WSL2; no Windows executable interop",
+    "renderer_elf_magic": "7f454c46",
+    "renderer_runtime_libraries": [
+      {
+        "file": "libnspr4.so",
+        "sha256": "c32583a53640c144757419b977a76976ee3dbda7b905a0af1046ace3c570ae98",
+        "bytes": 246248
+      },
+      {
+        "file": "libnss3.so",
+        "sha256": "55b09461bb63081b8e1d4f600583b0e1fdb8eff1ebe2f25e44cfa5f45b2d4169",
+        "bytes": 1229736
+      },
+      {
+        "file": "libnssutil3.so",
+        "sha256": "39deb60cb4cd5a8b1ee4da37f838de80c65258a81428a4bdb668ffd6f93a9501",
+        "bytes": 199128
+      },
+      {
+        "file": "libopenjp2.so.2.5.0",
+        "sha256": "19906c0334e8db2137912f83cceed5a03d954a9c12d9781901a9a27f92ce1c4d",
+        "bytes": 391648
+      },
+      {
+        "file": "libplc4.so",
+        "sha256": "f68520b4a9ba6190c67ce96511192f9af31dd96d91f18fd64cca48ffe08f7deb",
+        "bytes": 22784
+      },
+      {
+        "file": "libplds4.so",
+        "sha256": "403f3c1ec489de93d04b5a386d2e659af6da0a41e09ffb90a280b6d68eeb1617",
+        "bytes": 14624
+      },
+      {
+        "file": "libpoppler.so.134.0.0",
+        "sha256": "6b8cd637380019532005c83cb5d35e954eb29bd413ab22fe898c8314372494d7",
+        "bytes": 3617712
+      },
+      {
+        "file": "libsmime3.so",
+        "sha256": "38b9c337509c7cf443d6c5f49d4e9e9bd0bb4bf53de48f47c9d39a29757ab7ac",
+        "bytes": 162208
+      },
+      {
+        "file": "libLerc.so.4",
+        "sha256": "a0ee52df526738293bdd232ddaefbb0d1d9c2da775a82fc6730e7cd394da560c",
+        "bytes": 546992
+      },
+      {
+        "file": "libbrotlicommon.so.1.1.0",
+        "sha256": "a91ead095d2c80520c55a89057bbe10b031a075340442e63f44b310f93883a1b",
+        "bytes": 141640
+      },
+      {
+        "file": "libbrotlidec.so.1.1.0",
+        "sha256": "64d8a5019d4c294b89fde1193343ea324bbd8603652554e5545f0a01595fa2c5",
+        "bytes": 51512
+      },
+      {
+        "file": "libbz2.so.1.0.4",
+        "sha256": "218c4abdabce31161f3c2778762986d1fe06633705c7eb004a740946a5ccdfff",
+        "bytes": 78944
+      },
+      {
+        "file": "libc.so.6",
+        "sha256": "8db37cf3f2169f59a0f07ef1fea308c35656668c64c8ff294e1860f4121eb161",
+        "bytes": 2125328
+      },
+      {
+        "file": "libcom_err.so.2.1",
+        "sha256": "022943b3b11c860b049bce41342f1c2594941b7b401d95dfdf235521099fee08",
+        "bytes": 18504
+      },
+      {
+        "file": "libcrypto.so.3",
+        "sha256": "6a66c3ba6b3749aacc9497973fff00f6ba61c703ba7015d0d7ab3fd9510974b6",
+        "bytes": 5309400
+      },
+      {
+        "file": "libcurl-gnutls.so.4.8.0",
+        "sha256": "78e00eca595180e14691e9d5b59aaeecb48ee3f34dab0c9858656bc87c37ad4f",
+        "bytes": 765856
+      },
+      {
+        "file": "libdeflate.so.0",
+        "sha256": "608c8d7e4345a9ff4b57aa853ce0c355cf2e1d5ec11b8bee86fb4760bba8a15f",
+        "bytes": 75808
+      },
+      {
+        "file": "libexpat.so.1.9.1",
+        "sha256": "c42ff317838b4b4639e2ea801905f0317177c6df7e31b2f0d0240e3c3ac0cfde",
+        "bytes": 174336
+      },
+      {
+        "file": "libffi.so.8.1.4",
+        "sha256": "00f593fe192f2851b8ce23b25cec2488d769beb5a8f63e8c9e563071e1075153",
+        "bytes": 47672
+      },
+      {
+        "file": "libfontconfig.so.1.12.1",
+        "sha256": "a94b4059b27766f563894c8f7e61762b6f6b2e25c59ef36b730164d4b75c6c98",
+        "bytes": 325712
+      },
+      {
+        "file": "libfreetype.so.6.20.1",
+        "sha256": "c14c53c5baff12afafb610c6312fb879e9bb77e80dd42e27504d52d6d8bcd059",
+        "bytes": 833608
+      },
+      {
+        "file": "libgcc_s.so.1",
+        "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb",
+        "bytes": 183024
+      },
+      {
+        "file": "libgmp.so.10.5.0",
+        "sha256": "0ccdfb6d6f5c039465f6d002cf7e4c072d48ac6a2cffc8dd6c748dec31592804",
+        "bytes": 534896
+      },
+      {
+        "file": "libgnutls.so.30.37.1",
+        "sha256": "96137275400f39510c9a533c6ad8a921e94266e664e7e09c9ad6ea9f23277c23",
+        "bytes": 2057632
+      },
+      {
+        "file": "libgssapi_krb5.so.2.2",
+        "sha256": "b9a20df712d206654477c079f03b568276933e91cbe237e62af791f0f3ab8d8b",
+        "bytes": 338696
+      },
+      {
+        "file": "libhogweed.so.6.8",
+        "sha256": "c3c606139d4f7776efa4dbd4a6b62e30c916b07a0cafd8c3ef173d6f093607e3",
+        "bytes": 288920
+      },
+      {
+        "file": "libidn2.so.0.4.0",
+        "sha256": "6e632fd9a3125db60bbc623719bbc17b0470330321c5b1c57f1ff7190e5551ad",
+        "bytes": 133192
+      },
+      {
+        "file": "libjbig.so.0",
+        "sha256": "6fea8a26ef5e0d2a36d296d7d0ec0c1f0894bf796b5824317bea88c090833a62",
+        "bytes": 66400
+      },
+      {
+        "file": "libjpeg.so.8.2.2",
+        "sha256": "ac09f2cd6f8a3b8e3cb123999ce275f9bcbe31c6cf9e20212c8f297772591d15",
+        "bytes": 534592
+      },
+      {
+        "file": "libk5crypto.so.3.1",
+        "sha256": "8394027f2be7c2cc7b2da4797476a8b688a21f75ee231941fa2df8d00ba79d08",
+        "bytes": 178648
+      },
+      {
+        "file": "libkeyutils.so.1.10",
+        "sha256": "f48214417757f18793ed6e180cc14ee1d6f04252a518fc7270e8ca1d0b4260fe",
+        "bytes": 22600
+      },
+      {
+        "file": "libkrb5.so.3.3",
+        "sha256": "52c143c9c77a223a4dac5449eac41fd2490e37c8a30430f1559c1421f4f8ed73",
+        "bytes": 823488
+      },
+      {
+        "file": "libkrb5support.so.0.1",
+        "sha256": "8e1ef5a40f7b0d5b0fbcd6e4f28dd50b263650338a2bb72503be34632f3629d6",
+        "bytes": 47904
+      },
+      {
+        "file": "liblber.so.2.0.200",
+        "sha256": "6f6935b26c962d5b51ef2011332472cfd96ff244a4edc9d47120be6faa70e602",
+        "bytes": 59888
+      },
+      {
+        "file": "liblcms2.so.2.0.14",
+        "sha256": "65d948920458341176f78e3797320ffb7c052ab5bd75036c3db75dd88839b007",
+        "bytes": 394368
+      },
+      {
+        "file": "libldap.so.2.0.200",
+        "sha256": "4a0664ab6a8a66c685e78d5604b79df330f5710f0c5e2c382536a8325dc4c2a4",
+        "bytes": 372400
+      },
+      {
+        "file": "liblzma.so.5.4.5",
+        "sha256": "a9793942a8a5f6f4d0f523ef9e0a5be4f0033f2c6c28520cd2b4e706d53c6e17",
+        "bytes": 202904
+      },
+      {
+        "file": "libm.so.6",
+        "sha256": "e9c4b28d340e415b8137480ec442662f981e1399386c5931dae0e886e3639e91",
+        "bytes": 952616
+      },
+      {
+        "file": "libnettle.so.8.8",
+        "sha256": "a245ed916229583d6fe0b07657b3ed945bc148c28cc08b5266295f620d2b91cc",
+        "bytes": 342280
+      },
+      {
+        "file": "libnghttp2.so.14.26.0",
+        "sha256": "398c6d2025210279f4c7413ebdb7f4c63bc5afda5ec3b1ccc58885a65acc2b78",
+        "bytes": 170352
+      },
+      {
+        "file": "libp11-kit.so.0.3.1",
+        "sha256": "c6b469a006685ebf2075e200180c3b21f41b88ad722c5697d736ea558cfe3ea1",
+        "bytes": 1714008
+      },
+      {
+        "file": "libpng16.so.16.43.0",
+        "sha256": "eac265b3506df0d9110dd9143e1d0503e2daabafe1d98b23fac8ca17b71d1f6b",
+        "bytes": 223304
+      },
+      {
+        "file": "libpsl.so.5.3.4",
+        "sha256": "ae6c5a9aecc249fc66e03c16ec6c4385d09d7e12e0ea7694bb831ab4fee8133c",
+        "bytes": 75768
+      },
+      {
+        "file": "libresolv.so.2",
+        "sha256": "4086b12d3b95ef6f02373b30b88444e7d79fb8693ed1cfeaa5162e6959878912",
+        "bytes": 64008
+      },
+      {
+        "file": "librtmp.so.1",
+        "sha256": "15a2a75e8c437b9c99971b5ee10278ab110beef1a56d1d9e5d6759ea140e98ac",
+        "bytes": 121848
+      },
+      {
+        "file": "libsasl2.so.2.0.25",
+        "sha256": "a0f410ad093236856eee59c4ff2838dc04d932ea0993400f23ed77d67d85af34",
+        "bytes": 101200
+      },
+      {
+        "file": "libsharpyuv.so.0.0.1",
+        "sha256": "b2e62799e5dbd783a0671d53be99f7c6489567a5332a1e8f471e6bb250f294dc",
+        "bytes": 22672
+      },
+      {
+        "file": "libssh.so.4.9.6",
+        "sha256": "ef858714c882f2ff837c1a2dc2c7fb95f25316111453aeee984814cc5a0a5d04",
+        "bytes": 458264
+      },
+      {
+        "file": "libstdc++.so.6.0.33",
+        "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11",
+        "bytes": 2592224
+      },
+      {
+        "file": "libtasn1.so.6.6.3",
+        "sha256": "7c9c7830afbaac7b07ec21ddaa6b4d606423432c264efd2636e8ca9734b4d7b6",
+        "bytes": 88216
+      },
+      {
+        "file": "libtiff.so.6.0.1",
+        "sha256": "e9406982cacbafc945576ff23100c20f74989ca74d94432c24fc1a184dbca482",
+        "bytes": 575656
+      },
+      {
+        "file": "libunistring.so.5.0.0",
+        "sha256": "7bcf825cd449892db5105ad2aed91dcf94a27b796426600c765720c584c54dd1",
+        "bytes": 1755312
+      },
+      {
+        "file": "libwebp.so.7.1.8",
+        "sha256": "9664db51ec65209078abbb8bc7b699888a43ecc2f3c74ce8dd4e497175aa5bf0",
+        "bytes": 494136
+      },
+      {
+        "file": "libz.so.1.3",
+        "sha256": "9b64150b28505a33d6bc3ecf709c279f6de97a1c184dbda65d06ee4537f6d286",
+        "bytes": 113000
+      },
+      {
+        "file": "libzstd.so.1.5.5",
+        "sha256": "0a2128bc10841fb29e76d08d945864dfb0b6a66da5df6df5d8299197439e54bb",
+        "bytes": 755864
+      }
+    ],
+    "dependency_provisioning": "Pre-existing task-local renderer and Python dependencies; no system installation during qualification"
+  }
+}

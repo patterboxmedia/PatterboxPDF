@@ -58,11 +58,24 @@ LittleCMS comparisons and 30 retained-gallery comparisons. Maximum observed
 channel errors are zero, one and zero respectively, within the unchanged bound
 of four. Ten repeated pages per environment preserve decoded pixels and ICC
 bytes. Profile sensitivity and OutputIntent mismatch refusal pass separately.
+A further 156 independent expectations cover authored diagnostic colors,
+paint alpha and group opacity.
 
-[Windows](verification/current/proofing-20261017/windows.json) and
-[Ubuntu](verification/current/proofing-20261017/ubuntu.json) receipts bind actual
+The qualified Poppler PNG path composites ordinary transparency groups in RGB,
+including groups whose source PDF declares a CMYK blending space. The reference
+checks that RGB appearance. CMYK group-colorimetry and press simulation need
+separate qualification.
+
+[Windows](verification/current/proofing-20261017-r2/windows.json) and
+[Ubuntu](verification/current/proofing-20261017-r2/ubuntu.json) receipts bind actual
 inputs, tools, output pixels and conditions. The
-[source-input record](verification/current/proofing-20261017/source-package.json)
+[source-input record](verification/current/proofing-20261017-r2/source-package.json)
 binds the additive companion and unchanged native generation inputs. The exact
 source archive additionally requires its adjacent isolation receipt. The original
 three default-reader failures retain their verdicts and limits.
+
+Earlier [Windows](verification/current/proofing-20261017/windows.json),
+[Ubuntu](verification/current/proofing-20261017/ubuntu.json) and
+[source-input](verification/current/proofing-20261017/source-package.json)
+records retain their original tool identities. The current records add
+independent color and opacity expectations and reject failed or stale evidence.

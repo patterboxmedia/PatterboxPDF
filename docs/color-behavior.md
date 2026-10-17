@@ -38,7 +38,7 @@ target/client/release/examples/cmyk-diagnostic --output output/diagnostic.pdf
 
 On Windows, the executable has an `.exe` extension. The two pages have identical
 CMYK panels. A one-point RGB marker outside the panels selects RGB page blending
-on the second page; the first page uses CMYK page blending.
+in the second page dictionary; the first page declares CMYK page blending.
 
 Each row places a gradient on the left and five independently authored flat
 component controls on the right. From top to bottom, the rows exercise opaque
@@ -130,7 +130,11 @@ display-class RGB profile. An embedded CMYK OutputIntent must match the exact
 selected printing-profile bytes. Without an OutputIntent, the ordinary PDF uses
 the caller's explicit DefaultCMYK condition.
 
-Poppler interprets PDF rendering intents, embedded color spaces and blending.
+Poppler interprets PDF rendering intents and embedded color spaces.
+The qualified Poppler PNG path composites ordinary transparency groups in RGB,
+including groups whose source PDF declares a CMYK blending space. The reference
+checks that RGB appearance. CMYK group-colorimetry and press simulation need
+separate qualification.
 The CLI does not override rendering intent or black point compensation. The
 qualification reference for relative-colorimetric samples uses LittleCMS intent
 `1` and flags `0x2100` (no optimization and black point compensation); renderer

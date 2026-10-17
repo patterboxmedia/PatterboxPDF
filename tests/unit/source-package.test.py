@@ -115,6 +115,82 @@ def public_fixture(root):
     notice['example_assets'].extend(collector.collect_font_controls(root, root/'third_party/cargo-notices'))
     notice['example_assets'].extend(collector.collect_character_mapping(root, root/'third_party/cargo-notices'))
     write('third_party/cargo-notices/dependencies.json', json.dumps(notice).encode())
+    synthetic_proofing_evidence(root)
+
+
+def synthetic_proofing_evidence(root):
+    """Rebind test-only evidence to this temporary synthetic source tree.
+
+    Historical native receipts supply the record shape, never qualification for
+    these synthetic files. No test fixture is written into the real source tree.
+    """
+    original = Path(__file__).resolve().parents[2]
+    destination = root/'docs/verification/current/proofing-20261017-r2'
+    destination.mkdir(parents=True, exist_ok=True)
+    native_sources = ('scripts/pdf_proofing.py', 'scripts/proof-pdf.py', 'scripts/verify-pdf-proofing.py')
+    source_paths = (*native_sources, 'scripts/build-source-package.py', 'tests/unit/pdf-proofing.test.py',
+                    'tests/unit/pdf-proofing-verification.test.py', 'tests/unit/source-package.test.py')
+    def bindings(paths):
+        return [{'path': name, 'sha256': package.sha((root/name).read_bytes())} for name in paths]
+    for filename, target in zip(('windows.json', 'ubuntu.json'), package.SUPPORTED_TARGETS):
+        record = json.loads((original/'docs/verification/current/proofing-20261017'/filename).read_bytes())
+        record['scope'] = 'Synthetic package-test fixture; no native execution claim.'
+        record['source_bindings'] = bindings(native_sources)
+        for key, name in (('companion', native_sources[0]), ('verifier', native_sources[2])):
+            record[key]['sha256'] = package.sha((root/name).read_bytes())
+        record['target'] = target
+        # Synthetic absolute records retain coverage and explicit measured RGBs.
+        absolute = []
+        for row in record['diagnostic_gradient_flat_controls']:
+            case, t = row['case'], row['t']
+            fraction = (0. if t < .5 else 1.) if case == 'hard-stop' else t
+            alpha = .5 if case == 'constant-alpha' else t if case in (
+                'varying-alpha', 'radial-varying-alpha', 'varying-alpha-group-opacity') else 1.
+            group = .5 if case in ('group-opacity', 'varying-alpha-group-opacity') else 1.
+            expected = [round(alpha*group*c+(1-alpha*group)*204) for c in (64, 128, 192)]
+            absolute.extend({**row, 'region': region,
+                'foreground_components': [fraction, 1-fraction, fraction, .25*fraction],
+                'foreground_rgb': [64, 128, 192], 'background_rgb': [204, 204, 204],
+                'paint_alpha': alpha, 'group_opacity': group, 'effective_alpha': alpha*group,
+                'reference_rgb': expected, 'actual_rgb': expected, 'maximum_error': 0}
+                for region in ('gradient', 'flat'))
+        record['independent_diagnostic_appearance_controls'] = absolute
+        record['reference_conditions'].update({
+            'diagnostic_compositing': 'encoded-RGB source-over on opaque Splash RGB8; paint alpha times isolated group opacity once',
+            'diagnostic_background_rgb': [204, 204, 204]})
+        record['summary']['independent_diagnostic_samples'] = 156
+        record['summary']['independent_diagnostic_maximum_error'] = 0
+        # Bind the packaged display fixture and preserved history to test bytes.
+        historical = 'docs/verification/current/accepted-inputs-20261016/color.json'
+        record['historical_reader_comparison']['receipt']['sha256'] = package.sha((root/historical).read_bytes())
+        old_display = record['previews']['diagnostic']['display_profile']['sha256']
+        new_display = package.sha((root/'crates/print-core/tests/fixtures/generated-srgb.icc').read_bytes())
+        (destination/filename).write_text(json.dumps(record).replace(old_display, new_display), encoding='utf-8')
+    source = {'schema': 'patterboxpdf-proofing-source-qualification/v1', 'status': 'source-inputs-qualified',
+              'scope': 'Synthetic package-test fixture; no native execution claim.',
+              'source_bindings': bindings(source_paths),
+              'preview_qualifications': bindings([
+                  'docs/verification/current/proofing-20261017-r2/'+name for name in ('windows.json', 'ubuntu.json')]),
+              'native_generation': {'all_inputs_unchanged': True, 'inputs': [
+                  {'path': name, 'sha256': package.sha((root/name).read_bytes()), 'bytes': (root/name).stat().st_size}
+                  for name in sorted(package.public_paths(root))
+                  if name.startswith(('apps/', 'crates/', 'examples/standalone-client/'))
+                  or name in ('Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml')]},
+              'source_archive_isolation': {'required': True, 'asserted_by_this_record': False},
+              'historical_color': {'receipt': historical, 'sha256': package.sha((root/historical).read_bytes()),
+                                   'original_three_default_comparison_failures_preserved': True}}
+    (destination/'source-package.json').write_text(json.dumps(source), encoding='utf-8')
+
+
+def refreshed_archive(archive, files, manifest):
+    """Refresh the complete byte inventory, as in the demonstrated false pass."""
+    manifest = copy.deepcopy(manifest)
+    manifest['files'] = [{'path': name, 'bytes': len(data), 'sha256': package.sha(data)}
+                         for name, data in files.items()]
+    with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as zipped:
+        for name, data in files.items():
+            zipped.writestr(name, data)
+        zipped.writestr('source-manifest.json', json.dumps(manifest))
 
 
 class SourcePackageTests(unittest.TestCase):
@@ -215,6 +291,7 @@ class SourcePackageTests(unittest.TestCase):
             notices = json.loads(notice_path.read_bytes())
             notices['example_assets'].extend(collector.collect_component_controls(root, notice_path.parent))
             notice_path.write_text(json.dumps(notices), encoding='utf-8')
+            synthetic_proofing_evidence(root)
             _, files = package.collect(root)
             receipt = package.build(root, root/'package')
             package.verify_archive(root/'package'/receipt['archive'])
@@ -281,6 +358,9 @@ class SourcePackageTests(unittest.TestCase):
             'docs/verification/current/proofing-20261017/windows.json',
             'docs/verification/current/proofing-20261017/ubuntu.json',
             'docs/verification/current/proofing-20261017/source-package.json',
+            'docs/verification/current/proofing-20261017-r2/windows.json',
+            'docs/verification/current/proofing-20261017-r2/ubuntu.json',
+            'docs/verification/current/proofing-20261017-r2/source-package.json',
         )
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -305,6 +385,93 @@ class SourcePackageTests(unittest.TestCase):
                             package.collect(root)
                     finally:
                         path.write_bytes(data)
+
+    def test_failed_or_stale_proofing_evidence_rejected_after_inventory_refresh(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)/'source'
+            public_fixture(root)
+            receipt = package.build(root, Path(temporary)/'package')
+            archive = Path(temporary)/'package'/receipt['archive']
+            manifest = package.verify_archive(archive)
+            with zipfile.ZipFile(archive) as zipped:
+                files = {name: zipped.read(name) for name in zipped.namelist() if name != 'source-manifest.json'}
+            native = 'docs/verification/current/proofing-20261017-r2/windows.json'
+            failed = json.loads(files[native])
+            failed['passed'] = False
+            cases = [('failed native receipt', native, json.dumps(failed).encode()),
+                     ('stale companion qualification', 'scripts/pdf_proofing.py', b'# changed companion\n')]
+            for label, name, data in cases:
+                with self.subTest(label=label):
+                    altered = {**files, name: data}
+                    candidate = Path(temporary)/'changed.zip'
+                    refreshed_archive(candidate, altered, manifest)
+                    with self.assertRaisesRegex(ValueError, 'proofing'):
+                        package.verify_archive(candidate)
+                    path = root/name
+                    saved = path.read_bytes()
+                    path.write_bytes(data)
+                    try:
+                        with self.assertRaisesRegex(ValueError, 'proofing'):
+                            package.collect(root)
+                    finally:
+                        path.write_bytes(saved)
+
+    def test_proofing_measurements_and_native_bindings_survive_successor_rebinding(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)/'source'
+            public_fixture(root)
+            _, files = package.collect(root)
+            receipt = package.build(root, Path(temporary)/'package')
+            manifest = package.verify_archive(Path(temporary)/'package'/receipt['archive'])
+            prefix = 'docs/verification/current/proofing-20261017-r2/'
+            native_path, source_path = prefix+'windows.json', prefix+'source-package.json'
+            native = json.loads(files[native_path])
+            cases = []
+            failed = copy.deepcopy(native)
+            failed['passed'] = False
+            cases.append(('failed native with refreshed successor', failed))
+            for field in ('diagnostic_gradient_flat_controls', 'independent_diagnostic_appearance_controls',
+                          'independent_littlecms_flat_controls', 'retained_gallery_gradient_flat_controls'):
+                wrong = copy.deepcopy(native)
+                wrong[field][0]['actual_rgb'] = [255, 255, 255]
+                # Preserve the claimed zero error and passing summary deliberately.
+                cases.append(('false measured error '+field, wrong))
+                missing = copy.deepcopy(native)
+                missing[field].pop()
+                cases.append(('missing measured sample '+field, missing))
+            limits = copy.deepcopy(native)
+            limits['reference_conditions']['maximum_channel_error'] = 255
+            cases.append(('relaxed fixed tolerance', limits))
+            flags = copy.deepcopy(native)
+            flags['reference_conditions']['flags'] = 0
+            cases.append(('different reference flags', flags))
+            repeat = copy.deepcopy(native)
+            repeat['repeatability'][0]['decoded_pixels_equal'] = False
+            cases.append(('failed repeat control', repeat))
+            stale = copy.deepcopy(native)
+            stale['source_bindings'][0]['sha256'] = '0'*64
+            cases.append(('stale native source binding', stale))
+            summary = copy.deepcopy(native)
+            summary['summary']['diagnostic_samples'] = 1
+            cases.append(('summary disagrees with actual sample count', summary))
+            package.audit_proofing_evidence(files)  # Historical passed=false records are expected.
+            for label, record in cases:
+                with self.subTest(label=label):
+                    data = json.dumps(record).encode()
+                    source = json.loads(files[source_path])
+                    next(row for row in source['preview_qualifications'] if row['path'] == native_path)['sha256'] = package.sha(data)
+                    altered = {**files, native_path: data, source_path: json.dumps(source).encode()}
+                    candidate = Path(temporary)/'rebound.zip'
+                    refreshed_archive(candidate, altered, manifest)
+                    with self.assertRaisesRegex(ValueError, 'proofing'):
+                        package.verify_archive(candidate)
+            # A refreshed successor source binding cannot repair stale native qualification.
+            altered = {**files, 'scripts/pdf_proofing.py': b'# changed synthetic companion\n'}
+            source = json.loads(files[source_path])
+            next(row for row in source['source_bindings'] if row['path'] == 'scripts/pdf_proofing.py')['sha256'] = package.sha(altered['scripts/pdf_proofing.py'])
+            altered[source_path] = json.dumps(source).encode()
+            with self.assertRaisesRegex(ValueError, 'native source bindings'):
+                package.audit_proofing_evidence(altered)
 
     def test_shared_icc_dependency_is_collected_on_both_targets_and_client_roots(self):
         with tempfile.TemporaryDirectory() as temporary:

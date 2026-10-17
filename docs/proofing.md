@@ -7,10 +7,16 @@ for the intended display condition. Your viewing software, monitor and screen
 settings still affect what you see.
 
 This is a controlled CMYK-to-display preview. Poppler interprets embedded RGB,
-Gray and ICCBased content, PDF rendering intents and blending according to the
-PDF. The workflow does not promise a general RGB-to-press-to-screen simulation,
-universal reader agreement, monitor calibration or physical printer approval.
-Broader arbitrary-PDF fidelity needs separate qualification.
+Gray and ICCBased content and PDF rendering intents through its RGB PNG route.
+
+The qualified Poppler PNG path composites ordinary transparency groups in RGB,
+including groups whose source PDF declares a CMYK blending space. The reference
+checks that RGB appearance. CMYK group-colorimetry and press simulation need
+separate qualification.
+
+Arbitrary-PDF fidelity, general RGB-to-press-to-screen simulation, universal
+reader agreement, monitor calibration and physical printer approval need
+separate qualification.
 
 ## Prepare the optional tools
 
@@ -160,7 +166,7 @@ manifest alone is not an independent fidelity or printing acceptance result.
 Renderer arguments contain resolved local paths, so review a generated manifest
 before sharing it.
 
-Poppler honors PDF rendering intents. The CLI offers no rendering-intent or
+Poppler interprets PDF rendering intents. The CLI offers no rendering-intent or
 black-point-compensation override. Black point compensation and transform
 optimization follow the renderer build. The qualification reference for the
 relative-colorimetric samples uses LittleCMS intent `1` and flags `0x2100`
@@ -184,9 +190,15 @@ Inspect the error, fix the cause and rerun into a fresh directory.
 The recorded Windows and Ubuntu preview runs each pass 78 gradient/opacity,
 20 direct LittleCMS color and 30 gallery comparisons, with errors bounded
 to four 8-bit values per channel. Ten repeated pages per environment preserve decoded pixels
-and exact ICC bytes. The largest observed channel error is one. See the
-[Windows receipt](verification/current/proofing-20261017/windows.json) and
-[Ubuntu receipt](verification/current/proofing-20261017/ubuntu.json).
+and exact ICC bytes. Another 156 checks compare every diagnostic gradient and flat sample with
+independent color and opacity expectations. The largest observed channel error is one. See the
+[Windows receipt](verification/current/proofing-20261017-r2/windows.json) and
+[Ubuntu receipt](verification/current/proofing-20261017-r2/ubuntu.json).
+Earlier [Windows](verification/current/proofing-20261017/windows.json),
+[Ubuntu](verification/current/proofing-20261017/ubuntu.json) and
+[source-input](verification/current/proofing-20261017/source-package.json)
+records retain their original tool identities. The current records add
+independent color and opacity expectations and reject failed or stale evidence.
 Fresh source delivery requires the adjacent exact-archive isolation receipt.
 The three original failed reader comparisons and their limits remain recorded in
 [color behavior](color-behavior.md). New controlled previews have their own

@@ -12,6 +12,7 @@ import PIL
 from PIL import Image, ImageCms
 import pypdf
 from pypdf import PdfWriter
+from pypdf.generic import DictionaryObject, NameObject
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT/'scripts'))
@@ -142,6 +143,96 @@ class PreviewAuditTests(unittest.TestCase):
         self.assertEqual(record['maximum_error'], 4)
         with self.assertRaisesRegex(ValueError, '5'):
             verification.compare_rgb([15, 82, 145], [20, 82, 145], 'changed color')
+
+
+class DiagnosticAppearanceTests(unittest.TestCase):
+    """Both sides can agree while sharing the same lost paint or opacity bug."""
+    # Independent fixture values, rather than pixels read back as expectations.
+    COLORS = [[209, 63, 130], [184, 89, 127], [132, 117, 113],
+              [66, 130, 91], [0, 132, 78]]
+    ROWS = [COLORS, COLORS,
+            [[233, 0, 132]]*2 + [[0, 130, 66]]*3,
+            [[206, 134, 167], [194, 146, 166], [168, 160, 158], [135, 167, 148], [102, 168, 141]],
+            [[205, 186, 195], [199, 175, 185], [168, 160, 158], [100, 148, 119], [26, 141, 94]],
+            [[205, 186, 195], [199, 175, 185], [168, 160, 158], [100, 148, 119], [26, 141, 94]],
+            [[206, 134, 167], [194, 146, 166], [168, 160, 158], [135, 167, 148], [102, 168, 141]],
+            [[204, 195, 199], [202, 190, 194], [186, 182, 181], [152, 176, 162], [115, 172, 149]]]
+
+    def setUp(self):
+        PreviewAuditTests.setUp(self)
+        writer = PdfWriter()
+        for space in ('/DeviceCMYK', '/DeviceRGB'):
+            page = writer.add_blank_page(width=640, height=960)
+            page[NameObject('/Group')] = DictionaryObject({NameObject('/CS'): NameObject(space)})
+        writer.write(self.pdf)
+        self.manifest['source_pdf'] = ident(self.pdf)
+        self.manifest['conditions']['pages'] = [1, 2]
+        self.manifest['outputs'] = []
+        for page in (1, 2):
+            record = diagnostic_page_record(self, page)
+            self.manifest['outputs'].append(record)
+        self.paint_fixture()
+
+    def paint_fixture(self, *, solid=None, damaged=None):
+        for page, record in enumerate(self.manifest['outputs'], 1):
+            image = Image.new('RGB', (1280, 1920), solid or (204, 204, 204))
+            if solid is None:
+                for case, row in enumerate(self.ROWS):
+                    for j, (t, rgb) in enumerate(zip(verification.SAMPLES, row)):
+                        if damaged and case == damaged[0] and j == damaged[1]:
+                            rgb = damaged[2]
+                        for x in (32+256*t, 352+j*52+24):
+                            image.putpixel((round(x*2), round((960-(864-case*112+24))*2)), tuple(rgb))
+            png = self.bundle/f'page-{page}.png'
+            image.save(png, icc_profile=self.display_profile.read_bytes())
+            record.update(ident(png), pixel_sha256=hashlib.sha256(image.tobytes()).hexdigest())
+        (self.bundle/'manifest.json').write_text(json.dumps(self.manifest), encoding='utf-8')
+
+    def absolute(self):
+        values = {tuple([t, 1-t, t, .25*t]): rgb
+                  for t, rgb in zip(verification.SAMPLES, self.COLORS)}
+        values.update({(0., 1., 0., 0.): [233, 0, 132], (1., 0., 1., .25): [0, 130, 66]})
+        class IndependentCMS:
+            def reference(self, print_profile, display_profile, components):
+                return [values[tuple(row)] for row in components]
+        return verification.diagnostic_absolute_controls(self.bundle, self.pdf, IndependentCMS(),
+                                                         self.print_profile, self.display_profile)
+
+    def test_accepts_independent_opaque_alpha_and_group_appearance(self):
+        self.assertEqual(len(self.absolute()), 156)
+
+    def test_rejects_uniform_tagged_pages_with_refreshed_producer_hashes(self):
+        for solid in ((255, 255, 255), (204, 204, 204), (209, 63, 130)):
+            with self.subTest(solid=solid):
+                self.paint_fixture(solid=solid)
+                verification.audit_preview(self.bundle, pdf=self.pdf, print_profile=self.print_profile,
+                    display_profile=self.display_profile, renderer=self.renderer,
+                    renderer_version='pdftoppm fixture', pages=[1, 2])
+                self.assertEqual(len(verification.diagnostic_controls(self.bundle, self.pdf)), 78)
+                with self.assertRaisesRegex(ValueError, 'absolute diagnostic'):
+                    self.absolute()
+
+    def test_rejects_shared_opaque_or_opacity_errors_at_their_own_sample(self):
+        # Opaque wrong color, ignored paint alpha, ignored group opacity,
+        # and applying group opacity twice still pass matched comparisons.
+        for case, j, wrong in ((0, 0, [0, 0, 0]), (3, 1, self.COLORS[1]),
+                               (6, 1, self.COLORS[1]), (7, 1, [203, 197, 199])):
+            with self.subTest(case=case):
+                self.paint_fixture(damaged=(case, j, wrong))
+                self.assertEqual(len(verification.diagnostic_controls(self.bundle, self.pdf)), 78)
+                with self.assertRaisesRegex(ValueError, f'absolute diagnostic 1/{verification.CASES[case]}/'):
+                    self.absolute()
+
+
+def diagnostic_page_record(test, page):
+    """Build a fresh producer record with independent diagnostic dimensions."""
+    return {'page': page, 'file': f'page-{page}.png', 'pixel_dimensions': [1280, 1920],
+            'media_box_points': [0, 0, 640, 960], 'crop_box_points': [0, 0, 640, 960],
+            'rotation_degrees': 0, 'user_unit': 1., 'diagnostics': '',
+            'renderer_arguments': ['-f', str(page), '-l', str(page), '-singlefile', '-r', '144',
+                '-png', '-aa', 'yes', '-aaVector', 'yes', '-displayprofile', str(test.display_profile.resolve()),
+                '-defaultcmykprofile', str(test.print_profile.resolve()), str(test.pdf.resolve()),
+                str((test.bundle/f'page-{page}').resolve())]}
 
 
 if __name__ == '__main__':
