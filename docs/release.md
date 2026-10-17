@@ -39,3 +39,21 @@ Ordinary drawing and decoded images need no workers. Font and CMYK profile prepa
 The earlier [source isolation receipt](verification/current/public-release-20261016/source-isolation.json) remains attached to its original archive and source baseline. It is historical evidence rather than qualification of this changed source. Historical commercial-checker results likewise remain attached to their original exact PDFs.
 
 The three original CMYK whole-page reader comparisons retain their failed verdicts at unchanged bounds. Controlled component/color evidence explains the reader differences. See [color behavior](color-behavior.md) and [verification status](verification-status.md). Source-release qualification does not establish unrestricted PDF/X-4 feature coverage, identical reader previews or physical printer acceptance.
+
+## Controlled preview qualification
+
+The optional [proofing companion](proofing.md) renders actual PDF pages with
+explicit CMYK printing and RGB display profiles. Windows Poppler 26.07.0 and
+native Ubuntu Poppler 24.02.0 each pass 78 gradient/opacity comparisons, 20 direct
+LittleCMS comparisons and 30 retained-gallery comparisons. Maximum observed
+channel errors are zero, one and zero respectively, within the unchanged bound
+of four. Ten repeated pages per environment preserve decoded pixels and ICC
+bytes. Profile sensitivity and OutputIntent mismatch refusal pass separately.
+
+[Windows](verification/current/proofing-20261017/windows.json) and
+[Ubuntu](verification/current/proofing-20261017/ubuntu.json) receipts bind actual
+inputs, tools, output pixels and conditions. The
+[source-input record](verification/current/proofing-20261017/source-package.json)
+binds the additive companion and unchanged native generation inputs. The exact
+source archive additionally requires its adjacent isolation receipt. The original
+three default-reader failures retain their verdicts and limits.

@@ -273,6 +273,39 @@ class SourcePackageTests(unittest.TestCase):
                                         'normative_requirements': [], 'writer_contracts': [],
                                         'coverage_assurance': {'status': 'incomplete'}})
 
+    def test_proofing_companion_is_included_and_each_file_is_required(self):
+        companion = (
+            'docs/proofing.md',
+            'scripts/pdf_proofing.py', 'scripts/proof-pdf.py', 'scripts/verify-pdf-proofing.py',
+            'tests/unit/pdf-proofing.test.py', 'tests/unit/pdf-proofing-verification.test.py',
+            'docs/verification/current/proofing-20261017/windows.json',
+            'docs/verification/current/proofing-20261017/ubuntu.json',
+            'docs/verification/current/proofing-20261017/source-package.json',
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            public_fixture(root)
+            _, files = package.collect(root)
+            self.assertTrue(set(companion).issubset(files),
+                            'source package omits companion files: '+str(sorted(set(companion)-files.keys())))
+            receipt = package.build(root, root/'package')
+            manifest = package.verify_archive(root/'package'/receipt['archive'])
+            self.assertTrue(set(companion).issubset(row['path'] for row in manifest['files']))
+            for name in companion:
+                with self.subTest(missing=name):
+                    altered = dict(files)
+                    del altered[name]
+                    with self.assertRaisesRegex(ValueError, 'required public package file is missing'):
+                        package.audit_payload_paths(altered)
+                    path = root/name
+                    data = path.read_bytes()
+                    path.unlink()
+                    try:
+                        with self.assertRaisesRegex(ValueError, 'missing, linked or escaping source'):
+                            package.collect(root)
+                    finally:
+                        path.write_bytes(data)
+
     def test_shared_icc_dependency_is_collected_on_both_targets_and_client_roots(self):
         with tempfile.TemporaryDirectory() as temporary:
             inputs = []

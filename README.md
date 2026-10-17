@@ -12,6 +12,7 @@ Ordinary graphics and decoded images work directly. Font and print-profile prepa
 - [Standalone examples](examples/standalone-client/README.md): drawing and prepared-resource workflows.
 - [Local development](docs/development.md): builds and verification commands.
 - [Platform support](docs/supported-platforms.md): native worker and environment requirements.
+- [Controlled screen previews](docs/proofing.md): optional Python CMYK-to-display rendering with explicit ICC profiles.
 - [Generation checks](docs/requirements/README.md): input contracts and independent evidence.
 - [Roadmap](ROADMAP.md): delivered scope and future capabilities.
 
@@ -24,6 +25,8 @@ The writer embeds the exact prepared font program and admitted ICC profile. Righ
 The [generation contract](docs/requirements/generation-contract.json) binds the complete documented input domain to current code, independent measurements and actual native controls. The public contract/catalog audits pass. The source handoff has separate archive extraction, build and execution qualification on both supported targets; retain its adjacent isolation receipt.
 
 The three original CMYK screen comparisons retain their failed verdicts at unchanged bounds. Controlled component/color checks and those reader differences are explained in [color behavior](docs/color-behavior.md). These results do not establish unrestricted PDF/X-4 feature coverage, identical previews in every reader or physical printer acceptance.
+
+The optional [screen-preview companion](docs/proofing.md) reads an existing PDF through a caller-supplied, color-managed Poppler executable and writes ICC-tagged RGB PNGs with a completion manifest. It requires Pillow and pypdf separately; Rust generation needs none of these preview dependencies. Native Windows and Ubuntu previews pass the recorded color, opacity, profile-sensitivity and repeatability checks. Exact source-archive qualification is recorded separately in its adjacent isolation receipt.
 
 Current qualification uses free tools. Independent development inspectors stay outside the library runtime. The source package includes dependency and asset notices; its adjacent isolation receipt must confirm extraction, build and execution on both supported targets before release.
 

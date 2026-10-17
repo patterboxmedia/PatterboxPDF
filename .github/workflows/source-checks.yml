@@ -54,3 +54,8 @@ jobs:
           mkdir -p artifacts
           python scripts/build-source-package.py artifacts/ci-source
           python -c "import json, pathlib, subprocess, sys; folder = pathlib.Path('artifacts/ci-source'); receipt = json.loads((folder / 'receipt.json').read_text()); subprocess.run([sys.executable, 'scripts/build-source-package.py', '--verify', str(folder / receipt['archive'])], check=True)"
+      - name: Optional screen-preview regressions
+        run: |
+          python -m pip install Pillow==12.3.0 pypdf==6.10.0
+          python tests/unit/pdf-proofing.test.py
+          python tests/unit/pdf-proofing-verification.test.py

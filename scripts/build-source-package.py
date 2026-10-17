@@ -13,7 +13,7 @@ import zipfile
 
 ROOT_FILES = (".gitattributes", ".gitignore", "LICENSE-MIT", "LICENSE-APACHE", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml", "README.md", "ROADMAP.md")
 PUBLIC_DOCS = ("architecture.md", "development.md", "api.md", "release.md",
-               "supported-platforms.md", "verification-status.md", "color-behavior.md", "requirements/README.md",
+               "supported-platforms.md", "verification-status.md", "color-behavior.md", "proofing.md", "requirements/README.md",
                "requirements/public-technical-sources.md", "requirements/supported-output-review.md",
                "requirements/pdfx4-inventory.json", "requirements/public-output-rules.json",
                "requirements/generation-contract.json")
@@ -23,12 +23,14 @@ PUBLIC_SCRIPTS = ("build-source-package.py", "verify-requirements.py", "stage-wo
                   "pdf_truetype_hint_execution.py", "verify-linux-runtime.py",
                   "pdf_text_metadata_rules.py", "verify-font-metrics.py", "verify-output-rules.py",
                   "collect-pdf-candidate-licenses.py", "pdf_numeric_rules.py",
-                  "verify-icc-profile.py", "verify-accepted-inputs.py", "verify-composition-corpus.py")
+                  "verify-icc-profile.py", "verify-accepted-inputs.py", "verify-composition-corpus.py",
+                  "pdf_proofing.py", "proof-pdf.py", "verify-pdf-proofing.py")
 PUBLIC_TESTS = ("source-package.test.py", "font-map-metadata.test.py", "worker-staging.test.py",
                 "pdfx-supported-output.test.py", "font-program-rules.test.py", "cmyk-gradient-verification.test.py",
                 "truetype-hint-execution.test.py", "linux-runtime-verification.test.py",
                 "text-metadata-rules.test.py", "font-metrics-verification.test.py", "output-rules.test.py",
-                "icc-profile.test.py", "accepted-inputs.test.py")
+                "icc-profile.test.py", "accepted-inputs.test.py",
+                "pdf-proofing.test.py", "pdf-proofing-verification.test.py")
 PUBLIC_RECEIPTS = (
     "corpus-fidelity.json", "corpus-generation.json", "corpus-independent.json", "corpus-scope.json",
     "corpus-structure.json", "fixture-isolation.json", "standalone-api.json", "standalone-fidelity.json",
@@ -47,6 +49,7 @@ PUBLIC_RECEIPTS = (
     "three-area-20261016/linux.json", "three-area-20261016/windows.json",
     "accepted-inputs-20261016/supported-inputs.json", "accepted-inputs-20261016/color.json",
     "accepted-inputs-20261016/linux.json", "accepted-inputs-20261016/windows.json",
+    "proofing-20261017/windows.json", "proofing-20261017/ubuntu.json", "proofing-20261017/source-package.json",
 )
 SUPPORTED_TARGETS = ("x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu")
 FORBIDDEN_PARTS = {".git", ".codex", ".agents", ".tools", "target", "artifacts", "node_modules", "__pycache__"}

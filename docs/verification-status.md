@@ -48,3 +48,21 @@ The original default PDFium/Poppler comparison remains failed on ordinary page 2
 Historical receipts retain their exact original source and output identities. Earlier commercial-checker verdicts apply only to the files actually checked; this update claims no new commercial-checker verdict. Changes affecting generation or inspection require fresh relevant checks and current bindings.
 
 First-party source and original material use MIT OR Apache-2.0. Dependencies, fonts, profiles and character mapping data retain their separate terms. Registry publication stays disabled. Current source execution and output measurements do not establish unrestricted PDF/X-4 feature coverage, universal reader fidelity or downstream printer acceptance.
+
+## Controlled preview qualification
+
+The optional [proofing companion](proofing.md) renders actual PDF pages with
+explicit CMYK printing and RGB display profiles. Windows Poppler 26.07.0 and
+native Ubuntu Poppler 24.02.0 each pass 78 gradient/opacity comparisons, 20 direct
+LittleCMS comparisons and 30 retained-gallery comparisons. Maximum observed
+channel errors are zero, one and zero respectively, within the unchanged bound
+of four. Ten repeated pages per environment preserve decoded pixels and ICC
+bytes. Profile sensitivity and OutputIntent mismatch refusal pass separately.
+
+[Windows](verification/current/proofing-20261017/windows.json) and
+[Ubuntu](verification/current/proofing-20261017/ubuntu.json) receipts bind actual
+inputs, tools, output pixels and conditions. The
+[source-input record](verification/current/proofing-20261017/source-package.json)
+binds the additive companion and unchanged native generation inputs. The exact
+source archive additionally requires its adjacent isolation receipt. The original
+three default-reader failures retain their verdicts and limits.

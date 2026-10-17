@@ -120,3 +120,27 @@ Applications should distinguish an unmanaged screen preview from an explicitly
 profile-managed proof, and verify the destination printing condition they intend
 to use. These fixture checks establish neither universal reader agreement nor
 physical printer acceptance.
+
+## Optional controlled preview workflow
+
+The [proofing companion](proofing.md) offers a reusable Python API and CLI for
+rendering an existing PDF with explicit printing and display profiles. It requires
+a native CMS-enabled Poppler executable, a printer-class CMYK profile and a
+display-class RGB profile. An embedded CMYK OutputIntent must match the exact
+selected printing-profile bytes. Without an OutputIntent, the ordinary PDF uses
+the caller's explicit DefaultCMYK condition.
+
+Poppler interprets PDF rendering intents, embedded color spaces and blending.
+The CLI does not override rendering intent or black point compensation. The
+qualification reference for relative-colorimetric samples uses LittleCMS intent
+`1` and flags `0x2100` (no optimization and black point compensation); renderer
+build changes require fresh checks of those conditions. The companion tags the
+rendered RGB pixels with the exact display ICC bytes without reconverting them.
+A viewer must honor that tag, and the display condition still affects appearance.
+
+Native Windows and Ubuntu previews pass the recorded color, opacity, profile-sensitivity and repeatability checks. Exact source-archive qualification is recorded separately in its adjacent isolation receipt. New previews have
+their own PDF, profile, renderer and output identities in a completion manifest.
+They do not replace the three original failed comparisons, their unchanged
+thresholds or the historical PDF identities above. Controlled CMYK-to-display
+preview does not establish general RGB press simulation, universal reader
+agreement or physical printer approval.

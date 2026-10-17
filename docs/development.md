@@ -105,3 +105,31 @@ python3 scripts/verify-output-rules.py
 ```
 
 The source archive includes the independent ICC/numeric/family helpers, tiny font controls, their generator/provenance and applicable asset notices. Standalone generation does not need those development tools. Final qualification must be repeated from the extracted source rather than relying on a previously built worker.
+
+## Optional controlled screen previews
+
+The [proofing guide](proofing.md) gives Windows and Ubuntu CLI commands and the
+reusable `scripts/pdf_proofing.py` API. This companion uses Python 3.11 or later,
+Pillow with LittleCMS, pypdf and an explicitly supplied native CMS-enabled
+Poppler `pdftoppm`. Install these optional dependencies separately. Rust generation
+and its workers do not invoke the companion.
+
+Supply a printer-class CMYK profile, a display-class RGB profile and a new output
+directory whose parent exists. An embedded OutputIntent must exactly match the
+printing profile; ordinary PDFs without one use the explicit DefaultCMYK
+condition. Rendered PNGs carry the exact display ICC bytes. Check the final
+`manifest.json` and inspect the pages in a viewer that honors ICC tags. Partial
+PNGs without a completed manifest are incomplete output.
+
+Focused companion contract checks can run with the optional Python dependencies:
+
+```text
+python tests/unit/pdf-proofing.test.py
+python scripts/proof-pdf.py --help
+```
+
+Those focused tests do not establish native renderer color behavior. The
+recorded Windows and Ubuntu preview qualifications additionally exercise actual
+CMS rendering, independent color references and repeatability. Fresh source
+delivery must retain its adjacent archive isolation receipt. Existing generation
+receipts retain their recorded scope.

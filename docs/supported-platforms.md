@@ -22,3 +22,23 @@ Qualification applies to those recorded environments. Other distributions, kerne
 The optional trusted validator supports Windows. Linux refuses it before launch. The Python output inspector is a development check; the PDF writer needs neither qpdf nor a commercial checker. Enable `publisher-adapter` for the retained saved-publication compatibility path. Default library dependencies exclude application authoring crates. Existing crate, protocol and worker names remain compatibility identifiers.
 
 Native receipts show which code executed under confinement. Independent output receipts show what the exact emitted files contain. The generation evidence must bind both.
+
+## Optional preview companion
+
+The separate [controlled CMYK screen-preview workflow](proofing.md) targets
+native Windows x86_64 and Ubuntu x86_64. It requires Python 3.11 or later, Pillow
+with its LittleCMS binding, pypdf and a caller-supplied native Poppler `pdftoppm`
+with working CMS support. On Ubuntu, use an ELF renderer. The required profile
+options and actual color behavior must both be verified for the selected build.
+The companion does not install tools or profiles, and Rust generation does not
+require these dependencies.
+
+Native Windows and Ubuntu previews pass the recorded color, opacity, profile-sensitivity and repeatability checks. Exact source-archive qualification is recorded separately in its adjacent isolation receipt. The generator
+counts above describe generation and preparation, and do not establish preview
+qualification. Renderer builds, supplied profiles and document blending/intents
+influence preview pixels; cross-platform pixel equality is not promised.
+
+Each PNG carries the exact selected RGB display ICC profile. Viewing it correctly
+requires software that honors that profile and an appropriate display condition.
+The workflow provides no calibrated-monitor certification or physical printer
+acceptance. Its complete manifest records the actual platform and tool identities.

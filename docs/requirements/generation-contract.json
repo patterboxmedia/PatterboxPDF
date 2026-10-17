@@ -4636,7 +4636,7 @@
     },
     {
       "path": "scripts/build-source-package.py",
-      "sha256": "90853597f6775370ad0024317855d11ad4a3142b055e4ffaf84cab260a1fe1ff"
+      "sha256": "b253ed380c96cb49f0a7409859d5214823c516068d9ede20fd21d8b315aeea0c"
     },
     {
       "path": "scripts/collect-pdf-candidate-licenses.py",

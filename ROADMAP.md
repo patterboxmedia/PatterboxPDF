@@ -29,6 +29,21 @@ The three original CMYK reader comparisons remain failed at their unchanged boun
 
 Historical receipts retain their original source and exact output identities. Changes that affect generation or inspection require fresh relevant checks and current bindings.
 
+## Controlled CMYK screen previews
+
+The optional Python companion is implemented with a reusable module and CLI.
+It renders the actual PDF through an explicitly supplied CMS-enabled Poppler,
+requires matching embedded CMYK OutputIntent bytes when present, and writes RGB
+PNGs containing the selected display ICC profile. Ordinary PDFs without an
+OutputIntent record the caller's explicit DefaultCMYK condition.
+
+Native Windows and Ubuntu preview qualification passes with explicit profiles,
+independent color measurements and repeatability controls. Source delivery also
+requires the adjacent exact-archive isolation receipt. See the
+[proofing guide](docs/proofing.md) for use, completion manifests and limitations.
+The three historical failed reader comparisons retain their original verdicts
+and bounds. Physical printer acceptance remains a downstream check.
+
 ## Source release
 
 First-party source and original material use MIT OR Apache-2.0. Dependency, font and profile terms remain separate. All Cargo packages retain `publish = false`. Registry and binary releases require separate work.
