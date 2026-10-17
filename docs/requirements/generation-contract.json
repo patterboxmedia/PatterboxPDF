@@ -4676,7 +4676,7 @@
     },
     {
       "path": "scripts/verify-font-metrics.py",
-      "sha256": "047ec693d5d325e42d75d51fa1330c3b9be107fd107db3acd1607d3ba3d7cfd2"
+      "sha256": "744235cf2e73a59b963c7670f63724fa05d8fc015d11f25b747acc347949dedf"
     },
     {
       "path": "scripts/verify-icc-profile.py",
@@ -4703,7 +4703,7 @@
     {
       "kind": "supported-output",
       "path": "docs/verification/current/accepted-inputs-20261016/supported-inputs.json",
-      "sha256": "bd1b95b9e10c0b1d7df4fb74347a7631fc65c766e8acfc1300a0b53d43efb934"
+      "sha256": "c927e6e2d950ab4890b17b4be9d08acf1e742c1c46ffde4bcfe70bee683fee57"
     },
     {
       "kind": "color",

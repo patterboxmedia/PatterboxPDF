@@ -222,6 +222,39 @@ def program_pdf(program, *, bbox=(20, 0, 1100, 700), count=6, descent=0, cff=Fal
 
 
 class FontMetricVerification(unittest.TestCase):
+    def test_source_identity_ignores_other_name_encodings_without_repairing_selected_names(self):
+        from fontTools.ttLib import TTFont
+        from fontTools.ttLib.tables._n_a_m_e import makeName
+
+        def identity(records):
+            font = TTFont(io.BytesIO(original_font()), recalcTimestamp=False)
+            try:
+                font['name'].names = records
+                return metrics._postscript_name(font)
+            finally:
+                font.close()
+
+        chosen = 'AuthoredMetric-Regular'
+        for platform, encoding in ((0, 4), (3, 0), (3, 1), (3, 10), (1, 0)):
+            with self.subTest(platform=platform, encoding=encoding):
+                raw = chosen.encode('mac_roman' if platform == 1 else 'utf-16-be')
+                selected = makeName(raw, 6, platform, encoding, 0)
+                # A different name in an ignored encoding is not an ambiguity.
+                ignored = makeName(b'IgnoredLegacyIdentity', 6, 1, 1, 0)
+                self.assertEqual(identity([selected, ignored]), chosen)
+                conflicting = makeName(b'DifferentIdentity', 6, 1, 0, 0)
+                with self.assertRaisesRegex(ValueError, 'unambiguous'):
+                    identity([selected, conflicting])
+
+        for raw in (b'\x00A\x00', b'\xd8\x00'):
+            with self.subTest(malformed=raw), self.assertRaises(UnicodeError):
+                identity([makeName(raw, 6, 3, 1, 0)])
+        for text in ('', 'Contains Space', 'Bad/Delimiter', 'A' * 64, '\u00e9'):
+            with self.subTest(invalid=text), self.assertRaisesRegex(ValueError, 'Invalid source'):
+                identity([makeName(text.encode('utf-16-be'), 6, 3, 1, 0)])
+        with self.assertRaisesRegex(ValueError, 'unambiguous'):
+            identity([makeName(b'IgnoredLegacyIdentity', 6, 1, 1, 0)])
+
     def test_component_geometry_and_effective_advance_use_separate_phantom_roles(self):
         controls=ROOT/'apps/font-worker/src/tests/components'
         cases={

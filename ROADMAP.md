@@ -17,7 +17,7 @@ The reusable finished-page interface serves unrelated applications. Application 
 
 The current milestone covers the documented successful generation routes and all supported input families. Native resource checks and writer construction enforce the contract; independent evaluators measure actual output. Intentional diagnostic candidates have their own stated scope.
 
-Font preparation now preserves composite geometry and required metrics through subsetting, including retained component tails. Full-font embedding preserves source bytes. Font descriptors account for complete outlines, effective CFF transformations, flex curves, fractional coordinates and independently established design authority. Valid name-table formats are supported, and malformed retained names are rejected.
+Font preparation now preserves composite geometry and required metrics through subsetting, including retained component tails. Full-font embedding preserves source bytes. Font descriptors account for complete outlines, effective CFF transformations, flex curves, fractional coordinates and independently established design authority. Valid name-table formats are supported, and malformed retained names are rejected. Independent metric checks select the documented Unicode/MacRoman PostScript identity and ignore other permitted identity records without guessing their meaning.
 
 ICC preparation checks supported editions, headers, tag/type roles and retained payloads before native usability checks. Numeric encoding preserves the required relationships in the actual emitted decimals. Metadata, Unicode, image planes, gradient functions and resource graphs have independent output controls.
 

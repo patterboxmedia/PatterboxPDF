@@ -96,6 +96,27 @@ def _cff_geometry(top):
     return names, boxes, advances, matrices
 
 
+def _postscript_name(font):
+    names = set()
+    for item in font['name'].names:
+        if item.nameID != 6:
+            continue
+        if item.platformID == 0 or (item.platformID == 3 and item.platEncID in (0, 1, 10)):
+            codec = 'utf-16-be'
+        elif item.platformID == 1 and item.platEncID == 0:
+            codec = 'mac_roman'
+        else:
+            # Other permitted ID6 encodings do not select the source identity.
+            continue
+        name = bytes(item.string).decode(codec, errors='strict')
+        if not (0 < len(name) <= 63 and all(33 <= ord(char) <= 126 and char not in '[](){}<>/%' for char in name)):
+            raise ValueError('Invalid source PostScript name')
+        names.add(name)
+    if len(names) != 1:
+        raise ValueError('Source must have one unambiguous PostScript name')
+    return names.pop()
+
+
 def _source(data, face_index=0):
     collection = data[:4] == b'ttcf'
     if not collection and face_index != 0:
@@ -103,9 +124,7 @@ def _source(data, face_index=0):
     font = TTFont(io.BytesIO(data), fontNumber=face_index if collection else -1,
                   recalcBBoxes=False, recalcTimestamp=False)
     try:
-        names = {item.toUnicode() for item in font['name'].names if item.nameID == 6}
-        if len(names) != 1:
-            raise ValueError('Source must have one unambiguous PostScript name')
+        ps_name = _postscript_name(font)
         glyph_set = font.getGlyphSet()
         cff = _cff_geometry(font['CFF '].cff.topDictIndex[0]) if 'CFF ' in font else None
         aliases,unresolved_context = {},False
@@ -116,7 +135,7 @@ def _source(data, face_index=0):
                 continue
             for code,name in table.cmap.items():
                 aliases.setdefault(name,set()).add(code)
-        return {'font': font, 'data': data, 'sha256': sha(data), 'ps_name': names.pop(),
+        return {'font': font, 'data': data, 'sha256': sha(data), 'ps_name': ps_name,
                 'face_index': face_index,
                 'glyph_set': glyph_set, 'tt_geometry':truetype_geometry(font,allow_unresolved=True) if cff is None else None,
                 'cmap': font.getBestCmap() or {},

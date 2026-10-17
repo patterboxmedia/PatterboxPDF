@@ -43,8 +43,8 @@
     },
     {
       "path": "ROADMAP.md",
-      "bytes": 4260,
-      "sha256": "18869c76d238ce6cd2323ed70604309879f75a87d9000c4249f06f5caad677a4"
+      "bytes": 4421,
+      "sha256": "44d844dba99e7dc717f70a4470e86e6923841fee5730830dc788e18a1a07c2c1"
     },
     {
       "path": "apps/color-worker/Cargo.toml",
@@ -1694,17 +1694,17 @@
     {
       "path": "docs/requirements/generation-contract.json",
       "bytes": 447502,
-      "sha256": "da5790e719d0c7f43efce42c1574fb8b872657f24a7c10cc5af737c3954bce31"
+      "sha256": "7e5c14b0114bacd092a742063f2fed660e827973867f6c574fb4e9ef5b606f75"
     },
     {
       "path": "docs/requirements/pdfx4-inventory.json",
       "bytes": 94539,
-      "sha256": "a6be84920767c99567170cb067122fa087af060b399dd428fa7c51530bcdd28a"
+      "sha256": "d97756ce2f5f782278b1553c99a9c82b5e48c90a3193fd2533bec4fb29b08779"
     },
     {
       "path": "docs/requirements/public-output-rules.json",
       "bytes": 57668,
-      "sha256": "8a974179e6f182abbc3a2205df833ad823639f35690ba6066f0a9441d4f620bc"
+      "sha256": "c40b1dec9812976256d76e305f9d5230a03f9a87eee7d70355fe3664f013411b"
     },
     {
       "path": "docs/requirements/public-technical-sources.md",
@@ -1723,8 +1723,8 @@
     },
     {
       "path": "docs/verification-status.md",
-      "bytes": 6373,
-      "sha256": "bcb65294a9d27cc53305b018cda6f5fbd78285151e1202243494f4bef8f050a0"
+      "bytes": 6574,
+      "sha256": "ab0c3b84725897caa82ddc999b35d927bb7c87c0e4e6050c49c96bc26ed247a0"
     },
     {
       "path": "docs/verification/current/accepted-inputs-20261016/color.json",
@@ -1739,7 +1739,7 @@
     {
       "path": "docs/verification/current/accepted-inputs-20261016/supported-inputs.json",
       "bytes": 9891033,
-      "sha256": "bd1b95b9e10c0b1d7df4fb74347a7631fc65c766e8acfc1300a0b53d43efb934"
+      "sha256": "c927e6e2d950ab4890b17b4be9d08acf1e742c1c46ffde4bcfe70bee683fee57"
     },
     {
       "path": "docs/verification/current/accepted-inputs-20261016/windows.json",
@@ -2043,8 +2043,8 @@
     },
     {
       "path": "scripts/verify-font-metrics.py",
-      "bytes": 55695,
-      "sha256": "047ec693d5d325e42d75d51fa1330c3b9be107fd107db3acd1607d3ba3d7cfd2"
+      "bytes": 56392,
+      "sha256": "744235cf2e73a59b963c7670f63724fa05d8fc015d11f25b747acc347949dedf"
     },
     {
       "path": "scripts/verify-icc-profile.py",
@@ -2093,8 +2093,8 @@
     },
     {
       "path": "tests/unit/font-metrics-verification.test.py",
-      "bytes": 54520,
-      "sha256": "6f1d63032ef67553cbcc7de3435d39566f051e59a5eef8acbbc9bdecb1e66c30"
+      "bytes": 56333,
+      "sha256": "0751d3b2536c5930a05c40083237c782695ce0539062186b60fefa973efd8c8b"
     },
     {
       "path": "tests/unit/font-program-rules.test.py",
