@@ -1,5 +1,8 @@
 //! Bounded, machine-readable font inspection and publication preparation worker.
 
+mod pdf_metrics;
+mod subset_metrics;
+
 use layout_core::fonts::{FontEmbeddingEligibility, FontEmbeddingLicense, inspect_font_face};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -13,7 +16,7 @@ use std::{
 use subsetter::GlyphRemapper;
 use ttf_parser::{Face, GlyphId, Style, Tag, name_id};
 
-const PROTOCOL_VERSION: u16 = 5;
+const PROTOCOL_VERSION: u16 = 6;
 const MAX_REQUEST_BYTES: u64 = 256 * 1024;
 const MAX_FONT_FILE_BYTES: usize = 64 * 1024 * 1024;
 const MAX_FONT_GLYPHS_PER_SUBSET: usize = 16_384;
@@ -21,8 +24,7 @@ const MAX_FONT_FAMILY_BYTES: usize = 1_024;
 const MAX_FONT_FAMILY_CHARS: usize = 256;
 const MAX_FONT_FAMILY_NAMES: usize = 256;
 const ENGINE_IDENTITY: &str = "subsetter-0.2.6/ttf-parser-0.25.1";
-const RULES_IDENTITY: &str =
-    "publisher-v2/font-preparation/v5/inspect-family-aliases-and-publication/cid-cff/fail-closed";
+const RULES_IDENTITY: &str = "publisher-v2/font-preparation/v6/inspect-family-aliases-and-publication/cid-cff/fail-closed/precise-metrics-v1";
 const GLYPH_SET_DOMAIN: &[u8] = b"publisher-v2/font-glyph-set/v1\0";
 const RIGHTS_DOMAIN: &[u8] = b"publisher-v2/font-rights/v1\0";
 const POSTSCRIPT_NAME_DOMAIN: &[u8] = b"publisher-v2/font-postscript-name/v1\0";
@@ -63,8 +65,8 @@ enum PreparationPolicy {
 #[derive(Debug, Serialize)]
 #[serde(tag = "operation", content = "report", rename_all = "kebab-case")]
 enum WorkerReport {
-    Inspect(InspectionReport),
-    Prepare(PreparationReport),
+    Inspect(Box<InspectionReport>),
+    Prepare(Box<PreparationReport>),
 }
 
 #[derive(Debug, Serialize)]
@@ -118,6 +120,7 @@ struct PreparationReport {
     fixed_pitch: bool,
     italic: bool,
     widths: Vec<i32>,
+    pdf_metrics: pdf_metrics::PdfMetrics,
     remapped_glyphs: Vec<RemappedGlyph>,
     exercise_cid: u16,
     exercise_unicode: u32,
@@ -270,6 +273,7 @@ fn process_request(request: &WorkerRequest) -> Result<WorkerReport, WorkerError>
                 return Err(WorkerError::UnsupportedProtocol);
             }
             process_inspection(font_path, expected_source_sha256, *face_index)
+                .map(Box::new)
                 .map(WorkerReport::Inspect)
         }
         WorkerRequest::Prepare {
@@ -294,7 +298,9 @@ fn process_request(request: &WorkerRequest) -> Result<WorkerReport, WorkerError>
                 glyph_ids,
                 expected_glyph_set_sha256,
             };
-            process_preparation(&request).map(WorkerReport::Prepare)
+            process_preparation(&request)
+                .map(Box::new)
+                .map(WorkerReport::Prepare)
         }
     }
 }
@@ -434,7 +440,7 @@ fn process_preparation(request: &PreparationRequest<'_>) -> Result<PreparationRe
     {
         return Err(WorkerError::InvalidGlyphSet);
     }
-    let (prepared, remapped_glyphs) = match preparation_kind {
+    let (mut prepared, remapped_glyphs) = match preparation_kind {
         PreparationKind::Subset => {
             let mut remapper = GlyphRemapper::new();
             for glyph_id in request.glyph_ids {
@@ -474,6 +480,13 @@ fn process_preparation(request: &PreparationRequest<'_>) -> Result<PreparationRe
     if prepared.is_empty() || prepared.len() > MAX_FONT_FILE_BYTES {
         return Err(WorkerError::SubsetFailed);
     }
+    if matches!(preparation_kind, PreparationKind::Subset) {
+        subset_metrics::normalize(&mut prepared).map_err(|()| WorkerError::SubsetFailed)?;
+    } else if source_face.tables().glyf.is_some() && !subset_metrics::has_hint_tables(&prepared) {
+        // A full-font embedding must preserve the source bytes. It cannot be
+        // repaired into a different program when mandatory tables are absent.
+        return Err(WorkerError::MalformedFont);
+    }
     let (exercise_cid, exercise_unicode) =
         select_exercise_glyph(&source_face, &remapped_glyphs).ok_or(WorkerError::NoUnicodeGlyph)?;
     let face = Face::parse(&prepared, 0).map_err(|_| WorkerError::MalformedFont)?;
@@ -487,6 +500,12 @@ fn process_preparation(request: &PreparationRequest<'_>) -> Result<PreparationRe
     let units_per_em = i64::from(face.units_per_em());
     let scaled = |value: i16| scale_1000(i64::from(value), units_per_em);
     let bbox = face.global_bounding_box();
+    let pdf_metrics = pdf_metrics::prepare(
+        &source_face,
+        &face,
+        &remapped_glyphs,
+        matches!(preparation_kind, PreparationKind::Full),
+    );
     let widths = (0..face.number_of_glyphs())
         .map(|gid| {
             scale_1000(
@@ -555,11 +574,12 @@ fn process_preparation(request: &PreparationRequest<'_>) -> Result<PreparationRe
         ],
         ascent: scaled(face.ascender()),
         descent: scaled(face.descender()),
-        cap_height: scaled(face.capital_height().unwrap_or_else(|| face.ascender())),
+        cap_height: pdf_metrics::capital_height(&source_face).map_or(0, scaled),
         italic_angle_millidegrees,
         fixed_pitch: face.is_monospaced(),
         italic: face.is_italic(),
         widths,
+        pdf_metrics,
         remapped_glyphs,
         exercise_cid,
         exercise_unicode,
@@ -915,18 +935,18 @@ mod tests {
         let WorkerReport::Prepare(report) = report else {
             panic!("expected preparation report");
         };
-        report
+        *report
     }
 
     fn inspection_report(report: WorkerReport) -> InspectionReport {
         let WorkerReport::Inspect(report) = report else {
             panic!("expected inspection report");
         };
-        report
+        *report
     }
 
-    fn font_with_fs_type(fs_type: u16) -> Vec<u8> {
-        let mut font = FONT.to_vec();
+    fn font_with_fs_type(source: &[u8], fs_type: u16) -> Vec<u8> {
+        let mut font = source.to_vec();
         let table_count = usize::from(u16::from_be_bytes([font[4], font[5]]));
         let os2_record = (0..table_count)
             .map(|index| 12 + index * 16)
@@ -1014,11 +1034,111 @@ mod tests {
         let prepared = std::fs::read(directory.path("prepared.font")).expect("read subset output");
         assert_eq!(report.prepared_sha256, hex(sha256(&prepared)));
         assert_eq!(report.prepared_byte_length, prepared.len());
+        // Independently decoded DejaVu .notdef/A/B metrics in font units:
+        // AWmax 1405, minLSB 16, minRSB 17, xMaxExtent 1384. The original
+        // full-face extrema must not survive glyph removal in the subset.
+        let subset = Face::parse(&prepared, 0).unwrap();
+        let hhea = subset.raw_face().table(Tag::from_bytes(b"hhea")).unwrap();
+        assert_eq!(&hhea[10..18], &[0x05, 0x7d, 0, 16, 0, 17, 0x05, 0x68]);
+        let head = subset.raw_face().table(Tag::from_bytes(b"head")).unwrap();
+        assert_eq!(&head[36..44], &[0, 16, 0xfe, 0x96, 0x05, 0x68, 0x05, 0xd5]);
+        assert_eq!(report.cap_height, 729);
+        assert_eq!(report.pdf_metrics.cap_height, Some(729.003_9));
+        // Retained outlines, independently measured in font units, reach
+        // 1493 above and -362 below the baseline. Source line spacing is not
+        // the descriptor's maximum unaccented glyph height/depth.
+        assert_eq!(report.pdf_metrics.ascent.to_bits(), 729.003_9_f32.to_bits());
+        assert_eq!(
+            report.pdf_metrics.descent.to_bits(),
+            (-176.757_81_f32).to_bits()
+        );
+        assert_eq!(
+            report.pdf_metrics.bbox.map(f32::to_bits),
+            [7.8125_f32, -176.757_81, 675.781_25, 729.003_9].map(f32::to_bits)
+        );
+        assert_eq!(report.bbox, [7, -177, 675, 729]);
+    }
+
+    #[test]
+    fn a_face_without_latin_characters_keeps_optional_cap_height_and_measured_stems() {
+        let mut font = FONT.to_vec();
+        let count = usize::from(u16::from_be_bytes(font[4..6].try_into().unwrap()));
+        let record = (0..count)
+            .map(|index| 12 + index * 16)
+            .find(|record| &font[*record..*record + 4] == b"cmap")
+            .unwrap();
+        let offset = usize::try_from(u32::from_be_bytes(
+            font[record + 8..record + 12].try_into().unwrap(),
+        ))
+        .unwrap();
+        let length = usize::try_from(u32::from_be_bytes(
+            font[record + 12..record + 16].try_into().unwrap(),
+        ))
+        .unwrap();
+        // A single Greek alpha mapping to the original A outline. This face
+        // has no Latin mapping or positive OS/2 cap-height declaration.
+        let words = [
+            0_u16, 1, 3, 1, 0, 12, 4, 32, 0, 4, 4, 1, 0, 0x0391, 0xffff, 0, 0x0391, 0xffff, 0xfc93,
+            1, 0, 0,
+        ];
+        font[offset..offset + length].fill(0);
+        for (index, word) in words.into_iter().enumerate() {
+            font[offset + index * 2..offset + index * 2 + 2].copy_from_slice(&word.to_be_bytes());
+        }
+        let directory = TestDirectory::new();
+        let report = preparation_report(
+            process_request(&request(
+                &directory,
+                &font,
+                PreparationPolicy::SubsetOnly,
+                vec![0, 36],
+            ))
+            .unwrap(),
+        );
+        assert!(report.pdf_metrics.cap_height.is_none());
+        assert!(report.pdf_metrics.stem_v > 0.0);
+    }
+
+    #[test]
+    fn unhinted_source_subset_has_the_required_embedded_tables() {
+        let font = include_bytes!("../tests/fixtures/unhinted.ttf");
+        let directory = TestDirectory::new();
+        let report = preparation_report(
+            process_request(&request(
+                &directory,
+                font,
+                PreparationPolicy::SubsetOnly,
+                vec![0, 1],
+            ))
+            .unwrap(),
+        );
+        let prepared = std::fs::read(directory.path("prepared.font")).unwrap();
+        assert_eq!(report.prepared_byte_length, prepared.len());
+        let face = Face::parse(&prepared, 0).unwrap();
+        for tag in [*b"cvt ", *b"prep", *b"fpgm"] {
+            assert!(face.raw_face().table(Tag::from_bytes(&tag)).is_some());
+        }
+    }
+
+    #[test]
+    fn full_font_with_missing_embedded_tables_is_rejected_without_rewriting() {
+        let font = font_with_fs_type(include_bytes!("../tests/fixtures/unhinted.ttf"), 0x0108);
+        let directory = TestDirectory::new();
+        let error = process_request(&request(
+            &directory,
+            &font,
+            PreparationPolicy::Publication,
+            vec![0, 1],
+        ))
+        .unwrap_err();
+        assert_error(&error, "malformed-font", None);
+        assert!(!directory.path("prepared.font").exists());
+        assert_eq!(std::fs::read(directory.path("source.font")).unwrap(), font);
     }
 
     #[test]
     fn no_subsetting_rights_require_publication_policy_and_preserve_full_font() {
-        let font = font_with_fs_type(0x0108);
+        let font = font_with_fs_type(FONT, 0x0108);
         let directory = TestDirectory::new();
         let subset_request = request(
             &directory,
@@ -1055,7 +1175,7 @@ mod tests {
             (0x0400, "unknown"),
         ] {
             let directory = TestDirectory::new();
-            let font = font_with_fs_type(fs_type);
+            let font = font_with_fs_type(FONT, fs_type);
             let request = request(
                 &directory,
                 &font,
@@ -1215,7 +1335,7 @@ mod tests {
     #[test]
     fn inspect_returns_denied_rights_as_facts_but_rejects_malformed_sources() {
         let restricted_directory = TestDirectory::new();
-        let restricted = font_with_fs_type(0x0002);
+        let restricted = font_with_fs_type(FONT, 0x0002);
         let request = inspection_request(&restricted_directory, &restricted);
         let report = inspection_report(process_request(&request).expect("inspect restricted font"));
         assert!(matches!(

@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::{
     fs::{File, OpenOptions},
-    io::{Read, Seek, Write},
+    io::{self, Read, Seek, Write},
     path::{Path, PathBuf},
     process::ExitStatus,
     thread,
@@ -21,7 +21,7 @@ pub const COLOR_RULES_IDENTITY: &str =
     "publisher-v2/color-conversion/v1/relative-colorimetric/no-proofing";
 const MAX_WORKER_BYTES: u64 = 64 * 1024 * 1024;
 const MAX_REPORT_BYTES: u64 = 64 * 1024;
-#[cfg(windows)]
+#[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
 const WORKER_MEMORY_LIMIT: usize = raster_capacity::MAX_RASTER_COLOR_WORKER_BYTES;
 const CONVERSION_TIMEOUT: Duration = Duration::from_secs(120);
 const INSPECTION_RULES: &str =
@@ -499,6 +499,8 @@ fn release_worker_lookup_is_confined_to_the_application_directory() {
 }
 
 struct PreparedWorker {
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    verified_bytes: Vec<u8>,
     path: PathBuf,
     directory: PathBuf,
     executable_hash: Hash32,
@@ -517,11 +519,19 @@ impl PreparedWorker {
         } else {
             "publisher-color-worker"
         });
-        write_exclusive(&path, &bytes)?;
+        let mut prepared = Self {
+            path,
+            directory,
+            executable_hash: binding.executable_hash,
+            #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+            verified_bytes: Vec::new(),
+            identity_lock: None,
+        };
+        write_exclusive(&prepared.path, &bytes)?;
         #[cfg(unix)]
         {
             use std::os::unix::fs::PermissionsExt;
-            std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o500))
+            std::fs::set_permissions(&prepared.path, std::fs::Permissions::from_mode(0o500))
                 .map_err(io_error)?;
         }
         let mut options = OpenOptions::new();
@@ -531,7 +541,7 @@ impl PreparedWorker {
             use std::os::windows::fs::OpenOptionsExt;
             options.share_mode(1);
         }
-        let mut identity_lock = options.open(&path).map_err(io_error)?;
+        let mut identity_lock = options.open(&prepared.path).map_err(io_error)?;
         identity_lock.rewind().map_err(io_error)?;
         let mut exact = Vec::new();
         Read::by_ref(&mut identity_lock)
@@ -541,12 +551,12 @@ impl PreparedWorker {
         if Hash32::of(&exact) != binding.executable_hash {
             return Err(ColorWorkerError::ExecutableIdentityDrift);
         }
-        Ok(Self {
-            path,
-            directory,
-            executable_hash: binding.executable_hash,
-            identity_lock: Some(identity_lock),
-        })
+        prepared.identity_lock = Some(identity_lock);
+        #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+        {
+            prepared.verified_bytes = exact;
+        }
+        Ok(prepared)
     }
 }
 
@@ -559,6 +569,7 @@ impl Drop for PreparedWorker {
 }
 
 struct ConversionFiles {
+    output_directory: PathBuf,
     directory: PathBuf,
     rgb: PathBuf,
     source_profile: PathBuf,
@@ -569,19 +580,20 @@ struct ConversionFiles {
 impl ConversionFiles {
     fn new(rgb: &[u8], source: &[u8], output: &[u8]) -> Result<Self, ColorWorkerError> {
         let directory = private_directory("publisher-color-conversion")?;
-        let rgb_path = directory.join("pixels.rgb");
-        let source_path = directory.join("source.icc");
-        let output_path = directory.join("output.icc");
-        write_exclusive(&rgb_path, rgb)?;
-        write_exclusive(&source_path, source)?;
-        write_exclusive(&output_path, output)?;
-        Ok(Self {
-            converted: directory.join("converted.cmyk"),
+        let output_directory = directory.join("outputs");
+        let files = Self {
+            rgb: directory.join("pixels.rgb"),
+            source_profile: directory.join("source.icc"),
+            output_profile: directory.join("output.icc"),
+            converted: output_directory.join("converted.cmyk"),
+            output_directory,
             directory,
-            rgb: rgb_path,
-            source_profile: source_path,
-            output_profile: output_path,
-        })
+        };
+        write_exclusive(&files.rgb, rgb)?;
+        write_exclusive(&files.source_profile, source)?;
+        write_exclusive(&files.output_profile, output)?;
+        std::fs::create_dir(&files.output_directory).map_err(io_error)?;
+        Ok(files)
     }
 }
 
@@ -595,6 +607,7 @@ impl Drop for ConversionFiles {
         ] {
             let _ignored = std::fs::remove_file(path);
         }
+        let _ignored = std::fs::remove_dir_all(&self.output_directory);
         let _ignored = std::fs::remove_dir(&self.directory);
     }
 }
@@ -616,12 +629,32 @@ fn run_worker_report<T: serde::de::DeserializeOwned>(
         .map_err(|error| ColorWorkerError::MalformedReport(error.to_string()))?;
     let mut child = RunningProcess::spawn(worker, files, CONVERSION_TIMEOUT)
         .map_err(ColorWorkerError::ConfinementFailed)?;
-    let mut stdin = child.take_stdin().ok_or_else(|| {
-        child.terminate();
-        ColorWorkerError::SpawnFailed("color worker stdin unavailable".into())
-    })?;
-    stdin.write_all(&input).map_err(io_error)?;
-    drop(stdin);
+    let mut stdin = child
+        .take_stdin()
+        .ok_or_else(|| ColorWorkerError::SpawnFailed("worker stdin unavailable".into()))?;
+    let stdout = child
+        .take_stdout()
+        .ok_or_else(|| ColorWorkerError::MalformedReport("stdout unavailable".into()))?;
+    let stderr = child
+        .take_stderr()
+        .ok_or_else(|| ColorWorkerError::MalformedReport("stderr unavailable".into()))?;
+    let writer = thread::spawn(move || stdin.write_all(&input));
+    // Drain during execution so a bounded or hostile report cannot fill a pipe
+    // and hide the worker's termination from the owning boundary.
+    let reader = thread::spawn(move || {
+        let mut output = Vec::new();
+        stdout
+            .take(MAX_REPORT_BYTES + 1)
+            .read_to_end(&mut output)
+            .map(|_| output)
+    });
+    let stderr_reader = thread::spawn(move || {
+        let mut output = Vec::new();
+        stderr
+            .take(MAX_REPORT_BYTES + 1)
+            .read_to_end(&mut output)
+            .map(|_| output)
+    });
     let deadline = Instant::now() + CONVERSION_TIMEOUT;
     let status = loop {
         match child.try_wait() {
@@ -629,22 +662,39 @@ fn run_worker_report<T: serde::de::DeserializeOwned>(
             Ok(None) if Instant::now() < deadline => thread::sleep(Duration::from_millis(20)),
             Ok(None) => {
                 child.terminate();
+                let _ = writer.join();
+                let _ = reader.join();
+                let _ = stderr_reader.join();
                 return Err(ColorWorkerError::TimedOut);
             }
             Err(error) => {
                 child.terminate();
-                return Err(ColorWorkerError::Io(error.to_string()));
+                let _ = writer.join();
+                let _ = reader.join();
+                let _ = stderr_reader.join();
+                return Err(if error.kind() == io::ErrorKind::TimedOut {
+                    ColorWorkerError::TimedOut
+                } else {
+                    ColorWorkerError::Io(error.to_string())
+                });
             }
         }
     };
-    let mut output = Vec::new();
-    child
-        .take_stdout()
-        .ok_or_else(|| ColorWorkerError::MalformedReport("stdout unavailable".into()))?
-        .take(MAX_REPORT_BYTES + 1)
-        .read_to_end(&mut output)
+    let written = writer
+        .join()
+        .map_err(|_| ColorWorkerError::Io("worker input writer panicked".into()))?;
+    let output = reader
+        .join()
+        .map_err(|_| ColorWorkerError::Io("worker output reader panicked".into()))?
         .map_err(io_error)?;
-    if output.len() as u64 > MAX_REPORT_BYTES {
+    let stderr = stderr_reader
+        .join()
+        .map_err(|_| ColorWorkerError::Io("worker stderr reader panicked".into()))?
+        .map_err(io_error)?;
+    if written.is_err() && status.success() {
+        return Err(ColorWorkerError::Io("worker input pipe closed".into()));
+    }
+    if output.len() as u64 > MAX_REPORT_BYTES || stderr.len() as u64 > MAX_REPORT_BYTES {
         return Err(ColorWorkerError::ResourceLimit);
     }
     if !status.success() {
@@ -740,8 +790,10 @@ fn io_error(error: std::io::Error) -> ColorWorkerError {
 struct RunningProcess {
     #[cfg(windows)]
     inner: publisher_worker_job::SandboxedProcess,
-    #[cfg(not(windows))]
-    inner: std::process::Child,
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    inner: publisher_linux_worker_job::SandboxedProcess,
+    #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
+    inner: std::convert::Infallible,
 }
 
 impl RunningProcess {
@@ -765,7 +817,7 @@ impl RunningProcess {
                     .map_err(|error| error.to_string())?;
             }
             profile
-                .grant_private_working_directory(&files.directory)
+                .grant_private_working_directory(&files.output_directory)
                 .map_err(|error| error.to_string())?;
             let inner = profile
                 .spawn(
@@ -781,58 +833,116 @@ impl RunningProcess {
                 .map_err(|error| error.to_string())?;
             Ok(Self { inner })
         }
-        #[cfg(not(windows))]
+        #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+        {
+            // The bytes were read and hashed together during preparation. Never
+            // reopen the executable path between identity verification and exec.
+            let executable =
+                publisher_linux_worker_job::PinnedExecutable::from_bytes(&worker.verified_bytes)
+                    .map_err(|error| error.to_string())?;
+            let profile = publisher_linux_worker_job::SandboxProfile::new()
+                .map_err(|error| error.to_string())?;
+            profile
+                .grant_read(&files.rgb)
+                .map_err(|error| error.to_string())?;
+            profile
+                .grant_read(&files.source_profile)
+                .map_err(|error| error.to_string())?;
+            profile
+                .grant_read(&files.output_profile)
+                .map_err(|error| error.to_string())?;
+            profile
+                .grant_private_working_directory(&files.output_directory)
+                .map_err(|error| error.to_string())?;
+            let inner = profile
+                .spawn_pinned(
+                    &executable,
+                    &[],
+                    &files.output_directory,
+                    publisher_linux_worker_job::JobLimits {
+                        process_memory_bytes: WORKER_MEMORY_LIMIT,
+                        job_memory_bytes: WORKER_MEMORY_LIMIT,
+                        cpu_time: timeout,
+                        wall_time: timeout,
+                    },
+                )
+                .map_err(|error| error.to_string())?;
+            Ok(Self { inner })
+        }
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
         {
             let _ = (worker, files, timeout);
-            Err("worker confinement is supported only on Windows".into())
+            Err("worker confinement requires Windows or qualified x86_64 Linux".into())
         }
     }
 
     fn take_stdin(&mut self) -> Option<Box<dyn Write + Send>> {
-        #[cfg(windows)]
+        #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
         {
             self.inner
                 .take_stdin()
                 .map(|pipe| Box::new(pipe) as Box<dyn Write + Send>)
         }
-        #[cfg(not(windows))]
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
         {
-            self.inner
-                .stdin
-                .take()
-                .map(|pipe| Box::new(pipe) as Box<dyn Write + Send>)
+            match self.inner {}
         }
     }
 
     fn take_stdout(&mut self) -> Option<Box<dyn Read + Send>> {
-        #[cfg(windows)]
+        #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
         {
             self.inner
                 .take_stdout()
                 .map(|pipe| Box::new(pipe) as Box<dyn Read + Send>)
         }
-        #[cfg(not(windows))]
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
+        {
+            match self.inner {}
+        }
+    }
+
+    fn take_stderr(&mut self) -> Option<Box<dyn Read + Send>> {
+        #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
         {
             self.inner
-                .stdout
-                .take()
+                .take_stderr()
                 .map(|pipe| Box::new(pipe) as Box<dyn Read + Send>)
+        }
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
+        {
+            match self.inner {}
         }
     }
 
     fn try_wait(&mut self) -> std::io::Result<Option<ExitStatus>> {
-        self.inner.try_wait()
+        #[cfg(windows)]
+        {
+            self.inner.try_wait()
+        }
+        #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+        {
+            let status = self.inner.try_wait()?;
+            if status.is_some() && self.inner.deadline_terminated() {
+                Err(io::ErrorKind::TimedOut.into())
+            } else {
+                Ok(status)
+            }
+        }
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
+        {
+            match self.inner {}
+        }
     }
 
     fn terminate(&mut self) {
-        #[cfg(windows)]
+        #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
         {
             let _ignored = self.inner.terminate();
         }
-        #[cfg(not(windows))]
+        #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
         {
-            let _ignored = self.inner.kill();
-            let _ignored = self.inner.wait();
+            match self.inner {}
         }
     }
 }
@@ -880,7 +990,7 @@ mod tests {
         }
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn packaged_worker_inspects_profile_and_rejects_native_transform_corruption() {
         let profile = include_bytes!("../../print-core/tests/fixtures/SWOP2006coated_300_mth.icc");
@@ -919,7 +1029,7 @@ mod tests {
         assert!(!detail.contains("publisher-color"));
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     use super::TrustedColorBoundary;
     use super::{
         ColorWorkerError, Hash32, MAX_WORKER_BYTES, PreparedWorker, WorkerBinding,
@@ -950,7 +1060,7 @@ mod tests {
         assert!(first[84..100].iter().all(|byte| *byte == 0));
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn confined_worker_converts_valid_profile_and_rejects_out_of_bounds_icc_tag() {
         use super::{ConversionFiles, PROTOCOL_VERSION, WireRequest, run_worker};
@@ -1078,7 +1188,7 @@ mod tests {
         std::fs::remove_file(source).expect("remove test source");
         std::fs::remove_dir(directory).expect("remove test directory");
     }
-    #[cfg(windows)]
+    #[cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
     #[test]
     fn packaged_color_worker_cannot_read_or_write_outside_its_private_run() {
         use super::{ConversionFiles, PROTOCOL_VERSION, WireRequest, run_worker};
@@ -1114,7 +1224,7 @@ mod tests {
         assert!(!outside.converted.exists());
         assert_eq!(std::fs::read(&outside.rgb).expect("sentinel remains"), rgb);
     }
-    #[cfg(not(windows))]
+    #[cfg(not(any(windows, all(target_os = "linux", target_arch = "x86_64"))))]
     #[test]
     fn unsupported_platform_refuses_to_launch_a_worker() {
         use super::{
@@ -1132,7 +1242,7 @@ mod tests {
         .expect("private copy");
         let files = ConversionFiles::new(&[1, 2, 3], b"source", b"output").expect("private files");
         assert!(
-            matches!(RunningProcess::spawn(&worker, &files, std::time::Duration::from_secs(1)), Err(message) if message.contains("supported only on Windows"))
+            matches!(RunningProcess::spawn(&worker, &files, std::time::Duration::from_secs(1)), Err(message) if message.contains("requires Windows or qualified x86_64 Linux"))
         );
         std::fs::remove_file(path).expect("remove fixture");
         std::fs::remove_dir(directory).expect("remove test directory");

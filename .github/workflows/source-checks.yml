@@ -41,6 +41,10 @@ jobs:
         run: python tests/unit/requirements-inventory.test.py
       - name: Audit requirement bindings
         run: python scripts/verify-requirements.py
+      - name: Supported-output regressions
+        run: python tests/unit/output-rules.test.py
+      - name: Audit current output evidence
+        run: python scripts/verify-output-rules.py
       - name: Build and verify licensed source archive
         run: |
           mkdir -p artifacts

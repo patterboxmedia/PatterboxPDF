@@ -1,27 +1,29 @@
-# Requirements and standards review
+# Generated-output rules
 
-`pdfx4-inventory.json` keeps 28 retained validator topics, fifteen public writer contracts and the separate full normative inventory. Every current verified or excluded row names implementation symbols and exact hashed receipts. Earlier receipt bindings remain under `historical_evidence`; the original receipts are preserved.
+PatterboxPDF implements a bounded PDF 1.6 generation interface and a selected-CMYK
+PDF/X-4 output mode. Public checks describe the structures this interface emits.
+They do not certify arbitrary PDFs or establish unrestricted PDF/X-4 conformance.
 
-[Supported-output review](supported-output-review.md) describes the generated structures and implemented checks. `normative_pdfx4_coverage_complete` stays false and `normative_requirements` stays empty. Supported-output verification does not establish unrestricted PDF/X-4 conformance.
+The current output-rule catalog binds each checked rule to implementation paths,
+an independent evaluator, exact positive PDFs and exercised negative controls.
+Four current evidence records cover supported output, CMYK preview behavior,
+Linux execution and Windows execution. The catalog audit verifies identities and
+verdict consistency; it does not rerun a PDF analysis.
 
-The confirmed custom output-intent `Info` omission is corrected. Print output also requires a nonblank title, supplies matching document-info/XMP identity, screens exact ICC version encodings 2.2.0, 4.0.0, 4.1.0 and 4.2.0 before confined profile parsing, limits decoded content strings to 32,767 bytes, limits the deepest executed graphics-state path to 28 saves, and keeps object references within 8,388,607. Content-string encoding includes UTF-16 byte-order marks and surrogate pairs where used. Form invocation and soft-mask evaluation count toward executed depth. Titles are outside that individual content-string limit and retain the aggregate admission budget. These implemented checks describe supported print generation; they do not certify every ICC profile or every PDF/X requirement.
+The current catalog passes with 37 rules, four exact positive PDFs, 37 exercised negative controls and three source-font metric checks. Native Windows and Ubuntu receipts also pass, including fresh extracted-source execution.
 
-Ordinary output supports RGB, Gray and CMYK paint and decoded eight-bit images with optional independent straight alpha. Selected-CMYK print output admits CMYK and Gray and rejects unmanaged RGB, including registered RGB images that are not painted. Native axial/radial gradients support multiple stops, hard interior transitions, endpoint padding, transforms, clips and independently interpolated authored color/alpha. All sixteen standard blend modes apply per item. An isolated group's placement opacity and blend apply once to the completed group. Ordinary page/group blending space follows its own painted subtree; print groups use CMYK and internal luminosity masks use Gray. Each stream names its direct resources; stable shared resources are emitted once.
+pdfx4-inventory.json retains earlier topic and writer-contract bindings.
+The supported-output catalog is a separate finite verification contract.
+Historical receipts describe their original source and exact PDFs. Changed output
+requires new analysis.
 
-Current generation inputs provide no PDF reading/editing/merging, paragraph layout/shaping, arbitrary dictionaries, actions, JavaScript, forms, annotations, encryption, attachments, external streams, tiling patterns, spot-color authoring, mesh/conical gradients or repeating/reflecting spread. Image decoding remains caller-owned or uses the existing confined preparation path; directly encoded image streams are not public writer inputs. Those are current capability limits. Native shadings and supported gray soft masks must not be confused with excluded tiling patterns or one-bit stencil `ImageMask` inputs.
+Run python scripts/verify-output-rules.py for current catalog bindings and
+python scripts/verify-requirements.py for retained topic bindings. The public
+verify-pdfx-supported-output.py inspector reads exact PDF bytes with independent
+PDF/font/profile tools and qpdf. Its controls exercise rejected and valid output.
+Native worker tests separately establish preparation and process confinement.
 
-Fresh sanitized verification is under [finalization-20261004](../verification/current/finalization-20261004). The 34-case retained corpus passed all combined expectations: 14 positive candidates and 20 intended negative controls. Callas alone matched 30/34 expectations. It accepted the same four invalid destination-profile `N` controls; the separate selected-CMYK guard rejected them. Their combined verdict does not mean callas rejected those controls. The standalone print example and new CMYK feature gallery passed exact-byte callas analysis and the separate profile guard; the two ordinary examples failed PDF/X expectations as intended. Parsed-object/resource inspection, inspector negative controls, caller/worker checks and PDFium/Poppler comparisons supply complementary evidence. All 190 retained source pages passed geometry, ordered text and rendering comparisons.
-
-The gallery's structural inspection passed for both modes, including native functions, images, masks, all sixteen blend names and exact local resource dictionaries. Its whole-page renderer comparison reports `passed: false`: ordinary page 2 and print pages 1–2 exceeded the declared fixed bounds on CMYK gradient regions. The maximum 95th-percentile channel difference was 24 against a limit of 20; the maximum share of pixels differing by more than 10 was 12.557% against a limit of 8%. Every page metric and failed flag is preserved in the gallery receipt. Structural and callas results do not establish identical color appearance across renderers. Fifty focused authored-pixel probes passed independently in both readers, covering RGB/Gray gradients, alpha, hard edges, clipping and group/blend placement. A separate receipt preserves those results and the measurements locating preview differences in native DeviceCMYK gradient regions.
-
-The retained compatibility inspector handles its closed legacy structures. New native gradients and blend structures are checked through the dedicated gallery inspector and independent tools. A compatibility-profile rejection of a supported native structure does not itself establish that the PDF format prohibits it. Native suite counts retain the distinction between executed tests and an optional advanced-validator suite containing zero enabled tests; no unexecuted optional coverage is claimed.
-
-Run `python scripts/verify-requirements.py` to check IDs, implementation references and receipt identities. The three focused inventory tests protect those bindings and prevent unsupported completeness claims. `--require-normative` is a separate assertion for a future exhaustive standards audit and currently fails on `PX4-NORMATIVE-INVENTORY`. Mechanical consistency checks do not independently validate a PDF or complete a standards review.
-
-The public `scripts/verify-feature-gallery-appearance.py` runner executes the
-fifty authored checks on hash-bound renders from the gallery verifier. Current
-bindings use its reproducible receipt; the original receipt remains historical.
-The source archive includes both verifiers. Their authored-probe and whole-page
-comparison verdicts remain independent, including the recorded CMYK failures.
-
-[Technical sources](public-technical-sources.md) identify public format references. Printer-specific recommendations, physical printer acceptance and application integration remain separate from this generation library's current evidence. Follow the [roadmap](../../ROADMAP.md) for delivery status and source delivery and future capabilities.
+See [supported output](supported-output-review.md),
+[technical references](public-technical-sources.md),
+[color behavior](../color-behavior.md) and
+[platform support](../supported-platforms.md) for the contracts and practical limits.

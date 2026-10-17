@@ -2146,6 +2146,10 @@
     "sha256": "92948c02c896ae1fd31abbef47925d8e14f93b11b249b01c0a75309ed9cc8c32"
   },
   "coverage_assurance": {
-    "status": "incomplete"
+    "status": "complete",
+    "catalog": {
+      "path": "docs/requirements/public-output-rules.json",
+      "sha256": "4af05c66b58625fe07c9726203ed3ccfa8eb35a845eca4e280bac1e6cb6a96c3"
+    }
   }
 }

@@ -1,4 +1,7 @@
-#![cfg(all(windows, not(debug_assertions)))]
+#![cfg(all(
+    any(windows, all(target_os = "linux", target_arch = "x86_64")),
+    not(debug_assertions)
+))]
 
 // Run only in the isolated package fixture with this adjacent worker omitted.
 #[test]
@@ -7,7 +10,11 @@ fn missing_packaged_sidecar_fails_closed() {
     let executable = std::env::current_exe().expect("test executable");
     assert!(
         !executable
-            .with_file_name("publisher-color-worker.exe")
+            .with_file_name(if cfg!(windows) {
+                "publisher-color-worker.exe"
+            } else {
+                "publisher-color-worker"
+            })
             .exists()
     );
     let bytes = include_bytes!("../../print-core/tests/fixtures/SWOP2006coated_300_mth.icc");

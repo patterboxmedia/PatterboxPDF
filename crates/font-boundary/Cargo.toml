@@ -6,6 +6,10 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 
+[[example]]
+name = "linux-boundary-probe"
+path = "tests/support/linux_boundary_probe.rs"
+
 [dependencies]
 serde = { version = "=1.0.228", features = ["derive"] }
 serde_json = "=1.0.149"
@@ -13,6 +17,9 @@ sha2 = "=0.10.9"
 
 [target.'cfg(windows)'.dependencies]
 publisher-worker-job = { path = "../windows-worker-job" }
+
+[target.'cfg(all(target_os = "linux", target_arch = "x86_64"))'.dependencies]
+publisher-linux-worker-job = { path = "../linux-worker-job" }
 
 [lints]
 workspace = true

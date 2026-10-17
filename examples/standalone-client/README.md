@@ -82,7 +82,7 @@ passed focused RGB/Gray, hard-edge, alpha, clip and group/blend appearance probe
 Exact structural checks and those probes establish the tested behavior; review
 CMYK previews in the intended reader. Physical printer acceptance is a separate
 downstream check. Print profile
-preparation currently uses the confined Windows color worker. Ordinary graphics
+preparation uses the confined color worker for the recorded Windows or Ubuntu target. Current native Ubuntu execution and fresh extracted-source builds are recorded in the platform receipts. Ordinary graphics
 generation itself needs no worker. See [platform support](../../docs/supported-platforms.md).
 
 Fixture bytes are included through relative paths, so no private machine path is
@@ -141,3 +141,25 @@ This script checks the specific authored gallery and supplies no general PDF/X
 conformance verdict. Its output must be a fresh file. Run all three Python
 verifiers without `-O` or `PYTHONOPTIMIZE`; they reject optimized execution so
 their validation assertions cannot be skipped.
+
+
+## Native Ubuntu client
+
+Build and stage the native ELF workers/client using
+[development instructions](../../docs/development.md#native-ubuntu).
+The client accepts the same arguments and fixed fixtures as Windows. The
+executables have no .exe suffix. The worker-free gallery is:
+
+```sh
+target/client/x86_64-unknown-linux-gnu/release/examples/feature-gallery --output artifacts/ubuntu-gallery --mode ordinary
+```
+
+For print output, stage the native color worker beside that exact gallery
+executable and supply the profile as in the Windows example. Use a fresh output
+directory each time. Native WSL2 execution qualifies the actual recorded Linux
+environment; cross-compiling a Windows executable alone does not establish Linux
+support. See the current candidate status before relying on platform qualification.
+
+The cmyk-diagnostic example generates a worker-free controlled color PDF. Its
+replay, independent controls and reader-setting assumptions are in
+[color behavior](../../docs/color-behavior.md).

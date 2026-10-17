@@ -1,5 +1,6 @@
 use print_core::finished::*;
 use print_core::{FinishedPdfWriter, PdfCandidateMetadata};
+use std::fmt::Write as _;
 
 fn options() -> FinishedPdfOptions<'static> {
     FinishedPdfOptions {
@@ -59,6 +60,36 @@ fn document() -> FinishedDocument {
         pages: vec![page()],
         resources: FinishedResources::default(),
     }
+}
+
+#[test]
+fn actual_text_rejects_unsupported_language_escapes_before_resource_lookup() {
+    let mut value = document();
+    for text in ["\u{001b}", "\u{001b}\u{656e}\u{001b}X"] {
+        value.pages[0].items = vec![FinishedItem::new(FinishedContent::Glyphs(
+            PositionedGlyphRun {
+                font: "unprepared".into(),
+                font_size: 12.0,
+                glyphs: vec![PositionedGlyph {
+                    cid: 1,
+                    matrix: AffineTransform([1.0, 0.0, 0.0, 1.0, 0.0, 0.0]),
+                }],
+                actual_text: text.into(),
+                paint: Paint::gray(0.0, 1.0),
+            },
+        ))];
+        assert!(matches!(
+            FinishedPdfWriter::write(&value, &options()),
+            Err(FinishedPdfError::InvalidFont(font)) if font == "unprepared"
+        ));
+    }
+    if let FinishedContent::Glyphs(run) = &mut value.pages[0].items[0].content {
+        run.actual_text = "A".into();
+    }
+    assert!(matches!(
+        FinishedPdfWriter::write(&value, &options()),
+        Err(FinishedPdfError::MissingResource(font)) if font == "unprepared"
+    ));
 }
 
 fn object_text(text: &str, reference: i32) -> &str {
@@ -816,6 +847,7 @@ fn to_unicode_bounds_utf16_destinations_and_emits_unicode_map_type() {
         ("bmp-514", "A".repeat(257), false),
         ("surrogate-512", "😀".repeat(128), true),
         ("surrogate-516", "😀".repeat(129), false),
+        ("esc-scalar", "\u{001b}".into(), true),
     ] {
         let program = print_core::TrustedFontBoundary::resolve_packaged()
             .prepare_publication(
@@ -852,7 +884,11 @@ fn to_unicode_bounds_utf16_destinations_and_emits_unicode_map_type() {
                     cid,
                     matrix: AffineTransform::default(),
                 }],
-                actual_text: text.clone(),
+                actual_text: if name == "esc-scalar" {
+                    "A".into()
+                } else {
+                    text.clone()
+                },
                 paint: Paint::gray(0.0, 1.0),
             },
         ))];
@@ -861,7 +897,10 @@ fn to_unicode_bounds_utf16_destinations_and_emits_unicode_map_type() {
         let serialized = String::from_utf8_lossy(pdf.bytes());
         assert!(serialized.contains("/CMapType 2 def"));
         assert!(serialized.contains("/Encoding /Identity-H"));
-        let destination: String = text.encode_utf16().map(|u| format!("{u:04X}")).collect();
+        let destination = text.encode_utf16().fold(String::new(), |mut out, unit| {
+            write!(out, "{unit:04X}").unwrap();
+            out
+        });
         assert!(serialized.contains(&format!("<{cid:04X}> <{destination}>")));
     }
 }

@@ -17,41 +17,31 @@ Finalization covered standards corrections, ordinary color inputs, gradients, co
 
 ## Current verification
 
-October 6 maintenance: bound every retained ToUnicode destination to 512
-UTF-16BE bytes, emit Type 2 ToUnicode resources directly in both writer paths,
-and preserve CR/CRLF titles in decoded Info/XMP metadata. Focused native and
-independent decoding checks accompany a new source handoff. Archive 006 remains
-the earlier immutable checkpoint. New font-bearing output has different bytes;
-the October 4 checker results below are retained baseline evidence.
+The October 16 candidate adds native Ubuntu font/color/raster workers and
+fail-closed process confinement. Prepared fonts use precise widths and
+outline-derived descriptors. Independent evaluators check emitted PDF, font,
+profile, metadata and stream structures; nonstream syntax lines wrap at255 bytes.
 
-The affected native replay passed 150 Rust tests. Six actual Windows confinement checks and three real preparation-worker failure cases passed. The separate client retains a 57-package default graph without application authoring crates. The regenerated corpus met 34/34 combined expectations, with 14 positive callas passes; the separate CMYK guard rejects four malformed profile declarations that callas accepts. All 190 source pages passed geometry, text and fixed two-reader comparisons.
+The CMYK investigation is complete: decoded components and controlled samples
+pass on the recorded Windows and Ubuntu executables. The three original default
+reader-comparison failures remain recorded with their unchanged bounds.
+[Color behavior](docs/color-behavior.md) explains the reader conversion/sampling
+differences and replay.
 
-The new ordinary/print gallery passed native structure/resource checks and fifty meaningful appearance probes in both readers. Its exact CMYK output passed callas. Whole-page comparison exceeded its unchanged bounds on ordinary page 2 and print pages 1–2, concentrated in smooth CMYK gradient previews. Preserve those failures and their qualification; do not describe the full gallery comparison as passed.
+Current source passed supported-output and font/profile inspection, 146 native Windows tests/cases and 67 native Ubuntu tests. Fresh extracted-source builds repeated both platform workflows. The public catalog binds 37 checked rules, four positive outputs and 37 actual negative controls.
+[Verification status](docs/verification-status.md) records this boundary.
 
-The inherited Unicode test corpus is now supplied inside its crate. All eleven
-existing native assertions passed, and every workspace target compiles. Actual
-printer-profile worker/export evidence uses ICC 2.2.0; admitted v4 encodings have
-screening coverage without a complete real v4 end-to-end run.
-
-The authored gallery appearance runner is included in public source. Its exact
-fifty checks are reproducible from retained renders; the original evidence is
-preserved and the refreshed receipt retains failed whole-page comparison flags.
-
-The second pass corrected the recipient setup instructions and made the gallery
-and public API verifiers refuse optimized Python, which disables their checks.
-The source handoff includes a regression check for that refusal and requires a
-fresh extracted-package build after these repairs.
-
-Earlier corpus receipts, archives and the original 1,350 imported files remain preserved checkpoints. New evidence is under docs/verification/current/finalization-20261004; old receipts retain their historical identities.
+Historical receipts retain the exact source/output identities and verdicts of
+their original baselines. Current output requires current analysis.
 
 ## Source release
 
 On October 16, 2026 the project selected MIT OR Apache-2.0 for first-party source and original material, and the PatterboxPDF public source identity. Dependency/font/profile terms remain separate. All Cargo packages retain publish = false; registry and binary releases are separate future decisions. Earlier archives and receipts retain the licensing policy in effect when they were produced.
 
-The `normative_pdfx4_coverage_complete` flag remains false. Current verification covers the supported generation contracts and exact tested outputs; unrestricted PDF/X-4 conformance is not established.
+The supported-output catalog and native platform checks cover the implemented generation contracts and exact tested outputs. Unrestricted PDF/X-4 conformance is not established.
 
 ## Future capability work
 
-Reading/editing/merging PDFs, paragraph layout/shaping, annotations/forms/signatures, spot-color authoring, additional ICC workflows, gradient strokes/repeating/reflecting/conical/mesh gradients and equivalent resource preparation on other platforms require their own scoped plans. They are not unfinished units of this initial generation implementation.
+Reading/editing/merging PDFs, paragraph layout/shaping, annotations/forms/signatures, spot-color authoring, additional ICC workflows, gradient strokes/repeating/reflecting/conical/mesh gradients and resource preparation beyond the qualified Windows/Ubuntu environments require their own scoped plans. They are not unfinished units of this initial generation implementation.
 
 Next: build the documented standalone examples. Future capability work needs a separate scope and verification contract.

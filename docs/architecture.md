@@ -15,6 +15,7 @@ The Cargo workspace has no path dependency outside this project. It contains the
 | `crates/*-boundary`, `crates/raster-capacity` | Worker protocols, resource limits and lifecycle checks |
 | `apps/*-worker` | Isolated color, font, raster and PDF profile processing |
 | `crates/windows-worker-job`, `crates/windows-atomic-file` | Windows process/resource and atomic-file support |
+| `crates/linux-worker-job` | Native Ubuntu process/resource confinement for font/color/raster workers |
 | `examples/standalone-client` | Separate Cargo workspace consuming the default public interface |
 | `scripts`, `tests/unit`, `examples/pdf-candidate` | Development corpus construction, checker review and supporting fixtures |
 | `artifacts` | Frozen imported evidence and newly generated local setup outputs; excluded from Git by default |
@@ -31,4 +32,4 @@ Callas is an independent development checker. It is outside generation, the runt
 
 The finished-page boundary generates ordinary RGB/Gray/CMYK content and bounded CMYK print output. Native axial/radial gradients use component functions and matching gray opacity shadings. Items select defined PDF blend modes; each page or isolated group selects its own composition space from painted content. Shared objects are allocated deterministically, while page/Form resource dictionaries contain their direct stream usage.
 
-Font/profile preparation has Windows-specific runtime evidence. Reading/editing, paragraph layout and additional color/gradient families have separate future scope. See `../ROADMAP.md` for completion evidence and deferred decisions. Application UI, integration and document formats do not determine that queue.
+Font/profile preparation has retained Windows evidence and an implemented native Ubuntu backend awaiting the current candidate replay. Linux refuses the optional trusted validator before launching it. Reading/editing, paragraph layout and additional color/gradient families have separate future scope. See `../ROADMAP.md` for completion evidence and deferred decisions. Application UI, integration and document formats do not determine that queue.

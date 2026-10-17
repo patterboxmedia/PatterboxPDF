@@ -341,9 +341,8 @@ fn retain_combined_exact_output() {
 #[ignore = "requires a new absolute PUBLISHER_REPRESENTATIVE_OUTPUT directory"]
 fn retain_asymmetric_crop_shadow_source() {
     use document_core::model::{HardShadow, ImageCrop, Micrometres, ObjectEffects};
-    let destination = std::path::PathBuf::from(
-        std::env::var_os("PUBLISHER_REPRESENTATIVE_OUTPUT").unwrap(),
-    );
+    let destination =
+        std::path::PathBuf::from(std::env::var_os("PUBLISHER_REPRESENTATIVE_OUTPUT").unwrap());
     assert!(destination.is_absolute());
     std::fs::create_dir(&destination).unwrap();
     let mut rgba = Vec::with_capacity(800 * 800 * 4);
@@ -359,8 +358,12 @@ fn retain_asymmetric_crop_shadow_source() {
     }
     let mut png = Vec::new();
     let mut encoder = PngEncoder::new(&mut png);
-    encoder.set_icc_profile(lcms2::Profile::new_srgb().icc().unwrap()).unwrap();
-    encoder.write_image(&rgba, 800, 800, ExtendedColorType::Rgba8).unwrap();
+    encoder
+        .set_icc_profile(lcms2::Profile::new_srgb().icc().unwrap())
+        .unwrap();
+    encoder
+        .write_image(&rgba, 800, 800, ExtendedColorType::Rgba8)
+        .unwrap();
     std::fs::write(destination.join("asymmetric.png"), &png).unwrap();
     let inspection = document_core::inspect_raster(&png).unwrap();
     let mut assets = AssetStore::default();
@@ -370,41 +373,63 @@ fn retain_asymmetric_crop_shadow_source() {
         "Asymmetric image crop and shadow QA",
         PhysicalSize::new(215_900, 279_400).unwrap(),
         Insets::uniform(3175).unwrap(),
-    ).unwrap();
+    )
+    .unwrap();
     let page = document.pages[0].id.clone();
     let mut session = DocumentSession::new(document).unwrap();
-    let added = session.execute(Revision::initial(), Transaction::single(
-        "Place cropped asymmetric image", Command::AddObject {
-            location: ObjectLocation::Page(page),
-            object: ObjectDraft {
-                name: "Asymmetric cropped quadrants".into(),
-                size: PhysicalSize::new(70_000, 65_000).unwrap(),
-                transform: Transform::identity_at(25_000, 40_000),
-                opacity_millionths: 1_000_000,
-                kind: ObjectKind::Image {
-                    asset, wrap_mode: WrapMode::None,
-                    content_kind: ImageContentKind::ContinuousTone,
-                    crop: ImageCrop::new(100_000, 250_000, 200_000, 100_000).unwrap(),
-                    flip: document_core::model::ImageFlip::default(),
-                    lock_aspect_ratio: false,
+    let added = session
+        .execute(
+            Revision::initial(),
+            Transaction::single(
+                "Place cropped asymmetric image",
+                Command::AddObject {
+                    location: ObjectLocation::Page(page),
+                    object: ObjectDraft {
+                        name: "Asymmetric cropped quadrants".into(),
+                        size: PhysicalSize::new(70_000, 65_000).unwrap(),
+                        transform: Transform::identity_at(25_000, 40_000),
+                        opacity_millionths: 1_000_000,
+                        kind: ObjectKind::Image {
+                            asset,
+                            wrap_mode: WrapMode::None,
+                            content_kind: ImageContentKind::ContinuousTone,
+                            crop: ImageCrop::new(100_000, 250_000, 200_000, 100_000).unwrap(),
+                            flip: document_core::model::ImageFlip::default(),
+                            lock_aspect_ratio: false,
+                        },
+                    },
                 },
-            },
-        },
-    )).unwrap();
-    session.execute(added.revision, Transaction::single(
-        "Separate shadow for orientation inspection", Command::UpdateObjectEffects {
-            object_id: added.created_objects[0].clone(),
-            effects: ObjectEffects {
-                shadow: Some(HardShadow {
-                    color: Color { red: 0, green: 0, blue: 0, alpha: 255 },
-                    offset_x: Micrometres::new(90_000), offset_y: Micrometres::new(0),
-                }),
-                ..ObjectEffects::default()
-            },
-        },
-    )).unwrap();
+            ),
+        )
+        .unwrap();
+    session
+        .execute(
+            added.revision,
+            Transaction::single(
+                "Separate shadow for orientation inspection",
+                Command::UpdateObjectEffects {
+                    object_id: added.created_objects[0].clone(),
+                    effects: ObjectEffects {
+                        shadow: Some(HardShadow {
+                            color: Color {
+                                red: 0,
+                                green: 0,
+                                blue: 0,
+                                alpha: 255,
+                            },
+                            offset_x: Micrometres::new(90_000),
+                            offset_y: Micrometres::new(0),
+                        }),
+                        ..ObjectEffects::default()
+                    },
+                },
+            ),
+        )
+        .unwrap();
     document_core::save_new_package(
         &destination.join("source.publisher-v2"),
-        &ProjectSnapshot::from_session(&session), &assets,
-    ).unwrap();
+        &ProjectSnapshot::from_session(&session),
+        &assets,
+    )
+    .unwrap();
 }

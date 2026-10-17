@@ -1,15 +1,35 @@
 # Supported platforms
 
-This records the execution platform and resource workflows verified for the initial generation release.
+PatterboxPDF generates ordinary PDFs directly and prepares fonts, color profiles
+and encoded raster inputs through separate resource workers. Applications stage
+the required workers beside their executable. Missing, changed, malformed or
+unconfined workers cause preparation to fail.
 
-The first supported generation and resource-preparation environment is Windows x86_64 (`x86_64-pc-windows-msvc`), using Rust 1.98.0. Font and color preparation use separate executable workers. Release applications must place the required workers beside their own executable. The boundaries pin the executable identity before processing resources and fail when workers are missing, changed, malformed or unable to satisfy confinement.
+| Target | Generation and preparation | Confinement |
+| --- | --- | --- |
+| Windows x86_64 MSVC | Native generation and font/color/raster workers | AppContainer and Windows job limits |
+| Ubuntu x86_64 GNU | Native generation and font/color/raster workers | Landlock ABI 3+, seccomp, sealed executable and pidfd ownership |
 
-Ordinary vector drawing, gradients, blend modes and decoded RGB, gray and CMYK image writing do not launch workers. This path uses portable dependencies; current native execution evidence covers Windows. Other platforms have not received equivalent runtime qualification.
+Current source passed 146 native Windows tests/cases and 67 native Ubuntu tests, including actual confinement and resource preparation. Both workflows were repeated from a freshly extracted source package.
+See [verification status](verification-status.md).
 
-Font resources require opaque preparation receipts from the font boundary. Bounded PDF/X output also inspects the supplied output profile through the color boundary. These preparation paths require the Windows sidecars. Preparation accepts exact caller-provided bytes and does not perform paragraph layout or text shaping. Callers supply decoded straight color and alpha planes for direct image resources; encoded image ingestion can use their own decoder or the existing optional confined raster path.
+Ordinary paths, gradients, blend modes and decoded RGB/Gray/CMYK images need no
+workers. Fonts require opaque preparation receipts. Selected-CMYK print output also
+checks its exact supplied profile through the color worker. Callers provide
+positioned glyphs; paragraph layout and shaping remain caller responsibilities.
 
-The opt-in `publisher-adapter` feature retains the saved-publication compatibility path and its raster/layout dependencies. The default finished-page API excludes the authoring crates from its normal dependency graph. Legacy worker and executable names remain part of discovery and protocol compatibility.
+The Linux backend pins Ubuntu loader and shared-library objects. It requires
+Landlock ABI 3 or later, seccomp, clone3/pidfd and sealed memfd execution.
+Unavailable primitives fail before parsing, without an unconfined retry. Native
+WSL2 runs exercise the actual Linux kernel and ELF programs; results qualify the
+recorded environment. They do not establish every distribution, kernel,
+architecture or bare-metal configuration. See the
+[Linux boundary](../crates/linux-worker-job/README.md) for its policy.
 
-Other targets may compile portions of the library. Their resource preparation and process confinement have not been established as equivalent production support. Linux or WSL compilation is a development technique; Windows execution supplies the runtime evidence for this release.
-
-Callas is an optional development verification tool. The library and source package do not require or include it. The optional trusted validator uses a separately acquired pinned qpdf runtime on Windows; ordinary finished-page writing does not require qpdf. A binary distribution that includes third-party runtimes needs its own redistribution review.
+The optional trusted validator supports Windows. Linux refuses it before launch.
+The separate Python output inspector is a development check; the PDF writer
+itself requires neither qpdf nor a commercial checker. Enable publisher-adapter
+only for the retained saved-publication compatibility path. Default library
+dependencies exclude application authoring crates. Existing crate, protocol and
+worker names remain compatibility identifiers. Other platforms require their
+own preparation and confinement qualification.

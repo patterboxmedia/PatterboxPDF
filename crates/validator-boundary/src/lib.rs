@@ -5,8 +5,6 @@ pub mod writer_profile;
 
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
-#[cfg(not(windows))]
-use std::process::{Command, Stdio};
 use std::{
     collections::HashSet,
     ffi::OsString,
@@ -34,8 +32,7 @@ const WORKER_MEMORY_LIMIT: usize = 768 * 1024 * 1024;
 const QPDF_LARGE_MEMORY_LIMIT: usize = 2 * 1024 * 1024 * 1024;
 pub const VALIDATOR_NAME: &str = "Publisher V2 PDF/X-4 validation authority";
 pub const VALIDATOR_VERSION: &str = "0.9.0";
-pub const SOURCE_IDENTITY: &str =
-    "publisher-v2:pdf-x-4-authority:0.9.0:free-composite+writer-profile-v5+worker-first+bounded-qpdf-2g";
+pub const SOURCE_IDENTITY: &str = "publisher-v2:pdf-x-4-authority:0.9.0:free-composite+writer-profile-v5+worker-first+bounded-qpdf-2g";
 pub const AUTHORITY_ID: &str = "publisher-v2/pdf-x-4-authority/v1";
 pub const ACTIVE_ICC_NAME: &str = "LittleCMS and Publisher active color-space validator";
 pub const ACTIVE_ICC_VERSION: &str = "6";
@@ -158,7 +155,10 @@ impl TrustedValidatorBoundary {
             self.qpdf_binding.as_ref().map_err(Clone::clone)?,
             candidate_bytes,
             QPDF_TIMEOUT,
-            if validation.as_ref().is_ok_and(|checked| checked.verdict == TrustedValidationVerdict::Passed) {
+            if validation
+                .as_ref()
+                .is_ok_and(|checked| checked.verdict == TrustedValidationVerdict::Passed)
+            {
                 QPDF_LARGE_MEMORY_LIMIT
             } else {
                 WORKER_MEMORY_LIMIT
@@ -525,6 +525,11 @@ struct WireFailure {
 }
 
 fn resolve_validator_worker() -> Result<WorkerBinding, ValidatorWorkerError> {
+    if !cfg!(windows) {
+        return Err(ValidatorWorkerError::ProcessLimitSetupFailed(
+            "validator confinement is unsupported on this platform".into(),
+        ));
+    }
     let executable = std::env::current_exe()
         .map_err(|error| ValidatorWorkerError::InvalidExecutable(error.to_string()))?;
     let worker_name = if cfg!(windows) {
@@ -1437,19 +1442,15 @@ impl RunningProcess {
         }
         #[cfg(not(windows))]
         {
-            let _ = memory_limit;
-            let _ = readable_paths;
-            let _ = timeout;
-            Command::new(executable)
-                .args(arguments)
-                .env_clear()
-                .current_dir(current_directory)
-                .stdin(Stdio::piped())
-                .stdout(Stdio::piped())
-                .stderr(Stdio::piped())
-                .spawn()
-                .map(|inner| Self { inner })
-                .map_err(|error| error.to_string())
+            let _ = (
+                executable,
+                arguments,
+                current_directory,
+                readable_paths,
+                timeout,
+                memory_limit,
+            );
+            Err("validator confinement is unsupported on this platform".into())
         }
     }
 
@@ -1924,85 +1925,46 @@ mod tests {
 
     #[cfg(unix)]
     #[test]
-    fn output_larger_than_the_pipe_is_drained_and_reported_as_over_limit() {
+    fn unsupported_validator_fails_before_a_script_can_create_a_marker() {
+        let nonce = SystemTime::now()
+            .duration_since(SystemTime::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let marker_name = format!("publisher-validator-executed-{nonce}");
+        let marker = std::env::temp_dir().join(&marker_name);
         let worker = temp_file(
-            "oversized-worker",
-            b"#!/bin/sh\n/usr/bin/head -c 2097152 /dev/zero\n",
+            "unsupported-validator",
+            format!("#!/bin/sh\nprintf executed > {marker_name}\n").as_bytes(),
         );
-        let mut permissions = fs::metadata(&worker)
-            .expect("worker metadata")
-            .permissions();
+        let mut permissions = fs::metadata(&worker).unwrap().permissions();
         permissions.set_mode(0o700);
-        fs::set_permissions(&worker, permissions).expect("make worker executable");
-        let binding = bind_worker(&worker).expect("bind oversized-output worker");
-        let candidate = b"candidate";
+        fs::set_permissions(&worker, permissions).unwrap();
+        let binding = bind_worker(&worker).unwrap();
         let request = ValidatorWorkerRequest {
-            candidate_bytes: candidate,
+            candidate_bytes: b"candidate",
             expected_artifact_hash: Hash32::of(b"candidate"),
             evaluation_hash: Hash32::of(b"evaluation"),
             capsule_hash: Hash32::of(b"capsule"),
             profile_hash: Hash32::of(b"profile"),
         };
-
         assert_eq!(
-            run_validator_worker(&binding, request, Duration::from_secs(5)),
-            Err(ValidatorWorkerError::OutputLimitExceeded)
+            run_validator_worker(&binding, request, Duration::from_secs(1)),
+            Err(ValidatorWorkerError::ProcessLimitSetupFailed(
+                "validator confinement is unsupported on this platform".into()
+            ))
         );
-        fs::remove_file(worker).expect("remove oversized-output worker");
-    }
-
-    #[cfg(unix)]
-    #[test]
-    fn stderr_larger_than_the_pipe_is_drained_without_deadlock() {
-        let worker = temp_file(
-            "stderr-worker",
-            b"#!/bin/sh\n/usr/bin/head -c 262144 /dev/zero >&2\nprintf '{}'\n",
+        assert!(
+            super::RunningProcess::spawn(
+                &worker,
+                &[],
+                worker.parent().unwrap(),
+                &[],
+                Duration::from_secs(1),
+                super::WORKER_MEMORY_LIMIT
+            )
+            .is_err()
         );
-        let mut permissions = fs::metadata(&worker)
-            .expect("worker metadata")
-            .permissions();
-        permissions.set_mode(0o700);
-        fs::set_permissions(&worker, permissions).expect("make worker executable");
-        let binding = bind_worker(&worker).expect("bind stderr worker");
-        let candidate = b"candidate";
-        let request = ValidatorWorkerRequest {
-            candidate_bytes: candidate,
-            expected_artifact_hash: Hash32::of(candidate),
-            evaluation_hash: Hash32::of(b"evaluation"),
-            capsule_hash: Hash32::of(b"capsule"),
-            profile_hash: Hash32::of(b"profile"),
-        };
-
-        assert!(matches!(
-            run_validator_worker(&binding, request, Duration::from_secs(5)),
-            Err(ValidatorWorkerError::MalformedReport(_))
-        ));
-        fs::remove_file(worker).expect("remove stderr worker");
-    }
-
-    #[cfg(unix)]
-    #[test]
-    fn timeout_interrupts_a_worker_that_does_not_drain_streamed_candidate_bytes() {
-        let worker = temp_file("blocked-input-worker", b"#!/bin/sh\n/usr/bin/sleep 10\n");
-        let mut permissions = fs::metadata(&worker)
-            .expect("worker metadata")
-            .permissions();
-        permissions.set_mode(0o700);
-        fs::set_permissions(&worker, permissions).expect("make worker executable");
-        let binding = bind_worker(&worker).expect("bind blocked-input worker");
-        let candidate = vec![7_u8; 2 * 1024 * 1024];
-        let request = ValidatorWorkerRequest {
-            candidate_bytes: &candidate,
-            expected_artifact_hash: Hash32::of(&candidate),
-            evaluation_hash: Hash32::of(b"evaluation"),
-            capsule_hash: Hash32::of(b"capsule"),
-            profile_hash: Hash32::of(b"profile"),
-        };
-
-        assert_eq!(
-            run_validator_worker(&binding, request, Duration::from_millis(100)),
-            Err(ValidatorWorkerError::TimedOut)
-        );
-        fs::remove_file(worker).expect("remove blocked-input worker");
+        assert!(!marker.exists(), "unsupported validator must never execute");
+        fs::remove_file(worker).unwrap();
     }
 }

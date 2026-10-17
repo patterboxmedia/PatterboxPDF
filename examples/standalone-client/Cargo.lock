@@ -86,6 +86,7 @@ name = "color-boundary"
 version = "0.0.0"
 dependencies = [
  "lcms2",
+ "publisher-linux-worker-job",
  "publisher-worker-job",
  "raster-capacity",
  "serde",
@@ -164,6 +165,7 @@ dependencies = [
 name = "font-boundary"
 version = "0.0.0"
 dependencies = [
+ "publisher-linux-worker-job",
  "publisher-worker-job",
  "serde",
  "serde_json",
@@ -416,6 +418,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "985e7ec9bb745e6ce6535b544d84d6cd6f7ad8bd711c398938ae983b91a766d9"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "publisher-linux-worker-job"
+version = "0.0.0"
+dependencies = [
+ "libc",
 ]
 
 [[package]]

@@ -219,7 +219,7 @@ impl FinishedPdfWriter {
                 .xmp_for(file_id, PRODUCER, "PDF Library", profile.is_some()),
         );
         Ok(FinishedPdf {
-            bytes: pdf.finish(),
+            bytes: crate::pdf_lines::finish(&pdf.finish())?,
         })
     }
 }
@@ -366,6 +366,7 @@ fn validate_items(
                     || run.font_size <= 0.0
                     || run.glyphs.is_empty()
                     || run.actual_text.is_empty()
+                    || run.actual_text.contains('\u{001b}')
                 {
                     return Err(FinishedPdfError::InvalidFont(run.font.clone()));
                 }
@@ -1008,7 +1009,7 @@ mod tests {
     fn pdfx_reference_allocator_allows_last_object_and_rejects_the_next() {
         let document = FinishedDocument {
             pages: vec![],
-            resources: Default::default(),
+            resources: crate::finished::FinishedResources::default(),
         };
         let inputs = Inputs {
             fonts: BTreeMap::new(),

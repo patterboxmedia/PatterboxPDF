@@ -12,11 +12,37 @@ import zipfile
 
 ROOT_FILES = (".gitattributes", ".gitignore", "LICENSE-MIT", "LICENSE-APACHE", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml", "README.md", "ROADMAP.md")
 PUBLIC_DOCS = ("architecture.md", "development.md", "api.md", "release.md",
-               "supported-platforms.md", "verification-status.md", "requirements/README.md",
+               "supported-platforms.md", "verification-status.md", "color-behavior.md", "requirements/README.md",
                "requirements/public-technical-sources.md", "requirements/supported-output-review.md",
-               "requirements/pdfx4-inventory.json")
+               "requirements/pdfx4-inventory.json", "requirements/public-output-rules.json")
 PUBLIC_SCRIPTS = ("build-source-package.py", "verify-requirements.py", "stage-workers.py", "verify-public-api.py",
-                  "verify-feature-gallery.py", "verify-feature-gallery-appearance.py", "cargo-xwin-wsl.cmd")
+                  "verify-feature-gallery.py", "verify-feature-gallery-appearance.py", "cargo-xwin-wsl.cmd",
+                  "verify-cmyk-gradients.py", "verify-pdfx-supported-output.py", "pdf_font_program_rules.py",
+                  "pdf_truetype_hint_execution.py", "verify-linux-runtime.py",
+                  "pdf_text_metadata_rules.py", "verify-font-metrics.py", "verify-output-rules.py",
+                  "collect-pdf-candidate-licenses.py")
+PUBLIC_TESTS = ("source-package.test.py", "font-map-metadata.test.py", "worker-staging.test.py",
+                "pdfx-supported-output.test.py", "font-program-rules.test.py", "cmyk-gradient-verification.test.py",
+                "truetype-hint-execution.test.py", "linux-runtime-verification.test.py",
+                "text-metadata-rules.test.py", "font-metrics-verification.test.py", "output-rules.test.py")
+PUBLIC_RECEIPTS = (
+    "corpus-fidelity.json", "corpus-generation.json", "corpus-independent.json", "corpus-scope.json",
+    "corpus-structure.json", "fixture-isolation.json", "standalone-api.json", "standalone-fidelity.json",
+    "standalone-independent.json", "u1.json", "u2.json", "u3.json", "windows-confinement.json",
+    "finalization-20261004/corpus-fidelity.json", "finalization-20261004/corpus-generation.json",
+    "finalization-20261004/corpus-independent.json", "finalization-20261004/corpus-scope.json",
+    "finalization-20261004/corpus-structure.json", "finalization-20261004/examples-independent.json",
+    "finalization-20261004/feature-gallery.json", "finalization-20261004/gallery-appearance-probes-reproducible.json",
+    "finalization-20261004/gallery-appearance-probes.json", "finalization-20261004/gallery-controls.json",
+    "finalization-20261004/native-tests.json", "finalization-20261004/public-api.json",
+    "finalization-20261004/standalone-fidelity.json", "finalization-20261004/unicode-fixture.json",
+    "finalization-20261004/windows-confinement.json", "font-map-metadata-20261006/repair.json",
+    "public-release-20261016/gallery-appearance.json", "public-release-20261016/gallery.json",
+    "public-release-20261016/public-api.json", "public-release-20261016/source-isolation.json",
+    "three-area-20261016/supported-output.json", "three-area-20261016/color.json",
+    "three-area-20261016/linux.json", "three-area-20261016/windows.json",
+)
+SUPPORTED_TARGETS = ("x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu")
 FORBIDDEN_PARTS = {".git", ".codex", ".agents", ".tools", "target", "artifacts", "node_modules", "__pycache__"}
 FORBIDDEN_SUFFIXES = {".exe", ".dll", ".pyd", ".so", ".dylib", ".kfpx", ".pyc"}
 TEXT_SUFFIXES = {".rs", ".toml", ".json", ".md", ".txt", ".py", ".mjs", ".cmd", ".lock", ".html"}
@@ -105,19 +131,24 @@ def audit_entry(name, data):
             raise ValueError(f"machine home path in public content: {name}")
 
 
-def audit_notices(files):
+def audit_notices(files, *, require_union=True):
     notice_root = 'third_party/cargo-notices/'
     notices = json.loads(files[notice_root + 'dependencies.json'])
     if notices['cargo_lock_sha256'] != sha(files['Cargo.lock']):
         raise ValueError('dependency notices refer to a different Cargo lockfile')
-    recorded = {(row['name'], row['version']) for row in notices['dependencies']}
     locked = set()
     for lockfile in ('Cargo.lock', 'examples/standalone-client/Cargo.lock'):
         lock = tomllib.loads(files[lockfile].decode())
         locked.update((row['name'], row['version']) for row in lock['package'])
-    # Cargo lockfiles also pin inactive non-Windows branches. Those separately
-    # acquired sources are outside the collected Windows dependency closure.
-    if not recorded.issubset(locked):
+    if require_union:
+        if notices.get('includes_dev_dependencies') is not True or notices.get('all_workspace_members') is not True:
+            raise ValueError('source package requires workspace and development notice coverage')
+        audit_notice_coverage(notices, locked)
+        if notices['client_cargo_lock_sha256'] != sha(files['examples/standalone-client/Cargo.lock']):
+            raise ValueError('dependency notices refer to a different client lockfile')
+        if files[notice_root+'Cargo.lock'] != files['Cargo.lock'] or files[notice_root+'client-Cargo.lock'] != files['examples/standalone-client/Cargo.lock']:
+            raise ValueError('retained notice lockfile identity disagreement')
+    elif not {(row['name'], row['version']) for row in notices['dependencies']}.issubset(locked):
         raise ValueError('dependency notices include an unpinned package')
     def check(name, expected):
         if name not in files or sha(files[name]) != expected:
@@ -139,31 +170,124 @@ def audit_notices(files):
         check(notice_root + notice['path'], notice['sha256'])
     standard = notices['rust_standard_library']
     check(notice_root + standard['notice'], standard['sha256'])
+    for notice in standard.get('license_texts', []):
+        check(notice_root + notice['path'], notice['sha256'])
     for notice in json.loads(files['third_party/upstream/receipt.json'])['notices']:
         check(notice['path'], notice['sha256'])
 
 
-def collect(root):
+def audit_notice_coverage(notices, locked):
+    if notices.get('schema') != 'patterboxpdf-licenses/v2':
+        raise ValueError('dependency notice target coverage schema is missing')
+    targets = notices.get('supported_targets', [])
+    closures = notices.get('target_closures', [])
+    if len(targets) != len(SUPPORTED_TARGETS) or set(targets) != set(SUPPORTED_TARGETS):
+        raise ValueError('dependency notice target coverage disagreement')
+    if len(closures) != len(targets) or {row['target'] for row in closures} != set(targets):
+        raise ValueError('dependency notice target closure disagreement')
+    inputs = notices.get('metadata_inputs')
+    if (not isinstance(inputs, list) or len(inputs) != 2*len(targets)
+            or any(not isinstance(row, dict) or type(row.get('additional_workspace')) is not bool
+                   or not re.fullmatch(r'[0-9a-f]{64}', row.get('sha256', '')) or not row.get('roots') for row in inputs)
+            or {(row['target'], row['additional_workspace']) for row in inputs} != {(target, client) for target in targets for client in (False, True)}):
+        raise ValueError('dependency metadata input identity disagreement')
+    expected = {}
+    for closure in closures:
+        identities = [tuple(row) for row in closure['packages']]
+        if not identities or len(identities) != len(set(identities)):
+            raise ValueError('dependency notice closure coverage disagreement')
+        for identity in identities:
+            expected.setdefault(identity, set()).add(closure['target'])
+    recorded = {(row['name'], row['version']): row for row in notices['dependencies']}
+    if len(recorded) != len(notices['dependencies']) or set(recorded) != set(expected):
+        raise ValueError('dependency notice coverage disagreement')
+    if not set(recorded).issubset(locked):
+        raise ValueError('dependency notices include an unpinned package')
+    for identity, row in recorded.items():
+        if len(row.get('targets', [])) != len(expected[identity]) or set(row['targets']) != expected[identity]:
+            raise ValueError('dependency notice package target disagreement')
+
+
+def audit_public_inventory(inventory):
+    allowed = {'schema', 'scope', 'retained_topic_authority', 'normative_pdfx4_coverage_complete',
+               'normative_requirements', 'topics', 'writer_contracts', 'library_contracts', 'latest_focused_repair',
+               'coverage_assurance'}
+    if (inventory.get('schema') != 'pdf-library-requirements/v1' or set(inventory) - allowed
+            or inventory.get('normative_requirements') != [] or 'coverage_assurance' not in inventory):
+        raise ValueError('source packaging requires the neutral public inventory')
+
+
+def declared_paths(workspace, notices, upstream):
+    """Fixed public documents and the exact notice files named by their inventory."""
     paths = set(ROOT_FILES)
     paths.update("docs/" + p for p in PUBLIC_DOCS)
     paths.update("scripts/" + p for p in PUBLIC_SCRIPTS)
-    workspace = tomllib.loads((root / "Cargo.toml").read_text(encoding="utf-8"))
+    paths.update("tests/unit/" + p for p in PUBLIC_TESTS)
+    paths.update("docs/verification/current/" + p for p in PUBLIC_RECEIPTS)
+    paths.add('crates/linux-worker-job/README.md')
     for member in workspace["workspace"]["members"]:
-        package = tomllib.loads((root / member / 'Cargo.toml').read_text(encoding='utf-8'))['package']
         paths.add(member + "/Cargo.toml")
-        if (root / member / "build.rs").exists():
-            paths.add(member + "/build.rs")
-        for subtree in ("src", "tests", "rules"):
-            directory = root / member / subtree
-            if directory.exists():
-                paths.update(p.relative_to(root).as_posix() for p in directory.rglob("*") if p.is_file())
-    for subtree in ("third_party", "examples/standalone-client", "docs/verification/current"):
-        directory = root / subtree
-        if not directory.is_dir():
-            raise ValueError(f"required public directory is missing: {subtree}")
-        paths.update(p.relative_to(root).as_posix() for p in directory.rglob("*")
-                     if p.is_file() and not any(part in FORBIDDEN_PARTS for part in p.relative_to(directory).parts))
-    paths.update("tests/unit/" + p for p in ("source-package.test.py", "requirements-inventory.test.py", "font-map-metadata.test.py"))
+    paths.update('examples/standalone-client/'+name for name in ('Cargo.toml', 'Cargo.lock', 'README.md'))
+    prefix = 'third_party/cargo-notices/'
+    paths.update((prefix+'dependencies.json', prefix+'Cargo.lock', prefix+'client-Cargo.lock',
+                  'third_party/upstream/receipt.json', 'third_party/qpdf/NOTICE.md'))
+    for row in notices['dependencies']:
+        paths.update(prefix+notice['path'] for notice in row['license_texts'])
+    for row in notices['example_assets']:
+        paths.add(row['path'])
+        paths.add(prefix+row['provenance'])
+        if 'license_notice' in row:
+            paths.add(prefix+row['license_notice'])
+    paths.update(prefix+row['path'] for row in notices['canonical_terms'])
+    standard = notices['rust_standard_library']
+    paths.add(prefix+standard['notice'])
+    paths.update(prefix+row['path'] for row in standard.get('license_texts', []))
+    paths.update(row['path'] for row in upstream['notices'])
+    return paths
+
+
+def source_roots(workspace):
+    members = workspace['workspace']['members']
+    for member in members:
+        audit_entry(member+'/Cargo.toml', b'')
+        if not member.startswith(('crates/', 'apps/')) or len(member.split('/')) != 2:
+            raise ValueError('unsupported source workspace member')
+    return [member+'/'+subtree+'/' for member in members for subtree in ('src', 'tests', 'rules')]+[
+        'examples/standalone-client/src/', 'examples/standalone-client/examples/']
+
+
+def audit_payload_paths(files):
+    workspace = tomllib.loads(files['Cargo.toml'].decode())
+    required = declared_paths(workspace, json.loads(files['third_party/cargo-notices/dependencies.json']),
+                              json.loads(files['third_party/upstream/receipt.json']))
+    roots = source_roots(workspace)
+    build_scripts = {member+'/build.rs' for member in workspace['workspace']['members']}
+    if not required.issubset(files):
+        raise ValueError('required public package file is missing')
+    for name in files:
+        if name not in required and name not in build_scripts and not name.startswith(tuple(roots)):
+            raise ValueError('file is outside the public package allowlist: '+name)
+
+
+def public_paths(root):
+    """Select declared source trees; receipts never expand by traversal."""
+    workspace = tomllib.loads((root/'Cargo.toml').read_text(encoding='utf-8'))
+    paths = declared_paths(workspace, json.loads((root/'third_party/cargo-notices/dependencies.json').read_bytes()),
+                           json.loads((root/'third_party/upstream/receipt.json').read_bytes()))
+    for member in workspace['workspace']['members']:
+        if (root/member/'build.rs').is_file():
+            paths.add(member+'/build.rs')
+    for subtree in source_roots(workspace):
+        directory = root/subtree
+        if directory.is_dir():
+            paths.update(path.relative_to(root).as_posix() for path in directory.rglob('*')
+                         if path.is_file() and not any(part in FORBIDDEN_PARTS for part in path.relative_to(directory).parts))
+    return paths
+
+
+def collect(root):
+    paths = public_paths(root)
+    audit_public_inventory(json.loads((root/'docs/requirements/pdfx4-inventory.json').read_bytes()))
     files = {}
     for name in sorted(paths):
         source = root / name
@@ -175,8 +299,9 @@ def collect(root):
         audit_entry(name, data)
         files[name] = data
     audit_policy({'schema': 'patterboxpdf-source-package/v2', **POLICIES['patterboxpdf-source-package/v2']}, files)
+    audit_payload_paths(files)
     audit_notices(files)
-    return workspace, files
+    return tomllib.loads(files['Cargo.toml'].decode()), files
 
 
 def verify_archive(archive):
@@ -199,7 +324,10 @@ def verify_archive(archive):
                     raise ValueError("package file identity disagreement")
         files = {name: package.read(name) for name in expected}
         audit_policy(manifest, files)
-        audit_notices(files)
+        if manifest['schema'] == 'patterboxpdf-source-package/v2':
+            audit_public_inventory(json.loads(files['docs/requirements/pdfx4-inventory.json']))
+            audit_payload_paths(files)
+        audit_notices(files, require_union=manifest['schema'] == 'patterboxpdf-source-package/v2')
         return manifest
 
 

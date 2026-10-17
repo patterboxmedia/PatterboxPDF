@@ -14,7 +14,7 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 
 const WORKER: &str = env!("CARGO_BIN_EXE_publisher-font-worker");
-const PROTOCOL_VERSION: u16 = 5;
+const PROTOCOL_VERSION: u16 = 6;
 const GLYPH_SET_DOMAIN: &[u8] = b"publisher-v2/font-glyph-set/v1\0";
 const FONT: &[u8] = include_bytes!("../../../crates/layout-core/tests/fixtures/DejaVuSans.ttf");
 

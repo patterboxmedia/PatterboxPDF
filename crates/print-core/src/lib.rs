@@ -20,7 +20,6 @@
 #[cfg(feature = "publisher-adapter")]
 mod candidate;
 mod candidate_metadata;
-mod to_unicode;
 #[cfg(feature = "publisher-adapter")]
 mod color;
 #[cfg(feature = "publisher-adapter")]
@@ -31,6 +30,7 @@ mod fixture;
 mod font;
 #[cfg(feature = "publisher-adapter")]
 mod font_contract;
+mod pdf_lines;
 #[cfg(feature = "publisher-adapter")]
 mod preflight;
 #[cfg(feature = "publisher-adapter")]
@@ -44,6 +44,7 @@ mod publisher_adapter;
 mod raster;
 #[cfg(feature = "publisher-adapter")]
 mod scene;
+mod to_unicode;
 #[cfg(feature = "publisher-adapter")]
 mod validator;
 #[cfg(feature = "pdf-oxide-validator")]
